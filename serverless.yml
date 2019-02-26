@@ -1,0 +1,44 @@
+service: cloudkeeper
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'prod'}
+  region: eu-central-1
+  memorySize: 128
+  timeout: 15
+  runtime: nodejs8.10
+  tracing: true
+  environment:
+    BASE_PATH: /${opt:stage, 'prod'}
+
+package:
+  exclude:
+    - pages/**
+    - tests/**
+    - node_modules/.cache/**
+    - .cache
+    - .idea
+    - package.json
+    - package-lock.json
+  include:
+    - .next/**
+
+functions:
+  next:
+    handler: index.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+      - http:
+          path: /{any+}
+          method: ANY
+
+custom:
+  apigwBinary:
+    types:
+      - '*/*'
+
+plugins:
+  - serverless-offline
+  - serverless-apigw-binary
