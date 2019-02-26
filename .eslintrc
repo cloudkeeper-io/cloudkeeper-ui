@@ -17,6 +17,7 @@
   },
   "rules": {
     "semi": ["error", "never"],
+    "object-curly-newline": ["error", { "consistent": true }],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }]
   }
 }

@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 `
 
 interface CardProps {
-  children: JSX.Element | JSX.Element[] | string
+  children?: JSX.Element | JSX.Element[] | string
 }
 
 export default ({ children }: CardProps) => (
