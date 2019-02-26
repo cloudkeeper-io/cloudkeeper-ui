@@ -1,5 +1,5 @@
-import App, { Container } from 'next/app'
 import * as React from 'react'
+import App, { Container } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 import Head from 'next-server/head'
 

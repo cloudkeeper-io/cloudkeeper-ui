@@ -2,6 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 
 import BasicLayout from '../components/basic-layout'
+import Card from '../components/main-card.component'
 
 function Home() {
   return (
@@ -10,7 +11,9 @@ function Home() {
         <title>CloudKeeper | Index </title>
       </Head>
       <BasicLayout>
-        <div>Welcome to next.js!</div>
+        <Card>
+          Welcome to next.js!
+        </Card>
       </BasicLayout>
     </>
   )
