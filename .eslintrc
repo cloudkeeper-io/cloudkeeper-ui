@@ -1,0 +1,22 @@
+{
+  "extends": ["airbnb"],
+  "plugins": ["@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "useJSXTextNode": true,
+    "project": "./tsconfig.json",
+    "extraFileExtensions": [".tsx"]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {"extensions": [".js", ".jsx", ".json", ".ts", ".tsx"]}
+    }
+  },
+  "rules": {
+    "semi": ["error", "never"],
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }]
+  }
+}
