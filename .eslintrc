@@ -1,7 +1,9 @@
 {
   "extends": ["airbnb"],
-  "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
+  "env": {
+    "browser": true
+  },
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true

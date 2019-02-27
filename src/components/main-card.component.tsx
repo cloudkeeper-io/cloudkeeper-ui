@@ -1,5 +1,5 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const Shadow = styled.div`
   filter: drop-shadow(0 0 8px rgba(79, 250, 197, 0.3));
