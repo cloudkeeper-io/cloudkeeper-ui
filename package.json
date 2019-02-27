@@ -8,8 +8,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck",
-    "lint": "eslint */**",
-    "lint:fix": "eslint */** --fix"
+    "lint": "eslint '*/**'",
+    "lint:fix": "eslint '*/**' --fix"
   },
   "dependencies": {
     "react": "^16.8.3",
