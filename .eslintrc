@@ -1,6 +1,7 @@
 {
   "extends": ["airbnb"],
   "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "env": {
     "browser": true
   },
@@ -14,12 +15,15 @@
   },
   "settings": {
     "import/resolver": {
-      "node": {"extensions": [".js", ".jsx", ".json", ".ts", ".tsx"]}
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
+      }
     }
   },
   "rules": {
     "semi": ["error", "never"],
-    "object-curly-newline": ["error", { "consistent": true }],
-    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }]
+    "object-curly-newline": ["error", {"consistent": true}],
+    "react/jsx-filename-extension": [1, {"extensions": [".tsx", ".jsx"]}],
+    "@typescript-eslint/no-unused-vars": "error"
   }
 }

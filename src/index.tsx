@@ -1,14 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ThemeProvider } from 'styled-components/macro'
 
 import RootContainer from './containers/root.container'
-import themes from './styles/themes'
 import GlobalStyles from './styles/global.styles'
+import { ThemeProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render((
-  <ThemeProvider theme={themes.dark}>
+  <ThemeProvider>
     <>
       <GlobalStyles />
       <RootContainer />

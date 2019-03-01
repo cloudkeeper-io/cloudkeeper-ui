@@ -8,23 +8,28 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck",
-    "lint": "eslint '*/**'",
-    "lint:fix": "eslint '*/**' --fix"
+    "lint": "eslint \"src/**\"",
+    "lint:fix": "eslint \"src/**\" --fix"
   },
   "dependencies": {
+    "final-form": "^4.11.1",
+    "history": "^4.7.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
+    "react-final-form": "^4.0.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.5",
     "recharts": "^1.5.0",
     "styled-components": "^4.1.3"
   },
   "devDependencies": {
-    "@types/node": "11.9.5",
-    "@types/react": "^16.8.5",
+    "@types/node": "11.9.6",
+    "@types/react": "^16.8.6",
     "@types/react-dom": "16.8.2",
+    "@types/react-router-dom": "^4.3.1",
     "@types/recharts": "^1.1.13",
-    "@types/styled-components": "^4.1.10",
+    "@types/styled-components": "^4.1.11",
+    "@typescript-eslint/eslint-plugin": "^1.4.2",
     "@typescript-eslint/parser": "^1.4.2",
     "babel-plugin-styled-components": "^1.10.0",
     "eslint-config-airbnb": "17.1.0",
