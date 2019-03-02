@@ -15,6 +15,10 @@ interface RootContainerProps {
 }
 
 export default ({ history, user }: RootContainerProps) => {
+  if (!user.isUserLoaded) {
+    return <LoadingPage />
+  }
+
   if (user.session) {
     return (
       <Router history={history}>

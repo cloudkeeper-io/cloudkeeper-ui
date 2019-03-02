@@ -106,6 +106,7 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
 
   public async componentDidMount() {
     await this.getSession()
+    this.setUser({ isUserLoaded: true })
   }
 
   public render() {
