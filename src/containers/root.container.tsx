@@ -39,6 +39,9 @@ export default ({ history, user }: RootContainerProps) => {
           <Route exact path="/">
             <Login user={user} />
           </Route>
+          <Route>
+            <Error />
+          </Route>
         </Switch>
       </Suspense>
     </Router>

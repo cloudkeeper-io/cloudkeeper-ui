@@ -32,10 +32,13 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     if (expiredAt < Date.now() + 1000 * 60) {
       const updateResult = await updatedToken(refreshToken)
       console.log('Token Updated')
-      return this.setUser({ session: { refreshToken, accessToken: updateResult.accessToken } })
+      const newSession = { refreshToken, accessToken: updateResult.accessToken }
+      this.setUser({ session: newSession })
+      return newSession
     }
 
-    return this.setUser({ session })
+    this.setUser({ session })
+    return session
   }
 
   public getSession = async (): Promise<Session | null> => {
@@ -44,12 +47,14 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     try {
       const savedSession = session || JSON.parse(localStorage.getItem(SESSION_KEY)!)
       if (savedSession) {
-        this.setSession(savedSession)
+        return await this.setSession(savedSession)
       }
-
-      return savedSession
     } catch (e) {
-      console.log('Token Update Error')
+      const { pathname } = window.location
+      const restrictedRedirects = ['/', '/login']
+      if (!restrictedRedirects.includes(pathname)) {
+        localStorage.setItem(BACK_URL_KEY, pathname)
+      }
     }
 
     await this.signOut()
@@ -63,7 +68,7 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     try {
       const session = await postLogin(email, password)
       localStorage.setItem(BACK_URL_KEY, '')
-      this.setSession(session)
+      await this.setSession(session)
       history.push(backUrl || '/')
     } finally {
       this.setUser({ loading: false })

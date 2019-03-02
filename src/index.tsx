@@ -5,17 +5,9 @@ import createHistory from 'history/createBrowserHistory'
 import RootContainer from './containers/root.container'
 import GlobalStyles from './styles/global.styles'
 import { ThemeProvider, UserProvider } from './contexts'
-import { BACK_URL_KEY } from './constants'
 import * as serviceWorker from './serviceWorker'
 
 const history = createHistory()
-history.listen(() => {
-  const { pathname } = window.location
-  const restrictedRedirects = ['/', '/login']
-  if (!restrictedRedirects.includes(pathname)) {
-    localStorage.setItem(BACK_URL_KEY, pathname)
-  }
-})
 
 ReactDOM.render((
   <UserProvider history={history}>
