@@ -2,14 +2,17 @@ import * as React from 'react'
 import styled from 'styled-components'
 import { XAxis, YAxis, CartesianGrid, Line, LineChart, ResponsiveContainer } from 'recharts'
 
-import BasicLayout from '../components/basic-layout'
 import Card from '../components/card.component'
-import Button from '../components/button.component'
-import { User } from '../models'
 
 const StyledCard = styled(Card)`
   background: linear-gradient(180deg, rgba(0, 255, 176, 0.375) 0%, rgba(197, 0, 255, 0.375) 75.68%);
 `
+const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+`
+
 const data = [
   { a: 4000, x: 1 },
   { a: 3000, x: 2 },
@@ -29,28 +32,20 @@ const data = [
   { x: 16 },
 ]
 
-interface DashboardProps {
-  user: User
-}
-
-export default ({ user }: DashboardProps) => (
-  <>
-    <BasicLayout>
-      <StyledCard showBorder={false}>
-        <ResponsiveContainer>
-          <LineChart
-            data={data}
-            margin={{ top: 40, right: 30, left: 10, bottom: 30 }}
-          >
-            <XAxis dataKey="x" stroke="#B9FFEC" />
-            <YAxis stroke="#B9FFEC" />
-            <CartesianGrid stroke="#B9FFEC" strokeOpacity={0.75} />
-            <Line type="linear" dataKey="a" stroke="#FFFFFF" />
-          </LineChart>
-
-        </ResponsiveContainer>
-      </StyledCard>
-      <Button onClick={user.signOut}>Log out</Button>
-    </BasicLayout>
-  </>
+export default () => (
+  <Wrapper>
+    <StyledCard showBorder={false}>
+      <ResponsiveContainer>
+        <LineChart
+          data={data}
+          margin={{ top: 40, right: 30, left: 10, bottom: 30 }}
+        >
+          <XAxis dataKey="x" stroke="#B9FFEC" />
+          <YAxis stroke="#B9FFEC" />
+          <CartesianGrid stroke="#B9FFEC" strokeOpacity={0.75} />
+          <Line type="linear" dataKey="a" stroke="#FFFFFF" />
+        </LineChart>
+      </ResponsiveContainer>
+    </StyledCard>
+  </Wrapper>
 )

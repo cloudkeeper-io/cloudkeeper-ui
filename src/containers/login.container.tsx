@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import Field from '../components/field.components'
 import Button from '../components/button.component'
 import Card from '../components/card.component'
-import { ThemeConsumer } from '../contexts'
 import { User } from '../models'
 
 interface LoginProps {
@@ -19,6 +18,7 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+  min-height: calc(100vh - 60px);
   background: ${p => p.theme.colors.background};
 `
 const StyledForm = styled.form`
@@ -26,8 +26,7 @@ const StyledForm = styled.form`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 40px;
-  margin-top: 30px;
+  padding: 25px;
   clip-path: ${p => p.theme.clipPath};
 `
 
@@ -97,13 +96,6 @@ export default class Login extends React.Component<LoginProps> {
 
     return (
       <Wrapper>
-        <ThemeConsumer>
-          {({ dispatch }) => (
-            <Button onClick={() => dispatch({ type: 'toggle' })}>
-              Toggle Theme
-            </Button>
-          )}
-        </ThemeConsumer>
         <Card background="transparent">
           <Form onSubmit={v => this.onLogin(v as Values)} validate={v => this.validate(v as Values)}>
             {({ handleSubmit, pristine, invalid }) => (

@@ -2,8 +2,10 @@ const colors = {
   primary: '#4A90E2',
   background: '#F8F8F8',
   text: '#4A4A4A',
+  activeText: '#FFFFFF',
   disabled: '#ababab',
   spinner: '#4A90E2',
+  shadow: 'rgba(210, 210, 210, 0.5)',
 }
 
 const card = {

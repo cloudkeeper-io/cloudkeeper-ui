@@ -1,14 +1,23 @@
+import React from 'react'
 import styled, { css } from 'styled-components'
 
-export default styled.button<{ loading?: boolean }>`
-  cursor: pointer;
+const Border = styled.div<{ disabled? : boolean}>`
   width: 200px;
   height: 50px;
-  background: ${({ disabled, theme: { buttons } }) => (disabled ? buttons.primary.disabled : buttons.primary.background)};
+  padding: 2px;
+  background: ${p => p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.borderColor};
+  clip-path: ${p => p.theme.buttons.clipPath};
+`
+
+const Button = styled.button<{ loading?: boolean }>`
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background: ${p => p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.background};
   box-sizing: border-box;
   border-radius: ${p => p.theme.buttons.borderRadius};
   border: none;
-  color: ${({ disabled, theme: { buttons } }) => (disabled ? buttons.primary.disabledText : buttons.primary.color)};
+  color: ${p => p.disabled ? p.theme.buttons.primary.disabledText : p.theme.buttons.primary.color};
   font-weight: 500;
   font-size: 16px;
   clip-path: ${p => p.theme.buttons.clipPath};
@@ -17,7 +26,7 @@ export default styled.button<{ loading?: boolean }>`
    outline: none;
   }
   &:hover {
-   background:  ${({ disabled, theme: { buttons } }) => (disabled ? buttons.primary.disabled : buttons.primary.active)};
+   background:  ${p => p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.active};
   }
   &::-moz-focus-inner {
     border: 0;
@@ -54,3 +63,15 @@ export default styled.button<{ loading?: boolean }>`
     }
   ` : '')}
 `
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: JSX.Element | string
+  className?: string,
+  loading?: boolean
+}
+
+export default ({ children, className, disabled, ...props }: ButtonProps) => (
+  <Border className={className} disabled={disabled}>
+    <Button {...props} disabled={disabled}>{children}</Button>
+  </Border>
+)

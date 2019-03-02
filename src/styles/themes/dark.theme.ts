@@ -1,14 +1,16 @@
 const colors = {
   primary: '#349884',
   background: '#0E0B20',
-  text: '#FFFFFF',
+  text: '#B9FFEC',
+  activeText: '#B9FFEC',
   disabled: '#ababab',
   spinner: '#349884',
+  shadow: 'rgba(79, 250, 197, 0.3)',
 }
 
 const card = {
   background: '#0E0B20',
-  border: '1px solid #4FFAC5',
+  borderColor: '#4FFAC5',
   clipPath: 'polygon(13% 0, 100% 0, 100% 87%, 87% 100%, 0 100%, 0 13%)',
   shadow: 'rgba(79, 250, 197, 0.3)',
 }
@@ -21,13 +23,14 @@ const input = {
 
 const buttons = {
   borderRadius: 0,
-  clipPath: 'polygon(20% 0,100% 0,100% 55%,83% 100%,0 100%,0 55%)',
+  clipPath: 'polygon(20% 0,100% 0,100% 55%,84% 100%,0 100%,0 55%)',
   primary: {
-    background: 'rgba(79, 250, 197, 0.1)',
-    active: 'rgba(79, 250, 197, 0.3)',
+    background: '#142330',
+    active: '#293b53',
     color: '#B9FFEC',
-    disabled: 'rgba(171, 171, 171, 0.1)',
+    disabled: '#374856',
     disabledText: '#ababab',
+    borderColor: '#4FFAC5',
   },
 }
 
