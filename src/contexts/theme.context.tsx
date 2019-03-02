@@ -1,8 +1,8 @@
-/* eslint-disable react/no-unused-state,react/sort-comp */
 import * as React from 'react'
-import { ThemeProvider as StyledProvider } from 'styled-components/macro'
+import { ThemeProvider as StyledProvider } from 'styled-components'
 
-import { dark, light } from '../styles/themes'
+import themes from '../styles/themes'
+import { THEME_KEY } from '../constants'
 
 interface ThemeProviderProps {
   children: JSX.Element
@@ -12,32 +12,49 @@ interface ThemeProviderState {
   theme: any
 }
 
-export const defaultThemeContext = {
-  theme: dark,
-  toggleTheme: () => {},
+interface ThemeProviderAction {
+  type: string
+  payload?: any
 }
 
-export const ThemeContext = React.createContext(defaultThemeContext)
+interface ReducerState {
+  state: ThemeProviderState,
+  dispatch: React.Dispatch<ThemeProviderAction>
+}
 
-export class ThemeProvider extends React.PureComponent<ThemeProviderProps, ThemeProviderState> {
-  public toggleTheme = () => this.setState(
-    state => ({ theme: state.theme === dark ? light : dark }),
+const initialState = {
+  state: {
+    // @ts-ignore
+    theme: themes[localStorage.getItem(THEME_KEY)] || themes.dark,
+  },
+} as ReducerState
+
+const ThemeContext = React.createContext(initialState)
+
+const reducer = (state: ThemeProviderState, action: ThemeProviderAction) => {
+  switch (action.type) {
+    case 'toggle': {
+      const theme = state.theme === themes.dark ? 'light' : 'dark'
+      localStorage.setItem(THEME_KEY, theme)
+      return { theme: themes[theme] }
+    }
+    default:
+      return state
+  }
+}
+
+const ThemeProvider = React.memo(({ children }: ThemeProviderProps) => {
+  const [state, dispatch] = React.useReducer(reducer, initialState.state)
+
+  return (
+    <ThemeContext.Provider value={{ state, dispatch }}>
+      <StyledProvider theme={state.theme}>
+        {children}
+      </StyledProvider>
+    </ThemeContext.Provider>
   )
+})
 
-  public state = {
-    theme: dark,
-    toggleTheme: this.toggleTheme,
-  }
+const ThemeConsumer = ThemeContext.Consumer
 
-  public render() {
-    const { children } = this.props
-    const { theme } = this.state
-    return (
-      <ThemeContext.Provider value={this.state}>
-        <StyledProvider theme={theme}>
-          {children}
-        </StyledProvider>
-      </ThemeContext.Provider>
-    )
-  }
-}
+export { ThemeContext, ThemeProvider, ThemeConsumer }

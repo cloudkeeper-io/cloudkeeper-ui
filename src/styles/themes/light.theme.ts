@@ -1,8 +1,9 @@
 const colors = {
-  primary: '#349884',
+  primary: '#4A90E2',
   background: '#F8F8F8',
   text: '#4A4A4A',
   disabled: '#ababab',
+  spinner: '#4A90E2',
 }
 
 const card = {

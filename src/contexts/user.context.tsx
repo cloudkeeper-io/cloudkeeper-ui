@@ -1,8 +1,11 @@
 /* eslint-disable react/sort-comp,react/no-unused-state */
 import * as React from 'react'
 import { History } from 'history'
+import jwtDecode from 'jwt-decode'
 
-import { User } from '../models'
+import { User, Session } from '../models'
+import { postLogin, updatedToken } from '../utils'
+import { BACK_URL_KEY, SESSION_KEY } from '../constants'
 
 interface UserProviderProps {
   history: History
@@ -20,62 +23,67 @@ export const UserContext = React.createContext(defaultUserContext)
 export class UserProvider extends React.PureComponent<UserProviderProps, User> {
   public setUser = (user: Partial<User>) => this.setState(user as any)
 
-  public getUser = () => this.state
+  private setSession = async (session: Session) => {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session))
+    const { accessToken, refreshToken } = session
+    const decodedToken = accessToken ? jwtDecode(accessToken) : {} as any
+    const expiredAt = new Date(Number(decodedToken!.exp) * 1000).valueOf()
 
-  public getSession = async () => {
+    if (expiredAt < Date.now() + 1000 * 60) {
+      const updateResult = await updatedToken(refreshToken)
+      console.log('Token Updated')
+      return this.setUser({ session: { refreshToken, accessToken: updateResult.accessToken } })
+    }
+
+    return this.setUser({ session })
+  }
+
+  public getSession = async (): Promise<Session | null> => {
     const { session } = this.state
 
     try {
-      console.log(session)
-      // if (session) {
-      //   const token = session.getIdToken()
-      //   const expiredAt = token.getExpiration() * 1000
-      //
-      //   if (expiredAt < Date.now() + 1000 * 60) {
-      //     console.log('Token Updated')
-      //     const newSession = await refreshSession(session!.getRefreshToken())
-      //     this.setUser({ session: newSession })
-      //     return newSession.getIdToken().getJwtToken()
-      //   }
-      //   return token.getJwtToken()
-      // }
+      const savedSession = session || JSON.parse(localStorage.getItem(SESSION_KEY)!)
+      if (savedSession) {
+        this.setSession(savedSession)
+      }
+
+      return savedSession
     } catch (e) {
       console.log('Token Update Error')
     }
 
     await this.signOut()
-    return ''
+    return null
   }
 
   private login = async (email: string, password: string) => {
-    console.log(email)
-    console.log(password)
-    // const backUrl = localStorage.getItem('backUrl')
-    // this.setUser({ loading: true })
-    // try {
-    //   await postLogin(email, password)
-    //   await this.loadCognitoUser()
-    //   localStorage.setItem('backUrl', '')
-    //   this.props.history.push(backUrl || '/')
-    // } finally {
-    //   this.setUser({ loading: false })
-    // }
+    const { history } = this.props
+    const backUrl = localStorage.getItem(BACK_URL_KEY)
+    this.setUser({ loading: true })
+    try {
+      const session = await postLogin(email, password)
+      localStorage.setItem(BACK_URL_KEY, '')
+      this.setSession(session)
+      history.push(backUrl || '/')
+    } finally {
+      this.setUser({ loading: false })
+    }
   }
 
   public signOut = async () => {
     const { history } = this.props
+    const { session } = this.state
 
-    // try {
-    //   if (cognitoUser) {
-    //     cognitoUser.signOut()
-    //     this.setUser({ cognitoUser: null })
-    //     await this.client.resetStore()
-    //   }
-    // } catch (e) {
-    //   console.log('SignOut Error')
-    // } finally {
-    //   localStorage.clear()
-    // }
+    try {
+      if (session) {
+        this.setUser({ session: null })
+        localStorage.setItem(SESSION_KEY, '')
+        // TODO: reset store
+        // await this.client.resetStore()
+      }
+    } catch (e) {
+      console.log('SignOut Error')
+    }
 
     history.push('/')
   }
@@ -83,8 +91,10 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
 
   public state = {
     ...defaultUserContext,
+    loading: false,
+    username: '',
+    isUserLoaded: false,
     setUser: this.setUser,
-    getUser: this.getUser,
     login: this.login,
     signOut: this.signOut,
   }

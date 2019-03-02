@@ -3,6 +3,7 @@ const colors = {
   background: '#0E0B20',
   text: '#FFFFFF',
   disabled: '#ababab',
+  spinner: '#349884',
 }
 
 const card = {

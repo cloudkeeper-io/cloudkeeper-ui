@@ -10,7 +10,7 @@ const StyledInput = styled.input`
   box-sizing: border-box;
   border: solid ${p => p.theme.input.border};
   border-width: 0 0 1px 0;
-  color: #B9FFEC;
+  color: ${p => p.theme.input.color};
   font-weight: 500;
   line-height: 20px;
   font-size: 16px;

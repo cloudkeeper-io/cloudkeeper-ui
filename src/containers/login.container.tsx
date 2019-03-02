@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Field from '../components/field.components'
 import Button from '../components/button.component'
 import Card from '../components/card.component'
-import { ThemeContext } from '../contexts'
+import { ThemeConsumer } from '../contexts'
 import { User } from '../models'
 
 interface LoginProps {
@@ -44,7 +44,8 @@ const ServerError = styled.div`
   color: #ff1744;
   font-size: 12px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  height: 20px;
 `
 
 interface LoginProps {
@@ -61,7 +62,7 @@ export default class Login extends React.Component<LoginProps> {
     serverError: null,
   }
 
-  public onLogin = async (body: Values) => {
+  public onLogin = async (values: Values) => {
     const { user } = this.props
     if (user.loading) {
       return
@@ -70,9 +71,9 @@ export default class Login extends React.Component<LoginProps> {
     this.setState({ serverError: null })
 
     try {
-      await user.login(body.email, body.password)
+      await user.login(values.email, values.password)
     } catch (error) {
-      this.setState({ serverError: 'Server error, please try again' })
+      this.setState({ serverError: error.message || 'Server error' })
     }
   }
 
@@ -93,26 +94,24 @@ export default class Login extends React.Component<LoginProps> {
   public render() {
     const { user: { loading } } = this.props
     const { serverError } = this.state
+
     return (
       <Wrapper>
-        <ThemeContext.Consumer>
-          {({ toggleTheme }) => (
-            <Button onClick={toggleTheme}>
+        <ThemeConsumer>
+          {({ dispatch }) => (
+            <Button onClick={() => dispatch({ type: 'toggle' })}>
               Toggle Theme
             </Button>
           )}
-        </ThemeContext.Consumer>
+        </ThemeConsumer>
         <Card background="transparent">
-          <Form
-            onSubmit={e => console.log(e)}
-            validate={values => this.validate(values as Values)}
-          >
+          <Form onSubmit={v => this.onLogin(v as Values)} validate={v => this.validate(v as Values)}>
             {({ handleSubmit, pristine, invalid }) => (
               <StyledForm onSubmit={handleSubmit}>
                 <FormContent>
                   <Field name="email" placeholder="Email Address" autoComplete="email" />
                   <Field name="password" placeholder="Password" autoComplete="password" type="password" />
-                  {serverError && <ServerError>{serverError}</ServerError>}
+                  <ServerError>{serverError}</ServerError>
                   <Button disabled={pristine || invalid} loading={loading!}>Log in</Button>
                 </FormContent>
               </StyledForm>

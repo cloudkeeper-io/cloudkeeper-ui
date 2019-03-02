@@ -1,5 +1,5 @@
 export interface Session {
-  idToken: string,
+  accessToken: string,
   refreshToken: string,
 }
 
@@ -7,7 +7,7 @@ export interface User {
   username: string
   loading: boolean
   isUserLoaded: boolean
-  session: Session
+  session?: Session | null | undefined
 
   setUser: (user: Partial<User>) => void
   getUser: () => User

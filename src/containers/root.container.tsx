@@ -1,26 +1,46 @@
 import React, { lazy, Suspense } from 'react'
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Route, Router, Switch } from 'react-router-dom'
+import { History } from 'history'
 
-const LoadingMessage = () => <div>Loading...</div>
+import { User } from '../models'
+import LoadingPage from '../components/loading-page.component'
 
 const Dashboard = lazy(() => import('./dashboard.container'))
 const Login = lazy(() => import('./login.container'))
 const Error = lazy(() => import('./error.container'))
 
-export default () => (
-  <Router>
-    <Suspense fallback={<LoadingMessage />}>
-      <Switch>
-        <Route exact path="/">
-          <Dashboard />
-        </Route>
-        <Route exact path="/login">
-          <Login user={{} as any} />
-        </Route>
-        <Route>
-          <Error />
-        </Route>
-      </Switch>
-    </Suspense>
-  </Router>
-)
+interface RootContainerProps {
+  history: History
+  user: User
+}
+
+export default ({ history, user }: RootContainerProps) => {
+  if (user.session) {
+    return (
+      <Router history={history}>
+        <Suspense fallback={<LoadingPage />}>
+          <Switch>
+            <Route exact path="/">
+              <Dashboard user={user} />
+            </Route>
+            <Route>
+              <Error />
+            </Route>
+          </Switch>
+        </Suspense>
+      </Router>
+    )
+  }
+
+  return (
+    <Router history={history}>
+      <Suspense fallback={<LoadingPage />}>
+        <Switch>
+          <Route exact path="/">
+            <Login user={user} />
+          </Route>
+        </Switch>
+      </Suspense>
+    </Router>
+  )
+}

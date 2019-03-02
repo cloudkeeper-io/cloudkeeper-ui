@@ -1,9 +1,15 @@
 import * as React from 'react'
+import styled from 'styled-components'
 import { XAxis, YAxis, CartesianGrid, Line, LineChart, ResponsiveContainer } from 'recharts'
 
 import BasicLayout from '../components/basic-layout'
 import Card from '../components/card.component'
+import Button from '../components/button.component'
+import { User } from '../models'
 
+const StyledCard = styled(Card)`
+  background: linear-gradient(180deg, rgba(0, 255, 176, 0.375) 0%, rgba(197, 0, 255, 0.375) 75.68%);
+`
 const data = [
   { a: 4000, x: 1 },
   { a: 3000, x: 2 },
@@ -23,10 +29,14 @@ const data = [
   { x: 16 },
 ]
 
-export default () => (
+interface DashboardProps {
+  user: User
+}
+
+export default ({ user }: DashboardProps) => (
   <>
     <BasicLayout>
-      <Card>
+      <StyledCard showBorder={false}>
         <ResponsiveContainer>
           <LineChart
             data={data}
@@ -39,7 +49,8 @@ export default () => (
           </LineChart>
 
         </ResponsiveContainer>
-      </Card>
+      </StyledCard>
+      <Button onClick={user.signOut}>Log out</Button>
     </BasicLayout>
   </>
 )
