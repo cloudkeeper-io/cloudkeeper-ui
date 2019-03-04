@@ -69,7 +69,6 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
       const session = await postLogin(email, password)
       localStorage.setItem(BACK_URL_KEY, '')
       await this.setSession(session)
-      console.log(`push: ${backUrl || '/'}`)
       history.push(backUrl || '/')
     } finally {
       this.setUser({ loading: false })
