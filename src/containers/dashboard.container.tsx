@@ -5,6 +5,7 @@ import { XAxis, YAxis, CartesianGrid, Line, LineChart, ResponsiveContainer, Tool
 import { DateTime } from 'luxon'
 
 import Card from '../components/card.component'
+import { formatNumber } from '../utils'
 
 const data = [
   { invocations: '9704', errors: '1514', dateTime: '2019-03-03T18:00:00.000Z' },
@@ -33,7 +34,7 @@ const data = [
 ]
 
 const Wrapper = styled.div`
-  padding: 0 20px 20px 40px;
+  padding: 0 20px 20px 20px;
 `
 const Title = styled.div`
   font-size: 18px;
@@ -55,6 +56,7 @@ const StyledCard = styled(Card)`
     background: ${p => p.theme.dataCard.background};
   }
 `
+const StyledTooltip = Tooltip as any
 
 export default () => (
   <Wrapper>
@@ -65,7 +67,7 @@ export default () => (
           <ResponsiveContainer>
             <LineChart
               data={data}
-              margin={{ top: 40, right: 30, left: 10, bottom: 30 }}
+              margin={{ top: 40, right: 30, left: 0, bottom: 30 }}
             >
               <XAxis
                 dataKey="dateTime"
@@ -73,11 +75,22 @@ export default () => (
                 tick={{ fontSize: 12 }}
                 tickFormatter={x => DateTime.fromISO(x).toFormat('HH:mm')}
               />
-              <YAxis stroke="#B9FFEC" tick={{ fontSize: 12 }} />
+              <YAxis
+                stroke="#B9FFEC"
+                tick={{ fontSize: 12 }}
+                tickFormatter={x => formatNumber(x)}
+              />
               <CartesianGrid stroke="#B9FFEC" strokeOpacity={0.75} />
               <Line type="linear" dataKey="invocations" stroke="#FFFFFF" />
               <Line type="linear" dataKey="errors" stroke="pink" fill="pink" />
-              <Tooltip />
+              <StyledTooltip
+                wrapperStyle={{ opacity: 0.9 }}
+                contentStyle={{ background: '#0E0B20' }}
+                labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
+                itemStyle={{ fontSize: 12, lineHeight: '12px' }}
+                formatter={(value: string) => Number(value).toLocaleString()}
+                labelFormatter={(value: string) => DateTime.fromISO(value).toFormat('HH:mm')}
+              />
             </LineChart>
           </ResponsiveContainer>
         </StyledCard>

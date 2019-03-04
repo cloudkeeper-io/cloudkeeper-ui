@@ -12,7 +12,7 @@ export const postLogin = async (email: string, password: string) => {
   })
 
   if (result.status !== 200) {
-    throw new Error('Authorization error. Please try again')
+    throw new Error('Authorization error.')
   }
 
   return result.json()

@@ -6,7 +6,7 @@ const Border = styled.div<{ disabled? : boolean}>`
   height: 50px;
   padding: 2px;
   background: ${p => p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.borderColor};
-  clip-path: ${p => p.theme.buttons.clipPath};
+  clip-path: ${p => p.theme.buttons.borderClipPath};
 `
 
 const Button = styled.button<{ loading?: boolean }>`

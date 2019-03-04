@@ -28,7 +28,8 @@ const input = {
 
 const buttons = {
   borderRadius: 0,
-  clipPath: 'polygon(20% 0,100% 0,100% 55%,84% 100%,0 100%,0 55%)',
+  clipPath: 'polygon(20% 0,100% 0,100% 57%,84% 100%,0 100%,0 55%)',
+  borderClipPath: 'polygon(20% 0,100% 0,100% 60%,84% 100%,0 100%,0 52%)',
   primary: {
     background: '#142330',
     active: '#293b53',
