@@ -25,6 +25,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   padding: 25px;
   clip-path: ${p => p.theme.clipPath};
 `
@@ -33,6 +34,7 @@ const FormContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  width: 100%;
   padding: 0 10px;
   justify-content: space-around;
 `
@@ -93,7 +95,7 @@ export default class Login extends React.Component<LoginProps> {
 
     return (
       <Wrapper>
-        <Card background="transparent">
+        <Card>
           <Form onSubmit={v => this.onLogin(v as Values)} validate={v => this.validate(v as Values)}>
             {({ handleSubmit, pristine, invalid }) => (
               <StyledForm onSubmit={handleSubmit}>

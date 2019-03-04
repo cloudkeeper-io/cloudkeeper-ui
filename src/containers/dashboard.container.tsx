@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import * as React from 'react'
 import styled from 'styled-components/macro'
-import { XAxis, YAxis, CartesianGrid, Line, LineChart, ResponsiveContainer } from 'recharts'
+import { XAxis, YAxis, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip } from 'recharts'
 import { DateTime } from 'luxon'
 
 import Card from '../components/card.component'
@@ -32,14 +32,8 @@ const data = [
   { invocations: '8955', errors: '1484', dateTime: '2019-03-02T20:00:00.000Z' },
 ]
 
-const StyledCard = styled(Card)`
-  margin: auto;
-  ${Card.Wrapper} {
-    background: linear-gradient(180deg, #129F7C -0.31%, #6F20A0 100%);
-  }
-`
 const Wrapper = styled.div`
-  padding: 0 20px;
+  padding: 0 20px 20px 40px;
 `
 const Title = styled.div`
   font-size: 18px;
@@ -55,6 +49,13 @@ const CardsWrapper = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   }
 `
+const StyledCard = styled(Card)`
+  margin: auto;
+  ${Card.Wrapper} {
+    background: ${p => p.theme.dataCard.background};
+  }
+`
+
 export default () => (
   <Wrapper>
     <Title>Last 24h</Title>
@@ -76,6 +77,7 @@ export default () => (
               <CartesianGrid stroke="#B9FFEC" strokeOpacity={0.75} />
               <Line type="linear" dataKey="invocations" stroke="#FFFFFF" />
               <Line type="linear" dataKey="errors" stroke="pink" fill="pink" />
+              <Tooltip />
             </LineChart>
           </ResponsiveContainer>
         </StyledCard>

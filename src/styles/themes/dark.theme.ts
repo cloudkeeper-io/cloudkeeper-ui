@@ -16,6 +16,10 @@ const card = {
   shadow: 'rgba(79, 250, 197, 0.3)',
 }
 
+const dataCard = {
+  background: 'linear-gradient(180deg, #129F7C -0.31%, #6F20A0 100%)',
+}
+
 const input = {
   background: '#0E0B20',
   color: '#B9FFEC',
@@ -38,6 +42,7 @@ const buttons = {
 export default {
   colors,
   card,
+  dataCard,
   input,
   buttons,
 }

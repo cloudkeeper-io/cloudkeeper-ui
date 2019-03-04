@@ -16,6 +16,10 @@ const card = {
   borderRadius: '6px',
 }
 
+const dataCard = {
+  background: '#4A90E2',
+}
+
 const input = {
   background: '#FFFFFF',
   color: '#4A90E2',
@@ -37,6 +41,7 @@ const buttons = {
 export default {
   colors,
   card,
+  dataCard,
   input,
   buttons,
 }
