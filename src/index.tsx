@@ -6,6 +6,7 @@ import RootContainer from './containers/root.container'
 import GlobalStyles from './styles/global.styles'
 import { ThemeProvider, UserProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
+import './icons.config'
 
 const history = createHistory()
 

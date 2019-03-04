@@ -1,5 +1,5 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import Spinner from './spinner.component'
 
 const SpinnerWrapper = styled.div<{ height?: string }>`
@@ -7,7 +7,7 @@ const SpinnerWrapper = styled.div<{ height?: string }>`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: ${p => p.height || '100vh'};
+  height: ${p => p.height || 'calc(100vh - 60px)'};
   background: ${props => props.theme.colors.background};
 `
 

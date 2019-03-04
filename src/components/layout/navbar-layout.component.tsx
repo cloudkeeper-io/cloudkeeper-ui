@@ -2,19 +2,11 @@ import * as React from 'react'
 import { History } from 'history'
 import { withRouter } from 'react-router-dom'
 
-import { MenuLink, HeaderLink, SidebarContent } from './components'
+import HeaderLink from './header-link.component'
 import ErrorContainer from '../../containers/error.container'
 import { User } from '../../models'
-import ThemeSwitcher from '../theme-switcher.component'
-import {
-  Wrapper,
-  HeaderWrapper,
-  Header,
-  PageWrapper,
-  PageContent,
-  StyledSidebar,
-  Flex,
-} from './navbar-layout.styles'
+import { Wrapper, HeaderWrapper, Header, PageWrapper, PageContent, Flex } from './navbar-layout.styles'
+import { ThemeConsumer } from '../../contexts'
 
 interface NavbarLayoutProps {
   children?: React.ReactChildren | JSX.Element
@@ -22,105 +14,12 @@ interface NavbarLayoutProps {
   user: User
 }
 
-export class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
-  private readonly mql: MediaQueryList
-
-  private mounted: boolean
-
-  constructor(props: NavbarLayoutProps) {
-    super(props)
-    this.mounted = true
-    this.mql = window.matchMedia('(min-width: 801px)')
-    this.mql.addListener(this.handleMediaQueryChanged)
-  }
-
-  public state = { open: false, docked: window.innerWidth > 800, hasError: false }
-
-  public componentDidMount() {
-    const { history } = this.props
-    this.handleMediaQueryChanged()
-    history.listen(() => {
-      if (this.mounted) {
-        this.setState({ hasError: false })
-      }
-      if (window && window.scrollTo) {
-        window.scrollTo(0, 0)
-        if (this.mounted) {
-          this.closeSidebar()
-        }
-      }
-    })
-  }
+class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
+  public state = { hasError: false }
 
   public componentDidCatch(error: Error) {
     console.log(error)
-    if (this.mounted) {
-      this.setState({ hasError: true })
-    }
-  }
-
-  public componentWillUnmount() {
-    if (this.mql) {
-      this.mql.removeListener(this.handleMediaQueryChanged)
-      this.mounted = false
-    }
-  }
-
-  public getLinks = () => {
-    const links = [
-      {
-        title: 'Dashboard',
-        to: '/dashboard',
-      },
-      {
-        title: 'Settings',
-        to: '/settings',
-      },
-      { title: 'Logout', onClick: this.logout },
-    ]
-
-    return links.map(link => (
-      <MenuLink
-        key={link.title}
-        link={link}
-        active={this.isActive(link)}
-      />
-    ))
-  }
-
-  public getHeaderLinks = () => {
-    const { session } = this.props.user
-
-    if (!session) {
-      return null
-    }
-
-    const links = [
-      {
-        title: 'Dashboard',
-        to: '/dashboard',
-      },
-      {
-        title: 'Settings',
-        to: '/settings',
-      },
-    ]
-
-    return links.map(link => (
-      <HeaderLink
-        key={link.title}
-        title={link.title}
-        to={link.to}
-        isActive={this.isActive(link)}
-      />
-    ))
-  }
-
-  public handleMediaQueryChanged = () => {
-    if (this.mounted) {
-      const { matches } = this.mql
-      this.setState({ open: matches, docked: matches })
-    }
+    this.setState({ hasError: true })
   }
 
   public isActive = (link: any) => {
@@ -132,38 +31,26 @@ export class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
     return to && pathname.includes(to)
   }
 
-  public openSidebar = () => this.mounted && this.setState({ open: true })
-
-  public closeSidebar = () => this.mounted && this.setState({ open: false })
-
   public logout = () => this.props.user.signOut()
 
   public render() {
     const { children, user: { session } } = this.props
-    const { open, docked, hasError } = this.state
+    const { hasError } = this.state
+    const { pathname } = window.location
 
     return (
       <Wrapper>
-        <StyledSidebar
-          noOverlay={docked}
-          width={250}
-          isOpen={open && !docked}
-          onStateChange={isOpen => this.mounted && this.setState({ open: isOpen })}
-        >
-          <SidebarContent>
-            {this.getLinks()}
-          </SidebarContent>
-        </StyledSidebar>
         <HeaderWrapper>
           <Header>
-            {docked && (
-              <>
-                <ThemeSwitcher />
-                {this.getHeaderLinks()}
-                <Flex />
-                {session && <HeaderLink title="Logout" onClick={this.logout} />}
-              </>
-            )}
+            {session && <HeaderLink active={pathname.includes('/dashboard')} icon="home" to="/dashboard" />}
+            {session && <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings" />}
+            <Flex />
+            <ThemeConsumer>
+              {({ dispatch }) => (
+                <HeaderLink icon="lightbulb" iconSize="1x" onClick={() => dispatch({ type: 'toggle' })} />
+              )}
+            </ThemeConsumer>
+            {session && <HeaderLink icon="sign-out-alt" onClick={this.logout} />}
           </Header>
         </HeaderWrapper>
         <PageWrapper>

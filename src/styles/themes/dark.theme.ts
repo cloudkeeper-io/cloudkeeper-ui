@@ -2,6 +2,7 @@ const colors = {
   primary: '#349884',
   background: '#0E0B20',
   text: '#B9FFEC',
+  icon: '#B9FFEC',
   activeText: '#B9FFEC',
   disabled: '#ababab',
   spinner: '#349884',

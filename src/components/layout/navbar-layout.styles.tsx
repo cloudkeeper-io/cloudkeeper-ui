@@ -1,14 +1,6 @@
-import styled from 'styled-components'
-
-import Sidebar from '../sidebar.component'
+import styled from 'styled-components/macro'
 
 export const Wrapper = styled.div`
-`
-export const StyledSidebar = styled(Sidebar)`
-  top: 80px;
-  @media (max-width: 800px) {
-    top: 0;
-  }
 `
 export const HeaderWrapper = styled.div`
   position: fixed;
@@ -17,7 +9,6 @@ export const HeaderWrapper = styled.div`
   justify-content: center;
   width: 100vw;
   background: ${p => p.theme.colors.background};
-  box-shadow: 0 2px 8px ${p => p.theme.colors.shadow};
   height: 60px;
   z-index: 8;
 `
@@ -26,7 +17,7 @@ export const Header = styled.div`
   flex-direction: row;
   align-items: center;
   width: calc(100% - 20px);
-  padding: 0 20px;
+  padding: 0 15px 0 5px;
   color:  ${p => p.theme.colors.text};
   @media (max-width: 800px) {
     height: 30px;

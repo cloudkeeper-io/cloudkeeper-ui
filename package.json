@@ -12,9 +12,15 @@
     "lint:fix": "eslint \"src/**\" --fix"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-regular-svg-icons": "^5.7.2",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "final-form": "^4.11.1",
     "history": "^4.7.2",
     "jwt-decode": "^2.2.0",
+    "luxon": "^1.11.4",
+    "polished": "^3.0.3",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-final-form": "^4.0.2",
@@ -25,6 +31,7 @@
   },
   "devDependencies": {
     "@types/jwt-decode": "^2.2.1",
+    "@types/luxon": "^1.11.1",
     "@types/node": "11.10.0",
     "@types/react": "^16.8.6",
     "@types/react-dom": "16.8.2",

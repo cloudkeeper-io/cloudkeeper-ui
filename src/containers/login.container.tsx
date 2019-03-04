@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Form } from 'react-final-form'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import Field from '../components/field.components'
 import Button from '../components/button.component'
@@ -16,16 +16,15 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
   height: 100%;
   min-height: calc(100vh - 60px);
+  padding: 0 20px;
   background: ${p => p.theme.colors.background};
 `
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
   padding: 25px;
   clip-path: ${p => p.theme.clipPath};
 `
@@ -34,8 +33,6 @@ const FormContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 100%;
-  max-width: calc(100vw - 40px);
   padding: 0 10px;
   justify-content: space-around;
 `

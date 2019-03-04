@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ThemeProvider as StyledProvider } from 'styled-components'
+import { ThemeProvider as StyledProvider } from 'styled-components/macro'
 
 import themes from '../styles/themes'
 import { THEME_KEY } from '../constants'
