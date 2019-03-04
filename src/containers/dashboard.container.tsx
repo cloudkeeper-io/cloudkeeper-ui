@@ -68,7 +68,7 @@ export default () => (
           <ResponsiveContainer>
             <LineChart
               data={data}
-              margin={{ top: 40, right: 30, left: 0, bottom: 30 }}
+              margin={{ top: 40, right: 30, left: -5, bottom: 30 }}
             >
               <XAxis
                 dataKey="dateTime"
@@ -82,8 +82,8 @@ export default () => (
                 tickFormatter={x => formatNumber(x)}
               />
               <CartesianGrid stroke="#B9FFEC" strokeOpacity={0.75} />
-              <Line type="linear" dataKey="invocations" stroke="#FFFFFF" />
               <Line type="linear" dataKey="errors" stroke="pink" fill="pink" />
+              <Line type="linear" dataKey="invocations" stroke="#FFFFFF" />
               <StyledTooltip
                 wrapperStyle={{ opacity: 0.9 }}
                 contentStyle={{ background: '#0E0B20' }}
