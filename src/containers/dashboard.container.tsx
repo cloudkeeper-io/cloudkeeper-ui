@@ -45,13 +45,14 @@ const CardsWrapper = styled.div`
   display: grid;
   grid-auto-rows: auto;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  grid-gap: 60px 80px;
+  grid-gap: 60px 60px;
   @media(max-width: 1024px) {
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   }
 `
 const StyledCard = styled(Card)`
   margin: auto;
+  width: 100%;
   ${Card.Wrapper} {
     background: ${p => p.theme.dataCard.background};
   }
@@ -86,7 +87,7 @@ export default () => (
               <StyledTooltip
                 wrapperStyle={{ opacity: 0.9 }}
                 contentStyle={{ background: '#0E0B20' }}
-                labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
+                labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10, color: '#B9FFEC' }}
                 itemStyle={{ fontSize: 12, lineHeight: '12px' }}
                 formatter={(value: string) => Number(value).toLocaleString()}
                 labelFormatter={(value: string) => DateTime.fromISO(value).toFormat('HH:mm')}
