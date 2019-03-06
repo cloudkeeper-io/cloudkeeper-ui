@@ -3,11 +3,12 @@ import * as React from 'react'
 import styled from 'styled-components/macro'
 import { XAxis, YAxis, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip } from 'recharts'
 import { DateTime } from 'luxon'
+import orderBy from 'lodash/orderBy'
 
 import Card from '../components/card.component'
 import { formatNumber } from '../utils'
 
-const data = [
+const data = orderBy([
   { invocations: '9704', errors: '1514', dateTime: '2019-03-03T18:00:00.000Z' },
   { invocations: '9664', errors: '1481', dateTime: '2019-03-03T17:00:00.000Z' },
   { invocations: '9389', errors: '1487', dateTime: '2019-03-03T16:00:00.000Z' },
@@ -31,7 +32,7 @@ const data = [
   { invocations: '9094', errors: '1483', dateTime: '2019-03-02T22:00:00.000Z' },
   { invocations: '9240', errors: '1509', dateTime: '2019-03-02T21:00:00.000Z' },
   { invocations: '8955', errors: '1484', dateTime: '2019-03-02T20:00:00.000Z' },
-]
+], x => DateTime.fromISO(x.dateTime).valueOf())
 
 const Wrapper = styled.div`
   padding: 0 20px 20px 20px;
