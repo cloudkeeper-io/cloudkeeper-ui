@@ -67,7 +67,7 @@ jobs:
       - store_artifacts:
           path: reports/junit
 
-  dev-deploy:
+  dev-build-deploy:
     docker:
       - image: ayankovsky/node-serverless-aws
 
@@ -85,9 +85,10 @@ jobs:
             - v1-yarn-{{ .Branch }}-
             - v1-yarn-
 
+      - run: yarn build
       - run: aws s3 sync build/. s3://dev.cloudkeeper.io/ --delete
 
-  prod-deploy:
+  prod-build-deploy:
     docker:
       - image: ayankovsky/node-serverless-aws
 
@@ -128,7 +129,7 @@ workflows:
               ignore: /.*/
             tags:
               only: /^release.*/
-      - prod-deploy:
+      - prod-build-deploy:
           context: ayankovsky-context
           requires:
             - checks
@@ -150,7 +151,7 @@ workflows:
           filters:
             branches:
               only: master
-      - dev-deploy:
+      - dev-build-deploy:
           context: ayankovsky-context
           requires:
             - checks
