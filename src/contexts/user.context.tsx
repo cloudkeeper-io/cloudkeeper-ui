@@ -1,15 +1,17 @@
 /* eslint-disable react/sort-comp,react/no-unused-state */
 import * as React from 'react'
 import { History } from 'history'
+import { ApolloClient } from 'apollo-client'
 import jwtDecode from 'jwt-decode'
 
 import { User, Session } from '../models'
 import { postLogin, updatedToken } from '../utils'
 import { BACK_URL_KEY, SESSION_KEY } from '../constants'
+import { getApolloClient } from '../apollo.config'
 
 interface UserProviderProps {
   history: History
-  children: (props: { user: User }) => JSX.Element
+  children: (props: { user: User, client: ApolloClient<any> }) => JSX.Element
 }
 
 export const defaultUserContext = {
@@ -93,6 +95,10 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     history.push('/')
   }
 
+  public getIdToken = async () => {
+    const session = await this.getSession()
+    return session ? session.accessToken : ''
+  }
 
   public state = {
     ...defaultUserContext,
@@ -104,6 +110,8 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     signOut: this.signOut,
   }
 
+  public client = getApolloClient(this.getIdToken)
+
   public async componentDidMount() {
     await this.getSession()
     this.setUser({ isUserLoaded: true })
@@ -111,7 +119,7 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
 
   public render() {
     const { children } = this.props
-    const element = React.cloneElement(children({ user: this.state }))
+    const element = React.cloneElement(children({ user: this.state, client: this.client }))
     return (
       <UserContext.Provider value={this.state}>
         {element}

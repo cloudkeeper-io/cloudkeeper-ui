@@ -1,4 +1,1 @@
-// eslint-disable-next-line import/prefer-default-export
-export const config = {
-  authUrl: 'https://dev-api.cloudkeeper.io/auth',
-}
+export const getConfig = () => (window as any).env

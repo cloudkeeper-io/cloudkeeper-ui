@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import createHistory from 'history/createBrowserHistory'
+import { ApolloProvider } from 'react-apollo'
 
 import RootContainer from './containers/root.container'
 import GlobalStyles from './styles/global.styles'
@@ -12,14 +13,15 @@ const history = createHistory()
 
 ReactDOM.render((
   <UserProvider history={history}>
-    {({ user }) => (
-      <ThemeProvider>
-        <>
-          <GlobalStyles />
-          <RootContainer user={user} history={history} />
-        </>
-      </ThemeProvider>
-
+    {({ user, client }) => (
+      <ApolloProvider client={client}>
+        <ThemeProvider>
+          <>
+            <GlobalStyles />
+            <RootContainer user={user} history={history} />
+          </>
+        </ThemeProvider>
+      </ApolloProvider>
     )}
   </UserProvider>
 ), document.getElementById('root'))

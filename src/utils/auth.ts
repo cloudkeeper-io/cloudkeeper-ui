@@ -1,5 +1,6 @@
-/* eslint-disable import/prefer-default-export */
-import { config } from '.'
+import { getConfig } from '.'
+
+const config = getConfig()
 
 export const postLogin = async (email: string, password: string) => {
   const result = await fetch(`${config.authUrl}/local`, {
