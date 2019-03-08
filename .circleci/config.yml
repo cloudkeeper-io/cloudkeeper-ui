@@ -154,8 +154,9 @@ workflows:
           context: ayankovsky-context
           requires:
             - checks
-          branches:
-            only: master
+          filters:
+            branches:
+              only: master
 
   dev-pull-request-check-workflow:
     jobs:
