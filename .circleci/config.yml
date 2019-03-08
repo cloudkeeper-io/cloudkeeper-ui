@@ -1,0 +1,171 @@
+version: 2
+jobs:
+  ensure-deps:
+    docker:
+      - image: ayankovsky/node-serverless-aws
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-yarn-{{ .Branch }}-
+            - v1-yarn-
+
+      - run:
+          name: Install Dependencies
+          command: yarn install
+
+      - save_cache:
+          key: v1-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+            - .cache/yarn
+      - save_cache:
+          key: v1-yarn-{{ .Branch }}-
+          paths:
+            - .cache/yarn
+      - save_cache:
+          key: v1-yarn-
+          paths:
+            - .cache/yarn
+
+  checks:
+    docker:
+      - image: ayankovsky/node-serverless-aws
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: build/distributions
+
+      - restore_cache:
+          keys:
+            - v1-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-yarn-{{ .Branch }}-
+            - v1-yarn-
+
+      - run:
+          name: create folder
+          command: mkdir -p reports/junit
+
+      - run: yarn lint --format junit -o reports/junit/js-lint-results.xml
+      - run: yarn typecheck
+      - run:
+          name: Run tests
+          environment:
+            JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
+          command: yarn test -w 1 --ci --testResultsProcessor="jest-junit" --passWithNoTests
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+
+  dev-deploy:
+    docker:
+      - image: ayankovsky/node-serverless-aws
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: build/distributions
+
+      - restore_cache:
+          keys:
+            - v1-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-yarn-{{ .Branch }}-
+            - v1-yarn-
+
+      - run: aws s3 sync build/. s3://dev.cloudkeeper.io/ --delete
+
+  prod-deploy:
+    docker:
+      - image: ayankovsky/node-serverless-aws
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build/distributions
+      - restore_cache:
+          keys:
+            - v1-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - v1-yarn-{{ .Branch }}-
+            - v1-yarn-
+
+      - run: REACT_APP_ENV="prod" yarn build
+      - run:
+          name: Deploy
+          command: |
+            aws s3 sync build/. s3://app.cloudkeeper.io/ --delete
+            aws cloudfront create-invalidation --distribution-id E3BY0OT5J5F7FP --paths "/*"
+
+workflows:
+  version: 2
+  prod-deploy-workflow:
+    jobs:
+      - ensure-deps:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^release.*/
+      - checks:
+          requires:
+            - ensure-deps
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^release.*/
+      - prod-deploy:
+          context: ayankovsky-context
+          requires:
+            - checks
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^release.*/
+
+  dev-deploy-workflow:
+    jobs:
+      - ensure-deps:
+          filters:
+            branches:
+              only: master
+      - checks:
+          requires:
+            - ensure-deps
+          filters:
+            branches:
+              only: master
+      - dev-deploy:
+          context: ayankovsky-context
+          requires:
+            - checks
+          branches:
+            only: master
+
+  dev-pull-request-check-workflow:
+    jobs:
+      - ensure-deps:
+          filters:
+            branches:
+              ignore: master
+      - checks:
+          requires:
+            - ensure-deps
+          filters:
+            branches:
+              ignore: master
