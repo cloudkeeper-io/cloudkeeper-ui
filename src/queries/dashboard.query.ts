@@ -4,16 +4,14 @@ export const dashboardQuery = gql` {
   dashboardData {
     last24Hours {
       totals {
-        totals {
-          errors
-          invocations
-        }
+        invocations
+        errors
         dataPoints {
           dateTime
           invocations
           errors
         }
       }
-    }
   }
+}
 }`
