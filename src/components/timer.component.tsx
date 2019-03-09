@@ -12,8 +12,9 @@ const spinnerDash = keyframes`
 
 const Svg = styled.svg`
   height: 100%;
-  transform-origin: center center;
   width: 100%;
+  transform-origin: center center;
+  transform: rotate(-90deg);
 `
 const Circle = styled.circle<{ time: number }>`
   animation: ${spinnerDash} ${p => `${p.time}s`} ease-in-out forwards;

@@ -9,9 +9,10 @@ import { Wrapper, HeaderWrapper, Header, PageWrapper, PageContent, Flex } from '
 import { ThemeConsumer } from '../../contexts'
 
 interface NavbarLayoutProps {
-  children?: React.ReactChildren | JSX.Element
   history: History
   user: User
+  background?: string
+  children?: React.ReactChildren | JSX.Element
 }
 
 class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
@@ -34,13 +35,13 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
   public logout = () => this.props.user.signOut()
 
   public render() {
-    const { children, user: { session } } = this.props
+    const { children, background, user: { session } } = this.props
     const { hasError } = this.state
     const { pathname } = window.location
 
     return (
       <Wrapper>
-        <HeaderWrapper>
+        <HeaderWrapper background={background}>
           <Header>
             {session && <HeaderLink active={pathname.includes('/dashboard')} icon="home" to="/dashboard" />}
             {session && <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings" />}

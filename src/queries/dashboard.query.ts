@@ -12,6 +12,6 @@ export const dashboardQuery = gql` {
           errors
         }
       }
+    }
   }
-}
 }`

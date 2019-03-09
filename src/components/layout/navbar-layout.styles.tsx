@@ -2,13 +2,13 @@ import styled from 'styled-components/macro'
 
 export const Wrapper = styled.div`
 `
-export const HeaderWrapper = styled.div`
+export const HeaderWrapper = styled.div<{ background?: string }>`
   position: fixed;
   top: 0;
   display: flex;
   justify-content: center;
   width: 100vw;
-  background: ${p => p.theme.colors.background};
+  background: ${p => p.background || p.theme.colors.background};
   height: 60px;
   z-index: 8;
 `

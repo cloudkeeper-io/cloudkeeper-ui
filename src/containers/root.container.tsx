@@ -55,7 +55,7 @@ export default ({ history, user }: RootContainerProps) => {
 
   return (
     <Router history={history}>
-      <NavbarLayout history={history} user={user}>
+      <NavbarLayout background={!user.session && 'transparent'} history={history} user={user}>
         <Suspense fallback={<LoadingPage />}>
           {getRoutes(user)}
         </Suspense>

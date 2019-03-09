@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime } from 'luxon'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import { formatNumber } from '../../utils'
 import { useInterval } from '../../hooks'
@@ -78,8 +78,8 @@ export default memo(({ invocations, errors, dataPoints, className }: Invocations
             tickFormatter={x => formatNumber(x)}
           />
           <CartesianGrid stroke="#B9FFEC" strokeOpacity={0.35} />
-          {count % 2 && <Line type="linear" dataKey="invocations" stroke="#FFFFFF" />}
-          {!(count % 2) && <Line type="linear" dataKey="errors" stroke="pink" fill="pink" />}
+          {count % 2 && <Line type="linear" dataKey="invocations" stroke="#FFFFFF" dot={false} />}
+          {!(count % 2) && <Line type="linear" dataKey="errors" stroke="pink" fill="pink" dot={false} />}
           <StyledTooltip
             wrapperStyle={{ opacity: 0.9 }}
             contentStyle={{ background: '#0E0B20' }}

@@ -5,21 +5,22 @@ import styled from 'styled-components/macro'
 import Field from '../components/field.components'
 import Button from '../components/button.component'
 import Card from '../components/card.component'
+import Stars from '../components/stars.component'
 import { User } from '../models'
-
-interface LoginProps {
-  user: User
-}
+import treeline from '../components/treeline.svg'
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
   align-items: center;
   height: 100%;
-  min-height: calc(100vh - 60px);
+  min-height: 100vh;
+  margin-top: -60px;
   padding: 0 20px;
-  background: ${p => p.theme.colors.background};
+  background: linear-gradient(180deg, #0E0C1F -0.31%, #112531 100%);
+  background-size: contain;
 `
 const StyledForm = styled.form`
   display: flex;
@@ -29,7 +30,6 @@ const StyledForm = styled.form`
   padding: 25px;
   clip-path: ${p => p.theme.clipPath};
 `
-
 const FormContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -45,6 +45,13 @@ const ServerError = styled.div`
   margin-bottom: 10px;
   height: 20px;
 `
+const Threes = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: url("${treeline}") center bottom no-repeat;
+  background-size: contain;
+`
 
 interface LoginProps {
   user: User
@@ -55,7 +62,7 @@ interface Values {
   password: string
 }
 
-export default class Login extends React.Component<LoginProps> {
+export default class Login extends React.PureComponent<LoginProps> {
   public state = {
     serverError: null,
   }
@@ -95,6 +102,8 @@ export default class Login extends React.Component<LoginProps> {
 
     return (
       <Wrapper>
+        <Stars />
+        <Threes />
         <Card>
           <Form onSubmit={v => this.onLogin(v as Values)} validate={v => this.validate(v as Values)}>
             {({ handleSubmit, pristine, invalid }) => (
