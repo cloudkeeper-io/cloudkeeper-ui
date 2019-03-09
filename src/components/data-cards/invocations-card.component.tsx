@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { formatNumber } from '../../utils'
 import { useInterval } from '../../hooks'
 import Card from '../card.component'
+import Timer from '../timer.component'
 
 interface InvocationsCardProps {
   invocations: number
@@ -28,6 +29,11 @@ const StyledCard = styled(Card)`
   }
 `
 const Header = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% - 80px);
+  justify-content: space-between;
+  align-items: center;
   margin-left: 50px;
   margin-top: 20px;
 `
@@ -35,6 +41,7 @@ const Value = styled.div`
   font-size: 48px;
 `
 const Description = styled.div`
+  width: 100%;
   font-size: 9px;
 `
 const StyledTooltip = Tooltip as any
@@ -50,6 +57,7 @@ export default memo(({ invocations, errors, dataPoints, className }: Invocations
     <StyledCard showBorder={false} className={className}>
       <Header>
         <Value>{count % 2 ? invocations : errors}</Value>
+        <Timer color="#B9FFEC" size={48} key={count} />
         <Description>{count % 2 ? 'Lambda Executions' : 'Errors'}</Description>
       </Header>
       <ResponsiveContainer>

@@ -5,7 +5,7 @@ const colors = {
   icon: '#B9FFEC',
   activeText: '#B9FFEC',
   disabled: '#ababab',
-  spinner: '#349884',
+  spinner: 'url(#spinner-gradient)',
   shadow: 'rgba(79, 250, 197, 0.3)',
 }
 

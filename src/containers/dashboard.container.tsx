@@ -6,6 +6,7 @@ import { DateTime } from 'luxon'
 import orderBy from 'lodash/orderBy'
 
 import InvocationsCard from '../components/data-cards/invocations-card.component'
+import Loading from '../components/loading.component'
 import { dashboardQuery } from '../queries/dashboard.query'
 
 const Wrapper = styled.div`
@@ -30,7 +31,7 @@ export default () => (
   <Query query={dashboardQuery}>
     {({ data, loading, error }) => {
       if (loading) {
-        return <div>Loading</div>
+        return <Loading />
       }
 
       if (error) {

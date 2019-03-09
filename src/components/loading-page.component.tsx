@@ -1,15 +1,5 @@
 import * as React from 'react'
-import styled from 'styled-components/macro'
-import Spinner from './spinner.component'
-
-const SpinnerWrapper = styled.div<{ height?: string }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: ${p => p.height || 'calc(100vh - 60px)'};
-  background: ${props => props.theme.colors.background};
-`
+import Loading from './loading.component'
 
 interface LoadingProps {
   height?: any
@@ -17,17 +7,12 @@ interface LoadingProps {
   className?: any
 }
 
-export default (props: LoadingProps) => {
-  const { error, height, className } = props
-
-  if (error) {
-    console.log(error)
-    return error.toString()
+export default class extends React.PureComponent<LoadingProps> {
+  public componentDidMount() {
+    window.scrollTo(0, 0)
   }
 
-  return (
-    <SpinnerWrapper height={height} className={className}>
-      <Spinner />
-    </SpinnerWrapper>
-  )
+  public render() {
+    return <Loading {...this.props} />
+  }
 }
