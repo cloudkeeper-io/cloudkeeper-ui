@@ -51,6 +51,7 @@ const Threes = styled.div`
   width: 100%;
   background: url("${treeline}") center bottom no-repeat;
   background-size: contain;
+  pointer-events: none;
 `
 
 interface LoginProps {

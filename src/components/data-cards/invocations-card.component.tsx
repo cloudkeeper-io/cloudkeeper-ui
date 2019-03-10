@@ -36,6 +36,7 @@ const Header = styled.div`
   align-items: center;
   margin-left: 50px;
   margin-top: 20px;
+  margin-bottom: 15px;
 `
 const Value = styled.div`
   font-size: 48px;

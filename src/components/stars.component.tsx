@@ -5,10 +5,10 @@ import Particles from 'react-particles-js'
 const params = {
   particles: {
     number: {
-      value: Math.max(window.outerWidth / 3, window.outerHeight / 3),
+      value: Math.max(window.outerWidth / 2, window.outerHeight / 2),
       density: {
         enable: true,
-        value_area: 789.1476416322727,
+        value_area: 800,
       },
     },
     color: {
@@ -25,12 +25,12 @@ const params = {
       },
     },
     opacity: {
-      value: 0.48927153781200905,
-      random: false,
+      value: 0.5,
+      random: true,
       anim: {
         enable: true,
         speed: 0.2,
-        opacity_min: 0,
+        opacity_min: 0.05,
         sync: false,
       },
     },
