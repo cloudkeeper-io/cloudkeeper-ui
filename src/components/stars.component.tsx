@@ -53,7 +53,7 @@ const params = {
     },
     move: {
       enable: true,
-      speed: 0.4,
+      speed: window.outerWidth * window.outerHeight / 8000000,
       direction: 'none',
       random: true,
       straight: false,
@@ -81,7 +81,7 @@ const params = {
     },
     modes: {
       grab: {
-        distance: 400,
+        distance: 1400,
         line_linked: {
           opacity: 1,
         },

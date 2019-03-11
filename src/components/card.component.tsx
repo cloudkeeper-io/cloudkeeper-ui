@@ -8,15 +8,13 @@ const Border = styled.div<{ showBorder: boolean }>`
   height: 100%;
   padding: 2px;
   background: ${p => p.showBorder ? p.theme.card.borderColor : 'transparent'};
-  clip-path: ${p => p.theme.card.clipPath};
+  clip-path: ${p => p.theme.card.borderClipPath};
   transition: all 0.5s;
 `
-const Shadow = styled.div`
+const Shadow = styled.div<{ width?: string, height?: string }>`
   filter: drop-shadow(0 0 8px ${p => p.theme.card.shadow});
   transition: all 0.5s;
   max-width: 100%;
-  width: 450px;
-  height: 300px;
 `
 const Wrapper = styled.div<{ background: string, showBorder: boolean }>`
   display: flex;

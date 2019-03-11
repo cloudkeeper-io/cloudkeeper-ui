@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components/macro'
 
-const Border = styled.div<{ disabled? : boolean}>`
+const Border = styled.div<{ disabled?: boolean }>`
   width: 200px;
   height: 50px;
   padding: 2px;
@@ -70,8 +70,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean
 }
 
-export default ({ children, className, disabled, ...props }: ButtonProps) => (
+const ButtonComponent = ({ children, className, disabled, ...props }: ButtonProps) => (
   <Border className={className} disabled={disabled}>
     <Button {...props} disabled={disabled}>{children}</Button>
   </Border>
 )
+
+ButtonComponent.Wrapper = Button
+
+export default ButtonComponent

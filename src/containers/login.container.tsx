@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Form } from 'react-final-form'
 import styled from 'styled-components/macro'
+// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 
 import Field from '../components/field.components'
 import Button from '../components/button.component'
@@ -22,20 +23,50 @@ const Wrapper = styled.div`
   background: linear-gradient(180deg, #0E0C1F -0.31%, #112531 100%);
   background-size: contain;
 `
+const MainCard = styled(Card)`
+  width: 450px;
+  min-height: 300px;
+  ${Card.Wrapper} {
+    display: block;
+  }
+`
 const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 100%;
-  padding: 25px;
+  min-height: 300px;
   clip-path: ${p => p.theme.clipPath};
+`
+const TabList = styled.div`
+  position: relative;
+  right: 50px;
+  top: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% + 50px);
+`
+const TabButton = styled(Button)<{ active?: boolean }>`
+  position: relative;
+  width: 50%;
+  height: 60px;
+  top: -2px;
+  right: -2px;
+  ${Button.Wrapper} {
+    background: ${p => p.active ? p.theme.buttons.primary.background : p.theme.card.background};
+    color: ${p => p.active ? p.theme.buttons.primary.color : p.theme.colors.text};
+    border-radius: 0;
+  }
+`
+const SignInTab = styled(TabButton)`
+  left: -2px;
+  transform: translateX(50px);
+  //width: 280px;
 `
 const FormContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 100%;
-  padding: 0 10px;
+  width: calc(100% - 50px);
+  padding: 25px;
   justify-content: space-around;
 `
 const ServerError = styled.div`
@@ -66,6 +97,7 @@ interface Values {
 export default class Login extends React.PureComponent<LoginProps> {
   public state = {
     serverError: null,
+    selectedTab: 0,
   }
 
   public onLogin = async (values: Values) => {
@@ -99,26 +131,59 @@ export default class Login extends React.PureComponent<LoginProps> {
 
   public render() {
     const { user: { loading } } = this.props
-    const { serverError } = this.state
+    const { serverError, selectedTab } = this.state
 
     return (
       <Wrapper>
         <Stars />
         <Threes />
-        <Card>
-          <Form onSubmit={v => this.onLogin(v as Values)} validate={v => this.validate(v as Values)}>
-            {({ handleSubmit, pristine, invalid }) => (
-              <StyledForm onSubmit={handleSubmit}>
-                <FormContent>
-                  <Field name="email" placeholder="Email Address" autoComplete="email" />
-                  <Field name="password" placeholder="Password" autoComplete="password" type="password" />
-                  <ServerError>{serverError}</ServerError>
-                  <Button disabled={pristine || invalid} loading={loading!}>Log in</Button>
-                </FormContent>
-              </StyledForm>
-            )}
-          </Form>
-        </Card>
+        <MainCard>
+          <TabList>
+            <SignInTab
+              type="button"
+              active={selectedTab === 0}
+              onClick={() => this.setState({ selectedTab: 0 })}
+            >
+              Sing In
+            </SignInTab>
+            <TabButton
+              type="button"
+              active={selectedTab === 1}
+              onClick={() => this.setState({ selectedTab: 1 })}
+            >
+              Sing Up
+            </TabButton>
+          </TabList>
+          {selectedTab === 0 && (
+            <Form onSubmit={v => this.onLogin(v as Values)} validate={v => this.validate(v as Values)}>
+              {({ handleSubmit, pristine, invalid }) => (
+                <StyledForm onSubmit={handleSubmit}>
+                  <FormContent>
+                    <Field name="email" placeholder="Email Address" autoComplete="email" />
+                    <Field name="password" placeholder="Password" autoComplete="password" type="password" />
+                    <ServerError>{serverError}</ServerError>
+                    <Button type="submit" disabled={pristine || invalid} loading={loading!}>Log in</Button>
+                  </FormContent>
+                </StyledForm>
+              )}
+            </Form>
+          ) as any}
+          {selectedTab === 1 && (
+            <Form onSubmit={v => this.onLogin(v as Values)} validate={v => this.validate(v as Values)}>
+              {({ handleSubmit, pristine, invalid }) => (
+                <StyledForm onSubmit={handleSubmit}>
+                  <FormContent>
+                    <Field name="email" placeholder="Email Address" autoComplete="email" />
+                    <Field name="password" placeholder="Password" autoComplete="password" type="password" />
+                    <Field name="password" placeholder="Password" autoComplete="password" type="password" />
+                    <ServerError>{serverError}</ServerError>
+                    <Button type="submit" disabled={pristine || invalid} loading={loading!}>Log in</Button>
+                  </FormContent>
+                </StyledForm>
+              )}
+            </Form>
+          ) as any}
+        </MainCard>
       </Wrapper>
     )
   }

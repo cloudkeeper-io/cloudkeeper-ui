@@ -22,6 +22,7 @@ interface InvocationsCardProps {
 const StyledCard = styled(Card)`
   margin: auto;
   width: 100%;
+  height: 300px;
   ${Card.Wrapper} {
     background: ${p => p.theme.dataCard.background};
     flex-direction: column;
