@@ -1,7 +1,4 @@
-/* eslint-disable implicit-arrow-linebreak */
-
-const getClipPath = (x: number) =>
-  `polygon(${x}px 0, 100% 0, 100% calc(100% - ${x}px), calc(100% - ${x}px) 100%, 0 100%, 0 ${x}px)`
+import { getClipPath, getBorderClipPath } from '../../utils'
 
 const colors = {
   primary: '#349884',
@@ -15,10 +12,10 @@ const colors = {
 }
 
 const card = {
-  background: '#0E0B20',
+  background: 'transparent',
   borderColor: '#4FFAC5',
   clipPath: getClipPath(34),
-  borderClipPath: getClipPath(35),
+  borderClipPath: getBorderClipPath(35, 1),
   shadow: 'rgba(79, 250, 197, 0.3)',
 }
 
@@ -27,7 +24,7 @@ const dataCard = {
 }
 
 const input = {
-  background: '#0E0B20',
+  background: 'transparent',
   color: '#B9FFEC',
   border: '#B9FFEC',
 }
@@ -35,7 +32,7 @@ const input = {
 const buttons = {
   borderRadius: 0,
   clipPath: getClipPath(22),
-  borderClipPath: getClipPath(23),
+  borderClipPath: getBorderClipPath(23, 1),
   primary: {
     background: '#142330',
     active: '#293b53',

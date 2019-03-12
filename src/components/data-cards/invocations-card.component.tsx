@@ -23,7 +23,7 @@ const StyledCard = styled(Card)`
   margin: auto;
   width: 100%;
   height: 300px;
-  ${Card.Wrapper} {
+  ${Card.Content} {
     background: ${p => p.theme.dataCard.background};
     flex-direction: column;
     align-items: flex-start;

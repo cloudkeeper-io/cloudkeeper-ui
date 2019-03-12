@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Form } from 'react-final-form'
 import styled from 'styled-components/macro'
-// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 
 import Field from '../components/field.components'
 import Button from '../components/button.component'
@@ -9,6 +8,7 @@ import Card from '../components/card.component'
 import Stars from '../components/stars.component'
 import { User } from '../models'
 import treeline from '../components/treeline.svg'
+import { getClipPath, getBorderClipPath } from '../utils'
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 const MainCard = styled(Card)`
   width: 450px;
   min-height: 300px;
-  ${Card.Wrapper} {
+  ${Card.Content} {
     display: block;
   }
 `
@@ -50,16 +50,24 @@ const TabButton = styled(Button)<{ active?: boolean }>`
   height: 60px;
   top: -2px;
   right: -2px;
-  ${Button.Wrapper} {
-    background: ${p => p.active ? p.theme.buttons.primary.background : p.theme.card.background};
+  ${Button.Border} {
+    clip-path: ${getBorderClipPath(35, 1)};
+  }
+  ${Button.Content} {
+    background: ${p => p.active ? p.theme.buttons.primary.background : '#0F1222'};
     color: ${p => p.active ? p.theme.buttons.primary.color : p.theme.colors.text};
+    clip-path: ${getClipPath(34)};
     border-radius: 0;
   }
 `
 const SignInTab = styled(TabButton)`
   left: -2px;
   transform: translateX(50px);
-  //width: 280px;
+`
+const SubmitButton = styled(Button)`
+  ${Button.Content} {
+    background: transparent;
+  }
 `
 const FormContent = styled.div`
   display: flex;
@@ -177,7 +185,7 @@ export default class Login extends React.PureComponent<LoginProps> {
                     <Field name="password" placeholder="Password" autoComplete="password" type="password" />
                     <Field name="password" placeholder="Password" autoComplete="password" type="password" />
                     <ServerError>{serverError}</ServerError>
-                    <Button type="submit" disabled={pristine || invalid} loading={loading!}>Log in</Button>
+                    <SubmitButton type="submit" disabled={pristine || invalid} loading={loading!}>Log in</SubmitButton>
                   </FormContent>
                 </StyledForm>
               )}

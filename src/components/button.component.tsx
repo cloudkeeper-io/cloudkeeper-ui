@@ -1,18 +1,27 @@
 import React from 'react'
 import styled, { css } from 'styled-components/macro'
 
-const Border = styled.div<{ disabled?: boolean }>`
+const Wrapper = styled.div`
   width: 200px;
   height: 50px;
+  position: relative;
+`
+const Border = styled.div<{ disabled?: boolean }>`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
   padding: 2px;
   background: ${p => p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.borderColor};
   clip-path: ${p => p.theme.buttons.borderClipPath};
 `
-
 const Button = styled.button<{ loading?: boolean }>`
   cursor: pointer;
   width: 100%;
   height: 100%;
+  position: relative;
+  top: 2px;
+  left: 2px;
   background: ${p => p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.background};
   box-sizing: border-box;
   border-radius: ${p => p.theme.buttons.borderRadius};
@@ -71,11 +80,13 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const ButtonComponent = ({ children, className, disabled, ...props }: ButtonProps) => (
-  <Border className={className} disabled={disabled}>
+  <Wrapper className={className}>
+    <Border disabled={disabled} />
     <Button {...props} disabled={disabled}>{children}</Button>
-  </Border>
+  </Wrapper>
 )
 
-ButtonComponent.Wrapper = Button
+ButtonComponent.Border = Border
+ButtonComponent.Content = Button
 
 export default ButtonComponent
