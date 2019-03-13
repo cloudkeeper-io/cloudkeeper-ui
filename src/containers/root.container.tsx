@@ -1,10 +1,13 @@
 import React, { lazy, Suspense } from 'react'
 import { Route, Router, Switch, Redirect } from 'react-router-dom'
 import { History } from 'history'
+import { Query } from 'react-apollo'
 
 import { User } from '../models'
 import NavbarLayout from '../components/layout/navbar-layout.component'
 import LoadingPage from '../components/loading-page.component'
+import Loading from '../components/loading.component'
+import { tenantsQuery } from '../queries'
 
 const Dashboard = lazy(() => import('./dashboard.container'))
 const Login = lazy(() => import('./login.container'))
@@ -19,20 +22,36 @@ interface RootContainerProps {
 const getRoutes = (user: User) => {
   if (user.session) {
     return (
-      <Switch>
-        <Route exact path="/">
-          <Redirect to="/dashboard" />
-        </Route>
-        <Route exact path="/dashboard">
-          <Dashboard />
-        </Route>
-        <Route exact path="/settings">
-          <Settings />
-        </Route>
-        <Route>
-          <Error />
-        </Route>
-      </Switch>
+      <Query query={tenantsQuery}>
+        {({ data, loading, error }) => {
+          if (loading) {
+            return <Loading />
+          }
+
+          if (error) {
+            throw error
+          }
+
+          const { tenants } = data
+
+          return (
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/dashboard" />
+              </Route>
+              <Route exact path="/dashboard">
+                <Dashboard tenants={tenants} />
+              </Route>
+              <Route exact path="/settings">
+                <Settings />
+              </Route>
+              <Route>
+                <Error />
+              </Route>
+            </Switch>
+          )
+        }}
+      </Query>
     )
   }
 

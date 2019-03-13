@@ -1,43 +1,44 @@
 import gql from 'graphql-tag'
 
-export const dashboardQuery = gql`{
-  dashboardData {
-    last24Hours {
-      totals {
-         errors
-         invocations
-         dataPoints {
-          errors
-          invocations
-          dateTime
+export const dashboardQuery = gql`
+  query getReports ($tenantId: String) {
+    dashboardData (tenantId: $tenantId)  {
+      last24Hours {
+        totals {
+           errors
+           invocations
+           dataPoints {
+            errors
+            invocations
+            dateTime
+          }
         }
-      }
-      slowestLambdas {
-        lambdaName
-        averageDuration
-        dataPoints {
+        slowestLambdas {
+          lambdaName
           averageDuration
-          maxDuration
-          dateTime
+          dataPoints {
+            averageDuration
+            maxDuration
+            dateTime
+          }
         }
-      }
-      mostInvokedLambdas {
-        lambdaName
-        invocations
-        dataPoints {
+        mostInvokedLambdas {
+          lambdaName
           invocations
-          dateTime
+          dataPoints {
+            invocations
+            dateTime
+          }
         }
-      }
-      mostErrorsLambdas {
-        lambdaName
-        errors
-        dataPoints {
+        mostErrorsLambdas {
+          lambdaName
           errors
-          dateTime
+          dataPoints {
+            errors
+            dateTime
+          }
         }
       }
     }
   }
-}
 `
