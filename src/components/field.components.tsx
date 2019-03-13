@@ -24,7 +24,7 @@ const StyledInput = styled.input`
   &:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px ${p => p.theme.input.background} inset !important;
     -webkit-text-fill-color: ${p => p.theme.input.color} !important;
-    transition: background-color 5000s ease-in-out 0s;
+    transition: background-color 999999999s ease-in-out 0s;
   }
 `
 const InputWrapper = styled.div`

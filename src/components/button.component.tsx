@@ -12,15 +12,15 @@ const Border = styled.div<{ disabled?: boolean }>`
   position: absolute;
   top: 0;
   padding: 2px;
-  background: ${p => p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.borderColor};
+  background: ${p => p.disabled ? p.theme.buttons.primary.borderDisabled : p.theme.buttons.primary.borderColor};
   clip-path: ${p => p.theme.buttons.borderClipPath};
 `
 const Button = styled.button<{ loading?: boolean }>`
   cursor: pointer;
-  width: 100%;
-  height: 100%;
+  width: calc(100%);
+  height: calc(100% + 1px);
   position: relative;
-  top: 2px;
+  top: 1.5px;
   left: 2px;
   background: ${p => p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.background};
   box-sizing: border-box;

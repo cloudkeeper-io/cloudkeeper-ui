@@ -39,7 +39,6 @@ const Content = styled.div<{ background: string, showBorder: boolean }>`
   background: ${p => p.theme.card.background};
   border-radius: ${p => p.theme.card.borderRadius};
   clip-path: ${p => p.theme.card.clipPath};
-  transition: all 0.5s;
   z-index: 2;
 `
 

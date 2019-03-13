@@ -1,3 +1,5 @@
+import { darken } from 'polished'
+
 const colors = {
   primary: '#4A90E2',
   background: '#F8F8F8',
@@ -28,15 +30,25 @@ const input = {
 
 const buttons = {
   borderRadius: '20px',
+  login: {
+    background: '#4A90E2',
+  },
   primary: {
     background: '#4A90E2',
-    active: '#4b7acd',
+    active: darken(0.15, '#4A90E2'),
     color: '#FFFFFF',
     disabled: 'rgba(171, 171, 171, 0.1)',
+    borderDisabled: 'transparent',
     disabledText: '#ababab',
   },
 }
 
+const tabs = {
+  background: '#FFFFFF',
+  active: '#4A90E2',
+  text: '#FFFFFF',
+  activeText: '#4A4A4A',
+}
 
 export default {
   colors,
@@ -44,4 +56,5 @@ export default {
   dataCard,
   input,
   buttons,
+  tabs,
 }

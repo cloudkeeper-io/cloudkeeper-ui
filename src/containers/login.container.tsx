@@ -5,10 +5,10 @@ import styled from 'styled-components/macro'
 import Field from '../components/field.components'
 import Button from '../components/button.component'
 import Card from '../components/card.component'
+import Tabs from '../components/tabs.component'
 import Stars from '../components/stars.component'
 import { User } from '../models'
 import treeline from '../components/treeline.svg'
-import { getClipPath, getBorderClipPath } from '../utils'
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,38 +35,16 @@ const StyledForm = styled.form`
   min-height: 300px;
   clip-path: ${p => p.theme.clipPath};
 `
-const TabList = styled.div`
-  position: relative;
-  right: 50px;
-  top: -1px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: calc(100% + 50px);
-`
-const TabButton = styled(Button)<{ active?: boolean }>`
-  position: relative;
-  width: 50%;
-  height: 60px;
-  top: -2px;
-  right: -2px;
-  ${Button.Border} {
-    clip-path: ${getBorderClipPath(35, 1)};
-  }
-  ${Button.Content} {
-    background: ${p => p.active ? p.theme.buttons.primary.background : '#0F1222'};
-    color: ${p => p.active ? p.theme.buttons.primary.color : p.theme.colors.text};
-    clip-path: ${getClipPath(34)};
-    border-radius: 0;
-  }
-`
-const SignInTab = styled(TabButton)`
-  left: -2px;
-  transform: translateX(50px);
-`
 const SubmitButton = styled(Button)`
   ${Button.Content} {
-    background: transparent;
+    background: ${p => p.theme.buttons.login.background};
+    &:disabled {
+      background: ${p => p.theme.buttons.primary.disabled};
+    }
+    &:active,
+    &:hover {
+      background: ${p => p.theme.buttons.primary.active};
+    }
   }
 `
 const FormContent = styled.div`
@@ -146,22 +124,11 @@ export default class Login extends React.PureComponent<LoginProps> {
         <Stars />
         <Threes />
         <MainCard>
-          <TabList>
-            <SignInTab
-              type="button"
-              active={selectedTab === 0}
-              onClick={() => this.setState({ selectedTab: 0 })}
-            >
-              Sing In
-            </SignInTab>
-            <TabButton
-              type="button"
-              active={selectedTab === 1}
-              onClick={() => this.setState({ selectedTab: 1 })}
-            >
-              Sing Up
-            </TabButton>
-          </TabList>
+          <Tabs
+            tabs={['Sing In', 'Sing Up']}
+            selectedIndex={selectedTab}
+            onChange={i => this.setState({ selectedTab: i })}
+          />
           {selectedTab === 0 && (
             <Form onSubmit={v => this.onLogin(v as Values)} validate={v => this.validate(v as Values)}>
               {({ handleSubmit, pristine, invalid }) => (
@@ -170,7 +137,7 @@ export default class Login extends React.PureComponent<LoginProps> {
                     <Field name="email" placeholder="Email Address" autoComplete="email" />
                     <Field name="password" placeholder="Password" autoComplete="password" type="password" />
                     <ServerError>{serverError}</ServerError>
-                    <Button type="submit" disabled={pristine || invalid} loading={loading!}>Log in</Button>
+                    <SubmitButton type="submit" disabled={pristine || invalid} loading={loading!}>Log in</SubmitButton>
                   </FormContent>
                 </StyledForm>
               )}

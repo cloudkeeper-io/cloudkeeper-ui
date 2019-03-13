@@ -33,14 +33,28 @@ const buttons = {
   borderRadius: 0,
   clipPath: getClipPath(22),
   borderClipPath: getBorderClipPath(23, 1),
+  login: {
+    background: 'transparent',
+  },
   primary: {
     background: '#142330',
     active: '#293b53',
     color: '#B9FFEC',
     disabled: '#374856',
+    borderDisabled: '#374856',
     disabledText: '#ababab',
     borderColor: '#4FFAC5',
   },
+}
+
+const tabs = {
+  clipPath: getClipPath(34),
+  borderClipPath: getBorderClipPath(35, 1),
+  background: '#0F1222',
+  active: '#142330',
+  text: '#B9FFEC',
+  activeText: '#B9FFEC',
+  tabListRight: '50px',
 }
 
 export default {
@@ -49,4 +63,5 @@ export default {
   dataCard,
   input,
   buttons,
+  tabs,
 }
