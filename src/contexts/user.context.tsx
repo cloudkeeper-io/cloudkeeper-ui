@@ -80,8 +80,6 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
   }
 
   private signUp = async (email: string, password: string) => {
-    console.log(email)
-    console.log(password)
     const { history } = this.props
     this.setUser({ loading: true })
     try {
@@ -103,10 +101,12 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
         this.setUser({ session: null })
         localStorage.setItem(SESSION_KEY, '')
         // TODO: reset store
-        // await this.client.resetStore()
+        await this.client.resetStore()
       }
     } catch (e) {
       console.log('SignOut Error')
+    } finally {
+      localStorage.clear()
     }
 
     history.push('/')
