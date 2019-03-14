@@ -43,7 +43,7 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
       <Wrapper>
         <HeaderWrapper background={background}>
           <Header>
-            {session && <HeaderLink active={pathname.includes('/dashboard')} icon="home" to="/dashboard" />}
+            {session && <HeaderLink active={pathname.includes('/')} icon="home" to="/" />}
             {session && <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings" />}
             <Flex />
             <ThemeConsumer>
