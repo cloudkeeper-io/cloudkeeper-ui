@@ -5,7 +5,7 @@ import { ApolloClient } from 'apollo-client'
 import jwtDecode from 'jwt-decode'
 
 import { User, Session } from '../models'
-import { postLogin, updatedToken } from '../utils'
+import { postLogin, postSignUp, updatedToken } from '../utils'
 import { BACK_URL_KEY, SESSION_KEY } from '../constants'
 import { getApolloClient } from '../apollo.config'
 
@@ -53,9 +53,11 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
       }
     } catch (e) {
       const { pathname } = window.location
-      const restrictedRedirects = ['/', '/login']
+      const restrictedRedirects = ['/', '/sign-up']
       if (!restrictedRedirects.includes(pathname)) {
         localStorage.setItem(BACK_URL_KEY, pathname)
+      } else {
+        return null
       }
     }
 
@@ -72,6 +74,21 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
       localStorage.setItem(BACK_URL_KEY, '')
       await this.setSession(session)
       history.push(backUrl || '/')
+    } finally {
+      this.setUser({ loading: false })
+    }
+  }
+
+  private signUp = async (email: string, password: string) => {
+    console.log(email)
+    console.log(password)
+    const { history } = this.props
+    this.setUser({ loading: true })
+    try {
+      const session = await postSignUp(email, password)
+      localStorage.setItem(BACK_URL_KEY, '')
+      await this.setSession(session)
+      history.push('/')
     } finally {
       this.setUser({ loading: false })
     }
@@ -107,6 +124,7 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     isUserLoaded: false,
     setUser: this.setUser,
     login: this.login,
+    signUp: this.signUp,
     signOut: this.signOut,
   }
 

@@ -10,7 +10,7 @@ import Loading from '../components/loading.component'
 import { tenantsQuery } from '../queries'
 
 const Dashboard = lazy(() => import('./dashboard.container'))
-const Login = lazy(() => import('./login.container'))
+const Login = lazy(() => import('./login/login.container'))
 const Error = lazy(() => import('./error.container'))
 const Settings = lazy(() => import('./settings.container'))
 
@@ -58,7 +58,10 @@ const getRoutes = (user: User) => {
   return (
     <Switch>
       <Route exact path="/">
-        <Login user={user} />
+        {props => <Login user={user} {...props} />}
+      </Route>
+      <Route exact path="/sign-up">
+        {props => <Login user={user} {...props} />}
       </Route>
       <Route>
         <Error />

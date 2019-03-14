@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export const tenantsQuery = gql`{
   tenants {
-    tenantId
+    id
     name
     isSetupCompleted
   }

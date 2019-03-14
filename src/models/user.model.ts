@@ -12,5 +12,6 @@ export interface User {
   setUser: (user: Partial<User>) => void
   getUser: () => User
   login: (email: string, password: string) => any
+  signUp: (email: string, password: string) => any
   signOut: () => void
 }

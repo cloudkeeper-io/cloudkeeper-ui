@@ -9,9 +9,10 @@ const Wrapper = styled.div<{ width?: string, height?: string }>`
   max-width: 100%;
   z-index: 0;
 `
-const BorderShadow = styled.div<{ width?: string, height?: string }>`
+const BorderShadow = styled.div<{ showBorder?: boolean }>`
   position: absolute;
-  top: 0;
+  top: ${p => p.showBorder ? 0 : '2px'};
+  left: ${p => p.showBorder ? 0 : '2px'};
   width: 100%;
   height: 100%;
   filter: drop-shadow(0 0 8px ${p => p.theme.card.shadow});
@@ -20,14 +21,14 @@ const BorderShadow = styled.div<{ width?: string, height?: string }>`
   z-index: 0;
 `
 const Border = styled.div<{ showBorder: boolean }>`
-  width: 100%;
-  height: 100%;
-  padding: 2px;
-  background: ${p => p.showBorder ? p.theme.card.borderColor : 'transparent'};
+  width:  ${p => p.showBorder ? '100%' : 'calc(100% - 1px)'};
+  height:  ${p => p.showBorder ? '100%' : 'calc(100% - 1px)'};
+  padding: ${p => p.showBorder ? '2px' : 0};
+  background: ${p => p.color || p.theme.card.borderColor};
   clip-path: ${p => p.theme.card.borderClipPath};
   transition: all 0.5s;
 `
-const Content = styled.div<{ background: string, showBorder: boolean }>`
+const Content = styled.div<{ background: string }>`
   display: flex;
   position: relative;
   top: 2px;
@@ -52,10 +53,10 @@ interface CardProps {
 
 const Card = ({ children, background = DEFAULT_BG, showBorder = true, className }: CardProps) => (
   <Wrapper className={className}>
-    <BorderShadow>
+    <BorderShadow showBorder={showBorder}>
       <Border showBorder={showBorder} />
     </BorderShadow>
-    <Content background={background} showBorder={showBorder}>
+    <Content background={background}>
       {children}
     </Content>
   </Wrapper>

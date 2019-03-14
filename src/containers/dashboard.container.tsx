@@ -33,7 +33,7 @@ interface DashboardProps {
 }
 
 export default ({ tenants }: DashboardProps) => (
-  <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'tenantId') }}>
+  <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }}>
     {({ data, loading, error }) => {
       if (loading) {
         return <Loading />
