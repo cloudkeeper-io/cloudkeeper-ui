@@ -14,8 +14,8 @@ const colors = {
 const card = {
   background: 'transparent',
   borderColor: '#4FFAC5',
-  clipPath: getClipPath(34),
-  borderClipPath: getBorderClipPath(35, 1),
+  clipPath: getClipPath(40),
+  borderClipPath: getBorderClipPath(41, 1),
   shadow: 'rgba(79, 250, 197, 0.3)',
 }
 
@@ -48,13 +48,13 @@ const buttons = {
 }
 
 const tabs = {
-  clipPath: getClipPath(34),
-  borderClipPath: getBorderClipPath(35, 1),
+  clipPath: getClipPath(40),
+  borderClipPath: getBorderClipPath(41, 1),
   background: '#0F1222',
   active: '#142330',
   text: '#B9FFEC',
   activeText: '#B9FFEC',
-  tabListRight: '50px',
+  tabListRight: '60px',
 }
 
 export default {
