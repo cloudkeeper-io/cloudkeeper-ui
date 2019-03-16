@@ -64,7 +64,7 @@ export default class Login extends React.PureComponent<LoginProps> {
         <Logo />
         <MainCard>
           <Tabs
-            tabs={['Sing In', 'Sing Up']}
+            tabs={['Sign In', 'Sign Up']}
             selectedIndex={selectedTab}
             onChange={(i) => {
               if (i) {
