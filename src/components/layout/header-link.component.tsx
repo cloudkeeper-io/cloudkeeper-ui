@@ -12,7 +12,7 @@ const LinkContent = styled.div<{ active?: boolean, noPadding?: boolean }>`
   align-items: center;
   height: 60px;
   line-height: 60px;
-  padding: ${p => p.noPadding ? 0 : '0 16px'};
+  padding: ${p => (p.noPadding ? 0 : '0 16px')};
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;

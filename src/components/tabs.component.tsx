@@ -27,8 +27,8 @@ const TabButton = styled(Button)<{ active?: boolean }>`
     clip-path: ${p => p.theme.tabs.borderClipPath};
   }
   ${Button.Content} {
-    background: ${p => p.active ? p.theme.tabs.active : p.theme.tabs.background};
-    color: ${p => p.active ? p.theme.tabs.text : p.theme.tabs.activeText};
+    background: ${p => (p.active ? p.theme.tabs.active : p.theme.tabs.background)};
+    color: ${p => (p.active ? p.theme.tabs.text : p.theme.tabs.activeText)};
     clip-path: ${p => p.theme.tabs.clipPath};
     border-radius: 0 6px 0 0;
   }

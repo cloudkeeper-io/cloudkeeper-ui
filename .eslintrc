@@ -27,7 +27,6 @@
     "react/jsx-filename-extension": [1, {"extensions": [".tsx", ".jsx"]}],
     "@typescript-eslint/no-unused-vars": "error",
     "react/sort-comp": "off",
-    "no-confusing-arrow": "off",
     "operator-linebreak": "off",
     "react/destructuring-assignment": "warn",
     "import/prefer-default-export": "warn"

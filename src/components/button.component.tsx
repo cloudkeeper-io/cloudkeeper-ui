@@ -12,7 +12,7 @@ const Border = styled.div<{ disabled?: boolean }>`
   position: absolute;
   top: 0;
   padding: 2px;
-  background: ${p => p.disabled ? p.theme.buttons.primary.borderDisabled : p.theme.buttons.primary.borderColor};
+  background: ${p => (p.disabled ? p.theme.buttons.primary.borderDisabled : p.theme.buttons.primary.borderColor)};
   clip-path: ${p => p.theme.buttons.borderClipPath};
 `
 const Button = styled.button<{ loading?: boolean }>`
@@ -22,11 +22,11 @@ const Button = styled.button<{ loading?: boolean }>`
   position: relative;
   top: 1.5px;
   left: 2px;
-  background: ${p => p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.background};
+  background: ${p => (p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.background)};
   box-sizing: border-box;
   border-radius: ${p => p.theme.buttons.borderRadius};
   border: none;
-  color: ${p => p.disabled ? p.theme.buttons.primary.disabledText : p.theme.buttons.primary.color};
+  color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.theme.buttons.primary.color)};
   font-weight: 500;
   font-size: 16px;
   clip-path: ${p => p.theme.buttons.clipPath};
@@ -35,7 +35,7 @@ const Button = styled.button<{ loading?: boolean }>`
    outline: none;
   }
   &:hover {
-   background:  ${p => p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.active};
+   background:  ${p => (p.disabled ? p.theme.buttons.primary.disabled : p.theme.buttons.primary.active)};
   }
   &::-moz-focus-inner {
     border: 0;
