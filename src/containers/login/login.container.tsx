@@ -9,6 +9,7 @@ import SignUpForm from './components/sign-up-form.component'
 import Stars from '../../components/stars.component'
 import { User } from '../../models'
 import treeline from '../../components/treeline.svg'
+import { ReactComponent as SVGLogo } from './logo.svg'
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,6 +30,9 @@ const MainCard = styled(Card)`
   ${Card.Content} {
     display: block;
   }
+`
+const Logo = styled(SVGLogo)`
+  margin-bottom: 30px;
 `
 const Threes = styled.div`
   position: absolute;
@@ -57,6 +61,7 @@ export default class Login extends React.PureComponent<LoginProps> {
       <Wrapper>
         <Stars />
         <Threes />
+        <Logo />
         <MainCard>
           <Tabs
             tabs={['Sing In', 'Sing Up']}
@@ -70,8 +75,7 @@ export default class Login extends React.PureComponent<LoginProps> {
               this.setState({ selectedTab: i })
             }}
           />
-          {selectedTab === 0 && <LoginForm user={user} /> as any}
-          {selectedTab === 1 && <SignUpForm user={user} />}
+          {selectedTab ? <SignUpForm user={user} /> : <LoginForm user={user} />}
         </MainCard>
       </Wrapper>
     )

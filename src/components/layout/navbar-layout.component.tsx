@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { History } from 'history'
-import { withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import HeaderLink from './header-link.component'
 import ErrorContainer from '../../containers/error.container'
@@ -8,7 +8,7 @@ import { User } from '../../models'
 import { Wrapper, HeaderWrapper, Header, PageWrapper, PageContent, Flex } from './navbar-layout.styles'
 import { ThemeConsumer } from '../../contexts'
 
-interface NavbarLayoutProps {
+interface NavbarLayoutProps extends RouteComponentProps{
   history: History
   user: User
   background?: string
@@ -18,8 +18,7 @@ interface NavbarLayoutProps {
 class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
   public state = { hasError: false }
 
-  public componentDidCatch(error: Error) {
-    console.log(error)
+  public componentDidCatch() {
     this.setState({ hasError: true })
   }
 
@@ -64,4 +63,4 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
   }
 }
 
-export default withRouter(NavbarLayout as any) as any
+export default withRouter(NavbarLayout) as any
