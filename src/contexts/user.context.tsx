@@ -106,7 +106,8 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     } catch (e) {
       console.log('SignOut Error')
     } finally {
-      localStorage.clear()
+      localStorage.setItem(SESSION_KEY, '')
+      localStorage.setItem('apollo-cache-persist', '')
     }
 
     history.push('/')
