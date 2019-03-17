@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
 import { transparentize } from 'polished'
 
-import Icon, { StyledIcon } from '../icon.component'
+import Icon from '../icon.component'
 
 const LinkContent = styled.div<{ active?: boolean, noPadding?: boolean }>`
   position: relative;
@@ -18,13 +18,13 @@ const LinkContent = styled.div<{ active?: boolean, noPadding?: boolean }>`
   cursor: pointer;
   filter: blur(0.25px);
   overflow: visible;
-  transition: background-color 0.3s;
+  transition: background-color 0.5s;
   text-transform: uppercase;
   white-space: nowrap;
   &:focus {
     outline: none;
   }
-  ${StyledIcon} {
+  ${Icon.Wrapper} {
     filter: ${p => `drop-shadow(0px 0px 2px ${transparentize(p.active ? 0.15 : 0.85, p.theme.colors.icon)})`};
   }
 `

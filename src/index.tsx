@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from 'history'
 import { ApolloProvider } from 'react-apollo'
 
 import RootContainer from './containers/root.container'
@@ -9,7 +9,7 @@ import { ThemeProvider, UserProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
 import './icons.config'
 
-const history = createHistory()
+const history = createBrowserHistory()
 
 ReactDOM.render((
   <UserProvider history={history}>

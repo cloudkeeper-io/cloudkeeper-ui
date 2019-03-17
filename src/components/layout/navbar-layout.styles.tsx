@@ -31,7 +31,6 @@ export const PageWrapper = styled.div`
 export const PageContent = styled.div`
    margin-top: 60px;
    width: 100%;
-   transition: 0.5s all;
    @media (max-width: 800px) {
      margin-top: 60px;
      width: 100%;

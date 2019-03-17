@@ -13,6 +13,6 @@ export default class extends React.PureComponent<LoadingProps> {
   }
 
   public render() {
-    return <Loading {...this.props} />
+    return <Loading height="calc(100vh - 60px)" {...this.props} />
   }
 }

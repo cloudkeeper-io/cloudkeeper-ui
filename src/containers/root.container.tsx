@@ -7,7 +7,6 @@ import isEmpty from 'lodash/isEmpty'
 import { User } from '../models'
 import NavbarLayout from '../components/layout/navbar-layout.component'
 import LoadingPage from '../components/loading-page.component'
-import Loading from '../components/loading.component'
 import { tenantsQuery } from '../queries'
 
 const SetupTenant = lazy(() => import('./setup-tenant.container'))
@@ -27,7 +26,7 @@ const getRoutes = (user: User) => {
       <Query query={tenantsQuery}>
         {({ data, loading, error }) => {
           if (loading) {
-            return <Loading />
+            return <LoadingPage />
           }
 
           if (error) {

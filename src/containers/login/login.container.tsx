@@ -21,8 +21,14 @@ const Wrapper = styled.div`
   min-height: 100vh;
   margin-top: -60px;
   padding: 0 20px;
-  background: linear-gradient(180deg, #0E0C1F -0.31%, #112531 100%);
+  background: ${p => p.theme.colors.backgroundGradient};
   background-size: contain;
+`
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -100px;
 `
 const MainCard = styled(Card)`
   width: 450px;
@@ -32,9 +38,11 @@ const MainCard = styled(Card)`
   }
 `
 const Logo = styled(SVGLogo)`
+  fill: ${p => p.theme.colors.icon};
   margin-bottom: 30px;
+  z-index: 2;
 `
-const Threes = styled.div`
+const Trees = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
@@ -60,23 +68,25 @@ export default class Login extends React.PureComponent<LoginProps> {
     return (
       <Wrapper>
         <Stars />
-        <Threes />
-        <Logo />
-        <MainCard>
-          <Tabs
-            tabs={['Sign In', 'Sign Up']}
-            selectedIndex={selectedTab}
-            onChange={(i) => {
-              if (i) {
-                history.push('/sign-up')
-              } else {
-                history.push('/')
-              }
-              this.setState({ selectedTab: i })
-            }}
-          />
-          {selectedTab ? <SignUpForm user={user} /> : <LoginForm user={user} />}
-        </MainCard>
+        <Trees />
+        <Content>
+          <Logo />
+          <MainCard>
+            <Tabs
+              tabs={['Sign In', 'Sign Up']}
+              selectedIndex={selectedTab}
+              onChange={(i) => {
+                if (i) {
+                  history.push('/sign-up')
+                } else {
+                  history.push('/')
+                }
+                this.setState({ selectedTab: i })
+              }}
+            />
+            {selectedTab ? <SignUpForm user={user} /> : <LoginForm user={user} />}
+          </MainCard>
+        </Content>
       </Wrapper>
     )
   }

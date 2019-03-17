@@ -3,6 +3,7 @@ import { darken } from 'polished'
 const colors = {
   primary: '#4A90E2',
   background: '#F8F8F8',
+  backgroundGradient: 'linear-gradient(180deg, #F8F8F8 60px, #4A90E2 100%)',
   text: '#4A4A4A',
   icon: '#4A90E2',
   activeText: '#FFFFFF',

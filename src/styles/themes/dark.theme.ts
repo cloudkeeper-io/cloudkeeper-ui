@@ -3,6 +3,7 @@ import { getClipPath, getBorderClipPath } from '../../utils'
 const colors = {
   primary: '#349884',
   background: '#0E0B20',
+  backgroundGradient: 'linear-gradient(180deg, #0E0B20 0, #112531 100%)',
   text: '#B9FFEC',
   icon: '#B9FFEC',
   activeText: '#B9FFEC',

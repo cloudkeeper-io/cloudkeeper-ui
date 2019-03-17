@@ -30,7 +30,7 @@ const Button = styled.button<{ loading?: boolean }>`
   font-weight: 500;
   font-size: 16px;
   clip-path: ${p => p.theme.buttons.clipPath};
-  transition: 0.5s all;
+  transition: 0.5s background;
   &:focus {
    outline: none;
   }
