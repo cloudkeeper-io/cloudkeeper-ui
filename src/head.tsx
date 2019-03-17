@@ -9,7 +9,7 @@ interface HeadProps {
 export default memo(withTheme(({ theme }: HeadProps) => (
   <Helmet>
     <title>Cloud Keeper</title>
-    <meta name="theme-color" content={theme.colors.background} />
+    <meta name="theme-color" content={theme.colors.background} data-react-helmet="true" />
     <link rel="shortcut icon" href={theme.favicon} />
   </Helmet>
 )))
