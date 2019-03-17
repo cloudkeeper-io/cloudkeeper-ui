@@ -1,9 +1,10 @@
-import { darken } from 'polished'
+import { darken, transparentize } from 'polished'
 
 const colors = {
   primary: '#4A90E2',
   background: '#F8F8F8',
-  backgroundGradient: 'linear-gradient(180deg, #F8F8F8 60px, #4A90E2 100%)',
+  backgroundGradient: 'linear-gradient(180deg, #F8F8F8 60px, #C8DDF6 100%)',
+  borderColor: '#4A90E2',
   text: '#4A4A4A',
   icon: '#4A90E2',
   activeText: '#FFFFFF',
@@ -17,6 +18,8 @@ const card = {
   clipPath: 'none',
   shadow: colors.shadow,
   borderRadius: '6px',
+  showBorder: false,
+  borderColor: '#FFFFFF',
 }
 
 const dataCard = {
@@ -25,8 +28,9 @@ const dataCard = {
 
 const input = {
   background: '#FFFFFF',
-  color: '#4A90E2',
-  border: '#4A90E2',
+  color: colors.primary,
+  border: colors.borderColor,
+  placeholder: transparentize(0.4, colors.primary),
 }
 
 const buttons = {
@@ -54,11 +58,26 @@ const tabs = {
   activeText: '#4A4A4A',
 }
 
+const select = {
+  color: colors.text,
+  listBackground: colors.background,
+  focusedListBackground: transparentize(0.7, colors.primary),
+  selectedListBackground: transparentize(0.4, colors.primary),
+}
+
+const login = {
+  treesOpacity: 0,
+  particlesColor: colors.primary,
+}
+
 export default {
+  name: 'light',
   colors,
   card,
   dataCard,
   input,
   buttons,
   tabs,
+  select,
+  login,
 }

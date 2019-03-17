@@ -1,5 +1,5 @@
 /* eslint-disable react/sort-comp,react/no-unused-state */
-import * as React from 'react'
+import React from 'react'
 import { History } from 'history'
 import { ApolloClient } from 'apollo-client'
 import jwtDecode from 'jwt-decode'

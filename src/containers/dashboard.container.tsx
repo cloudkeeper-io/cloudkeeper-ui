@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import * as React from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import { Query } from 'react-apollo'
 import get from 'lodash/get'

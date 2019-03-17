@@ -1,9 +1,12 @@
+import { mix, transparentize } from 'polished'
+
 import { getClipPath, getBorderClipPath } from '../../utils'
 
 const colors = {
-  primary: '#349884',
+  primary: '#B9FFEC',
   background: '#0E0B20',
   backgroundGradient: 'linear-gradient(180deg, #0E0B20 0, #112531 100%)',
+  borderColor: '#4FFAC5',
   text: '#B9FFEC',
   icon: '#B9FFEC',
   activeText: '#B9FFEC',
@@ -18,6 +21,7 @@ const card = {
   clipPath: getClipPath(40),
   borderClipPath: getBorderClipPath(41, 1),
   shadow: colors.shadow,
+  showBorder: true,
 }
 
 const dataCard = {
@@ -26,8 +30,9 @@ const dataCard = {
 
 const input = {
   background: 'transparent',
-  color: '#B9FFEC',
-  border: '#B9FFEC',
+  color: colors.primary,
+  border: colors.borderColor,
+  placeholder: transparentize(0.4, colors.primary),
 }
 
 const buttons = {
@@ -39,7 +44,7 @@ const buttons = {
   },
   primary: {
     background: '#142330',
-    active: '#293b53',
+    active: mix(0.85, '#142330', '#B9FFEC'),
     color: '#B9FFEC',
     disabled: '#374856',
     borderDisabled: '#374856',
@@ -61,11 +66,26 @@ const tabs = {
   tabListRight: '60px',
 }
 
+const select = {
+  color: colors.primary,
+  listBackground: '#142330',
+  focusedListBackground: transparentize(0.7, colors.primary),
+  selectedListBackground: transparentize(0.4, colors.primary),
+}
+
+const login = {
+  treesOpacity: 1,
+  particlesColor: '#FFFFFF',
+}
+
 export default {
+  name: 'dark',
   colors,
   card,
   dataCard,
   input,
   buttons,
   tabs,
+  select,
+  login,
 }

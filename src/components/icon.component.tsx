@@ -19,6 +19,4 @@ const Icon = ({ size = 'lg', children, ...props }: IconProps) => (
   </StyledIcon>
 )
 
-Icon.Wrapper = StyledIcon
-
-export default Icon
+export default styled(Icon)``

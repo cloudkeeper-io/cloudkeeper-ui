@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import { History } from 'history'
 
@@ -8,8 +8,8 @@ import LoginForm from './components/login-form.component'
 import SignUpForm from './components/sign-up-form.component'
 import Stars from '../../components/stars.component'
 import { User } from '../../models'
-import treeline from '../../components/treeline.svg'
-import { ReactComponent as SVGLogo } from './logo.svg'
+import treeline from './images/treeline.svg'
+import { ReactComponent as SVGLogo } from './images/logo.svg'
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,6 +32,7 @@ const Content = styled.div`
 `
 const MainCard = styled(Card)`
   width: 450px;
+  max-width: 90vw;
   min-height: 300px;
   ${Card.Content} {
     display: block;
@@ -48,6 +49,7 @@ const Trees = styled.div`
   width: 100%;
   background: url("${treeline}") center bottom no-repeat;
   background-size: contain;
+  opacity: ${p => p.theme.login.treesOpacity};
   pointer-events: none;
 `
 

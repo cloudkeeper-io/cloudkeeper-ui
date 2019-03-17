@@ -1,6 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import { Field as FormField } from 'react-final-form'
+
+import Error from './error-message.components'
 
 const StyledInput = styled.input`
   background: transparent !important;
@@ -26,18 +28,20 @@ const StyledInput = styled.input`
     -webkit-text-fill-color: ${p => p.theme.input.color} !important;
     transition: background-color 999999999s ease-in-out 0s;
   }
+  ::placeholder {
+    color: ${p => p.theme.input.placeholder};
+  }
 `
 const InputWrapper = styled.div`
   width: 100%;
   margin-bottom: 10px;
   min-height: 77px;
 `
-const ErrorMessage = styled.div`
+const ErrorMessage = styled(Error)`
   font-size: 12px;
   line-height: 12px;
   margin: 5px 0 0 5px;
   color: #ff1744;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 `
 
 interface FieldProps {

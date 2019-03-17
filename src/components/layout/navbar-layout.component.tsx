@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { History } from 'history'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 

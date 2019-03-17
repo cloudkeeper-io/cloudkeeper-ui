@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 
 const Wrapper = styled.div<{ width?: string, height?: string }>`
@@ -8,8 +8,8 @@ const Wrapper = styled.div<{ width?: string, height?: string }>`
 `
 const BorderShadow = styled.div<{ showBorder?: boolean }>`
   position: absolute;
-  top: ${p => (p.showBorder ? 0 : '2px')};
-  left: ${p => (p.showBorder ? 0 : '2px')};
+  top: ${p => (p.showBorder || p.theme.card.showBorder ? 0 : '2px')};
+  left: ${p => (p.showBorder || p.theme.card.showBorder ? 0 : '2px')};
   width: 100%;
   height: 100%;
   filter: drop-shadow(0 0 8px ${p => p.theme.card.shadow});
@@ -17,10 +17,11 @@ const BorderShadow = styled.div<{ showBorder?: boolean }>`
   z-index: 0;
 `
 const Border = styled.div<{ showBorder: boolean }>`
-  width:  ${p => (p.showBorder ? '100%' : 'calc(100% - 1px)')};
-  height:  ${p => (p.showBorder ? '100%' : 'calc(100% - 1px)')};
-  padding: ${p => (p.showBorder ? '2px' : 0)};
-  background: ${p => p.color || p.theme.card.borderColor};
+  width:  ${p => (p.showBorder || p.theme.card.showBorder ? '100%' : 'calc(100% - 1px)')};
+  height:  ${p => (p.showBorder || p.theme.card.showBorder ? '100%' : 'calc(100% - 1px)')};
+  padding: ${p => (p.showBorder || p.theme.card.showBorder ? '2px' : 0)};
+  background: ${p => p.theme.card.borderColor};
+  border-radius: ${p => p.theme.card.borderRadius};
   clip-path: ${p => p.theme.card.borderClipPath};
 `
 const Content = styled.div<{ background?: string }>`
@@ -46,10 +47,10 @@ interface CardProps {
   cardClassName?: string
 }
 
-const Card = ({ children, background, showBorder = true, className }: CardProps) => (
+const Card = ({ children, background, showBorder, className }: CardProps) => (
   <Wrapper className={className}>
     <BorderShadow showBorder={showBorder}>
-      <Border showBorder={showBorder} />
+      <Border showBorder={showBorder!} />
     </BorderShadow>
     <Content background={background}>
       {children}

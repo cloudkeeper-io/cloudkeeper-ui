@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 
 import { Form } from 'react-final-form'
-import Field from '../../../components/field.components'
+import Field from '../../../components/form/field.components'
 import { User } from '../../../models'
 import { FormContent, ServerError, StyledForm, SubmitButton } from './login-components.styles'
 

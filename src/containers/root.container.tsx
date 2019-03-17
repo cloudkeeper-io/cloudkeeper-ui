@@ -9,7 +9,7 @@ import NavbarLayout from '../components/layout/navbar-layout.component'
 import LoadingPage from '../components/loading-page.component'
 import { tenantsQuery } from '../queries'
 
-const SetupTenant = lazy(() => import('./setup-tenant.container'))
+const SetupTenant = lazy(() => import('./setup-tenant/setup-tenant.container'))
 const Dashboard = lazy(() => import('./dashboard.container'))
 const Login = lazy(() => import('./login/login.container'))
 const Error = lazy(() => import('./error.container'))

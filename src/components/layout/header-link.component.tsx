@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
@@ -24,7 +24,7 @@ const LinkContent = styled.div<{ active?: boolean, noPadding?: boolean }>`
   &:focus {
     outline: none;
   }
-  ${Icon.Wrapper} {
+  ${Icon} {
     filter: ${p => `drop-shadow(0px 0px 2px ${transparentize(p.active ? 0.15 : 0.85, p.theme.colors.icon)})`};
   }
 `

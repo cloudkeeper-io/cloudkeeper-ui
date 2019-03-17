@@ -33,7 +33,7 @@ const Button = styled.button<{ loading?: boolean }>`
   font-size: 16px;
   clip-path: ${p => p.theme.buttons.clipPath};
   transition: 0.5s background;
-  ${Icon.Wrapper} {
+  ${Icon} {
     color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.theme.buttons.primary.color)};
   }
   &:focus {

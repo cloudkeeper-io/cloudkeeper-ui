@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
-import styled from 'styled-components/macro'
+import styled, { withTheme } from 'styled-components/macro'
 import Particles from 'react-particles-js'
 
-const params = {
+const getParams = (color: string) => ({
   particles: {
     number: {
       value: Math.max(window.outerWidth / 2, window.outerHeight / 2),
@@ -12,7 +12,7 @@ const params = {
       },
     },
     color: {
-      value: '#ffffff',
+      value: color,
     },
     shape: {
       type: 'circle',
@@ -106,7 +106,7 @@ const params = {
     },
   },
   retina_detect: true,
-} as any
+}) as any
 
 const Stars = styled(Particles)`
   position: absolute;
@@ -116,4 +116,10 @@ const Stars = styled(Particles)`
   width: 100%;
 `
 
-export default memo(({ ...props }) => <Stars params={params} {...props} />)
+interface StarsProps {
+  theme: any
+}
+
+export default withTheme(memo(({ theme, ...props }: StarsProps) => (
+  <Stars params={getParams(theme.login.particlesColor)} {...props} />
+)))
