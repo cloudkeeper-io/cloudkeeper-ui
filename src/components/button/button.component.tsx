@@ -1,10 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components/macro'
 
-const Wrapper = styled.div`
-  width: 200px;
-  height: 50px;
+import Icon from '../icon.component'
+
+const Wrapper = styled.div<{ width: string, height: string}>`
   position: relative;
+  width: ${p => p.width};
+  height: ${p => p.height};
 `
 const Border = styled.div<{ disabled?: boolean }>`
   width: 100%;
@@ -31,6 +33,9 @@ const Button = styled.button<{ loading?: boolean }>`
   font-size: 16px;
   clip-path: ${p => p.theme.buttons.clipPath};
   transition: 0.5s background;
+  ${Icon.Wrapper} {
+    color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.theme.buttons.primary.color)};
+  }
   &:focus {
    outline: none;
   }
@@ -76,11 +81,15 @@ const Button = styled.button<{ loading?: boolean }>`
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: JSX.Element | string
   className?: string,
+  width?: string,
+  height?: string,
   loading?: boolean
 }
 
-const ButtonComponent = ({ children, className, disabled, ...props }: ButtonProps) => (
-  <Wrapper className={className}>
+const ButtonComponent = (
+  { children, className, width = '200px', height = '50px', disabled, ...props }: ButtonProps,
+) => (
+  <Wrapper className={className} width={width} height={height}>
     <Border disabled={disabled} />
     <Button {...props} disabled={disabled}>{children}</Button>
   </Wrapper>

@@ -1,0 +1,42 @@
+import React from 'react'
+import styled from 'styled-components/macro'
+import { mix } from 'polished'
+import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
+
+import Icon from '../icon.component'
+
+const Wrapper = styled.button<{ size: string}>`
+  min-width: ${p => p.size};
+  max-width: ${p => p.size};
+  min-height: ${p => p.size};
+  max-height: ${p => p.size};
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: ${p => p.theme.buttons.icon.background};
+  box-shadow: 0 0 4px ${p => p.theme.colors.shadow};
+  transition: 0.5s box-shadow, 0.5s background;
+  outline: none;
+  &:hover {
+    background: ${p => mix(0.95, p.theme.buttons.icon.background, p.theme.colors.primary)};
+    box-shadow: 0 0 8px ${p => p.theme.colors.shadow};
+  }
+`
+
+interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string,
+  size?: string,
+  icon?: IconProp,
+  iconSize?: SizeProp,
+}
+
+const IconButton = ({ className, icon, size = '50px', iconSize = '2x', ...props }: IconButtonProps) => (
+  <Wrapper className={className} size={size} {...props}>
+    <Icon size={iconSize} icon={icon!} />
+  </Wrapper>
+)
+
+IconButton.Wrapper = Wrapper
+IconButton.Icon = Icon
+
+export default IconButton

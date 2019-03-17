@@ -9,13 +9,13 @@ const colors = {
   activeText: '#FFFFFF',
   disabled: '#ababab',
   spinner: '#4A90E2',
-  shadow: 'rgba(210, 210, 210, 0.5)',
+  shadow: 'rgba(74, 144, 226, 0.3)',
 }
 
 const card = {
   background: '#FFFFFF',
   clipPath: 'none',
-  shadow: 'rgba(74, 144, 226, 0.3)',
+  shadow: colors.shadow,
   borderRadius: '6px',
 }
 
@@ -41,6 +41,9 @@ const buttons = {
     disabled: 'rgba(171, 171, 171, 0.1)',
     borderDisabled: 'transparent',
     disabledText: '#ababab',
+  },
+  icon: {
+    background: '#FFFFFF',
   },
 }
 

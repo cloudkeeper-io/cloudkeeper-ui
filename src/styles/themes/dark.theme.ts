@@ -17,7 +17,7 @@ const card = {
   borderColor: '#4FFAC5',
   clipPath: getClipPath(40),
   borderClipPath: getBorderClipPath(41, 1),
-  shadow: 'rgba(79, 250, 197, 0.3)',
+  shadow: colors.shadow,
 }
 
 const dataCard = {
@@ -45,6 +45,9 @@ const buttons = {
     borderDisabled: '#374856',
     disabledText: '#ababab',
     borderColor: '#4FFAC5',
+  },
+  icon: {
+    background: '#142330',
   },
 }
 

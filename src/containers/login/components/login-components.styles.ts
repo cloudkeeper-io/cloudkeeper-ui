@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro'
-import Button from '../../../components/button.component'
+import Button from '../../../components/button/button.component'
 
 export const StyledForm = styled.form`
   width: 100%;
