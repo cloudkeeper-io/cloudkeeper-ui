@@ -1,15 +1,24 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import isBoolean from 'lodash/isBoolean'
 
 const Wrapper = styled.div<{ width?: string, height?: string }>`
   position: relative;
   max-width: 100%;
   z-index: 0;
 `
+
+const isBorderVisible = ((p: any) => {
+  if (isBoolean(p.showBorder)) {
+    return p.showBorder
+  }
+  return p.theme.card.showBorder
+})
+
 const BorderShadow = styled.div<{ showBorder?: boolean }>`
   position: absolute;
-  top: ${p => (p.showBorder || p.theme.card.showBorder ? 0 : '2px')};
-  left: ${p => (p.showBorder || p.theme.card.showBorder ? 0 : '2px')};
+  top: ${p => (isBorderVisible(p) ? 0 : '2px')};
+  left: ${p => (isBorderVisible(p) ? 0 : '2px')};
   width: 100%;
   height: 100%;
   filter: drop-shadow(0 0 8px ${p => p.theme.card.shadow});
@@ -17,9 +26,9 @@ const BorderShadow = styled.div<{ showBorder?: boolean }>`
   z-index: 0;
 `
 const Border = styled.div<{ showBorder: boolean }>`
-  width:  ${p => (p.showBorder || p.theme.card.showBorder ? '100%' : 'calc(100% - 1px)')};
-  height:  ${p => (p.showBorder || p.theme.card.showBorder ? '100%' : 'calc(100% - 1px)')};
-  padding: ${p => (p.showBorder || p.theme.card.showBorder ? '2px' : 0)};
+  width:  ${p => (isBorderVisible(p) ? '100%' : 'calc(100% - 1px)')};
+  height:  ${p => (isBorderVisible(p) ? '100%' : 'calc(100% - 1px)')};
+  padding: ${p => (isBorderVisible(p) ? '2px' : 0)};
   background: ${p => p.theme.card.borderColor};
   border-radius: ${p => p.theme.card.borderRadius};
   clip-path: ${p => p.theme.card.borderClipPath};

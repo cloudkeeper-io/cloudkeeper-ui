@@ -72,6 +72,7 @@ const login = {
 
 export default {
   name: 'light',
+  favicon: 'light-favicon.png',
   colors,
   card,
   dataCard,

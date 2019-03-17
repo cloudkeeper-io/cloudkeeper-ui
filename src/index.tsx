@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { createBrowserHistory } from 'history'
 import { ApolloProvider } from 'react-apollo'
 
+import Head from './head'
 import RootContainer from './containers/root.container'
 import GlobalStyles from './styles/global.styles'
 import { ThemeProvider, UserProvider } from './contexts'
@@ -17,6 +18,7 @@ ReactDOM.render((
       <ApolloProvider client={client}>
         <ThemeProvider>
           <>
+            <Head />
             <GlobalStyles />
             <RootContainer user={user} history={history} />
           </>

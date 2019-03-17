@@ -24,8 +24,7 @@ interface ReducerState {
 
 const initialState = {
   state: {
-    // @ts-ignore
-    theme: themes[localStorage.getItem(THEME_KEY)] || themes.dark,
+    theme: (themes as any)[localStorage.getItem(THEME_KEY)!] || themes.dark,
   },
 } as ReducerState
 

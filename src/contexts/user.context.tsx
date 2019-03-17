@@ -71,7 +71,7 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     this.setUser({ loading: true })
     try {
       const session = await postLogin(email, password)
-      localStorage.setItem(BACK_URL_KEY, '')
+      localStorage.removeItem(BACK_URL_KEY)
       await this.setSession(session)
       history.push(backUrl || '/')
     } finally {
@@ -84,7 +84,7 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     this.setUser({ loading: true })
     try {
       const session = await postSignUp(email, password)
-      localStorage.setItem(BACK_URL_KEY, '')
+      localStorage.removeItem(BACK_URL_KEY)
       await this.setSession(session)
       history.push('/')
     } finally {
@@ -99,15 +99,15 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     try {
       if (session) {
         this.setUser({ session: null })
-        localStorage.setItem(SESSION_KEY, '')
+        localStorage.removeItem(SESSION_KEY)
         // TODO: reset store
         await this.client.resetStore()
       }
     } catch (e) {
       console.log('SignOut Error')
     } finally {
-      localStorage.setItem(SESSION_KEY, '')
-      localStorage.setItem('apollo-cache-persist', '')
+      localStorage.removeItem(SESSION_KEY)
+      localStorage.removeItem('apollo-cache-persist')
     }
 
     history.push('/')
