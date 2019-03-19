@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import StepsIndicator from '../../components/steps-indicator.component'
 import Step1 from './components/step1.component'
 import Step2 from './components/step2.component'
 import Step3 from './components/step3.component'
@@ -32,6 +33,7 @@ export default () => {
 
   return (
     <Wrapper>
+      <StepsIndicator steps={3} index={step - 1} onClick={i => setStep(i + 1)} />
       <StyledCard>
         <Content>
           {step === 1 && <Step1 code={STEP1_CODE} onForward={() => setStep(2)} />}

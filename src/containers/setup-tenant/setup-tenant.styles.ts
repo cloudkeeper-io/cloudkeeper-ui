@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   position: relative;
   align-items: center;
-  min-height: calc(100vh - 80px);;
+  min-height: calc(100vh - 80px);
   margin-top: -60px;
   padding: 60px 20px 20px 20px;
   background-size: contain;

@@ -23,7 +23,10 @@ const card = {
 }
 
 const dataCard = {
-  background: '#4A90E2',
+  background: '#FFFFFF',
+  axis: transparentize(0.5, colors.primary),
+  lines: colors.primary,
+  tooltipBackground: '#FFFFFF',
 }
 
 const input = {

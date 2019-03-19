@@ -1,12 +1,12 @@
 import React, { memo, useState } from 'react'
+import styled, { withTheme } from 'styled-components/macro'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime } from 'luxon'
-import styled from 'styled-components/macro'
 
 import { formatNumber } from '../../utils'
 import { useInterval } from '../../hooks'
 import Card from '../card.component'
-import Timer from '../timer.component'
+import StepIndicator from '../steps-indicator.component'
 
 interface InvocationsCardProps {
   invocations: number
@@ -16,7 +16,8 @@ interface InvocationsCardProps {
     errors: number
     dateTime: string
   }>
-  className?: string
+  className?: string,
+  theme: any,
 }
 
 const StyledCard = styled(Card)`
@@ -41,15 +42,18 @@ const Header = styled.div`
 `
 const Value = styled.div`
   font-size: 48px;
+  color: ${p => p.theme.dataCard.lines}
 `
 const Description = styled.div`
   width: 100%;
   font-size: 9px;
+  color: ${p => p.theme.dataCard.lines}
 `
 const StyledTooltip = Tooltip as any
 
-export default memo(({ invocations, errors, dataPoints, className }: InvocationsCardProps) => {
+const DataCard = ({ invocations, errors, dataPoints, theme, className }: InvocationsCardProps) => {
   const [count, setCount] = useState(1)
+  const { dataCard: colors } = theme
 
   useInterval(() => {
     setCount(count + 1)
@@ -59,33 +63,33 @@ export default memo(({ invocations, errors, dataPoints, className }: Invocations
     <StyledCard showBorder={false} className={className}>
       <Header>
         <Value>{count % 2 ? invocations : errors}</Value>
-        <Timer color="#B9FFEC" size={48} key={count} />
+        <StepIndicator index={(count + 1) % 2} steps={2} onClick={i => setCount(i - 1)} />
         <Description>{count % 2 ? 'Lambda Executions' : 'Errors'}</Description>
       </Header>
       <ResponsiveContainer>
         <LineChart data={dataPoints} margin={{ top: 20, right: 30, left: -5, bottom: 30 }}>
           <XAxis
             dataKey="dateTime"
-            stroke="#B9FFEC"
+            stroke={colors.axis}
             tick={{ fontSize: 12 }}
             tickLine={false}
             tickFormatter={x => DateTime.fromISO(x).toFormat('HH:mm')}
           />
           <YAxis
-            stroke="#B9FFEC"
+            stroke={colors.axis}
             tick={{ fontSize: 12 }}
             tickLine={false}
             type="number"
             padding={{ top: 20, bottom: 5 }}
             tickFormatter={x => formatNumber(x)}
           />
-          <CartesianGrid stroke="#B9FFEC" strokeOpacity={0.35} />
-          {count % 2 && <Line type="linear" dataKey="invocations" stroke="#FFFFFF" dot={false} />}
-          {!(count % 2) && <Line type="linear" dataKey="errors" stroke="pink" fill="pink" dot={false} />}
+          <CartesianGrid stroke={colors.axis} strokeOpacity={0.35} />
+          {count % 2 && <Line type="linear" dataKey="invocations" stroke={colors.lines} dot={false} />}
+          {!(count % 2) && <Line type="linear" dataKey="errors" stroke={colors.lines} dot={false} />}
           <StyledTooltip
             wrapperStyle={{ opacity: 0.9 }}
-            contentStyle={{ background: '#0E0B20' }}
-            labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10, color: '#B9FFEC' }}
+            contentStyle={{ background: colors.tooltipBackground }}
+            labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10, color: colors.lines }}
             itemStyle={{ fontSize: 12, lineHeight: '12px' }}
             formatter={(value: string) => Number(value).toLocaleString()}
             labelFormatter={(value: string) => DateTime.fromISO(value).toFormat('d LLL HH:mm')}
@@ -94,4 +98,6 @@ export default memo(({ invocations, errors, dataPoints, className }: Invocations
       </ResponsiveContainer>
     </StyledCard>
   )
-})
+}
+
+export default memo(withTheme(DataCard))

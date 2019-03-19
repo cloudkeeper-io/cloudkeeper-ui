@@ -18,6 +18,13 @@ interface NavbarLayoutProps extends RouteComponentProps{
 class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
   public state = { hasError: false }
 
+  public componentDidUpdate(prevProps: Readonly<NavbarLayoutProps>) {
+    const { history: { location: { pathname } }, user: { session } } = this.props
+    if (prevProps.history.location.pathname !== pathname || session !== prevProps.user.session) {
+      this.setState({ hasError: false })
+    }
+  }
+
   public componentDidCatch() {
     this.setState({ hasError: true })
   }

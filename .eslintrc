@@ -28,6 +28,7 @@
     "@typescript-eslint/no-unused-vars": "error",
     "react/sort-comp": "off",
     "operator-linebreak": "off",
+    "react/no-did-update-set-state": "off",
     "react/destructuring-assignment": "warn",
     "import/prefer-default-export": "warn"
   }
