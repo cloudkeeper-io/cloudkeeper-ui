@@ -112,7 +112,7 @@ const Stars = styled(Particles)`
   position: absolute;
   top: 0;
   left: 0;
-  height: calc(100vh - 5px);
+  height: calc(100vh - 65px);
   width: 100%;
 `
 

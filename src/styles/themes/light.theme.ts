@@ -24,7 +24,7 @@ const card = {
 
 const dataCard = {
   background: '#FFFFFF',
-  axis: transparentize(0.5, colors.primary),
+  axis: transparentize(0.5, colors.text),
   lines: colors.primary,
   tooltipBackground: '#FFFFFF',
 }
@@ -76,6 +76,7 @@ const login = {
 export default {
   name: 'light',
   favicon: 'light-favicon.png',
+  font: 'Roboto',
   colors,
   card,
   dataCard,

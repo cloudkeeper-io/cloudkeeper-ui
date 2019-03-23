@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styled from 'styled-components/macro'
 
 import StepsIndicator from '../../components/steps-indicator.component'
 import Step1 from './components/step1.component'
@@ -28,12 +29,16 @@ const STEP2_CODE = `aws iam put-user-policy --user-name cloudkeeper-user
 `
 const STEP3_CODE = 'aws iam create-access-key --user-name cloudkeeper-user'
 
+const Indicator = styled(StepsIndicator)`
+  margin: 10px 0;
+`
+
 export default () => {
   const [step, setStep] = useState(1)
 
   return (
     <Wrapper>
-      <StepsIndicator steps={3} index={step - 1} onClick={i => setStep(i + 1)} />
+      <Indicator steps={3} index={step - 1} onClick={i => setStep(i + 1)} />
       <StyledCard>
         <Content>
           {step === 1 && <Step1 code={STEP1_CODE} onForward={() => setStep(2)} />}

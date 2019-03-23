@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react'
-import { Route, Router, Switch } from 'react-router-dom'
+import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { History } from 'history'
 import { Query } from 'react-apollo'
 import isEmpty from 'lodash/isEmpty'
@@ -50,7 +50,7 @@ const getRoutes = (user: User) => {
                 <Settings />
               </Route>
               <Route>
-                <Error />
+                <Redirect to="/" />
               </Route>
             </Switch>
           )

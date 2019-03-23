@@ -18,9 +18,8 @@ const Wrapper = styled.div`
   position: relative;
   align-items: center;
   height: 100%;
-  min-height: 100vh;
-  margin-top: -60px;
-  padding: 0 20px;
+  min-height: calc(100vh - 180px);
+  padding: 0 20px 60px 20px;
   background: ${p => p.theme.colors.backgroundGradient};
   background-size: contain;
 `
@@ -28,7 +27,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -100px;
+  padding-bottom: 60px;
 `
 const MainCard = styled(Card)`
   width: 450px;

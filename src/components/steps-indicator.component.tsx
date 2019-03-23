@@ -7,12 +7,12 @@ import noop from 'lodash/noop'
 
 const Wrapper = styled.div`
   display: flex;
+  align-items: center;
 `
 const Step = styled.div<{ active: boolean, cursor: string }>`
   width: ${p => (p.active ? '35px' : '20px')};
   height: 2px;
   border-radius: 1px;
-  //margin: 0 5px;
   padding: 10px 7px;
   transition: 0.5s width;
   cursor: ${p => p.cursor}
@@ -28,11 +28,12 @@ const StepLine = styled.div<{ active: boolean }>`
 interface StepsIndicatorProps {
   steps: number,
   index: number,
+  className?: string,
   onClick?: (index: number) => void,
 }
 
-export default ({ steps, index, onClick = noop }: StepsIndicatorProps) => (
-  <Wrapper>
+export default ({ steps, index, className, onClick = noop }: StepsIndicatorProps) => (
+  <Wrapper className={className}>
     {times(steps, i => (
       <Step key={i} active={i === index} onClick={() => onClick(i)} cursor={onClick === noop ? '' : 'pointer'}>
         <StepLine active={i === index} />

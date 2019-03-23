@@ -20,7 +20,7 @@ const Circle = styled.circle<{ time: number }>`
   animation: ${spinnerDash} ${p => `${p.time}s`} ease-in-out forwards;
   stroke-dasharray: 1,200;
   stroke-linecap: round;
-  stroke: ${props => props.color || props.theme.colors.spinner};
+  stroke: ${props => props.color || props.theme.colors.primary};
 `
 
 interface SpinnerProps {

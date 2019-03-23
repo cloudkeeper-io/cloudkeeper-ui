@@ -1,16 +1,18 @@
-import React, { memo, useState } from 'react'
+import React from 'react'
 import styled, { withTheme } from 'styled-components/macro'
+import { useTransition, animated } from 'react-spring'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime } from 'luxon'
 
 import { formatNumber } from '../../utils'
-import { useInterval } from '../../hooks'
+import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
 
 interface InvocationsCardProps {
   invocations: number
   errors: number
+  count: number,
   dataPoints: Array<{
     invocations: number
     errors: number
@@ -40,31 +42,56 @@ const Header = styled.div`
   margin-top: 20px;
   margin-bottom: 15px;
 `
-const Value = styled.div`
+const Value = styled(animated.div)`
+  position: relative;
+  min-height: 58px;
+  min-width: 1px;
   font-size: 48px;
-  color: ${p => p.theme.dataCard.lines}
+  color: ${p => p.theme.colors.text};
+  > div {
+    position: absolute;
+    will-change: transform, opacity;
+  }
 `
 const Description = styled.div`
+  position: relative;
   width: 100%;
   font-size: 9px;
-  color: ${p => p.theme.dataCard.lines}
+  min-height: 11px;
+  min-width: 1px;
+  color: ${p => p.theme.colors.text};
+  > div {
+    position: absolute;
+    will-change: transform, opacity;
+  }
 `
 const StyledTooltip = Tooltip as any
 
-const DataCard = ({ invocations, errors, dataPoints, theme, className }: InvocationsCardProps) => {
-  const [count, setCount] = useState(1)
+const DataCard = ({ invocations, errors, count, dataPoints, theme, className }: InvocationsCardProps) => {
+  const TABS_AMOUNT = 2
+  const [tab, setTab] = useSwitchTab(count, TABS_AMOUNT)
   const { dataCard: colors } = theme
 
-  useInterval(() => {
-    setCount(count + 1)
-  }, 10000)
+  const transitions = useTransition(tab, p => p, {
+    from: { opacity: 0, transform: 'translate3d(100%, 0, 0)' },
+    enter: { opacity: 1, transform: 'translate3d(0, 0. 0)' },
+    leave: { opacity: 0, transform: 'translate3d(-50%, 0, 0)' },
+  })
 
   return (
     <StyledCard showBorder={false} className={className}>
       <Header>
-        <Value>{count % 2 ? invocations : errors}</Value>
-        <StepIndicator index={(count + 1) % 2} steps={2} onClick={i => setCount(i - 1)} />
-        <Description>{count % 2 ? 'Lambda Executions' : 'Errors'}</Description>
+        <Value>
+          {transitions.map(({ props, key }) => (
+            <animated.div key={key} style={{ ...props }}>{tab === 0 ? invocations : errors}</animated.div>
+          ))}
+        </Value>
+        <StepIndicator index={tab} steps={TABS_AMOUNT} onClick={i => setTab(i)} />
+        <Description>
+          {transitions.map(({ props, key }) => (
+            <animated.div key={key} style={{ ...props }}>{tab === 0 ? 'Lambda Executions' : 'Errors'}</animated.div>
+          ))}
+        </Description>
       </Header>
       <ResponsiveContainer>
         <LineChart data={dataPoints} margin={{ top: 20, right: 30, left: -5, bottom: 30 }}>
@@ -84,8 +111,8 @@ const DataCard = ({ invocations, errors, dataPoints, theme, className }: Invocat
             tickFormatter={x => formatNumber(x)}
           />
           <CartesianGrid stroke={colors.axis} strokeOpacity={0.35} />
-          {count % 2 && <Line type="linear" dataKey="invocations" stroke={colors.lines} dot={false} />}
-          {!(count % 2) && <Line type="linear" dataKey="errors" stroke={colors.lines} dot={false} />}
+          {tab === 0 && <Line type="linear" dataKey="invocations" stroke={colors.lines} dot={false} />}
+          {tab !== 0 && <Line type="linear" dataKey="errors" stroke={colors.lines} dot={false} />}
           <StyledTooltip
             wrapperStyle={{ opacity: 0.9 }}
             contentStyle={{ background: colors.tooltipBackground }}
@@ -100,4 +127,4 @@ const DataCard = ({ invocations, errors, dataPoints, theme, className }: Invocat
   )
 }
 
-export default memo(withTheme(DataCard))
+export default withTheme(DataCard)

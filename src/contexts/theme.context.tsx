@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo, useReducer } from 'react'
 import { ThemeProvider as StyledProvider } from 'styled-components/macro'
 
 import themes from '../styles/themes'
@@ -42,8 +42,8 @@ const reducer = (state: ThemeProviderState, action: ThemeProviderAction) => {
   }
 }
 
-const ThemeProvider = React.memo(({ children }: ThemeProviderProps) => {
-  const [state, dispatch] = React.useReducer(reducer, initialState.state)
+const ThemeProvider = memo(({ children }: ThemeProviderProps) => {
+  const [state, dispatch] = useReducer(reducer, initialState.state)
 
   return (
     <ThemeContext.Provider value={{ state, dispatch }}>

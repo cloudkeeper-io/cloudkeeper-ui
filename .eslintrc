@@ -1,7 +1,7 @@
 {
   "extends": ["airbnb"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "react-hooks"],
   "env": {
     "browser": true
   },
@@ -26,9 +26,12 @@
     "object-curly-newline": ["error", {"consistent": true}],
     "react/jsx-filename-extension": [1, {"extensions": [".tsx", ".jsx"]}],
     "@typescript-eslint/no-unused-vars": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "react/sort-comp": "off",
     "operator-linebreak": "off",
     "react/no-did-update-set-state": "off",
+    "react/jsx-one-expression-per-line": "off",
     "react/destructuring-assignment": "warn",
     "import/prefer-default-export": "warn"
   }

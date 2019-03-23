@@ -84,6 +84,7 @@ const login = {
 export default {
   name: 'dark',
   favicon: 'dark-favicon.png',
+  font: 'Montserrat',
   colors,
   card,
   dataCard,

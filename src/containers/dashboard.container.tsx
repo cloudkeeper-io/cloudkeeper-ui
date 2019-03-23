@@ -1,5 +1,4 @@
-/* eslint-disable react/no-array-index-key */
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import { Query } from 'react-apollo'
 import get from 'lodash/get'
@@ -7,13 +6,18 @@ import last from 'lodash/last'
 
 import InvocationsCard from '../components/data-cards/invocations-card.component'
 import Loading from '../components/loading.component'
+import TimerComponent from '../components/timer.component'
 import { dashboardQuery } from '../queries'
 import { Tenant } from '../models'
+import { useInterval } from '../hooks'
+
 
 const Wrapper = styled.div`
   padding: 0 20px 20px 20px;
 `
 const Title = styled.div`
+  display: flex;
+  align-items: center;
   font-size: 18px;
   margin-bottom: 20px;
   filter: blur(0.25px);
@@ -27,34 +31,44 @@ const CardsWrapper = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   }
 `
+const Timer = styled(TimerComponent)`
+  margin-left: 10px;
+`
 
 interface DashboardProps {
   tenants: Tenant[]
 }
 
-export default ({ tenants }: DashboardProps) => (
-  <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }}>
-    {({ data, loading, error }) => {
-      if (loading) {
-        return <Loading />
-      }
+export default ({ tenants }: DashboardProps) => {
+  const [count, setCount] = useState(1)
 
-      if (error) {
-        throw error
-      }
+  useInterval(() => {
+    setCount(count + 1)
+  }, 10000)
 
-      const { dataPoints, invocations, errors } = data.dashboardData.last24Hours.totals
+  return (
+    <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }}>
+      {({ data, loading, error }) => {
+        if (loading) {
+          return <Loading />
+        }
 
-      return (
-        <Wrapper>
-          <Title>Last 24h</Title>
-          <CardsWrapper>
-            {Array(13).fill(1).map((d, i) => (
-              <InvocationsCard key={i} dataPoints={dataPoints} invocations={invocations} errors={errors} />
-            ))}
-          </CardsWrapper>
-        </Wrapper>
-      )
-    }}
-  </Query>
-)
+        if (error) {
+          throw error
+        }
+
+        const { dataPoints, invocations, errors } = data.dashboardData.last24Hours.totals
+
+        return (
+          <Wrapper>
+            <Title>Last 24h <Timer key={count} size={30} /> </Title>
+            <CardsWrapper>
+              <InvocationsCard count={count} dataPoints={dataPoints} invocations={invocations} errors={errors} />
+              <InvocationsCard count={count} dataPoints={dataPoints} invocations={invocations} errors={errors} />
+            </CardsWrapper>
+          </Wrapper>
+        )
+      }}
+    </Query>
+  )
+}
