@@ -5,7 +5,7 @@ export function useSwitchTab(trigger: any, tabsAmount: number, initialState = 0)
 
   useEffect(() => {
     setTab(currentTab + 1 >= tabsAmount ? 0 : currentTab + 1)
-  }, [trigger])
+  }, [tabsAmount, trigger])
 
   return [currentTab, setTab]
 }

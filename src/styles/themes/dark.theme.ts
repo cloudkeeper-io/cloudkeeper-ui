@@ -27,7 +27,7 @@ const card = {
 const dataCard = {
   background: 'linear-gradient(180deg, #129F7C -0.31%, #6F20A0 100%)',
   axis: '#B9FFEC',
-  lines: '#FFFFFF',
+  lines: '#B9FFEC',
   tooltipBackground: '#0E0B20',
 }
 

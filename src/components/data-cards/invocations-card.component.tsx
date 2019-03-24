@@ -1,23 +1,26 @@
 import React from 'react'
 import styled, { withTheme } from 'styled-components/macro'
-import { useTransition, animated } from 'react-spring'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime } from 'luxon'
+import map from 'lodash/map'
 
 import { formatNumber } from '../../utils'
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
+import AnimatedText from '../animated-text.component'
 
 interface InvocationsCardProps {
-  invocations: number
-  errors: number
-  count: number,
-  dataPoints: Array<{
+  data: {
     invocations: number
     errors: number
-    dateTime: string
-  }>
+    dataPoints: Array<{
+      invocations: number
+      errors: number
+      dateTime: string
+    }>
+  }
+  count: number,
   className?: string,
   theme: any,
 }
@@ -42,7 +45,7 @@ const Header = styled.div`
   margin-top: 20px;
   margin-bottom: 15px;
 `
-const Value = styled(animated.div)`
+const Value = styled(AnimatedText)`
   position: relative;
   min-height: 58px;
   min-width: 1px;
@@ -53,7 +56,7 @@ const Value = styled(animated.div)`
     will-change: transform, opacity;
   }
 `
-const Description = styled.div`
+const Description = styled(AnimatedText)`
   position: relative;
   width: 100%;
   font-size: 9px;
@@ -67,30 +70,22 @@ const Description = styled.div`
 `
 const StyledTooltip = Tooltip as any
 
-const DataCard = ({ invocations, errors, count, dataPoints, theme, className }: InvocationsCardProps) => {
+const DataCard = ({ data, count, theme, className }: InvocationsCardProps) => {
   const TABS_AMOUNT = 2
-  const [tab, setTab] = useSwitchTab(count, TABS_AMOUNT)
+  const { invocations, errors } = data
   const { dataCard: colors } = theme
-
-  const transitions = useTransition(tab, p => p, {
-    from: { opacity: 0, transform: 'translate3d(100%, 0, 0)' },
-    enter: { opacity: 1, transform: 'translate3d(0, 0. 0)' },
-    leave: { opacity: 0, transform: 'translate3d(-50%, 0, 0)' },
-  })
+  const [tab, setTab] = useSwitchTab(count, TABS_AMOUNT)
+  const dataPoints = map(data.dataPoints, x => ({ ...x, value: tab === 0 ? x.invocations : x.errors }))
 
   return (
     <StyledCard showBorder={false} className={className}>
       <Header>
         <Value>
-          {transitions.map(({ props, key }) => (
-            <animated.div key={key} style={{ ...props }}>{tab === 0 ? invocations : errors}</animated.div>
-          ))}
+          {tab === 0 ? invocations : errors}
         </Value>
         <StepIndicator index={tab} steps={TABS_AMOUNT} onClick={i => setTab(i)} />
         <Description>
-          {transitions.map(({ props, key }) => (
-            <animated.div key={key} style={{ ...props }}>{tab === 0 ? 'Lambda Executions' : 'Errors'}</animated.div>
-          ))}
+          {tab === 0 ? 'Lambda Executions' : 'Errors'}
         </Description>
       </Header>
       <ResponsiveContainer>
@@ -111,8 +106,7 @@ const DataCard = ({ invocations, errors, count, dataPoints, theme, className }: 
             tickFormatter={x => formatNumber(x)}
           />
           <CartesianGrid stroke={colors.axis} strokeOpacity={0.35} />
-          {tab === 0 && <Line type="linear" dataKey="invocations" stroke={colors.lines} dot={false} />}
-          {tab !== 0 && <Line type="linear" dataKey="errors" stroke={colors.lines} dot={false} />}
+          <Line type="linear" dataKey="value" stroke={colors.lines} dot={false} />
           <StyledTooltip
             wrapperStyle={{ opacity: 0.9 }}
             contentStyle={{ background: colors.tooltipBackground }}

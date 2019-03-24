@@ -8,6 +8,8 @@ import {
   faCopy,
   faArrowRight,
   faArrowLeft,
+  faPlay,
+  faPause,
 } from '@fortawesome/free-solid-svg-icons'
 import { faLightbulb as faRegularLightbulb } from '@fortawesome/free-regular-svg-icons'
 
@@ -20,3 +22,5 @@ library.add(faRegularLightbulb)
 library.add(faCopy)
 library.add(faArrowRight)
 library.add(faArrowLeft)
+library.add(faPlay)
+library.add(faPause)

@@ -35,16 +35,19 @@ const Timer = styled(TimerComponent)`
   margin-left: 10px;
 `
 
+const DELAY = 10000
+
 interface DashboardProps {
   tenants: Tenant[]
 }
 
 export default ({ tenants }: DashboardProps) => {
   const [count, setCount] = useState(1)
+  const [isSwitchEnabled, setSwitchStatus] = useState(true)
 
   useInterval(() => {
     setCount(count + 1)
-  }, 10000)
+  }, DELAY, isSwitchEnabled)
 
   return (
     <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }}>
@@ -57,14 +60,23 @@ export default ({ tenants }: DashboardProps) => {
           throw error
         }
 
-        const { dataPoints, invocations, errors } = data.dashboardData.last24Hours.totals
+        const { totals } = data.dashboardData.last24Hours
 
         return (
           <Wrapper>
-            <Title>Last 24h <Timer key={count} size={30} /> </Title>
+            <Title>
+              Last 24h
+              <Timer
+                key={count}
+                time={DELAY}
+                size={40}
+                active={isSwitchEnabled}
+                onClick={() => setSwitchStatus(!isSwitchEnabled)}
+              />
+            </Title>
             <CardsWrapper>
-              <InvocationsCard count={count} dataPoints={dataPoints} invocations={invocations} errors={errors} />
-              <InvocationsCard count={count} dataPoints={dataPoints} invocations={invocations} errors={errors} />
+              <InvocationsCard count={count} data={totals} />
+              <InvocationsCard count={count} data={totals} />
             </CardsWrapper>
           </Wrapper>
         )

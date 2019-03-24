@@ -44,6 +44,7 @@ const Logo = styled(SVGLogo)`
 `
 const Trees = styled.div`
   position: absolute;
+  bottom: 0;
   height: 100%;
   width: 100%;
   background: url("${treeline}") center bottom no-repeat;
