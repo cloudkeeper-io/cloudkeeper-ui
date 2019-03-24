@@ -4,13 +4,13 @@ import { Query } from 'react-apollo'
 import get from 'lodash/get'
 import last from 'lodash/last'
 
-import InvocationsCard from '../components/data-cards/invocations-card.component'
+import TotalInvocationsCard from '../components/data-cards/total-invocations-card.component'
+import MostInvokedCard from '../components/data-cards/most-invoked-card.component'
 import Loading from '../components/loading.component'
 import TimerComponent from '../components/timer.component'
 import { dashboardQuery } from '../queries'
 import { Tenant } from '../models'
 import { useInterval } from '../hooks'
-
 
 const Wrapper = styled.div`
   padding: 0 20px 20px 20px;
@@ -53,14 +53,14 @@ export default ({ tenants }: DashboardProps) => {
     <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }}>
       {({ data, loading, error }) => {
         if (loading) {
-          return <Loading />
+          return <Loading height="calc(100vh - 60px)" />
         }
 
         if (error) {
           throw error
         }
 
-        const { totals } = data.dashboardData.last24Hours
+        const { totals, mostInvokedLambdas } = data.dashboardData.last24Hours
 
         return (
           <Wrapper>
@@ -75,8 +75,8 @@ export default ({ tenants }: DashboardProps) => {
               />
             </Title>
             <CardsWrapper>
-              <InvocationsCard count={count} data={totals} />
-              <InvocationsCard count={count} data={totals} />
+              <TotalInvocationsCard count={count} data={totals} />
+              <MostInvokedCard count={count} data={mostInvokedLambdas} />
             </CardsWrapper>
           </Wrapper>
         )

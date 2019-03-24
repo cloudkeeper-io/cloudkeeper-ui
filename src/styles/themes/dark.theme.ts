@@ -26,9 +26,14 @@ const card = {
 
 const dataCard = {
   background: 'linear-gradient(180deg, #129F7C -0.31%, #6F20A0 100%)',
+  secondaryBackground: 'linear-gradient(180deg, #129F7C -0.31%, #6F20A0 100%)',
   axis: '#B9FFEC',
+  secondaryAxis: '#B9FFEC',
   lines: '#B9FFEC',
+  secondaryLines: '#B9FFEC',
   tooltipBackground: '#0E0B20',
+  secondaryTooltipBackground: '#0E0B20',
+  secondaryTab: colors.primary,
 }
 
 const input = {

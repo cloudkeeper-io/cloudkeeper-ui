@@ -10,21 +10,6 @@ import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
 import AnimatedText from '../animated-text.component'
 
-interface InvocationsCardProps {
-  data: {
-    invocations: number
-    errors: number
-    dataPoints: Array<{
-      invocations: number
-      errors: number
-      dateTime: string
-    }>
-  }
-  count: number,
-  className?: string,
-  theme: any,
-}
-
 const StyledCard = styled(Card)`
   margin: auto;
   width: 100%;
@@ -63,14 +48,25 @@ const Description = styled(AnimatedText)`
   min-height: 11px;
   min-width: 1px;
   color: ${p => p.theme.colors.text};
-  > div {
-    position: absolute;
-    will-change: transform, opacity;
-  }
 `
 const StyledTooltip = Tooltip as any
 
-const DataCard = ({ data, count, theme, className }: InvocationsCardProps) => {
+interface TotalInvocationsCardProps {
+  data: {
+    invocations: number
+    errors: number
+    dataPoints: Array<{
+      invocations: number
+      errors: number
+      dateTime: string
+    }>
+  }
+  count: number,
+  className?: string,
+  theme: any,
+}
+
+const DataCard = ({ data, count, theme, className }: TotalInvocationsCardProps) => {
   const TABS_AMOUNT = 2
   const { invocations, errors } = data
   const { dataCard: colors } = theme
@@ -81,7 +77,7 @@ const DataCard = ({ data, count, theme, className }: InvocationsCardProps) => {
     <StyledCard showBorder={false} className={className}>
       <Header>
         <Value>
-          {tab === 0 ? invocations : errors}
+          {tab === 0 ? invocations.toLocaleString('ru') : errors.toLocaleString('ru')}
         </Value>
         <StepIndicator index={tab} steps={TABS_AMOUNT} onClick={i => setTab(i)} />
         <Description>
@@ -106,7 +102,7 @@ const DataCard = ({ data, count, theme, className }: InvocationsCardProps) => {
             tickFormatter={x => formatNumber(x)}
           />
           <CartesianGrid stroke={colors.axis} strokeOpacity={0.35} />
-          <Line type="linear" dataKey="value" stroke={colors.lines} dot={false} />
+          <Line type="linear" dataKey="value" stroke={colors.lines} dot={false} strokeWidth={1.5} />
           <StyledTooltip
             wrapperStyle={{ opacity: 0.9 }}
             contentStyle={{ background: colors.tooltipBackground }}

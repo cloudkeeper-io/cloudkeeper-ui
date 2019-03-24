@@ -24,9 +24,14 @@ const card = {
 
 const dataCard = {
   background: '#FFFFFF',
+  secondaryBackground: colors.primary,
   axis: transparentize(0.5, colors.text),
+  secondaryAxis: transparentize(0.3, colors.activeText),
   lines: colors.primary,
+  secondaryLines: colors.activeText,
   tooltipBackground: '#FFFFFF',
+  secondaryTooltipBackground: '#0E0B20',
+  secondaryTab: '#FFFFFF',
 }
 
 const input = {
