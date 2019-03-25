@@ -31,6 +31,7 @@ const dataCard = {
   secondaryLines: colors.activeText,
   tooltipBackground: '#FFFFFF',
   secondaryTooltipBackground: '#0E0B20',
+  primaryTab: colors.primary,
   secondaryTab: '#FFFFFF',
 }
 

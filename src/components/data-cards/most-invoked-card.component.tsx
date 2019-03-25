@@ -13,13 +13,13 @@ import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
 import AnimatedText from '../animated-text.component'
 
-const StyledCard = styled(Card)`
+const StyledCard = styled(Card)<{ isPrimary: boolean }>`
   margin: auto;
   width: 100%;
   height: 300px;
   ${Card.Content} {
-    background: ${p => p.theme.dataCard.secondaryBackground};
-    color: ${p => p.theme.colors.activeText};
+    background: ${p => (p.isPrimary ? p.theme.dataCard.background : p.theme.dataCard.secondaryBackground)};
+    color: ${p => (p.isPrimary ? p.theme.colors.text : p.theme.colors.activeText)};
     overflow: hidden;
   }
 `
@@ -93,7 +93,7 @@ const DataCard = ({ data, count, theme, className }: MostInvokedCardProps) => {
   const dataPoints = tab > 0 ? data[tab - 1].dataPoints : []
 
   return (
-    <StyledCard showBorder={false} className={className}>
+    <StyledCard showBorder={false} className={className} isPrimary={Boolean(tab)}>
       <Content>
         {tab === 0 && (
           <Tab>
@@ -121,31 +121,36 @@ const DataCard = ({ data, count, theme, className }: MostInvokedCardProps) => {
                 <LineChart data={dataPoints} margin={{ top: 0, right: 30, left: -25, bottom: 0 }}>
                   <XAxis
                     dataKey="dateTime"
-                    stroke={colors.secondaryAxis}
+                    stroke={tab ? colors.axis : colors.secondaryAxis}
                     tick={{ fontSize: 12 }}
                     tickLine={false}
                     tickFormatter={x => DateTime.fromISO(x).toFormat('HH:mm')}
                   />
                   <YAxis
-                    stroke={colors.secondaryAxis}
+                    stroke={tab ? colors.axis : colors.secondaryAxis}
                     tick={{ fontSize: 12 }}
                     tickLine={false}
                     type="number"
                     padding={{ top: 20, bottom: 5 }}
                     tickFormatter={x => formatNumber(x)}
                   />
-                  <CartesianGrid stroke={colors.secondaryAxis} strokeOpacity={0.35} />
+                  <CartesianGrid stroke={tab ? colors.axis : colors.secondaryAxis} strokeOpacity={0.35} />
                   <Line
                     type="linear"
                     dataKey="invocations"
-                    stroke={colors.secondaryLines}
+                    stroke={tab ? colors.lines : colors.secondaryLines}
                     dot={false}
                     strokeWidth={1.5}
                   />
                   <StyledTooltip
                     wrapperStyle={{ opacity: 0.9 }}
-                    contentStyle={{ background: colors.secondaryTooltipBackground }}
-                    labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10, color: colors.secondaryLines }}
+                    contentStyle={{ background: tab ? colors.tooltipBackground : colors.secondaryTooltipBackground }}
+                    labelStyle={{
+                      fontSize: 12,
+                      lineHeight: '12px',
+                      marginBottom: 10,
+                      color: tab ? colors.lines : colors.secondaryLines,
+                    }}
                     itemStyle={{ fontSize: 12, lineHeight: '12px' }}
                     formatter={(value: string) => Number(value).toLocaleString()}
                     labelFormatter={(value: string) => DateTime.fromISO(value).toFormat('d LLL HH:mm')}
@@ -162,7 +167,12 @@ const DataCard = ({ data, count, theme, className }: MostInvokedCardProps) => {
             </LambdaInfo>
           </Tab>
         )}
-        <TabIndicator color={colors.secondaryTab} index={tab} steps={TABS_AMOUNT} onClick={i => setTab(i)} />
+        <TabIndicator
+          color={tab ? colors.primaryTab : colors.secondaryTab}
+          index={tab}
+          steps={TABS_AMOUNT}
+          onClick={i => setTab(i)}
+        />
       </Content>
     </StyledCard>
   )
