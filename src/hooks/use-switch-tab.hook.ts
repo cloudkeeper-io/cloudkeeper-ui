@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
 
 export function useSwitchTab(trigger: any, tabsAmount: number, initialState = 0): [number, (newTab: number) => void] {
