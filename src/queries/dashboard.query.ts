@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export const dashboardQuery = gql`
   query getReports ($tenantId: String) {
-    dashboardData(tenantId: $tenantId) {
+    lambdasData(tenantId: $tenantId) {
       last24Hours {
         totals {
            errors

@@ -60,7 +60,7 @@ export default ({ tenants }: DashboardProps) => {
           throw error
         }
 
-        const { totals, mostInvokedLambdas } = data.dashboardData.last24Hours
+        const { totals, mostInvokedLambdas } = data.lambdasData.last24Hours
 
         return (
           <Wrapper>
