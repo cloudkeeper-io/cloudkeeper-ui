@@ -1,20 +1,15 @@
 import React from 'react'
 import styled, { withTheme } from 'styled-components/macro'
 import map from 'lodash/map'
-import sumBy from 'lodash/sumBy'
-import random from 'lodash/random'
-
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { DateTime } from 'luxon'
-import { formatNumber } from '../../utils'
+import { DateTime, Duration } from 'luxon'
 
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
 import AnimatedText from '../animated-text.component'
 
-const StyledCard = styled(Card)<{ isPrimary: boolean }>`
-  margin: auto;
+const StyledCard = styled(Card)<{ isPrimary: boolean }>`  margin: auto;
   width: 100%;
   height: 300px;
   ${Card.Content} {
@@ -30,13 +25,13 @@ const Content = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 10px 20px 0 50px;
+  padding: 0 20px 0 50px;
 `
 const Header = styled(AnimatedText)`
   font-size: 22px;
   line-height: 24px;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `
 const Text = styled(AnimatedText)`
   position: relative;
@@ -47,22 +42,29 @@ const Text = styled(AnimatedText)`
     margin-bottom: 0;
   }
 `
+const Value = styled.span`
+  margin-left: 15px;
+`
 const GraphContainer = styled.div`
   width: 100%;
   height: 130px;
   margin-left: -32px;
+  svg {
+    overflow: visible;
+  }
 `
 const Tab = styled.div`
   width: 100%;
   flex: 1;
 `
 const LambdaInfo = styled.div`
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-gap: 0 10px;
+  display: flex;
   ${Text} {
-    margin-bottom: 0;
+    margin-bottom: 3px;
   }
+`
+const LambdaInfoColumn = styled.div`
+  flex: 1
 `
 const TabIndicator = styled(StepIndicator)`
   display: flex;
@@ -72,25 +74,45 @@ const TabIndicator = styled(StepIndicator)`
 `
 const StyledTooltip = Tooltip as any
 
-interface MostInvokedCardProps {
-  data: Array<{
-    lambdaName: string,
-    invocations: number,
-    dataPoints: Array<{
-      invocations: number,
-      dateTime: string,
-    }>
-  }>,
-  count: number,
-  className?: string,
-  theme: any,
+interface Data {
+  lambdaName: string
+  runtime?: string
+  invocations?: number
+  averageDuration?: number
+  errors?: number
+  maxDuration?: number
+  size?: number
+  cost?: number
+  codeSize?: number
+  timeout?: number
+  dataPoints: Array<{
+    invocations: number
+    dateTime: string
+  }>
 }
 
-const DataCard = ({ data, count, theme, className }: MostInvokedCardProps) => {
-  const TABS_AMOUNT = 6
+interface MostInvokedCardProps {
+  data: Data []
+  count: number
+  header?: string
+  lambdaHeader?: string
+  className?: string
+  unit: 'invocations' | 'averageDuration' | 'errors' | 'cost'
+  summaryFormatter: (value: Data) => string
+  tooltipFormatter: (value: string) => string
+  yAxisFormatter: (value: any) => any
+  theme: any
+}
+
+const DataCard = (props: MostInvokedCardProps) => {
+  const {
+    data, count, unit, theme, header, lambdaHeader, tooltipFormatter, yAxisFormatter, summaryFormatter, className,
+  } = props
+  const TABS_AMOUNT = data.length + 1
   const { dataCard: colors } = theme
   const [tab, setTab] = useSwitchTab(count, TABS_AMOUNT, 1)
-  const dataPoints = tab > 0 ? data[tab - 1].dataPoints : []
+  const lambda = data[tab - 1]
+  const dataPoints = lambda ? lambda.dataPoints : []
 
   return (
     <StyledCard showBorder={false} className={className} isPrimary={Boolean(tab)}>
@@ -98,14 +120,12 @@ const DataCard = ({ data, count, theme, className }: MostInvokedCardProps) => {
         {tab === 0 && (
           <Tab>
             <Header>
-              Top 5 Most Invoked Lambdas
+              {header}
             </Header>
             {map(data, x => (
               <Text key={x.lambdaName} trigger={tab}>
-                <>
-                  <div>{x.lambdaName}</div>
-                  <div>{x.invocations.toLocaleString('ru')} invocations</div>
-                </>
+                <div>{x.lambdaName}</div>
+                <div>{summaryFormatter(x)}</div>
               </Text>
             ))}
           </Tab>
@@ -113,7 +133,7 @@ const DataCard = ({ data, count, theme, className }: MostInvokedCardProps) => {
         {tab > 0 && (
           <Tab>
             <Header>
-              Most Invoked Lambda Last 24h
+              {lambdaHeader}
             </Header>
             <Text>{data[tab - 1].lambdaName}</Text>
             <GraphContainer>
@@ -132,14 +152,14 @@ const DataCard = ({ data, count, theme, className }: MostInvokedCardProps) => {
                     tickLine={false}
                     type="number"
                     padding={{ top: 20, bottom: 5 }}
-                    tickFormatter={x => formatNumber(x)}
+                    tickFormatter={yAxisFormatter}
                   />
                   <CartesianGrid stroke={tab ? colors.axis : colors.secondaryAxis} strokeOpacity={0.35} />
                   <Line
                     type="linear"
-                    dataKey="invocations"
+                    dataKey={unit}
                     stroke={tab ? colors.lines : colors.secondaryLines}
-                    dot={false}
+                    dot={dataPoints.length < 3}
                     strokeWidth={1.5}
                   />
                   <StyledTooltip
@@ -152,18 +172,69 @@ const DataCard = ({ data, count, theme, className }: MostInvokedCardProps) => {
                       color: tab ? colors.lines : colors.secondaryLines,
                     }}
                     itemStyle={{ fontSize: 12, lineHeight: '12px' }}
-                    formatter={(value: string) => Number(value).toLocaleString()}
+                    formatter={tooltipFormatter}
                     labelFormatter={(value: string) => DateTime.fromISO(value).toFormat('d LLL HH:mm')}
                   />
                 </LineChart>
               </ResponsiveContainer>
             </GraphContainer>
             <LambdaInfo>
-              <Text>{`total: ${sumBy(dataPoints, 'invocations').toLocaleString('ru')}`}</Text>
-              <Text trigger={tab}>runtime: node.js 8.10</Text>
-              <Text>{`average: ${(random(100, 600)).toLocaleString('ru')}ms`}</Text>
-              <Text trigger={tab}>size: 2048mb</Text>
-              <Text trigger={tab}>timeout: 60s</Text>
+              <LambdaInfoColumn>
+                {lambda.invocations && (
+                  <Text trigger={tab}>
+                    total:
+                    <Value>{lambda.invocations.toLocaleString('ru')}</Value>
+                  </Text>
+                )}
+                {lambda.averageDuration && (
+                  <Text trigger={tab}>
+                    average:
+                    <Value>
+                      {Duration.fromObject({ milliseconds: lambda.averageDuration }).toFormat('s')}s
+                    </Value>
+                  </Text>
+                )}
+                {lambda.maxDuration && (
+                  <Text trigger={tab}>
+                    max:
+                    <Value>
+                      {Duration.fromObject({ milliseconds: lambda.maxDuration }).toFormat('s')}s
+                    </Value>
+                  </Text>
+                )}
+                {lambda.errors && (
+                  <Text trigger={tab}>
+                    total:
+                    <Value>{lambda.errors.toLocaleString('ru')}</Value>
+                  </Text>
+                )}
+                {lambda.cost && (
+                  <Text trigger={tab}>
+                    cost:
+                    <Value>$ {lambda.cost.toLocaleString('en')}</Value>
+                  </Text>
+                )}
+              </LambdaInfoColumn>
+              <LambdaInfoColumn>
+                {lambda.runtime && (
+                  <Text trigger={tab}>
+                    runtime:
+                    <Value>{lambda.runtime}</Value>
+                  </Text>
+                )}
+                {lambda.size && (
+                  <Text trigger={tab}>
+                    memory size:
+                    <Value>{lambda.size}MB</Value>
+                  </Text>
+                )}
+                {lambda.timeout && (
+                  <Text trigger={tab}>
+                    timeout:
+                    <Value>{lambda.timeout}s</Value>
+                  </Text>
+                )}
+              </LambdaInfoColumn>
             </LambdaInfo>
           </Tab>
         )}

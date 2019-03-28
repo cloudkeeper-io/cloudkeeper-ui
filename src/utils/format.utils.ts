@@ -1,4 +1,5 @@
 import round from 'lodash/round'
+import { Duration } from 'luxon'
 
 export const formatNumber = (x: number, maxD = 4): number | string => {
   const v = Math.abs(x)
@@ -20,7 +21,10 @@ export const formatNumber = (x: number, maxD = 4): number | string => {
   }
 
   const { length } = round(Number(value)).toString()
-  const d = 4 - length > maxD ? maxD : 4 - length
+  const d = maxD - length > maxD ? maxD : maxD - length
 
   return `${round(Number(value), d)}${unit}`
 }
+
+
+export const msToSeconds = (x: string | number) => Duration.fromObject({ milliseconds: Number(x) }).toFormat('s')

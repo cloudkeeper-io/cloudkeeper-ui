@@ -1,4 +1,4 @@
 export * from './config'
 export * from './auth'
-export * from './math.utils'
+export * from './format.utils'
 export * from './css.utils'

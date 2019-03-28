@@ -5,10 +5,10 @@ export const dashboardQuery = gql`
     lambdasData(tenantId: $tenantId) {
       last24Hours {
         totals {
-           errors
-           invocations
-           cost
-           dataPoints {
+          errors
+          invocations
+          cost
+          dataPoints {
             errors
             invocations
             cost
@@ -17,6 +17,10 @@ export const dashboardQuery = gql`
         }
         slowestLambdas {
           lambdaName
+          runtime
+          size
+          codeSize
+          timeout
           averageDuration
           dataPoints {
             averageDuration
@@ -27,6 +31,11 @@ export const dashboardQuery = gql`
         mostInvokedLambdas {
           lambdaName
           invocations
+          runtime
+          size
+          codeSize
+          timeout
+            
           dataPoints {
             invocations
             dateTime
@@ -35,6 +44,10 @@ export const dashboardQuery = gql`
         mostErrorsLambdas {
           lambdaName
           errors
+          runtime
+          size
+          codeSize
+          timeout
           dataPoints {
             errors
             dateTime
@@ -42,6 +55,10 @@ export const dashboardQuery = gql`
         }
         mostExpensiveLambdas {
           lambdaName
+          runtime
+          size
+          codeSize
+          timeout
           cost
           dataPoints {
             cost
@@ -51,10 +68,10 @@ export const dashboardQuery = gql`
       }
       last30Days {
         totals {
-           errors
-           invocations
-           cost
-           dataPoints {
+          errors
+          invocations
+          cost
+          dataPoints {
             errors
             invocations
             cost
@@ -63,6 +80,10 @@ export const dashboardQuery = gql`
         }
         slowestLambdas {
           lambdaName
+          runtime
+          size
+          codeSize
+          timeout
           averageDuration
           dataPoints {
             averageDuration
@@ -72,6 +93,10 @@ export const dashboardQuery = gql`
         }
         mostInvokedLambdas {
           lambdaName
+          runtime
+          size
+          timeout
+          codeSize
           invocations
           dataPoints {
             invocations
@@ -80,6 +105,10 @@ export const dashboardQuery = gql`
         }
         mostErrorsLambdas {
           lambdaName
+          runtime
+          size
+          timeout
+          codeSize
           errors
           dataPoints {
             errors
@@ -88,6 +117,10 @@ export const dashboardQuery = gql`
         }
         mostExpensiveLambdas {
           lambdaName
+          runtime
+          size
+          timeout
+          codeSize
           cost
           dataPoints {
             cost

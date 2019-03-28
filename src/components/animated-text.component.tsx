@@ -2,7 +2,7 @@ import React from 'react'
 import { useTransition, animated } from 'react-spring'
 
 interface AnimatedTextProps {
-  children: string | number | JSX.Element,
+  children: any,
   trigger?: string | number,
   offset?: string,
   className?: string,

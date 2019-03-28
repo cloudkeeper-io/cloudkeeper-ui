@@ -5,12 +5,13 @@ import get from 'lodash/get'
 import last from 'lodash/last'
 
 import TotalInvocationsCard from '../components/data-cards/total-invocations-card.component'
-import MostInvokedCard from '../components/data-cards/most-invoked-card.component'
+import TopLambdasCard from '../components/data-cards/top-lambdas-card.component'
 import Loading from '../components/loading.component'
 import TimerComponent from '../components/timer.component'
 import { dashboardQuery } from '../queries'
 import { Tenant } from '../models'
 import { useInterval } from '../hooks'
+import { formatNumber, msToSeconds } from '../utils'
 
 const Wrapper = styled.div`
   padding: 0 20px 20px 20px;
@@ -60,7 +61,13 @@ export default ({ tenants }: DashboardProps) => {
           throw error
         }
 
-        const { totals, mostInvokedLambdas } = data.lambdasData.last24Hours
+        const {
+          totals,
+          mostInvokedLambdas,
+          slowestLambdas,
+          mostErrorsLambdas,
+          mostExpensiveLambdas,
+        } = data.lambdasData.last24Hours
 
         return (
           <Wrapper>
@@ -76,7 +83,46 @@ export default ({ tenants }: DashboardProps) => {
             </Title>
             <CardsWrapper>
               <TotalInvocationsCard count={count} data={totals} />
-              <MostInvokedCard count={count} data={mostInvokedLambdas} />
+              <TopLambdasCard
+                header="Top 5 Most Invoked Lambdas"
+                lambdaHeader="Most Invoked Lambdas Last 24h"
+                unit="invocations"
+                count={count}
+                data={mostInvokedLambdas}
+                summaryFormatter={x => `${x.invocations!.toLocaleString('ru')} invocations`}
+                yAxisFormatter={x => formatNumber(x)}
+                tooltipFormatter={x => Number(x).toLocaleString()}
+              />
+              <TopLambdasCard
+                header="Top 5 Slowest Lambdas"
+                lambdaHeader="Slowest Lambdas Last 24h"
+                unit="averageDuration"
+                count={count}
+                data={slowestLambdas}
+                summaryFormatter={x => `${msToSeconds(x.averageDuration!)} sec average`}
+                yAxisFormatter={x => `${msToSeconds(x)}s`}
+                tooltipFormatter={x => `${msToSeconds(x)}s`}
+              />
+              <TopLambdasCard
+                header="Top 5 Most Faulty Lambdas"
+                lambdaHeader="Most Faulty Lambdas Last 24h"
+                unit="errors"
+                count={count}
+                data={mostErrorsLambdas}
+                summaryFormatter={x => `${x.errors!.toLocaleString('ru')} errors`}
+                yAxisFormatter={x => formatNumber(x)}
+                tooltipFormatter={x => Number(x).toLocaleString()}
+              />
+              <TopLambdasCard
+                header="Top 5 Most Expensive Lambdas"
+                lambdaHeader="Most Expensive Lambdas Last 24h"
+                unit="cost"
+                count={count}
+                data={mostExpensiveLambdas}
+                summaryFormatter={x => `$ ${x.cost!.toLocaleString('en')}`}
+                yAxisFormatter={x => `$ ${Number(x).toLocaleString('en')}`}
+                tooltipFormatter={x => `$${Number(x).toLocaleString('en')}`}
+              />
             </CardsWrapper>
           </Wrapper>
         )
