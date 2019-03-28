@@ -3,6 +3,7 @@ import styled, { withTheme } from 'styled-components/macro'
 import map from 'lodash/map'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime, Duration } from 'luxon'
+import round from 'lodash/round'
 
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
@@ -210,8 +211,8 @@ const DataCard = (props: MostInvokedCardProps) => {
                 )}
                 {lambda.cost && (
                   <Text trigger={tab}>
-                    cost:
-                    <Value>$ {lambda.cost.toLocaleString('en')}</Value>
+                    24h cost:
+                    <Value>$ {round(lambda.cost, 2).toLocaleString('en')}</Value>
                   </Text>
                 )}
               </LambdaInfoColumn>

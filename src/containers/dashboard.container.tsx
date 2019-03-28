@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 import { Query } from 'react-apollo'
 import get from 'lodash/get'
 import last from 'lodash/last'
+import round from 'lodash/round'
 
 import TotalInvocationsCard from '../components/data-cards/total-invocations-card.component'
 import TopLambdasCard from '../components/data-cards/top-lambdas-card.component'
@@ -119,9 +120,9 @@ export default ({ tenants }: DashboardProps) => {
                 unit="cost"
                 count={count}
                 data={mostExpensiveLambdas}
-                summaryFormatter={x => `$ ${x.cost!.toLocaleString('en')}`}
-                yAxisFormatter={x => `$ ${Number(x).toLocaleString('en')}`}
-                tooltipFormatter={x => `$${Number(x).toLocaleString('en')}`}
+                summaryFormatter={x => `$ ${round(x.cost!, 2).toLocaleString('en')}`}
+                yAxisFormatter={x => `$ ${round(x, 2).toLocaleString('en')}`}
+                tooltipFormatter={x => `$${round(Number(x), 2).toLocaleString('en')}`}
               />
             </CardsWrapper>
           </Wrapper>
