@@ -13,6 +13,7 @@ import AnimatedText from '../animated-text.component'
 const StyledCard = styled(Card)`
   margin: auto;
   width: 100%;
+  min-width: 500px;
   height: 300px;
   ${Card.Content} {
     background: ${p => p.theme.dataCard.background};

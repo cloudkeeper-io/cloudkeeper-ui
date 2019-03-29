@@ -4,11 +4,12 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import HeaderLink from './header-link.component'
 import ErrorContainer from '../../containers/error.container'
+import Timer from '../timer.component'
 import { User } from '../../models'
 import { Wrapper, HeaderWrapper, Header, PageWrapper, PageContent, Flex } from './navbar-layout.styles'
-import { ThemeConsumer } from '../../contexts'
+import { ThemeConsumer, TimerConsumer } from '../../contexts'
 
-interface NavbarLayoutProps extends RouteComponentProps{
+interface NavbarLayoutProps extends RouteComponentProps {
   history: History
   user: User
   background?: string
@@ -49,8 +50,21 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
       <Wrapper>
         <HeaderWrapper background={background}>
           <Header>
-            {session && <HeaderLink active={pathname.includes('/')} icon="home" to="/" />}
+            {session && <HeaderLink active={pathname === '/'} icon="home" to="/" />}
             {session && <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings" />}
+            {session && pathname === '/' && (
+              <TimerConsumer>
+                {({ count, delay, isTimerEnabled, setTimerStatus }) => (
+                  <Timer
+                    key={count}
+                    time={delay}
+                    size={40}
+                    active={isTimerEnabled}
+                    onClick={() => setTimerStatus(status => !status)}
+                  />
+                )}
+              </TimerConsumer>
+            )}
             <Flex />
             <ThemeConsumer>
               {({ dispatch }) => (

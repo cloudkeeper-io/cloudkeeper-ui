@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export const dashboardQuery = gql`
-  query getReports ($tenantId: String) {
+  query getReports ($tenantId: String){
     lambdasData(tenantId: $tenantId) {
       last24Hours {
         totals {
@@ -22,6 +22,7 @@ export const dashboardQuery = gql`
           codeSize
           timeout
           averageDuration
+          maxDuration
           dataPoints {
             averageDuration
             maxDuration
@@ -35,7 +36,7 @@ export const dashboardQuery = gql`
           size
           codeSize
           timeout
-            
+          invocationsPerSecond
           dataPoints {
             invocations
             dateTime
@@ -47,6 +48,7 @@ export const dashboardQuery = gql`
           runtime
           size
           codeSize
+          errorRate
           timeout
           dataPoints {
             errors
@@ -84,6 +86,7 @@ export const dashboardQuery = gql`
           size
           codeSize
           timeout
+          maxDuration
           averageDuration
           dataPoints {
             averageDuration
@@ -98,6 +101,7 @@ export const dashboardQuery = gql`
           timeout
           codeSize
           invocations
+          invocationsPerSecond
           dataPoints {
             invocations
             dateTime
@@ -110,6 +114,7 @@ export const dashboardQuery = gql`
           timeout
           codeSize
           errors
+          errorRate
           dataPoints {
             errors
             dateTime

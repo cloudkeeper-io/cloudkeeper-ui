@@ -6,7 +6,7 @@ import { ApolloProvider } from 'react-apollo'
 import Head from './head'
 import RootContainer from './containers/root.container'
 import GlobalStyles from './styles/global.styles'
-import { ThemeProvider, UserProvider } from './contexts'
+import { ThemeProvider, UserProvider, TimerProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
 import './icons.config'
 
@@ -17,11 +17,13 @@ ReactDOM.render((
     {({ user, client }) => (
       <ApolloProvider client={client}>
         <ThemeProvider>
-          <>
-            <Head />
-            <GlobalStyles />
-            <RootContainer user={user} history={history} />
-          </>
+          <TimerProvider>
+            <>
+              <Head />
+              <GlobalStyles />
+              <RootContainer user={user} history={history} />
+            </>
+          </TimerProvider>
         </ThemeProvider>
       </ApolloProvider>
     )}

@@ -2,8 +2,7 @@ import React from 'react'
 import styled, { withTheme } from 'styled-components/macro'
 import map from 'lodash/map'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { DateTime, Duration } from 'luxon'
-import round from 'lodash/round'
+import { DateTime } from 'luxon'
 
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
@@ -12,6 +11,7 @@ import AnimatedText from '../animated-text.component'
 
 const StyledCard = styled(Card)<{ isPrimary: boolean }>`  margin: auto;
   width: 100%;
+  min-width: 500px;
   height: 300px;
   ${Card.Content} {
     background: ${p => (p.isPrimary ? p.theme.dataCard.background : p.theme.dataCard.secondaryBackground)};
@@ -79,8 +79,10 @@ interface Data {
   lambdaName: string
   runtime?: string
   invocations?: number
+  invocationsPerSecond?: number
   averageDuration?: number
   errors?: number
+  errorRate?: number
   maxDuration?: number
   size?: number
   cost?: number
@@ -90,6 +92,12 @@ interface Data {
     invocations: number
     dateTime: string
   }>
+}
+
+interface LambdaInfoItem {
+  unit: keyof Data
+  text: string
+  valueFn: (value: any) => any
 }
 
 interface MostInvokedCardProps {
@@ -102,16 +110,16 @@ interface MostInvokedCardProps {
   summaryFormatter: (value: Data) => string
   tooltipFormatter: (value: string) => string
   yAxisFormatter: (value: any) => any
+  lambdaInfo?: LambdaInfoItem []
   theme: any
 }
 
 const DataCard = (props: MostInvokedCardProps) => {
-  const {
-    data, count, unit, theme, header, lambdaHeader, tooltipFormatter, yAxisFormatter, summaryFormatter, className,
-  } = props
+  const { data, lambdaInfo, count, unit, theme, header } = props
+  const { lambdaHeader, tooltipFormatter, yAxisFormatter, summaryFormatter, className } = props
   const TABS_AMOUNT = data.length + 1
   const { dataCard: colors } = theme
-  const [tab, setTab] = useSwitchTab(count, TABS_AMOUNT, 1)
+  const [tab, setTab] = useSwitchTab(count, TABS_AMOUNT, 0)
   const lambda = data[tab - 1]
   const dataPoints = lambda ? lambda.dataPoints : []
 
@@ -181,40 +189,12 @@ const DataCard = (props: MostInvokedCardProps) => {
             </GraphContainer>
             <LambdaInfo>
               <LambdaInfoColumn>
-                {lambda.invocations && (
-                  <Text trigger={tab}>
-                    total:
-                    <Value>{lambda.invocations.toLocaleString('ru')}</Value>
+                {map(lambdaInfo, x => lambda[x.unit] && (
+                  <Text key={x.unit} trigger={tab}>
+                    {x.text}:
+                    <Value>{x.valueFn(lambda[x.unit])}</Value>
                   </Text>
-                )}
-                {lambda.averageDuration && (
-                  <Text trigger={tab}>
-                    average:
-                    <Value>
-                      {Duration.fromObject({ milliseconds: lambda.averageDuration }).toFormat('s')}s
-                    </Value>
-                  </Text>
-                )}
-                {lambda.maxDuration && (
-                  <Text trigger={tab}>
-                    max:
-                    <Value>
-                      {Duration.fromObject({ milliseconds: lambda.maxDuration }).toFormat('s')}s
-                    </Value>
-                  </Text>
-                )}
-                {lambda.errors && (
-                  <Text trigger={tab}>
-                    total:
-                    <Value>{lambda.errors.toLocaleString('ru')}</Value>
-                  </Text>
-                )}
-                {lambda.cost && (
-                  <Text trigger={tab}>
-                    24h cost:
-                    <Value>$ {round(lambda.cost, 2).toLocaleString('en')}</Value>
-                  </Text>
-                )}
+                ))}
               </LambdaInfoColumn>
               <LambdaInfoColumn>
                 {lambda.runtime && (

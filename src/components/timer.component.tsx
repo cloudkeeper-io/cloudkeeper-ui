@@ -42,7 +42,7 @@ const ActiveIcon = styled(Icon)<{ fontSize: number }>`
   transition: 0.5s all;
 `
 
-interface SpinnerProps {
+interface TimerProps {
   style?: object
   size?: number
   active: boolean
@@ -53,7 +53,7 @@ interface SpinnerProps {
   onClick?: () => void
 }
 
-export default ({ size = 50, color = '', strokeWidth = 2, className, onClick, active, time = 10000 }: SpinnerProps) => (
+export default ({ size = 50, color = '', strokeWidth = 2, className, onClick, active, time = 10000 }: TimerProps) => (
   <Wrapper size={size} className={className} onClick={onClick}>
     <Svg style={{ width: size, height: size }} viewBox="25 25 50 50">
       <Circle
