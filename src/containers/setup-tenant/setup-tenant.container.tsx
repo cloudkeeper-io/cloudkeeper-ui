@@ -8,24 +8,24 @@ import Step3 from './components/step3.component'
 import { Wrapper, Content, StyledCard } from './setup-tenant.styles'
 
 const STEP1_CODE = 'aws iam create-user --user-name cloudkeeper-user'
-const STEP2_CODE = `aws iam put-user-policy --user-name cloudkeeper-user 
---policy-name cloudkeeper-user-policy --policy-document '
-{
+const STEP2_CODE = `aws iam put-user-policy --user-name cloudkeeper-user --policy-name cloudkeeper-user-policy --policy-document '{
   "Version": "2012-10-17",
   "Statement": [
     {
       "Sid": "Stmt1551136182426",
       "Action": [
-      "cloudwatch:GetMetricData",
-      "cloudwatch:GetMetricStatistics",
-      "cloudwatch:ListMetrics"
+        "cloudwatch:GetMetricData",
+        "cloudwatch:GetMetricStatistics",
+        "cloudwatch:ListMetrics",
+        "lambda:ListFunctions",
+        "dynamodb:ListTables",
+        "dynamodb:DescribeTable"
       ],
       "Effect": "Allow",
       "Resource": "*"
     }
   ]
-}
-'
+}'
 `
 const STEP3_CODE = 'aws iam create-access-key --user-name cloudkeeper-user'
 

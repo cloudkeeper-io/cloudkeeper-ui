@@ -2,12 +2,15 @@ import React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
+import { Mutation, MutationFn } from 'react-apollo'
 
 import TextArea from '../../../components/form/text-area.components'
 import Select from '../../../components/form/select.components'
 import Error from '../../../components/form/error-message.components'
 import Icon from '../../../components/icon.component'
 import { Text, Code, CopyButton, ButtonWrapper, NavigationButton } from '../setup-tenant.styles'
+import { createTenant } from '../../../mutations'
+import { tenantsQuery } from '../../../queries'
 
 const REGIONS = ['us-east-2', 'us-east-1', 'us-west-1', 'eu-west-1', 'eu-central-1'].map(x => ({ value: x, label: x }))
 
@@ -43,12 +46,24 @@ export default class extends React.PureComponent<StepsProps> {
     serverError: '',
   }
 
-  public onSubmit = (v: Values) => {
+  public onSubmit = async (v: Values, mutation: MutationFn) => {
     console.log(v)
     this.setState({ loading: true, serverError: '' })
-    setTimeout(() => {
+    try {
+      const keys = JSON.parse(v.keys).AccessKey
+      const parameters = {
+        name: 'default tenant',
+        region: v.region,
+        accessKey: keys.AccessKeyId,
+        secretKey: keys.SecretAccessKey,
+      }
+
+      await mutation({ variables: parameters })
+    } catch (err) {
       this.setState({ serverError: 'Server Error. Try Again Later', loading: false })
-    }, 1000)
+    }
+
+    this.setState({ loading: false })
   }
 
   public validate = (values: Values) => {
@@ -56,6 +71,17 @@ export default class extends React.PureComponent<StepsProps> {
     if (!values.keys) {
       errors.keys = 'Your Response is Required'
     }
+
+    try {
+      const keys = JSON.parse(values.keys).AccessKey
+
+      if (!keys.AccessKeyId || !keys.SecretAccessKey) {
+        errors.keys = 'Malformed string'
+      }
+    } catch (err) {
+      errors.keys = 'Malformed string'
+    }
+
     if (!values.region) {
       errors.region = 'Region is Required'
     }
@@ -76,29 +102,33 @@ export default class extends React.PureComponent<StepsProps> {
             <CopyButton icon="copy" />
           </CopyToClipboard>
         </Code>
-        <Form onSubmit={v => this.onSubmit(v as Values)} validate={v => this.validate(v as Values)}>
-          {({ handleSubmit }) => (
-            <StyledForm onSubmit={handleSubmit}>
-              <Text>
-                Paste the response here:
-              </Text>
-              <TextArea name="keys" placeholder="Your Result" />
-              <Text>
-                Choose your region:
-              </Text>
-              <StyledSelect name="region" placeholder="AWS Region" options={REGIONS} />
-              <ButtonWrapper>
-                <ServerError>{serverError}</ServerError>
-                <NavigationButton onClick={onBack} type="button">
-                  <Icon icon="arrow-left" />
-                </NavigationButton>
-                <NavigationButton loading={loading}>
-                  Finish
-                </NavigationButton>
-              </ButtonWrapper>
-            </StyledForm>
+        <Mutation mutation={createTenant} refetchQueries={[{ query: tenantsQuery }]}>
+          {mutation => (
+            <Form onSubmit={v => this.onSubmit(v as Values, mutation)} validate={v => this.validate(v as Values)}>
+              {({ handleSubmit }) => (
+                <StyledForm onSubmit={handleSubmit}>
+                  <Text>
+                  Paste the response here:
+                  </Text>
+                  <TextArea name="keys" placeholder="Your Result" />
+                  <Text>
+                  Choose your region:
+                  </Text>
+                  <StyledSelect name="region" placeholder="AWS Region" options={REGIONS} />
+                  <ButtonWrapper>
+                    <ServerError>{serverError}</ServerError>
+                    <NavigationButton onClick={onBack} type="button">
+                      <Icon icon="arrow-left" />
+                    </NavigationButton>
+                    <NavigationButton loading={loading}>
+                    Finish
+                    </NavigationButton>
+                  </ButtonWrapper>
+                </StyledForm>
+              )}
+            </Form>
           )}
-        </Form>
+        </Mutation>
       </>
     )
   }
