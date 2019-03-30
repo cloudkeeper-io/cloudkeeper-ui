@@ -7,7 +7,7 @@ import isEmpty from 'lodash/isEmpty'
 import { User } from '../models'
 import NavbarLayout from '../components/layout/navbar-layout.component'
 import LoadingPage from '../components/loading-page.component'
-import { tenantsQuery } from '../queries'
+import { tenantsQuery } from '../graphql'
 
 const SetupTenant = lazy(() => import('./setup-tenant/setup-tenant.container'))
 const Dashboard = lazy(() => import('./dashboard.container'))
