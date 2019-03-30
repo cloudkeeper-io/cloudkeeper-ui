@@ -9,7 +9,7 @@ import { Duration } from 'luxon'
 import TotalInvocationsCard from '../components/data-cards/total-invocations-card.component'
 import TopLambdasCard from '../components/data-cards/top-lambdas-card.component'
 import Loading from '../components/loading.component'
-import { dashboardQuery } from '../queries'
+import { dashboardQuery } from '../graphql'
 import { Tenant } from '../models'
 import { formatNumber, msToSeconds } from '../utils'
 import { TimerContext } from '../contexts'
@@ -54,7 +54,7 @@ export default ({ tenants }: DashboardProps) => {
       setActive(false)
       setVisibility(false)
     }
-  }, [isDataLoaded, setActive, setVisibility])
+  }, [isDataLoaded])
 
   return (
     <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }}>
