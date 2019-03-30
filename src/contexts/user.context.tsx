@@ -100,7 +100,6 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
       if (session) {
         this.setUser({ session: null })
         localStorage.removeItem(SESSION_KEY)
-        // TODO: reset store
         await this.client.resetStore()
       }
     } catch (e) {

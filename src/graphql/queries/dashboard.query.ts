@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 export const dashboardQuery = gql`
   query getReports ($tenantId: String){
     lambdasData(tenantId: $tenantId) {
+      processing
       last24Hours {
         totals {
           errors
@@ -129,6 +130,127 @@ export const dashboardQuery = gql`
           cost
           dataPoints {
             cost
+            dateTime
+          }
+        }
+      }
+    }
+    dynamoData(tenantId: $tenantId) {
+      processing
+      last24Hours {
+        mostReadTables {
+          name
+          consumedRead
+          provisionedRead
+          billingMode
+          sizeBytes
+          items
+          dataPoints {
+            consumedRead
+            provisionedRead
+            dateTime
+          }
+        }
+        mostWritesTables {
+          name
+          consumedWrite
+          provisionedWrite
+          billingMode
+          sizeBytes
+          items
+          dataPoints {
+            consumedWrite
+            provisionedWrite
+            dateTime
+          }
+        }
+        mostThrottledTables {
+          name
+          billingMode
+          sizeBytes
+          items
+          throttledRequests
+          throttledWrites
+          throttledReads
+          dataPoints {
+            throttledRequests
+            throttledWrites
+            throttledReads
+            dateTime
+          }
+        }
+        mostExpensiveTables {
+          name
+          billingMode
+          sizeBytes
+          items
+          totalPrice
+          readPrice
+          writePrice
+          storagePrice
+          dataPoints {
+            totalPrice
+            readPrice
+            writePrice
+            storagePrice
+            dateTime
+          }
+        }
+      }
+      last30Days {
+        mostReadTables {
+          name
+          billingMode
+          sizeBytes
+          items
+          consumedRead
+          provisionedRead
+          dataPoints {
+            consumedRead
+            provisionedRead
+            dateTime
+          }
+        }
+        mostWritesTables {
+          name
+          billingMode
+          sizeBytes
+          items
+          consumedWrite
+          provisionedWrite
+          dataPoints {
+            consumedWrite
+            provisionedWrite
+            dateTime
+          }
+        }
+        mostThrottledTables {
+          name
+          billingMode
+          sizeBytes
+          items
+          throttledRequests
+          throttledWrites
+          throttledReads
+          dataPoints {
+            throttledRequests
+            throttledWrites
+            throttledReads
+            dateTime
+          }
+        }
+        mostExpensiveTables {
+          name
+          billingMode
+          totalPrice
+          readPrice
+          writePrice
+          storagePrice
+          dataPoints {
+            totalPrice
+            readPrice
+            writePrice
+            storagePrice
             dateTime
           }
         }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo, useEffect } from 'react'
 import Loading from './loading.component'
 
 interface LoadingProps {
@@ -7,12 +7,8 @@ interface LoadingProps {
   className?: any
 }
 
-export default class extends React.PureComponent<LoadingProps> {
-  public componentDidMount() {
-    window.scrollTo(0, 0)
-  }
+export default memo((props: LoadingProps) => {
+  useEffect(() => window.scrollTo(0, 0), [])
 
-  public render() {
-    return <Loading height="calc(100vh - 60px)" {...this.props} />
-  }
-}
+  return <Loading height="calc(100vh - 60px)" {...props} />
+})

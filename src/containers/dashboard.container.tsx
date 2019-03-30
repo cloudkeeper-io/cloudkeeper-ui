@@ -54,7 +54,7 @@ export default ({ tenants }: DashboardProps) => {
       setActive(false)
       setVisibility(false)
     }
-  }, [isDataLoaded])
+  }, [isDataLoaded, setActive, setVisibility])
 
   return (
     <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }}>

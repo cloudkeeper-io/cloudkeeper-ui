@@ -65,8 +65,8 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
             </TimerConsumer>
             <Flex />
             <ThemeConsumer>
-              {({ dispatch }) => (
-                <HeaderLink icon="lightbulb" iconSize="1x" onClick={() => dispatch({ type: 'toggle' })} />
+              {({ toggleTheme }) => (
+                <HeaderLink icon="lightbulb" iconSize="1x" onClick={toggleTheme} />
               )}
             </ThemeConsumer>
             {session && <HeaderLink icon="sign-out-alt" onClick={this.logout} />}
