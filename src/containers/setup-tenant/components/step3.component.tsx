@@ -109,11 +109,11 @@ export default class extends React.PureComponent<StepsProps> {
                   {({ handleSubmit }) => (
                     <StyledForm onSubmit={handleSubmit}>
                       <Text>
-                  Paste the response here:
+                        Paste the response here:
                       </Text>
                       <TextArea name="keys" placeholder="Your Result" />
                       <Text>
-                  Choose your region:
+                        Choose your region:
                       </Text>
                       <StyledSelect name="region" placeholder="AWS Region" options={mapRegions(awsRegions)} />
                       <ButtonWrapper>
@@ -122,7 +122,7 @@ export default class extends React.PureComponent<StepsProps> {
                           <Icon icon="arrow-left" />
                         </NavigationButton>
                         <NavigationButton loading={loading}>
-                    Finish
+                          Finish
                         </NavigationButton>
                       </ButtonWrapper>
                     </StyledForm>
