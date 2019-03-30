@@ -52,19 +52,17 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
           <Header>
             {session && <HeaderLink active={pathname === '/'} icon="home" to="/" />}
             {session && <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings" />}
-            {session && pathname === '/' && (
-              <TimerConsumer>
-                {({ count, delay, isTimerEnabled, setTimerStatus }) => (
-                  <Timer
-                    key={count}
-                    time={delay}
-                    size={40}
-                    active={isTimerEnabled}
-                    onClick={() => setTimerStatus(status => !status)}
-                  />
-                )}
-              </TimerConsumer>
-            )}
+            <TimerConsumer>
+              {({ count, delay, isActive, isVisible, setActive }) => isVisible && (
+                <Timer
+                  key={count}
+                  time={delay}
+                  size={40}
+                  active={isActive}
+                  onClick={() => setActive(status => !status)}
+                />
+              )}
+            </TimerConsumer>
             <Flex />
             <ThemeConsumer>
               {({ dispatch }) => (

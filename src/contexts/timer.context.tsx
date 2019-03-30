@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, memo, useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import noop from 'lodash/noop'
 
 import { useInterval } from '../hooks'
@@ -10,38 +10,43 @@ interface TimerProviderProps {
 interface TimerState {
   count: number,
   delay: number,
-  isTimerEnabled: boolean,
+  isActive: boolean,
+  isVisible: boolean,
   setDelay: Dispatch<SetStateAction<number>>
-  setTimerStatus: Dispatch<SetStateAction<boolean>>
+  setActive: Dispatch<SetStateAction<boolean>>
+  setVisibility: Dispatch<SetStateAction<boolean>>
 }
 
 const initialState: TimerState = {
   count: 0,
   delay: 0,
-  isTimerEnabled: false,
+  isActive: false,
+  isVisible: false,
   setDelay: noop,
-  setTimerStatus: noop,
+  setActive: noop,
+  setVisibility: noop,
 }
 
 const TimerContext = React.createContext(initialState)
 
 const DELAY = 10000
 
-const TimerProvider = memo(({ children }: TimerProviderProps) => {
+const TimerProvider = ({ children }: TimerProviderProps) => {
   const [count, setCount] = useState(1)
   const [delay, setDelay] = useState(DELAY)
-  const [isTimerEnabled, setTimerStatus] = useState(true)
+  const [isActive, setActive] = useState(true)
+  const [isVisible, setVisibility] = useState(false)
 
   useInterval(() => {
     setCount(current => current + 1)
-  }, delay, isTimerEnabled)
+  }, delay, isActive)
 
   return (
-    <TimerContext.Provider value={{ count, delay, isTimerEnabled, setDelay, setTimerStatus }}>
+    <TimerContext.Provider value={{ count, delay, isActive, isVisible, setDelay, setActive, setVisibility }}>
       {children}
     </TimerContext.Provider>
   )
-})
+}
 
 const TimerConsumer = TimerContext.Consumer
 
