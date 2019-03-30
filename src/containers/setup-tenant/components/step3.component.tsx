@@ -2,7 +2,7 @@ import React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
-import { Mutation, MutationFn, Query } from 'react-apollo'
+import { Mutation, MutationFn } from 'react-apollo'
 import { map } from 'lodash'
 
 import TextArea from '../../../components/form/text-area.components'
@@ -10,7 +10,7 @@ import Select from '../../../components/form/select.components'
 import Error from '../../../components/form/error-message.components'
 import Icon from '../../../components/icon.component'
 import { Text, Code, CopyButton, ButtonWrapper, NavigationButton } from '../setup-tenant.styles'
-import { tenantsQuery, awsRegionsQuery, createTenant } from '../../../graphql'
+import { tenantsQuery, createTenant } from '../../../graphql'
 
 const mapRegions = (options: string[]): any => map(options, (x: string) => ({ value: x, label: x }))
 
@@ -38,6 +38,7 @@ interface Values {
 interface StepsProps {
   code: string,
   onBack: () => void,
+  regions: string[]
 }
 
 export default class extends React.PureComponent<StepsProps> {
@@ -88,7 +89,7 @@ export default class extends React.PureComponent<StepsProps> {
   }
 
   public render() {
-    const { code, onBack } = this.props
+    const { code, onBack, regions } = this.props
     const { loading, serverError } = this.state
     return (
       <>
@@ -101,37 +102,33 @@ export default class extends React.PureComponent<StepsProps> {
             <CopyButton icon="copy" />
           </CopyToClipboard>
         </Code>
-        <Query query={awsRegionsQuery}>
-          {({ data: { awsRegions } }) => (
-            <Mutation mutation={createTenant} refetchQueries={[{ query: tenantsQuery }]}>
-              {mutation => (
-                <Form onSubmit={v => this.onSubmit(v as Values, mutation)} validate={v => this.validate(v as Values)}>
-                  {({ handleSubmit }) => (
-                    <StyledForm onSubmit={handleSubmit}>
-                      <Text>
+        <Mutation mutation={createTenant} refetchQueries={[{ query: tenantsQuery }]}>
+          {mutation => (
+            <Form onSubmit={v => this.onSubmit(v as Values, mutation)} validate={v => this.validate(v as Values)}>
+              {({ handleSubmit }) => (
+                <StyledForm onSubmit={handleSubmit}>
+                  <Text>
                         Paste the response here:
-                      </Text>
-                      <TextArea name="keys" placeholder="Your Result" />
-                      <Text>
+                  </Text>
+                  <TextArea name="keys" placeholder="Your Result" />
+                  <Text>
                         Choose your region:
-                      </Text>
-                      <StyledSelect name="region" placeholder="AWS Region" options={mapRegions(awsRegions)} />
-                      <ButtonWrapper>
-                        <ServerError>{serverError}</ServerError>
-                        <NavigationButton onClick={onBack} type="button">
-                          <Icon icon="arrow-left" />
-                        </NavigationButton>
-                        <NavigationButton loading={loading}>
+                  </Text>
+                  <StyledSelect name="region" placeholder="AWS Region" options={mapRegions(regions)} />
+                  <ButtonWrapper>
+                    <ServerError>{serverError}</ServerError>
+                    <NavigationButton onClick={onBack} type="button">
+                      <Icon icon="arrow-left" />
+                    </NavigationButton>
+                    <NavigationButton loading={loading}>
                           Finish
-                        </NavigationButton>
-                      </ButtonWrapper>
-                    </StyledForm>
-                  )}
-                </Form>
+                    </NavigationButton>
+                  </ButtonWrapper>
+                </StyledForm>
               )}
-            </Mutation>
+            </Form>
           )}
-        </Query>
+        </Mutation>
       </>
     )
   }
