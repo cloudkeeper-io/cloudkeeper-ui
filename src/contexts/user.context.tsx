@@ -22,6 +22,9 @@ export const defaultUserContext = {
 
 export const UserContext = React.createContext(defaultUserContext)
 
+const RESTRICTED_REDIRECT = ['/', '/sign-up']
+
+
 export class UserProvider extends React.PureComponent<UserProviderProps, User> {
   public setUser = (user: Partial<User>) => this.setState(user as any)
 
@@ -53,8 +56,7 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
       }
     } catch (e) {
       const { pathname } = window.location
-      const restrictedRedirects = ['/', '/sign-up']
-      if (!restrictedRedirects.includes(pathname)) {
+      if (!RESTRICTED_REDIRECT.includes(pathname)) {
         localStorage.setItem(BACK_URL_KEY, pathname)
       } else {
         return null
@@ -109,7 +111,9 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
       localStorage.removeItem('apollo-cache-persist')
     }
 
-    history.push('/')
+    if (!RESTRICTED_REDIRECT.includes(window.location.pathname)) {
+      history.push('/')
+    }
   }
 
   public getIdToken = async () => {

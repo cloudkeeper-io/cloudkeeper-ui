@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, memo, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { History } from 'history'
 
@@ -58,38 +58,26 @@ interface LoginProps {
   history: History
 }
 
-export default class Login extends React.PureComponent<LoginProps> {
-  public state = {
-    selectedTab: window.location.pathname === '/sign-up' ? 1 : 0,
-  }
+export default memo(({ user, history, history: { location: { pathname } } }: LoginProps) => {
+  const [tab, setTab] = useState(0)
 
-  public render() {
-    const { user, history } = this.props
-    const { selectedTab } = this.state
+  useEffect(() => setTab(pathname === '/sign-up' ? 1 : 0), [pathname])
 
-    return (
-      <Wrapper>
-        <Stars />
-        <Trees />
-        <Content>
-          <Logo />
-          <MainCard>
-            <Tabs
-              tabs={['Sign In', 'Sign Up']}
-              selectedIndex={selectedTab}
-              onChange={(i) => {
-                if (i) {
-                  history.push('/sign-up')
-                } else {
-                  history.push('/')
-                }
-                this.setState({ selectedTab: i })
-              }}
-            />
-            {selectedTab ? <SignUpForm user={user} /> : <LoginForm user={user} />}
-          </MainCard>
-        </Content>
-      </Wrapper>
-    )
-  }
-}
+  return (
+    <Wrapper>
+      <Stars />
+      <Trees />
+      <Content>
+        <Logo />
+        <MainCard>
+          <Tabs
+            tabs={['Sign In', 'Sign Up']}
+            selectedIndex={tab}
+            onChange={i => (i ? history.push('/sign-up') : history.push('/'))}
+          />
+          {tab ? <SignUpForm user={user} /> : <LoginForm user={user} />}
+        </MainCard>
+      </Content>
+    </Wrapper>
+  )
+})

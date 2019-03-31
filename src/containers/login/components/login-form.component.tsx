@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { useState, memo } from 'react'
 
 import { Form } from 'react-final-form'
 import Field from '../../../components/form/field.components'
@@ -14,27 +14,24 @@ interface LoginProps {
   user: User
 }
 
-export default class extends PureComponent<LoginProps> {
-  public state = {
-    serverError: null,
-  }
+export default memo(({ user }: LoginProps) => {
+  const [serverError, setServerError] = useState('')
 
-  public onLogin = async (values: Values) => {
-    const { user } = this.props
+  const onLogin = async (values: Values) => {
     if (user.loading) {
       return
     }
 
-    this.setState({ serverError: null })
+    setServerError('')
 
     try {
       await user.login(values.email, values.password)
     } catch (error) {
-      this.setState({ serverError: error.message || 'Server error' })
+      setServerError(error.message || 'Server error')
     }
   }
 
-  public validate = (values: Values) => {
+  const validate = (values: Values) => {
     const errors = {} as Values
     if (!values.email) {
       errors.email = 'Email is Required'
@@ -48,22 +45,18 @@ export default class extends PureComponent<LoginProps> {
     return errors
   }
 
-  render() {
-    const { user: { loading } } = this.props
-    const { serverError } = this.state
-    return (
-      <Form onSubmit={v => this.onLogin(v as Values)} validate={v => this.validate(v as Values)}>
-        {({ handleSubmit, pristine, invalid }) => (
-          <StyledForm onSubmit={handleSubmit}>
-            <FormContent>
-              <Field name="email" placeholder="Email Address" autoComplete="email" />
-              <Field name="password" placeholder="Password" autoComplete="password" type="password" />
-              <ServerError>{serverError}</ServerError>
-              <SubmitButton type="submit" disabled={pristine || invalid} loading={loading!}>Log in</SubmitButton>
-            </FormContent>
-          </StyledForm>
-        )}
-      </Form>
-    )
-  }
-}
+  return (
+    <Form onSubmit={v => onLogin(v as Values)} validate={v => validate(v as Values)}>
+      {({ handleSubmit, pristine, invalid }) => (
+        <StyledForm onSubmit={handleSubmit}>
+          <FormContent>
+            <Field name="email" placeholder="Email Address" autoComplete="email" />
+            <Field name="password" placeholder="Password" autoComplete="password" type="password" />
+            <ServerError>{serverError}</ServerError>
+            <SubmitButton type="submit" disabled={pristine || invalid} loading={user.loading!}>Log in</SubmitButton>
+          </FormContent>
+        </StyledForm>
+      )}
+    </Form>
+  )
+})

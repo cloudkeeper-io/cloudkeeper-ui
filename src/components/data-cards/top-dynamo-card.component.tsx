@@ -1,6 +1,10 @@
 import React from 'react'
 import styled, { withTheme } from 'styled-components/macro'
 import map from 'lodash/map'
+import startCase from 'lodash/startCase'
+import toLower from 'lodash/toLower'
+import first from 'lodash/first'
+import last from 'lodash/last'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime } from 'luxon'
 
@@ -8,7 +12,7 @@ import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
 import AnimatedText from '../animated-text.component'
-import { toOrdinal } from '../../utils'
+import { bytesToSize, toOrdinal } from '../../utils'
 
 const StyledCard = styled(Card)<{ isPrimary: boolean }>`  margin: auto;
   width: 100%;
@@ -77,55 +81,50 @@ const TabIndicator = styled(StepIndicator)`
 const StyledTooltip = Tooltip as any
 
 interface Data {
-  lambdaName: string
-  runtime?: string
-  invocations?: number
-  invocationsPerSecond?: number
-  averageDuration?: number
-  errors?: number
-  errorRate?: number
-  maxDuration?: number
-  size?: number
-  cost?: number
-  codeSize?: number
-  timeout?: number
+  name: string
+  billingMode?: string
+  consumedRead?: number
+  items?: number
+  provisionedRead?: number
+  sizeBytes?: number
   dataPoints: Array<{
-    invocations: number
+    consumedRead: number
+    provisionedRead: number
     dateTime: string
   }>
 }
 
-interface LambdaInfoItem {
+interface DynamoInfoItem {
   unit: keyof Data
   text: string
   valueFn: (value: any) => any
 }
 
-interface MostInvokedCardProps {
+interface TopDynamoCardProps {
   data: Data []
   count: number
   header?: string
-  lambdaHeader?: string
+  dynamoHeader?: string
   className?: string
-  unit: 'invocations' | 'averageDuration' | 'errors' | 'cost'
+  units?: string[]
   summaryFormatter: (value: Data) => string
   tooltipFormatter: (value: string) => string
   yAxisFormatter: (value: any) => any
-  lambdaInfo?: LambdaInfoItem []
+  dynamoInfo?: DynamoInfoItem []
   theme: any
 }
 
-const DataCard = (props: MostInvokedCardProps) => {
-  const { data, lambdaInfo, count, unit, theme, header } = props
-  const { lambdaHeader, tooltipFormatter, yAxisFormatter, summaryFormatter, className } = props
+const DataCard = (props: TopDynamoCardProps) => {
+  const { data, dynamoInfo, count, theme, header, units } = props
+  const { dynamoHeader, tooltipFormatter, yAxisFormatter, summaryFormatter, className } = props
   const TABS_AMOUNT = data.length + 1
   const { dataCard: colors } = theme
   const [tab, setTab] = useSwitchTab(count, TABS_AMOUNT, 0)
-  const lambda = data[tab - 1]
-  const dataPoints = lambda ? lambda.dataPoints : []
+  const dynamo = data[tab - 1]
+  const dataPoints = dynamo ? dynamo.dataPoints : []
 
   return (
-    <StyledCard showBorder={false} className={className} isPrimary={Boolean(tab)}>
+    <StyledCard showBorder={false} className={className} isPrimary>
       <Content>
         {tab === 0 && (
           <Tab>
@@ -133,8 +132,8 @@ const DataCard = (props: MostInvokedCardProps) => {
               {header}
             </Header>
             {map(data, x => (
-              <Text key={x.lambdaName} trigger={tab}>
-                <div>{x.lambdaName}</div>
+              <Text key={x.name} trigger={tab}>
+                <div>{x.name}</div>
                 <div>{summaryFormatter(x)}</div>
               </Text>
             ))}
@@ -143,9 +142,9 @@ const DataCard = (props: MostInvokedCardProps) => {
         {tab > 0 && (
           <Tab>
             <Header>
-              {`${toOrdinal(tab)} ${lambdaHeader}`}
+              {`${toOrdinal(tab)} ${dynamoHeader}`}
             </Header>
-            <Text>{data[tab - 1].lambdaName}</Text>
+            <Text>{`${data[tab - 1].name} (billing mode: ${toLower(startCase(dynamo.billingMode))})`}</Text>
             <GraphContainer>
               <ResponsiveContainer>
                 <LineChart data={dataPoints} margin={{ top: 0, right: -25, left: -25, bottom: 0 }}>
@@ -167,11 +166,20 @@ const DataCard = (props: MostInvokedCardProps) => {
                   <CartesianGrid stroke={tab ? colors.axis : colors.secondaryAxis} strokeOpacity={0.35} />
                   <Line
                     type="linear"
-                    dataKey={unit}
+                    dataKey={first(units)!}
                     stroke={colors.lines}
                     dot={dataPoints.length < 3}
                     strokeWidth={1.5}
                   />
+                  {dynamo.billingMode === 'PROVISIONED' && (
+                    <Line
+                      type="linear"
+                      dataKey={last(units)!}
+                      stroke="#DB60FF"
+                      dot={dataPoints.length < 3}
+                      strokeWidth={1.5}
+                    />
+                  )}
                   <StyledTooltip
                     wrapperStyle={{ opacity: 0.9 }}
                     contentStyle={{ background: tab ? colors.tooltipBackground : colors.secondaryTooltipBackground }}
@@ -190,30 +198,24 @@ const DataCard = (props: MostInvokedCardProps) => {
             </GraphContainer>
             <LambdaInfo>
               <LambdaInfoColumn>
-                {map(lambdaInfo, x => lambda[x.unit] && (
+                {map(dynamoInfo, x => dynamo[x.unit] && (
                   <Text key={x.unit} trigger={tab}>
                     {x.text}:
-                    <Value>{x.valueFn(lambda[x.unit])}</Value>
+                    <Value>{x.valueFn(dynamo[x.unit])}</Value>
                   </Text>
                 ))}
               </LambdaInfoColumn>
               <LambdaInfoColumn>
-                {lambda.runtime && (
+                {dynamo.items && (
                   <Text trigger={tab}>
-                    runtime:
-                    <Value>{lambda.runtime}</Value>
+                    items:
+                    <Value>{dynamo.items.toLocaleString('ru')}</Value>
                   </Text>
                 )}
-                {lambda.size && (
+                {dynamo.sizeBytes && (
                   <Text trigger={tab}>
-                    memory size:
-                    <Value>{lambda.size}MB</Value>
-                  </Text>
-                )}
-                {lambda.timeout && (
-                  <Text trigger={tab}>
-                    timeout:
-                    <Value>{lambda.timeout}s</Value>
+                    size:
+                    <Value>{bytesToSize(dynamo.sizeBytes)}</Value>
                   </Text>
                 )}
               </LambdaInfoColumn>
@@ -221,7 +223,7 @@ const DataCard = (props: MostInvokedCardProps) => {
           </Tab>
         )}
         <TabIndicator
-          color={tab ? colors.primaryTab : colors.secondaryTab}
+          color={colors.primaryTab}
           index={tab}
           steps={TABS_AMOUNT}
           onClick={i => setTab(i)}

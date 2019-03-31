@@ -10,7 +10,7 @@ import LoadingPage from '../components/loading-page.component'
 import { tenantsQuery } from '../graphql'
 
 const SetupTenant = lazy(() => import('./setup-tenant/setup-tenant.container'))
-const Dashboard = lazy(() => import('./dashboard.container'))
+const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
 const Login = lazy(() => import('./login/login.container'))
 const Error = lazy(() => import('./error.container'))
 const Settings = lazy(() => import('./settings.container'))

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, memo } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
@@ -41,14 +41,13 @@ interface StepsProps {
   regions: string[]
 }
 
-export default class extends React.PureComponent<StepsProps> {
-  public state = {
-    loading: false,
-    serverError: '',
-  }
+export default memo(({ code, onBack, regions }: StepsProps) => {
+  const [loading, setLoading] = useState(false)
+  const [serverError, setServerError] = useState('')
 
-  public onSubmit = async (v: Values, mutation: MutationFn) => {
-    this.setState({ loading: true, serverError: '' })
+  const onSubmit = async (v: Values, mutation: MutationFn) => {
+    setLoading(false)
+    setServerError('')
     try {
       const keys = JSON.parse(v.keys).AccessKey
       const parameters = {
@@ -60,13 +59,13 @@ export default class extends React.PureComponent<StepsProps> {
 
       await mutation({ variables: parameters })
     } catch (err) {
-      this.setState({ serverError: 'Server Error. Try Again Later' })
+      setServerError('Server Error. Try Again Later')
     } finally {
-      this.setState({ loading: false })
+      setLoading(false)
     }
   }
 
-  public validate = (values: Values) => {
+  const validate = (values: Values) => {
     const errors = {} as Values
     if (!values.keys) {
       errors.keys = 'Your Response is Required'
@@ -88,48 +87,44 @@ export default class extends React.PureComponent<StepsProps> {
     return errors
   }
 
-  public render() {
-    const { code, onBack, regions } = this.props
-    const { loading, serverError } = this.state
-    return (
-      <>
-        <Text>
-          Our last step is to generate credentials for the user we created:
-        </Text>
-        <Code>
-          {code}
-          <CopyToClipboard text={code}>
-            <CopyButton icon="copy" />
-          </CopyToClipboard>
-        </Code>
-        <Mutation mutation={createTenant} refetchQueries={[{ query: tenantsQuery }]}>
-          {mutation => (
-            <Form onSubmit={v => this.onSubmit(v as Values, mutation)} validate={v => this.validate(v as Values)}>
-              {({ handleSubmit }) => (
-                <StyledForm onSubmit={handleSubmit}>
-                  <Text>
-                        Paste the response here:
-                  </Text>
-                  <TextArea name="keys" placeholder="Your Result" />
-                  <Text>
-                        Choose your region:
-                  </Text>
-                  <StyledSelect name="region" placeholder="AWS Region" options={mapRegions(regions)} />
-                  <ButtonWrapper>
-                    <ServerError>{serverError}</ServerError>
-                    <NavigationButton onClick={onBack} type="button">
-                      <Icon icon="arrow-left" />
-                    </NavigationButton>
-                    <NavigationButton loading={loading}>
-                          Finish
-                    </NavigationButton>
-                  </ButtonWrapper>
-                </StyledForm>
-              )}
-            </Form>
-          )}
-        </Mutation>
-      </>
-    )
-  }
-}
+  return (
+    <>
+      <Text>
+        Our last step is to generate credentials for the user we created:
+      </Text>
+      <Code>
+        {code}
+        <CopyToClipboard text={code}>
+          <CopyButton icon="copy" />
+        </CopyToClipboard>
+      </Code>
+      <Mutation mutation={createTenant} refetchQueries={[{ query: tenantsQuery }]}>
+        {mutation => (
+          <Form onSubmit={v => onSubmit(v as Values, mutation)} validate={v => validate(v as Values)}>
+            {({ handleSubmit }) => (
+              <StyledForm onSubmit={handleSubmit}>
+                <Text>
+                  Paste the response here:
+                </Text>
+                <TextArea name="keys" placeholder="Your Result" />
+                <Text>
+                  Choose your region:
+                </Text>
+                <StyledSelect name="region" placeholder="AWS Region" options={mapRegions(regions)} />
+                <ButtonWrapper>
+                  <ServerError>{serverError}</ServerError>
+                  <NavigationButton onClick={onBack} type="button">
+                    <Icon icon="arrow-left" />
+                  </NavigationButton>
+                  <NavigationButton loading={loading}>
+                    Finish
+                  </NavigationButton>
+                </ButtonWrapper>
+              </StyledForm>
+            )}
+          </Form>
+        )}
+      </Mutation>
+    </>
+  )
+})
