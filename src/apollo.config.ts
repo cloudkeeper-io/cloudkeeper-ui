@@ -7,7 +7,7 @@ import ApolloClient from 'apollo-client'
 import { getConfig } from './utils'
 
 const PERSIST_LAST_PURGE_KEY = 'PERSIST_LAST_PURGE_KEY'
-const PERSIST_TTL = 1000 * 60 * 30 // 30 minutes
+const PERSIST_TTL = 1000 * 60 * 20 // 20 minutes
 
 export const getApolloClient = (getIdToken: () => Promise<string>) => {
   const cache = new InMemoryCache()

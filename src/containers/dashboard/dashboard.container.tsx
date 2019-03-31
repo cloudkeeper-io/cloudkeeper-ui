@@ -54,7 +54,7 @@ export default ({ tenants }: DashboardProps) => {
   }, [isDataLoaded, setActive, setVisibility])
 
   return (
-    <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }}>
+    <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }} pollInterval={30 * 60 * 1000}>
       {({ data, loading, error }) => {
         if (loading) {
           return <Loading height="calc(100vh - 60px)" />
