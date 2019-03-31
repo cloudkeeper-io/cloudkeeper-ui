@@ -9,10 +9,11 @@ import { formatNumber, msToSeconds } from '../../utils'
 
 interface GraphsProps {
   count: number
+  timeAxisFormat: string
   data: any
 }
 
-export const LambdasGraphs = memo(({ count, data }: GraphsProps) => (
+export const LambdasGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps) => (
   <>
     <TotalInvocationsCard count={count} data={data.totals} />
     <TopLambdasCard
@@ -24,6 +25,7 @@ export const LambdasGraphs = memo(({ count, data }: GraphsProps) => (
       summaryFormatter={x => `${x.invocations!.toLocaleString('ru')} invocations`}
       yAxisFormatter={x => formatNumber(x)}
       tooltipFormatter={x => Number(x).toLocaleString()}
+      timeAxisFormat={timeAxisFormat}
       lambdaInfo={[
         {
           unit: 'invocations',
@@ -46,6 +48,7 @@ export const LambdasGraphs = memo(({ count, data }: GraphsProps) => (
       summaryFormatter={x => `${msToSeconds(x.averageDuration!)} sec average`}
       yAxisFormatter={x => `${msToSeconds(x)}s`}
       tooltipFormatter={x => `${msToSeconds(x)}s`}
+      timeAxisFormat={timeAxisFormat}
       lambdaInfo={[
         {
           unit: 'averageDuration',
@@ -68,6 +71,7 @@ export const LambdasGraphs = memo(({ count, data }: GraphsProps) => (
       summaryFormatter={x => `${x.errors!.toLocaleString('ru')} errors`}
       yAxisFormatter={x => formatNumber(x)}
       tooltipFormatter={x => Number(x).toLocaleString()}
+      timeAxisFormat={timeAxisFormat}
       lambdaInfo={[
         {
           unit: 'errors',
@@ -90,6 +94,7 @@ export const LambdasGraphs = memo(({ count, data }: GraphsProps) => (
       summaryFormatter={x => `$ ${round(x.cost!, 2).toLocaleString('en')}`}
       yAxisFormatter={x => `$ ${round(x, 2).toLocaleString('en')}`}
       tooltipFormatter={x => `$${round(Number(x), 2).toLocaleString('en')}`}
+      timeAxisFormat={timeAxisFormat}
       lambdaInfo={[
         {
           unit: 'cost',

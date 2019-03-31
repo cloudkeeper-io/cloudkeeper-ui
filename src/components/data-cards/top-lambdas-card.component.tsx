@@ -105,6 +105,7 @@ interface LambdaInfoItem {
 interface MostInvokedCardProps {
   data: Data []
   count: number
+  timeAxisFormat: string
   header?: string
   lambdaHeader?: string
   className?: string
@@ -117,7 +118,7 @@ interface MostInvokedCardProps {
 }
 
 const DataCard = (props: MostInvokedCardProps) => {
-  const { data, lambdaInfo, count, unit, theme, header } = props
+  const { data, lambdaInfo, count, unit, theme, header, timeAxisFormat } = props
   const { lambdaHeader, tooltipFormatter, yAxisFormatter, summaryFormatter, className } = props
   const TABS_AMOUNT = data.length + 1
   const { dataCard: colors } = theme
@@ -159,7 +160,7 @@ const DataCard = (props: MostInvokedCardProps) => {
                     stroke={tab ? colors.axis : colors.secondaryAxis}
                     tick={{ fontSize: 12 }}
                     tickLine={false}
-                    tickFormatter={x => DateTime.fromISO(x).toFormat('HH:mm')}
+                    tickFormatter={x => DateTime.fromISO(x).toFormat(timeAxisFormat)}
                   />
                   <YAxis
                     stroke={tab ? colors.axis : colors.secondaryAxis}

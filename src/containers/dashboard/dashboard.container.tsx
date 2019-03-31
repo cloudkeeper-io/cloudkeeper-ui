@@ -75,15 +75,15 @@ export default ({ tenants }: DashboardProps) => {
               Last 24h
             </Title>
             <CardsWrapper>
-              <LambdasGraphs count={count} data={data.lambdasData.last24Hours} />
-              <DynamoGraphs count={count} data={data.dynamoData.last24Hours} />
+              <LambdasGraphs timeAxisFormat="HH:mm" count={count} data={data.lambdasData.last24Hours} />
+              <DynamoGraphs timeAxisFormat="HH:mm" count={count} data={data.dynamoData.last24Hours} />
             </CardsWrapper>
             <Title>
               Last 30 days
             </Title>
             <CardsWrapper>
-              <LambdasGraphs count={count} data={data.lambdasData.last30Days} />
-              <DynamoGraphs count={count} data={data.dynamoData.last30Days} />
+              <LambdasGraphs timeAxisFormat="LLL d" count={count} data={data.lambdasData.last30Days} />
+              <DynamoGraphs timeAxisFormat="LLL d" count={count} data={data.dynamoData.last30Days} />
             </CardsWrapper>
           </Wrapper>
         )

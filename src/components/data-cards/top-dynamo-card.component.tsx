@@ -135,6 +135,7 @@ interface DynamoInfoItem {
 interface TopDynamoCardProps {
   data: Data []
   count: number
+  timeAxisFormat: string
   header?: string
   dynamoHeader?: string
   className?: string
@@ -150,7 +151,7 @@ interface TopDynamoCardProps {
 }
 
 const DataCard = (props: TopDynamoCardProps) => {
-  const { data, dynamoInfo, count, theme, header, units } = props
+  const { data, dynamoInfo, count, theme, header, units, timeAxisFormat } = props
   const { dynamoHeader, tooltipFormatter, yAxisFormatter, summaryFormatter, className } = props
   const TABS_AMOUNT = data.length + 1
   const { dataCard: colors } = theme
@@ -192,7 +193,7 @@ const DataCard = (props: TopDynamoCardProps) => {
                     stroke={tab ? colors.axis : colors.secondaryAxis}
                     tick={{ fontSize: 12 }}
                     tickLine={false}
-                    tickFormatter={x => DateTime.fromISO(x).toFormat('HH:mm')}
+                    tickFormatter={x => DateTime.fromISO(x).toFormat(timeAxisFormat)}
                   />
                   <YAxis
                     stroke={tab ? colors.axis : colors.secondaryAxis}

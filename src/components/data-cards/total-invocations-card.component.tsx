@@ -3,6 +3,7 @@ import styled, { withTheme } from 'styled-components/macro'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime } from 'luxon'
 import round from 'lodash/round'
+import map from 'lodash/map'
 
 import { formatNumber } from '../../utils'
 import { useSwitchTab } from '../../hooks'
@@ -91,6 +92,7 @@ const DataCard = ({ data, count, theme, className }: TotalInvocationsCardProps) 
   const { dataCard: colors } = theme
   const [tab, setTab] = useSwitchTab(count, tabs.length)
   const unit = tabs[tab]
+  const dataPoints = map(data.dataPoints, x => ({ ...x, value: x[unit] }))
 
   return (
     <StyledCard showBorder={false} className={className}>
@@ -104,7 +106,7 @@ const DataCard = ({ data, count, theme, className }: TotalInvocationsCardProps) 
         </Description>
       </Header>
       <ResponsiveContainer>
-        <LineChart data={data.dataPoints} margin={{ top: 20, right: 30, left: -5, bottom: 30 }}>
+        <LineChart data={dataPoints} margin={{ top: 20, right: 30, left: -5, bottom: 30 }}>
           <XAxis
             dataKey="dateTime"
             stroke={colors.axis}
@@ -121,7 +123,7 @@ const DataCard = ({ data, count, theme, className }: TotalInvocationsCardProps) 
             tickFormatter={tickFormatters[tab]}
           />
           <CartesianGrid stroke={colors.axis} strokeOpacity={0.35} />
-          <Line type="linear" dataKey={unit} stroke={colors.lines} dot={false} strokeWidth={1.5} />
+          <Line type="linear" dataKey="value" stroke={colors.lines} dot={false} strokeWidth={1.5} />
           <StyledTooltip
             wrapperStyle={{ opacity: 0.9 }}
             contentStyle={{ background: colors.tooltipBackground }}
