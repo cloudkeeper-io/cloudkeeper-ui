@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, memo } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { History } from 'history'
 import { ApolloClient } from 'apollo-client'
 import jwtDecode from 'jwt-decode'
@@ -25,7 +25,7 @@ export const UserContext = React.createContext({} as UserState)
 
 const RESTRICTED_REDIRECT = ['/', '/sign-up']
 
-export const UserProvider = memo(({ children, history }: UserProviderProps) => {
+export const UserProvider = ({ children, history }: UserProviderProps) => {
   const [user, setUser] = useState<User>({
     username: '',
     loading: false,
@@ -35,10 +35,8 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
   })
 
   const signOut = useCallback(async () => {
-    const { session } = user
-
     try {
-      if (session) {
+      if (user.session) {
         setUser(current => ({ ...current, session: null }))
         localStorage.removeItem(SESSION_KEY)
         if (user.apolloClient) {
@@ -55,9 +53,9 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
     if (!RESTRICTED_REDIRECT.includes(window.location.pathname)) {
       history.push('/')
     }
-  }, [history, user])
+  }, [history, user.apolloClient, user.session])
 
-  const setSession = useCallback(async (session: Session) => {
+  const setSession = async (session: Session) => {
     localStorage.setItem(SESSION_KEY, JSON.stringify(session))
     const { accessToken, refreshToken } = session
     const decodedToken = accessToken ? jwtDecode(accessToken) : {} as any
@@ -73,34 +71,9 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
     }
     setUser(current => ({ ...current, session }))
     return session
-  }, [])
+  }
 
-  const getSession = useCallback(async (): Promise<Session | null> => {
-    const { session } = user
-
-    try {
-      const savedSession = session || JSON.parse(localStorage.getItem(SESSION_KEY)!)
-      if (savedSession) {
-        return await setSession(savedSession)
-      }
-    } catch (e) {
-      const { pathname } = window.location
-      if (!RESTRICTED_REDIRECT.includes(pathname)) {
-        localStorage.setItem(BACK_URL_KEY, pathname)
-      } else {
-        return null
-      }
-    }
-    await signOut()
-    return null
-  }, [setSession, signOut, user])
-
-  const getIdToken = useCallback(async () => {
-    const session = await getSession()
-    return session ? session.accessToken : ''
-  }, [getSession])
-
-  const login = useCallback(async (email: string, password: string) => {
+  const login = async (email: string, password: string) => {
     const backUrl = localStorage.getItem(BACK_URL_KEY)
     setUser(current => ({ ...current, loading: true }))
     try {
@@ -111,9 +84,9 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
     } finally {
       setUser(current => ({ ...current, loading: false }))
     }
-  }, [history, setSession])
+  }
 
-  const signUp = useCallback(async (email: string, password: string) => {
+  const signUp = async (email: string, password: string) => {
     setUser(current => ({ ...current, loading: true }))
     try {
       const session = await postSignUp(email, password)
@@ -123,16 +96,27 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
     } finally {
       setUser(current => ({ ...current, loading: false }))
     }
-  }, [history, setSession])
+  }
+
+  useEffect(() => {
+    try {
+      const savedSession = JSON.parse(localStorage.getItem(SESSION_KEY)!)
+      if (savedSession) {
+        setSession(savedSession)
+      }
+    } catch (e) {
+      localStorage.removeItem(SESSION_KEY)
+      if (!RESTRICTED_REDIRECT.includes(window.location.pathname)) {
+        setUser(current => ({ ...current, isUserLoaded: true }))
+        history.push('/')
+      }
+    }
+  }, [history])
 
   useEffect((() => {
-    async function fetchUser() {
-      await getSession()
-      setUser(current => ({ ...current, isUserLoaded: true, apolloClient: getApolloClient(getIdToken) }))
-    }
-
-    fetchUser()
-  }), [getIdToken, getSession])
+    const accessToken = user.session ? user.session.accessToken : ''
+    setUser(current => ({ ...current, isUserLoaded: true, apolloClient: getApolloClient(accessToken) }))
+  }), [user.session])
 
 
   const element = React.cloneElement(children({ client: user.apolloClient! }))
@@ -142,4 +126,4 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
       {element}
     </UserContext.Provider>
   )
-})
+}

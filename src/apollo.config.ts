@@ -9,7 +9,7 @@ import { getConfig } from './utils'
 const PERSIST_LAST_PURGE_KEY = 'PERSIST_LAST_PURGE_KEY'
 const PERSIST_TTL = 1000 * 60 * 30 // 30 minutes
 
-export const getApolloClient = (getIdToken: () => Promise<string>) => {
+export const getApolloClient = (accessToken: string) => {
   const cache = new InMemoryCache()
 
   const persistor = new CachePersistor({
@@ -32,10 +32,7 @@ export const getApolloClient = (getIdToken: () => Promise<string>) => {
 
   const httpLink = createHttpLink({ uri: getConfig().apolloUri })
 
-  const middlewareLink = setContext(async () => {
-    const jwtToken = await getIdToken()
-    return { headers: { authorization: `Bearer ${jwtToken}` } }
-  })
+  const middlewareLink = setContext(() => ({ headers: { authorization: `Bearer ${accessToken}` } }))
 
   const link = middlewareLink.concat(httpLink)
 
