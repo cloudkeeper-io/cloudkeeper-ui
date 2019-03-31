@@ -7,5 +7,5 @@ export function useSwitchTab(trigger: any, tabsAmount: number, initialState = 0)
     setTab(tab => (tab + 1 >= tabsAmount ? 0 : tab + 1))
   }, [tabsAmount, trigger])
 
-  return [currentTab, setTab]
+  return [currentTab > -1 ? currentTab : initialState, setTab]
 }

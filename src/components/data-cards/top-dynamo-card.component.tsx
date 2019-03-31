@@ -5,8 +5,11 @@ import startCase from 'lodash/startCase'
 import toLower from 'lodash/toLower'
 import first from 'lodash/first'
 import last from 'lodash/last'
+import isEmpty from 'lodash/isEmpty'
+import isNil from 'lodash/isNil'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime } from 'luxon'
+import { transparentize } from 'polished'
 
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
@@ -44,6 +47,7 @@ const Text = styled(AnimatedText)`
   margin-bottom: 8px;
   font-size: 14px;
   line-height: 19px;
+  white-space: nowrap;
   :last-child {
     margin-bottom: 0;
   }
@@ -61,15 +65,34 @@ const GraphContainer = styled.div`
 `
 const Tab = styled.div`
   width: 100%;
+  max-height: calc(100% - 22px);
   flex: 1;
 `
-const LambdaInfo = styled.div`
+const Legend = styled.div`
+  display: flex;
+  margin-bottom: 5px;
+`
+const LegendItem = styled.div<{ color: string }>`
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-right: 20px;
+  color: ${p => p.color};
+`
+const LegendLine = styled.div<{ color: string }>`
+  width: 40px;
+  margin-right: 10px;
+  height: 2px;
+  background: ${p => p.color};
+  box-shadow: 0 0 4px ${p => transparentize(0.5, p.color)};
+`
+const DynamoInfo = styled.div`
   display: flex;
   ${Text} {
     margin-bottom: 3px;
   }
 `
-const LambdaInfoColumn = styled.div`
+const DynamoInfoColumn = styled.div`
   flex: 1
 `
 const TabIndicator = styled(StepIndicator)`
@@ -84,8 +107,17 @@ interface Data {
   name: string
   billingMode?: string
   consumedRead?: number
-  items?: number
   provisionedRead?: number
+  averageConsumedRead?: number
+  consumedWrite?: number
+  provisionedWrite?: number
+  averageConsumedWrite?: number
+  readPrice?: number
+  writePrice?: number
+  throttledRequests?: number
+  throttledReads?: number
+  throttledWrites?: number
+  items?: number
   sizeBytes?: number
   dataPoints: Array<{
     consumedRead: number
@@ -106,7 +138,10 @@ interface TopDynamoCardProps {
   header?: string
   dynamoHeader?: string
   className?: string
-  units?: string[]
+  units?: Array<{
+    label: string
+    value: string
+  }>
   summaryFormatter: (value: Data) => string
   tooltipFormatter: (value: string) => string
   yAxisFormatter: (value: any) => any
@@ -123,13 +158,17 @@ const DataCard = (props: TopDynamoCardProps) => {
   const dynamo = data[tab - 1]
   const dataPoints = dynamo ? dynamo.dataPoints : []
 
+  if (isEmpty(data)) {
+    return null
+  }
+
   return (
     <StyledCard showBorder={false} className={className} isPrimary>
       <Content>
         {tab === 0 && (
           <Tab>
             <Header>
-              {header}
+              {`Top ${data.length} ${header}`}
             </Header>
             {map(data, x => (
               <Text key={x.name} trigger={tab}>
@@ -166,7 +205,8 @@ const DataCard = (props: TopDynamoCardProps) => {
                   <CartesianGrid stroke={tab ? colors.axis : colors.secondaryAxis} strokeOpacity={0.35} />
                   <Line
                     type="linear"
-                    dataKey={first(units)!}
+                    dataKey={first(units)!.value}
+                    name={first(units)!.label}
                     stroke={colors.lines}
                     dot={dataPoints.length < 3}
                     strokeWidth={1.5}
@@ -174,7 +214,8 @@ const DataCard = (props: TopDynamoCardProps) => {
                   {dynamo.billingMode === 'PROVISIONED' && (
                     <Line
                       type="linear"
-                      dataKey={last(units)!}
+                      dataKey={last(units)!.value}
+                      name={last(units)!.label}
                       stroke="#DB60FF"
                       dot={dataPoints.length < 3}
                       strokeWidth={1.5}
@@ -196,16 +237,24 @@ const DataCard = (props: TopDynamoCardProps) => {
                 </LineChart>
               </ResponsiveContainer>
             </GraphContainer>
-            <LambdaInfo>
-              <LambdaInfoColumn>
-                {map(dynamoInfo, x => dynamo[x.unit] && (
+            <Legend>
+              {map(units, (unit, index) => (
+                <LegendItem key={unit.label} color={index ? '#DB60FF' : colors.lines}>
+                  <LegendLine color={index ? '#DB60FF' : colors.lines} />
+                  {unit.label}
+                </LegendItem>
+              ))}
+            </Legend>
+            <DynamoInfo>
+              <DynamoInfoColumn>
+                {map(dynamoInfo, x => !isNil(dynamo[x.unit]) && (
                   <Text key={x.unit} trigger={tab}>
                     {x.text}:
                     <Value>{x.valueFn(dynamo[x.unit])}</Value>
                   </Text>
                 ))}
-              </LambdaInfoColumn>
-              <LambdaInfoColumn>
+              </DynamoInfoColumn>
+              <DynamoInfoColumn>
                 {dynamo.items && (
                   <Text trigger={tab}>
                     items:
@@ -218,8 +267,8 @@ const DataCard = (props: TopDynamoCardProps) => {
                     <Value>{bytesToSize(dynamo.sizeBytes)}</Value>
                   </Text>
                 )}
-              </LambdaInfoColumn>
-            </LambdaInfo>
+              </DynamoInfoColumn>
+            </DynamoInfo>
           </Tab>
         )}
         <TabIndicator

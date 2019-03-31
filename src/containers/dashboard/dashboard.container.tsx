@@ -8,8 +8,8 @@ import Loading from '../../components/loading.component'
 import { dashboardQuery } from '../../graphql'
 import { Tenant } from '../../models'
 import { TimerContext } from '../../contexts'
-import { LambdasGraphs24h, LambdasGraphs30d } from './dashboard-lambdas.cards'
-import { DynamoGraphs24h } from './dashboard-dynamo.cards'
+import { LambdasGraphs } from './dashboard-lambdas.cards'
+import { DynamoGraphs } from './dashboard-dynamo.cards'
 
 const Wrapper = styled.div`
   position: relative;
@@ -44,7 +44,7 @@ export default ({ tenants }: DashboardProps) => {
   useEffect(() => {
     if (isDataLoaded) {
       setDataLoaded(true)
-      setActive(false)
+      setActive(true)
       setVisibility(true)
     }
     return () => {
@@ -75,14 +75,15 @@ export default ({ tenants }: DashboardProps) => {
               Last 24h
             </Title>
             <CardsWrapper>
-              <LambdasGraphs24h count={count} data={data.lambdasData.last24Hours} />
-              <DynamoGraphs24h count={count} data={data.dynamoData.last24Hours} />
+              <LambdasGraphs count={count} data={data.lambdasData.last24Hours} />
+              <DynamoGraphs count={count} data={data.dynamoData.last24Hours} />
             </CardsWrapper>
             <Title>
               Last 30 days
             </Title>
             <CardsWrapper>
-              <LambdasGraphs30d count={count} data={data.lambdasData.last30Days} />
+              <LambdasGraphs count={count} data={data.lambdasData.last30Days} />
+              <DynamoGraphs count={count} data={data.dynamoData.last30Days} />
             </CardsWrapper>
           </Wrapper>
         )

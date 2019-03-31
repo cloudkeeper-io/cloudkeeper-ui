@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { withTheme } from 'styled-components/macro'
 import map from 'lodash/map'
+import isEmpty from 'lodash/isEmpty'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime } from 'luxon'
 
@@ -124,13 +125,17 @@ const DataCard = (props: MostInvokedCardProps) => {
   const lambda = data[tab - 1]
   const dataPoints = lambda ? lambda.dataPoints : []
 
+  if (isEmpty(data)) {
+    return null
+  }
+
   return (
     <StyledCard showBorder={false} className={className} isPrimary={Boolean(tab)}>
       <Content>
         {tab === 0 && (
           <Tab>
             <Header>
-              {header}
+              {`Top ${data.length} ${header}`}
             </Header>
             {map(data, x => (
               <Text key={x.lambdaName} trigger={tab}>

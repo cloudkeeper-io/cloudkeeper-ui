@@ -140,6 +140,7 @@ export const dashboardQuery = gql`
       last24Hours {
         mostReadTables {
           name
+          averageConsumedRead
           consumedRead
           provisionedRead
           billingMode
@@ -153,6 +154,7 @@ export const dashboardQuery = gql`
         }
         mostWritesTables {
           name
+          averageConsumedWrite
           consumedWrite
           provisionedWrite
           billingMode
@@ -200,6 +202,7 @@ export const dashboardQuery = gql`
       last30Days {
         mostReadTables {
           name
+          averageConsumedRead
           billingMode
           sizeBytes
           items
@@ -213,6 +216,7 @@ export const dashboardQuery = gql`
         }
         mostWritesTables {
           name
+          averageConsumedWrite
           billingMode
           sizeBytes
           items
