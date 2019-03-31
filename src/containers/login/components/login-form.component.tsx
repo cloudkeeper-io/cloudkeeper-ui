@@ -12,9 +12,10 @@ interface Values {
 
 interface LoginProps {
   user: User
+  login: (email: string, password: string) => any
 }
 
-export default memo(({ user }: LoginProps) => {
+export default memo(({ user, login }: LoginProps) => {
   const [serverError, setServerError] = useState('')
 
   const onLogin = async (values: Values) => {
@@ -25,7 +26,7 @@ export default memo(({ user }: LoginProps) => {
     setServerError('')
 
     try {
-      await user.login(values.email, values.password)
+      await login(values.email, values.password)
     } catch (error) {
       setServerError(error.message || 'Server error')
     }

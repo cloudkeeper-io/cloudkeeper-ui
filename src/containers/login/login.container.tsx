@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect } from 'react'
+import React, { useState, memo, useEffect, useContext } from 'react'
 import styled from 'styled-components/macro'
 import { History } from 'history'
 
@@ -7,9 +7,9 @@ import Tabs from '../../components/tabs.component'
 import LoginForm from './components/login-form.component'
 import SignUpForm from './components/sign-up-form.component'
 import Stars from '../../components/stars.component'
-import { User } from '../../models'
 import treeline from './images/treeline.svg'
 import { ReactComponent as SVGLogo } from './images/logo.svg'
+import { UserContext } from '../../contexts'
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,12 +54,12 @@ const Trees = styled.div`
 `
 
 interface LoginProps {
-  user: User
   history: History
 }
 
-export default memo(({ user, history, history: { location: { pathname } } }: LoginProps) => {
+export default memo(({ history, history: { location: { pathname } } }: LoginProps) => {
   const [tab, setTab] = useState(0)
+  const { user, login, signUp } = useContext(UserContext)
 
   useEffect(() => setTab(pathname === '/sign-up' ? 1 : 0), [pathname])
 
@@ -75,7 +75,7 @@ export default memo(({ user, history, history: { location: { pathname } } }: Log
             selectedIndex={tab}
             onChange={i => (i ? history.push('/sign-up') : history.push('/'))}
           />
-          {tab ? <SignUpForm user={user} /> : <LoginForm user={user} />}
+          {tab ? <SignUpForm user={user} signUp={signUp} /> : <LoginForm user={user} login={login} />}
         </MainCard>
       </Content>
     </Wrapper>

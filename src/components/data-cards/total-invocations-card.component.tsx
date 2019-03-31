@@ -79,12 +79,12 @@ const descriptions = ['Lambda Executions', 'Errors', 'Cost']
 const formatters = [
   (x: number) => x.toLocaleString('ru'),
   (x: number) => x.toLocaleString('ru'),
-  (x: number) => `$ ${round(x, 2).toLocaleString('en')}`,
+  (x: number) => `$${round(x, 2).toLocaleString('en')}`,
 ]
 const tickFormatters = [
   formatNumber,
   formatNumber,
-  (x: number) => `$ ${round(x, 2).toLocaleString('en')}`,
+  (x: number) => `$${round(x, 2).toLocaleString('en')}`,
 ]
 
 const DataCard = ({ data, count, theme, className }: TotalInvocationsCardProps) => {

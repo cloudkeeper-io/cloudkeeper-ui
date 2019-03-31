@@ -14,9 +14,10 @@ interface Values {
 
 interface RegisterProps {
   user: User
+  signUp: (email: string, password: string) => any
 }
 
-export default memo(({ user }: RegisterProps) => {
+export default memo(({ user, signUp }: RegisterProps) => {
   const [serverError, setServerError] = useState('')
 
   const onSignUp = async (values: Values) => {
@@ -27,7 +28,7 @@ export default memo(({ user }: RegisterProps) => {
     setServerError('')
 
     try {
-      await user.signUp(values.email, values.password)
+      await signUp(values.email, values.password)
     } catch (error) {
       setServerError(error.message || 'Server error')
     }

@@ -1,5 +1,4 @@
 import React from 'react'
-import { History } from 'history'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import HeaderLink from './header-link.component'
@@ -10,8 +9,8 @@ import { Wrapper, HeaderWrapper, Header, PageWrapper, PageContent, Flex } from '
 import { ThemeConsumer, TimerConsumer } from '../../contexts'
 
 interface NavbarLayoutProps extends RouteComponentProps {
-  history: History
   user: User
+  signOut: () => void
   background?: string
   children?: React.ReactChildren | JSX.Element
 }
@@ -39,7 +38,7 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
     return to && pathname.includes(to)
   }
 
-  public logout = () => this.props.user.signOut()
+  public logout = () => this.props.signOut()
 
   public render() {
     const { children, background, user: { session } } = this.props
@@ -82,4 +81,4 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
   }
 }
 
-export default withRouter(NavbarLayout) as any
+export default withRouter<NavbarLayoutProps>(NavbarLayout)

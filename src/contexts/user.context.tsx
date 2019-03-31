@@ -1,5 +1,4 @@
-/* eslint-disable react/sort-comp,react/no-unused-state */
-import React from 'react'
+import React, { useState, useCallback, useEffect, memo } from 'react'
 import { History } from 'history'
 import { ApolloClient } from 'apollo-client'
 import jwtDecode from 'jwt-decode'
@@ -11,98 +10,40 @@ import { getApolloClient } from '../apollo.config'
 
 interface UserProviderProps {
   history: History
-  children: (props: { user: User, client: ApolloClient<any> }) => JSX.Element
+  children: (props: { client: ApolloClient<any> }) => JSX.Element
 }
 
-export const defaultUserContext = {
-  loading: false,
-  username: '',
-  isUserLoaded: false,
-} as User
+interface UserState {
+  user: User,
 
-export const UserContext = React.createContext(defaultUserContext)
+  login: (email: string, password: string) => any
+  signUp: (email: string, password: string) => any
+  signOut: () => void
+}
+
+export const UserContext = React.createContext({} as UserState)
 
 const RESTRICTED_REDIRECT = ['/', '/sign-up']
 
+export const UserProvider = memo(({ children, history }: UserProviderProps) => {
+  const [user, setUser] = useState<User>({
+    username: '',
+    loading: false,
+    isUserLoaded: false,
+    session: null,
+    apolloClient: null,
+  })
 
-export class UserProvider extends React.PureComponent<UserProviderProps, User> {
-  public setUser = (user: Partial<User>) => this.setState(user as any)
-
-  private setSession = async (session: Session) => {
-    localStorage.setItem(SESSION_KEY, JSON.stringify(session))
-    const { accessToken, refreshToken } = session
-    const decodedToken = accessToken ? jwtDecode(accessToken) : {} as any
-    const expiredAt = new Date(Number(decodedToken!.exp) * 1000).valueOf()
-
-    if (expiredAt < Date.now() + 1000 * 60) {
-      const updateResult = await updatedToken(refreshToken)
-      console.log('Token Updated')
-      const newSession = { refreshToken, accessToken: updateResult.accessToken }
-      this.setUser({ session: newSession })
-      return newSession
-    }
-
-    this.setUser({ session })
-    return session
-  }
-
-  public getSession = async (): Promise<Session | null> => {
-    const { session } = this.state
-
-    try {
-      const savedSession = session || JSON.parse(localStorage.getItem(SESSION_KEY)!)
-      if (savedSession) {
-        return await this.setSession(savedSession)
-      }
-    } catch (e) {
-      const { pathname } = window.location
-      if (!RESTRICTED_REDIRECT.includes(pathname)) {
-        localStorage.setItem(BACK_URL_KEY, pathname)
-      } else {
-        return null
-      }
-    }
-
-    await this.signOut()
-    return null
-  }
-
-  private login = async (email: string, password: string) => {
-    const { history } = this.props
-    const backUrl = localStorage.getItem(BACK_URL_KEY)
-    this.setUser({ loading: true })
-    try {
-      const session = await postLogin(email, password)
-      localStorage.removeItem(BACK_URL_KEY)
-      await this.setSession(session)
-      history.push(backUrl || '/')
-    } finally {
-      this.setUser({ loading: false })
-    }
-  }
-
-  private signUp = async (email: string, password: string) => {
-    const { history } = this.props
-    this.setUser({ loading: true })
-    try {
-      const session = await postSignUp(email, password)
-      localStorage.removeItem(BACK_URL_KEY)
-      await this.setSession(session)
-      history.push('/')
-    } finally {
-      this.setUser({ loading: false })
-    }
-  }
-
-  public signOut = async () => {
-    const { history } = this.props
-    const { session } = this.state
+  const signOut = useCallback(async () => {
+    const { session } = user
 
     try {
       if (session) {
-        this.setUser({ session: null })
+        setUser(current => ({ ...current, session: null }))
         localStorage.removeItem(SESSION_KEY)
-        await this.client.resetStore()
+        if (user.apolloClient) {
+          await user.apolloClient.resetStore()
+        }
       }
     } catch (e) {
       console.log('SignOut Error')
@@ -114,38 +55,91 @@ export class UserProvider extends React.PureComponent<UserProviderProps, User> {
     if (!RESTRICTED_REDIRECT.includes(window.location.pathname)) {
       history.push('/')
     }
-  }
+  }, [history, user])
 
-  public getIdToken = async () => {
-    const session = await this.getSession()
+  const setSession = useCallback(async (session: Session) => {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session))
+    const { accessToken, refreshToken } = session
+    const decodedToken = accessToken ? jwtDecode(accessToken) : {} as any
+    const expiredAt = new Date(Number(decodedToken!.exp) * 1000).valueOf()
+
+    if (expiredAt < Date.now() + 1000 * 60) {
+      const updateResult = await updatedToken(refreshToken)
+      console.log('Token Updated')
+      const newSession = { refreshToken, accessToken: updateResult.accessToken }
+      localStorage.setItem(SESSION_KEY, JSON.stringify(newSession))
+      setUser(current => ({ ...current, session: newSession }))
+      return newSession
+    }
+    setUser(current => ({ ...current, session }))
+    return session
+  }, [])
+
+  const getSession = useCallback(async (): Promise<Session | null> => {
+    const { session } = user
+
+    try {
+      const savedSession = session || JSON.parse(localStorage.getItem(SESSION_KEY)!)
+      if (savedSession) {
+        return await setSession(savedSession)
+      }
+    } catch (e) {
+      const { pathname } = window.location
+      if (!RESTRICTED_REDIRECT.includes(pathname)) {
+        localStorage.setItem(BACK_URL_KEY, pathname)
+      } else {
+        return null
+      }
+    }
+    await signOut()
+    return null
+  }, [setSession, signOut, user])
+
+  const getIdToken = useCallback(async () => {
+    const session = await getSession()
     return session ? session.accessToken : ''
-  }
+  }, [getSession])
 
-  public state = {
-    ...defaultUserContext,
-    loading: false,
-    username: '',
-    isUserLoaded: false,
-    setUser: this.setUser,
-    login: this.login,
-    signUp: this.signUp,
-    signOut: this.signOut,
-  }
+  const login = useCallback(async (email: string, password: string) => {
+    const backUrl = localStorage.getItem(BACK_URL_KEY)
+    setUser(current => ({ ...current, loading: true }))
+    try {
+      const session = await postLogin(email, password)
+      localStorage.removeItem(BACK_URL_KEY)
+      await setSession(session)
+      history.push(backUrl || '/')
+    } finally {
+      setUser(current => ({ ...current, loading: false }))
+    }
+  }, [history, setSession])
 
-  public client = getApolloClient(this.getIdToken)
+  const signUp = useCallback(async (email: string, password: string) => {
+    setUser(current => ({ ...current, loading: true }))
+    try {
+      const session = await postSignUp(email, password)
+      localStorage.removeItem(BACK_URL_KEY)
+      await setSession(session)
+      history.push('/')
+    } finally {
+      setUser(current => ({ ...current, loading: false }))
+    }
+  }, [history, setSession])
 
-  public async componentDidMount() {
-    await this.getSession()
-    this.setUser({ isUserLoaded: true })
-  }
+  useEffect((() => {
+    async function fetchUser() {
+      await getSession()
+      setUser(current => ({ ...current, isUserLoaded: true, apolloClient: getApolloClient(getIdToken) }))
+    }
 
-  public render() {
-    const { children } = this.props
-    const element = React.cloneElement(children({ user: this.state, client: this.client }))
-    return (
-      <UserContext.Provider value={this.state}>
-        {element}
-      </UserContext.Provider>
-    )
-  }
-}
+    fetchUser()
+  }), [getIdToken, getSession])
+
+
+  const element = React.cloneElement(children({ client: user.apolloClient! }))
+
+  return (
+    <UserContext.Provider value={{ user, login, signUp, signOut }}>
+      {element}
+    </UserContext.Provider>
+  )
+})

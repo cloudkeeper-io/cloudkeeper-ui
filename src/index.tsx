@@ -14,19 +14,19 @@ const history = createBrowserHistory()
 
 ReactDOM.render((
   <UserProvider history={history}>
-    {({ user, client }) => (
+    {({ client }) => (client ? (
       <ApolloProvider client={client}>
         <ThemeProvider>
           <TimerProvider>
             <>
               <Head />
               <GlobalStyles />
-              <RootContainer user={user} history={history} />
+              <RootContainer history={history} />
             </>
           </TimerProvider>
         </ThemeProvider>
       </ApolloProvider>
-    )}
+    ) : <div />)}
   </UserProvider>
 ), document.getElementById('root'))
 

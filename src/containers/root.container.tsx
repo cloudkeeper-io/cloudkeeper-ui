@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useContext } from 'react'
 import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { History } from 'history'
 import { Query } from 'react-apollo'
@@ -8,6 +8,7 @@ import { User } from '../models'
 import NavbarLayout from '../components/layout/navbar-layout.component'
 import LoadingPage from '../components/loading-page.component'
 import { tenantsQuery } from '../graphql'
+import { UserContext } from '../contexts'
 
 const SetupTenant = lazy(() => import('./setup-tenant/setup-tenant.container'))
 const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
@@ -17,7 +18,6 @@ const Settings = lazy(() => import('./settings.container'))
 
 interface RootContainerProps {
   history: History
-  user: User
 }
 
 const getRoutes = (user: User) => {
@@ -62,10 +62,10 @@ const getRoutes = (user: User) => {
   return (
     <Switch>
       <Route exact path="/">
-        {props => <Login user={user} {...props} />}
+        {props => <Login {...props} />}
       </Route>
       <Route exact path="/sign-up">
-        {props => <Login user={user} {...props} />}
+        {props => <Login {...props} />}
       </Route>
       <Route>
         <Error />
@@ -74,14 +74,16 @@ const getRoutes = (user: User) => {
   )
 }
 
-export default ({ history, user }: RootContainerProps) => {
+export default ({ history }: RootContainerProps) => {
+  const { user, signOut } = useContext(UserContext)
+
   if (!user.isUserLoaded) {
     return <LoadingPage />
   }
 
   return (
     <Router history={history}>
-      <NavbarLayout background={user.session ? '' : 'transparent'} history={history} user={user}>
+      <NavbarLayout background={user.session ? '' : 'transparent'} user={user} signOut={signOut}>
         <Suspense fallback={<LoadingPage />}>
           {getRoutes(user)}
         </Suspense>
