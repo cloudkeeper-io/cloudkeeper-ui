@@ -5,6 +5,7 @@ import { getClipPath, getBorderClipPath } from '../../utils'
 const colors = {
   primary: '#B9FFEC',
   background: '#0E0B20',
+  transparentBackground: 'rgb(14, 11, 32, 0.4)',
   backgroundGradient: 'linear-gradient(180deg, #0E0B20 0, #112531 100%)',
   borderColor: '#4FFAC5',
   text: '#B9FFEC',

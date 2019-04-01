@@ -8,7 +8,7 @@ export const HeaderWrapper = styled.div<{ background?: string }>`
   display: flex;
   justify-content: center;
   width: 100vw;
-  background: ${p => p.background || p.theme.colors.background};
+  background: ${p => p.background || p.theme.colors.transparentBackground};
   height: 60px;
   z-index: 8;
 `

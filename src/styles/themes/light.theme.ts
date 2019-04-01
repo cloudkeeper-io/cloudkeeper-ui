@@ -3,6 +3,7 @@ import { darken, transparentize } from 'polished'
 const colors = {
   primary: '#4A90E2',
   background: '#F8F8F8',
+  transparentBackground: 'rgb(248, 248, 248, 0.6)',
   backgroundGradient: 'linear-gradient(180deg, #F8F8F8 60px, #C8DDF6 100%)',
   borderColor: '#4A90E2',
   text: '#4A4A4A',
