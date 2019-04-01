@@ -15,7 +15,7 @@ interface GraphsProps {
 
 export const LambdasGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps) => (
   <>
-    <TotalInvocationsCard count={count} data={data.totals} />
+    <TotalInvocationsCard count={count} data={data.totals} timeAxisFormat={timeAxisFormat} />
     <TopLambdasCard
       header="Most Invoked Lambdas"
       lambdaHeader="Most Invoked Lambda"

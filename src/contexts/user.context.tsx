@@ -85,7 +85,6 @@ export const UserProvider = ({ children, history }: UserProviderProps) => {
         setUser(current => ({ ...current, isUserLoaded: true }))
         history.push('/')
       }
-      return ''
     }
     return ''
   }, [history])
@@ -115,17 +114,21 @@ export const UserProvider = ({ children, history }: UserProviderProps) => {
     }
   }
 
-  useEffect(() => { getSession() }, [getSession, history])
-
   useEffect((() => {
-    setUser(current => ({
-      ...current,
-      isUserLoaded: true,
-      apolloClient: getApolloClient(async () => {
-        const session = await getSession()
-        return session ? session.accessToken : ''
-      }),
-    }))
+    const asyncFetchSession = async () => {
+      await getSession()
+      setUser(current => ({
+        ...current,
+        isUserLoaded: true,
+        apolloClient: getApolloClient(async () => {
+          const session = await getSession()
+          return session ? session.accessToken : ''
+        }),
+      }))
+    }
+
+    // eslint-disable-next-line no-console
+    asyncFetchSession().catch(console.log)
   }), [getSession])
 
   const element = React.cloneElement(children({ client: user.apolloClient! }))

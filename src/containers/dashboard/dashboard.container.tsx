@@ -14,6 +14,7 @@ import { DynamoGraphs } from './dashboard-dynamo.cards'
 const Wrapper = styled.div`
   position: relative;
   padding: 0 20px 20px 20px;
+  text-shadow: 0 0 1.5px ${p => p.theme.colors.boxShadow};
 `
 const Title = styled.div`
   display: flex;
@@ -56,7 +57,7 @@ export default ({ tenants }: DashboardProps) => {
   return (
     <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }} pollInterval={30 * 60 * 1000}>
       {({ data, loading, error }) => {
-        if (loading) {
+        if (loading && !isDataLoaded) {
           return <Loading height="calc(100vh - 60px)" />
         }
 

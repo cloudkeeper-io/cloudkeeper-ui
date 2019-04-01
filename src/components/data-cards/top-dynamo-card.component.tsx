@@ -48,6 +48,10 @@ const Text = styled(AnimatedText)`
   font-size: 14px;
   line-height: 19px;
   white-space: nowrap;
+`
+const InfoText = styled(Text)`
+  display: flex;
+  justify-content: space-between;
   :last-child {
     margin-bottom: 0;
   }
@@ -88,12 +92,14 @@ const LegendLine = styled.div<{ color: string }>`
 `
 const DynamoInfo = styled.div`
   display: flex;
+  width: 80%;
   ${Text} {
     margin-bottom: 3px;
   }
 `
 const DynamoInfoColumn = styled.div`
-  flex: 1
+  flex: 1;
+  margin-right: 30px;
 `
 const TabIndicator = styled(StepIndicator)`
   display: flex;
@@ -168,7 +174,7 @@ const DataCard = (props: TopDynamoCardProps) => {
       <Content>
         {tab === 0 && (
           <Tab>
-            <Header>
+            <Header trigger={tab}>
               {`Top ${data.length} ${header}`}
             </Header>
             {map(data, x => (
@@ -181,10 +187,12 @@ const DataCard = (props: TopDynamoCardProps) => {
         )}
         {tab > 0 && (
           <Tab>
-            <Header>
-              {`${toOrdinal(tab)} ${dynamoHeader}`}
+            <Header trigger={tab}>
+              {`${tab === 1 ? '' : toOrdinal(tab)} ${dynamoHeader}`}
             </Header>
-            <Text>{`${data[tab - 1].name} (billing mode: ${toLower(startCase(dynamo.billingMode))})`}</Text>
+            <Text trigger={tab}>
+              {`${data[tab - 1].name} (billing mode: ${toLower(startCase(dynamo.billingMode))})`}
+            </Text>
             <GraphContainer>
               <ResponsiveContainer>
                 <LineChart data={dataPoints} margin={{ top: 0, right: -25, left: -25, bottom: 0 }}>
@@ -249,24 +257,24 @@ const DataCard = (props: TopDynamoCardProps) => {
             <DynamoInfo>
               <DynamoInfoColumn>
                 {map(dynamoInfo, x => !isNil(dynamo[x.unit]) && (
-                  <Text key={x.unit} trigger={tab}>
+                  <InfoText key={x.unit} trigger={tab}>
                     {x.text}:
                     <Value>{x.valueFn(dynamo[x.unit])}</Value>
-                  </Text>
+                  </InfoText>
                 ))}
               </DynamoInfoColumn>
               <DynamoInfoColumn>
                 {dynamo.items && (
-                  <Text trigger={tab}>
+                  <InfoText trigger={tab}>
                     items:
                     <Value>{dynamo.items.toLocaleString('ru')}</Value>
-                  </Text>
+                  </InfoText>
                 )}
                 {dynamo.sizeBytes && (
-                  <Text trigger={tab}>
+                  <InfoText trigger={tab}>
                     size:
                     <Value>{bytesToSize(dynamo.sizeBytes)}</Value>
-                  </Text>
+                  </InfoText>
                 )}
               </DynamoInfoColumn>
             </DynamoInfo>

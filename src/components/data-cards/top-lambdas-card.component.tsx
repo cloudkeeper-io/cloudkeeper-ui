@@ -41,11 +41,16 @@ const Text = styled(AnimatedText)`
   margin-bottom: 8px;
   font-size: 14px;
   line-height: 19px;
+
+`
+const InfoText = styled(Text)`
+  display: flex;
+  justify-content: space-between;
   :last-child {
     margin-bottom: 0;
   }
 `
-const Value = styled.span`
+const Value = styled.div`
   margin-left: 15px;
 `
 const GraphContainer = styled.div`
@@ -62,12 +67,14 @@ const Tab = styled.div`
 `
 const LambdaInfo = styled.div`
   display: flex;
+  width: 80%;
   ${Text} {
     margin-bottom: 3px;
   }
 `
 const LambdaInfoColumn = styled.div`
-  flex: 1
+  flex: 1;
+  margin-right: 30px;
 `
 const TabIndicator = styled(StepIndicator)`
   display: flex;
@@ -135,7 +142,7 @@ const DataCard = (props: MostInvokedCardProps) => {
       <Content>
         {tab === 0 && (
           <Tab>
-            <Header>
+            <Header trigger={tab}>
               {`Top ${data.length} ${header}`}
             </Header>
             {map(data, x => (
@@ -148,10 +155,10 @@ const DataCard = (props: MostInvokedCardProps) => {
         )}
         {tab > 0 && (
           <Tab>
-            <Header>
-              {`${toOrdinal(tab)} ${lambdaHeader}`}
+            <Header trigger={tab}>
+              {`${tab === 1 ? '' : toOrdinal(tab)} ${lambdaHeader}`}
             </Header>
-            <Text>{data[tab - 1].lambdaName}</Text>
+            <Text trigger={tab}>{data[tab - 1].lambdaName}</Text>
             <GraphContainer>
               <ResponsiveContainer>
                 <LineChart data={dataPoints} margin={{ top: 0, right: -25, left: -25, bottom: 0 }}>
@@ -197,30 +204,30 @@ const DataCard = (props: MostInvokedCardProps) => {
             <LambdaInfo>
               <LambdaInfoColumn>
                 {map(lambdaInfo, x => lambda[x.unit] && (
-                  <Text key={x.unit} trigger={tab}>
+                  <InfoText key={x.unit} trigger={tab}>
                     {x.text}:
                     <Value>{x.valueFn(lambda[x.unit])}</Value>
-                  </Text>
+                  </InfoText>
                 ))}
               </LambdaInfoColumn>
               <LambdaInfoColumn>
                 {lambda.runtime && (
-                  <Text trigger={tab}>
+                  <InfoText trigger={tab}>
                     runtime:
                     <Value>{lambda.runtime}</Value>
-                  </Text>
+                  </InfoText>
                 )}
                 {lambda.size && (
-                  <Text trigger={tab}>
+                  <InfoText trigger={tab}>
                     memory size:
                     <Value>{lambda.size}MB</Value>
-                  </Text>
+                  </InfoText>
                 )}
                 {lambda.timeout && (
-                  <Text trigger={tab}>
+                  <InfoText trigger={tab}>
                     timeout:
                     <Value>{lambda.timeout}s</Value>
-                  </Text>
+                  </InfoText>
                 )}
               </LambdaInfoColumn>
             </LambdaInfo>

@@ -46,7 +46,7 @@ const Value = styled(AnimatedText)`
 const Description = styled(AnimatedText)`
   position: relative;
   width: 100%;
-  font-size: 9px;
+  font-size: 12px;
   min-height: 11px;
   min-width: 1px;
   color: ${p => p.theme.colors.text};
@@ -70,13 +70,14 @@ interface Data {
 interface TotalInvocationsCardProps {
   data: Data
   count: number,
+  timeAxisFormat: string,
   className?: string,
   theme: any,
 }
 type Units = 'invocations' | 'errors' | 'cost'
 
 const tabs: Array<Units> = ['invocations', 'errors', 'cost']
-const descriptions = ['Lambda Executions', 'Errors', 'Cost']
+const descriptions = ['Lambdas Executions', 'Lambdas Errors', 'Lambdas Cost']
 const formatters = [
   (x: number) => x.toLocaleString('ru'),
   (x: number) => x.toLocaleString('ru'),
@@ -88,7 +89,7 @@ const tickFormatters = [
   (x: number) => `$${round(x, 2).toLocaleString('en')}`,
 ]
 
-const DataCard = ({ data, count, theme, className }: TotalInvocationsCardProps) => {
+const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvocationsCardProps) => {
   const { dataCard: colors } = theme
   const [tab, setTab] = useSwitchTab(count, tabs.length)
   const unit = tabs[tab]
@@ -97,11 +98,11 @@ const DataCard = ({ data, count, theme, className }: TotalInvocationsCardProps) 
   return (
     <StyledCard showBorder={false} className={className}>
       <Header>
-        <Value>
+        <Value trigger={tab}>
           {formatters[tab](data[unit])}
         </Value>
         <StepIndicator index={tab} steps={tabs.length} onClick={i => setTab(i)} />
-        <Description>
+        <Description trigger={tab}>
           {descriptions[tab]}
         </Description>
       </Header>
@@ -112,7 +113,7 @@ const DataCard = ({ data, count, theme, className }: TotalInvocationsCardProps) 
             stroke={colors.axis}
             tick={{ fontSize: 12 }}
             tickLine={false}
-            tickFormatter={x => DateTime.fromISO(x).toFormat('HH:mm')}
+            tickFormatter={x => DateTime.fromISO(x).toFormat(timeAxisFormat)}
           />
           <YAxis
             stroke={colors.axis}
