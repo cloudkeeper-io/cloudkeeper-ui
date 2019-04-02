@@ -15,7 +15,7 @@ import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
 import AnimatedText from '../animated-text.component'
-import { bytesToSize, toOrdinal } from '../../utils'
+import { bytesToSize, toOrdinal, processDataPoints } from '../../utils'
 
 const StyledCard = styled(Card)`  
   margin: auto;
@@ -166,11 +166,12 @@ const DataCard = (props: TopDynamoCardProps) => {
   const { dataCard: colors } = theme
   const [tab, setTab] = useSwitchTab(count, TABS_AMOUNT, 0)
   const dynamo = data[tab - 1]
-  const dataPoints = dynamo ? dynamo.dataPoints : []
 
   if (isEmpty(data)) {
     return null
   }
+
+  const dataPoints = processDataPoints(dynamo ? dynamo.dataPoints : [], map(units, x => x.value))
 
   return (
     <StyledCard showBorder={false} className={className}>
@@ -216,14 +217,7 @@ const DataCard = (props: TopDynamoCardProps) => {
                       tickFormatter={yAxisFormatter}
                     />
                     <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
-                    <Line
-                      type="linear"
-                      dataKey={last(units)!.value}
-                      name={last(units)!.label}
-                      stroke={colors.svgLinesSecondary}
-                      dot={dataPoints.length < 3}
-                      strokeWidth={3}
-                    />
+
                     <Line
                       type="linear"
                       dataKey={first(units)!.value}
@@ -232,6 +226,16 @@ const DataCard = (props: TopDynamoCardProps) => {
                       dot={dataPoints.length < 3}
                       strokeWidth={3}
                     />
+                    {dynamo.billingMode === 'PROVISIONED' && (
+                      <Line
+                        type="linear"
+                        dataKey={last(units)!.value}
+                        name={last(units)!.label}
+                        stroke={colors.svgLinesSecondary}
+                        dot={dataPoints.length < 3}
+                        strokeWidth={3}
+                      />
+                    )}
                     <StyledTooltip
                       wrapperStyle={{ opacity: 0.9 }}
                       contentStyle={{ background: tab ? colors.tooltipBackground : colors.secondaryTooltipBackground }}

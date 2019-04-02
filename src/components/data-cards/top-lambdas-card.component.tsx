@@ -9,7 +9,7 @@ import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
 import AnimatedText from '../animated-text.component'
-import { toOrdinal } from '../../utils'
+import { processDataPoints, toOrdinal } from '../../utils'
 
 const StyledCard = styled(Card)`  
   margin: auto;
@@ -137,11 +137,12 @@ const DataCard = (props: MostInvokedCardProps) => {
   const { dataCard: colors } = theme
   const [tab, setTab] = useSwitchTab(count, TABS_AMOUNT, 0)
   const lambda = data[tab - 1]
-  const dataPoints = lambda ? lambda.dataPoints : []
 
   if (isEmpty(data)) {
     return null
   }
+
+  const dataPoints = processDataPoints(lambda ? lambda.dataPoints : [], [unit])
 
   return (
     <StyledCard showBorder={false} className={className}>

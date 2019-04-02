@@ -1,6 +1,6 @@
 import { darken, mix, transparentize } from 'polished'
 
-const PRIMARY = mix(0.5, '#FFAA6E', '#FF5F99') // '#4A90E2' // mix(0.5, '#FFAA6E', '#FF5F99')
+const PRIMARY = mix(0.5, '#FFAA6E', '#FF5F99') // '#4A90E2'
 
 const colors = {
   primary: PRIMARY,

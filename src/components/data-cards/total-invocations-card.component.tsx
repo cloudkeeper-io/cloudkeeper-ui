@@ -5,7 +5,7 @@ import { DateTime } from 'luxon'
 import round from 'lodash/round'
 import map from 'lodash/map'
 
-import { formatNumber } from '../../utils'
+import { formatNumber, processDataPoints } from '../../utils'
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
@@ -78,6 +78,7 @@ interface TotalInvocationsCardProps {
   className?: string,
   theme: any,
 }
+
 type Units = 'invocations' | 'errors' | 'cost'
 
 const tabs: Array<Units> = ['invocations', 'errors', 'cost']
@@ -97,7 +98,7 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
   const { dataCard: colors } = theme
   const [tab, setTab] = useSwitchTab(count, tabs.length)
   const unit = tabs[tab]
-  const dataPoints = map(data.dataPoints, x => ({ ...x, value: x[unit] }))
+  const dataPoints = processDataPoints(map(data.dataPoints, x => ({ ...x, value: x[unit] })), ['value'])
 
   return (
     <StyledCard showBorder={false} className={className}>
