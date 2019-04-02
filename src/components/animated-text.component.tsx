@@ -4,7 +4,7 @@ import React from 'react'
 
 interface AnimatedTextProps {
   children: any,
-  trigger: number,
+  trigger?: number,
   offset?: string,
   className?: string,
 }

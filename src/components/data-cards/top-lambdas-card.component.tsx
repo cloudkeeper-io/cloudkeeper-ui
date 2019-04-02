@@ -142,7 +142,7 @@ const DataCard = (props: MostInvokedCardProps) => {
       <Content>
         {tab === 0 && (
           <Tab>
-            <Header trigger={tab}>
+            <Header>
               {`Top ${data.length} ${header}`}
             </Header>
             {map(data, x => (
@@ -155,10 +155,10 @@ const DataCard = (props: MostInvokedCardProps) => {
         )}
         {tab > 0 && (
           <Tab>
-            <Header trigger={tab}>
-              {`${tab === 1 ? '' : toOrdinal(tab)} ${lambdaHeader}`}
+            <Header>
+              {`${toOrdinal(tab)} ${lambdaHeader}`}
             </Header>
-            <Text trigger={tab}>{data[tab - 1].lambdaName}</Text>
+            <Text>{data[tab - 1].lambdaName}</Text>
             <GraphContainer>
               <ResponsiveContainer>
                 <LineChart data={dataPoints} margin={{ top: 0, right: -25, left: -25, bottom: 0 }}>

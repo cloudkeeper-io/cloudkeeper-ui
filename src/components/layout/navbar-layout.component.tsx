@@ -53,13 +53,15 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
             {session && <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings" />}
             <TimerConsumer>
               {({ count, delay, isActive, isVisible, setActive }) => isVisible && (
-                <Timer
-                  key={count}
-                  time={delay}
-                  size={40}
-                  active={isActive}
-                  onClick={() => setActive(status => !status)}
-                />
+                <>
+                  <Timer
+                    key={count}
+                    time={delay}
+                    size={40}
+                    active={isActive}
+                    onClick={() => setActive(status => !status)}
+                  />
+                </>
               )}
             </TimerConsumer>
             <Flex />

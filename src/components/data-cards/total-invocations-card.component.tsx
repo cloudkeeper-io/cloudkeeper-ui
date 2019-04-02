@@ -98,11 +98,11 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
   return (
     <StyledCard showBorder={false} className={className}>
       <Header>
-        <Value trigger={tab}>
+        <Value>
           {formatters[tab](data[unit])}
         </Value>
         <StepIndicator index={tab} steps={tabs.length} onClick={i => setTab(i)} />
-        <Description trigger={tab}>
+        <Description>
           {descriptions[tab]}
         </Description>
       </Header>

@@ -15,6 +15,7 @@ interface TimerState {
   setDelay: Dispatch<SetStateAction<number>>
   setActive: Dispatch<SetStateAction<boolean>>
   setVisibility: Dispatch<SetStateAction<boolean>>
+  setCount: Dispatch<SetStateAction<number>>
 }
 
 const initialState: TimerState = {
@@ -25,6 +26,7 @@ const initialState: TimerState = {
   setDelay: noop,
   setActive: noop,
   setVisibility: noop,
+  setCount: noop,
 }
 
 const TimerContext = React.createContext(initialState)
@@ -42,7 +44,7 @@ const TimerProvider = ({ children }: TimerProviderProps) => {
   }, delay, isActive)
 
   return (
-    <TimerContext.Provider value={{ count, delay, isActive, isVisible, setDelay, setActive, setVisibility }}>
+    <TimerContext.Provider value={{ count, delay, isActive, isVisible, setCount, setDelay, setActive, setVisibility }}>
       {children}
     </TimerContext.Provider>
   )
