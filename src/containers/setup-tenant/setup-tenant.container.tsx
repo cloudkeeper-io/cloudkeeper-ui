@@ -33,6 +33,10 @@ const STEP2_CODE = `aws iam put-user-policy --user-name cloudkeeper-user --polic
 const STEP3_CODE = 'aws iam create-access-key --user-name cloudkeeper-user'
 
 const Indicator = styled(StepsIndicator)`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 10px 0;
 `
 
@@ -41,11 +45,11 @@ export default () => {
 
   return (
     <Wrapper>
-      <Indicator steps={3} index={step - 1} onClick={i => setStep(i + 1)} />
       <StyledCard>
         <Query query={awsRegionsQuery}>
           {({ data: { awsRegions } }) => (
             <Content>
+              <Indicator steps={3} index={step - 1} onClick={i => setStep(i + 1)} />
               {step === 1 && <Step1 code={STEP1_CODE} onForward={() => setStep(2)} />}
               {step === 2 && <Step2 code={STEP2_CODE} onBack={() => setStep(1)} onForward={() => setStep(3)} />}
               {step === 3 && <Step3 regions={awsRegions} code={STEP3_CODE} onBack={() => setStep(2)} />}

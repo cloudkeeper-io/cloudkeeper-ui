@@ -52,14 +52,14 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
             {session && <HeaderLink active={pathname === '/'} icon="home" to="/" />}
             {session && <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings" />}
             <TimerConsumer>
-              {({ count, delay, isActive, isVisible, setActive }) => isVisible && (
+              {({ count, delay, isActive, isVisible, setActiveAndSave }) => isVisible && (
                 <>
                   <Timer
                     key={count}
                     time={delay}
                     size={40}
                     active={isActive}
-                    onClick={() => setActive(status => !status)}
+                    onClick={() => setActiveAndSave(!isActive)}
                   />
                 </>
               )}

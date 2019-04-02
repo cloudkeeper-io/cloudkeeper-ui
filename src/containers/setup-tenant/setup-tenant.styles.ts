@@ -26,7 +26,7 @@ export const Content = styled.div`
   justify-content: space-between;
   width: calc(100% - 70px);
   height: calc(100% - 65px);
-  padding: 35px 30px 20px 40px;
+  padding: 10px 30px 20px 40px;
   font-size: 12px;
   line-height: 18px;
 `

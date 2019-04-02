@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 import styled from 'styled-components/macro'
 import { transparentize } from 'polished'
@@ -9,23 +10,23 @@ const Wrapper = styled.div`
   align-items: center;
 `
 const Step = styled.div<{ active: boolean, cursor: string }>`
-  width: ${p => (p.active ? '35px' : '20px')};
-  height: 2px;
+  width: ${p => (p.active ? '24px' : '6px')};
+  height: 6px;
   border-radius: 1px;
   padding: 10px 7px;
   transition: 0.5s width;
   cursor: ${p => p.cursor}
 `
 const StepLine = styled.div<{ active: boolean, color?: string }>`
-  height: 2px;
-  border-radius: 1px;
+  height: 6px;
+  border-radius: 6px;
   background: ${p => (p.active ?
-    p.color || p.theme.colors.primary :
-    transparentize(0.6, p.color || p.theme.colors.primary)
+    p.color || p.theme.steps.activeColor :
+    p.color ? transparentize(0.6, p.color) : p.theme.steps.color
   )};
-  box-shadow: 0 0 2px ${p => (p.active ?
-    p.color || p.theme.colors.primary :
-    transparentize(0.6, p.color || p.theme.colors.primary)
+  box-shadow: 0 0 4px ${p => (p.active ?
+    (p.color ? transparentize(0.6, p.color) : p.theme.steps.shadow) :
+    'transparent'
   )};
   transition: 0.5s background;
 `

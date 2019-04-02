@@ -109,7 +109,7 @@ const getParams = (color: string) => ({
 }) as any
 
 const Stars = styled(Particles)`
-  position: absolute;
+  position: fixed;
   top: -65px;
   left: 0;
   height: 100vh;

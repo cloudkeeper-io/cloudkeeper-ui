@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 import { Query } from 'react-apollo'
 import get from 'lodash/get'
 import last from 'lodash/last'
+import isBoolean from 'lodash/isBoolean'
 
 import Loading from '../../components/loading.component'
 import { dashboardQuery } from '../../graphql'
@@ -10,18 +11,18 @@ import { Tenant } from '../../models'
 import { TimerContext } from '../../contexts'
 import { LambdasGraphs } from './dashboard-lambdas.cards'
 import { DynamoGraphs } from './dashboard-dynamo.cards'
+import { safeParse } from '../../utils'
+import { TIMER_KEY } from '../../constants'
 
 const Wrapper = styled.div`
   position: relative;
   padding: 0 20px 20px 20px;
-  text-shadow: 0 0 1.5px ${p => p.theme.colors.boxShadow};
 `
 const Title = styled.div`
   display: flex;
   align-items: center;
   font-size: 18px;
   margin-bottom: 20px;
-  filter: blur(0.25px);
 `
 const CardsWrapper = styled.div`
   display: grid;
@@ -43,9 +44,10 @@ export default ({ tenants }: DashboardProps) => {
   const { count, setActive, setVisibility } = useContext(TimerContext)
 
   useEffect(() => {
+    const timerValue = safeParse(localStorage.getItem(TIMER_KEY)!)
     if (isDataLoaded) {
       setDataLoaded(true)
-      setActive(true)
+      setActive(isBoolean(timerValue) ? timerValue : true)
       setVisibility(true)
     }
     return () => {

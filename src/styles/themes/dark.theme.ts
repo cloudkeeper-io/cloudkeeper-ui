@@ -2,23 +2,28 @@ import { mix, transparentize } from 'polished'
 
 import { getClipPath, getBorderClipPath } from '../../utils'
 
+const PRIMARY = '#B9FFEC'
+
 const colors = {
-  primary: '#B9FFEC',
+  primary: PRIMARY,
   background: '#0E0B20',
   transparentBackground: 'rgb(14, 11, 32, 0.4)',
   backgroundGradient: 'linear-gradient(180deg, #0E0B20 0, #112531 100%)',
-  borderColor: '#4FFAC5',
-  text: '#B9FFEC',
-  icon: '#B9FFEC',
-  activeText: '#B9FFEC',
+  borderColor: PRIMARY,
+  text: PRIMARY,
+  icon: PRIMARY,
+  activeText: PRIMARY,
   disabled: '#ababab',
   spinner: 'url(#spinner-gradient)',
   shadow: 'rgba(79, 250, 197, 0.3)',
+
+  active: '#129F7C',
+  activeSecondary: '#6F20A0',
 }
 
 const card = {
   background: 'transparent',
-  borderColor: '#4FFAC5',
+  borderColor: colors.primary,
   clipPath: getClipPath(40),
   borderClipPath: getBorderClipPath(41, 1),
   shadow: colors.shadow,
@@ -28,14 +33,18 @@ const card = {
 const dataCard = {
   background: 'linear-gradient(180deg, #129F7C -0.31%, #6F20A0 100%)',
   secondaryBackground: 'linear-gradient(180deg, #129F7C -0.31%, #6F20A0 100%)',
-  axis: '#B9FFEC',
-  secondaryAxis: '#B9FFEC',
-  lines: '#B9FFEC',
-  secondaryLines: '#B9FFEC',
+  axis: colors.primary,
+  secondaryAxis: colors.primary,
+  lines: colors.primary,
+  linesSecondary: '#DB60FF',
+  svgLines: 'url(#darkLine)',
+  svgLinesSecondary: 'url(#darkLineSecondary)',
+  secondaryLines: colors.primary,
   tooltipBackground: '#0E0B20',
   secondaryTooltipBackground: '#0E0B20',
   primaryTab: colors.primary,
   secondaryTab: colors.primary,
+  cartesianGrid: colors.primary,
 }
 
 const input = {
@@ -54,8 +63,8 @@ const buttons = {
   },
   primary: {
     background: '#142330',
-    active: mix(0.85, '#142330', '#B9FFEC'),
-    color: '#B9FFEC',
+    active: mix(0.85, '#142330', colors.primary),
+    color: colors.primary,
     disabled: '#374856',
     borderDisabled: '#374856',
     disabledText: '#ababab',
@@ -71,9 +80,15 @@ const tabs = {
   borderClipPath: getBorderClipPath(41, 1),
   background: '#0F1222',
   active: '#142330',
-  text: '#B9FFEC',
-  activeText: '#B9FFEC',
+  text: colors.primary,
+  activeText: colors.primary,
   tabListRight: '60px',
+}
+
+const steps = {
+  color: transparentize(0.6, colors.primary),
+  activeColor: colors.primary,
+  shadow: transparentize(0.8, colors.primary),
 }
 
 const select = {
@@ -98,6 +113,7 @@ export default {
   input,
   buttons,
   tabs,
+  steps,
   select,
   login,
 }

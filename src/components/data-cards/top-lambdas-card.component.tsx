@@ -11,14 +11,19 @@ import StepIndicator from '../steps-indicator.component'
 import AnimatedText from '../animated-text.component'
 import { toOrdinal } from '../../utils'
 
-const StyledCard = styled(Card)<{ isPrimary: boolean }>`  margin: auto;
+const StyledCard = styled(Card)`  
+  margin: auto;
   width: 100%;
   min-width: 500px;
-  height: 300px;
+  height: 310px;
   ${Card.Content} {
-    background: ${p => (p.isPrimary ? p.theme.dataCard.background : p.theme.dataCard.secondaryBackground)};
-    color: ${p => (p.isPrimary ? p.theme.colors.text : p.theme.colors.activeText)};
+    background: ${p => p.theme.dataCard.background};
+    color: ${p => p.theme.colors.text};
     overflow: hidden;
+  }
+  @media (max-width: 800px) {
+    min-width: auto;
+    max-width: 100%;
   }
 `
 const Content = styled.div`
@@ -30,11 +35,18 @@ const Content = styled.div`
   justify-content: flex-start;
   padding: 0 20px 0 50px;
 `
-const Header = styled(AnimatedText)`
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
   font-size: 22px;
   line-height: 24px;
   margin-top: 10px;
   margin-bottom: 5px;
+`
+const TabIndicator = styled(StepIndicator)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 const Text = styled(AnimatedText)`
   position: relative;
@@ -66,8 +78,8 @@ const Tab = styled.div`
   flex: 1;
 `
 const LambdaInfo = styled.div`
-  display: flex;
-  width: 80%;
+  display: grid;
+  grid-template-columns: 50% 50%;
   ${Text} {
     margin-bottom: 3px;
   }
@@ -75,12 +87,6 @@ const LambdaInfo = styled.div`
 const LambdaInfoColumn = styled.div`
   flex: 1;
   margin-right: 30px;
-`
-const TabIndicator = styled(StepIndicator)`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
 `
 const StyledTooltip = Tooltip as any
 
@@ -138,107 +144,103 @@ const DataCard = (props: MostInvokedCardProps) => {
   }
 
   return (
-    <StyledCard showBorder={false} className={className} isPrimary={Boolean(tab)}>
+    <StyledCard showBorder={false} className={className}>
       <Content>
-        {tab === 0 && (
-          <Tab>
-            <Header>
-              {`Top ${data.length} ${header}`}
-            </Header>
-            {map(data, x => (
-              <Text key={x.lambdaName} trigger={tab}>
-                <div>{x.lambdaName}</div>
-                <div>{summaryFormatter(x)}</div>
-              </Text>
-            ))}
-          </Tab>
-        )}
-        {tab > 0 && (
-          <Tab>
-            <Header>
-              {`${toOrdinal(tab)} ${lambdaHeader}`}
-            </Header>
-            <Text>{data[tab - 1].lambdaName}</Text>
-            <GraphContainer>
-              <ResponsiveContainer>
-                <LineChart data={dataPoints} margin={{ top: 0, right: -25, left: -25, bottom: 0 }}>
-                  <XAxis
-                    dataKey="dateTime"
-                    stroke={tab ? colors.axis : colors.secondaryAxis}
-                    tick={{ fontSize: 12 }}
-                    tickLine={false}
-                    tickFormatter={x => DateTime.fromISO(x).toFormat(timeAxisFormat)}
-                  />
-                  <YAxis
-                    stroke={tab ? colors.axis : colors.secondaryAxis}
-                    tick={{ fontSize: 12 }}
-                    tickLine={false}
-                    type="number"
-                    padding={{ top: 20, bottom: 5 }}
-                    tickFormatter={yAxisFormatter}
-                  />
-                  <CartesianGrid stroke={tab ? colors.axis : colors.secondaryAxis} strokeOpacity={0.35} />
-                  <Line
-                    type="linear"
-                    dataKey={unit}
-                    stroke={colors.lines}
-                    dot={dataPoints.length < 3}
-                    strokeWidth={1.5}
-                  />
-                  <StyledTooltip
-                    wrapperStyle={{ opacity: 0.9 }}
-                    contentStyle={{ background: tab ? colors.tooltipBackground : colors.secondaryTooltipBackground }}
-                    labelStyle={{
-                      fontSize: 12,
-                      lineHeight: '12px',
-                      marginBottom: 10,
-                      color: tab ? colors.lines : colors.secondaryLines,
-                    }}
-                    itemStyle={{ fontSize: 12, lineHeight: '12px' }}
-                    formatter={tooltipFormatter}
-                    labelFormatter={(value: string) => DateTime.fromISO(value).toFormat('d LLL HH:mm')}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </GraphContainer>
-            <LambdaInfo>
-              <LambdaInfoColumn>
-                {map(lambdaInfo, x => lambda[x.unit] && (
-                  <InfoText key={x.unit} trigger={tab}>
-                    {x.text}:
-                    <Value>{x.valueFn(lambda[x.unit])}</Value>
-                  </InfoText>
-                ))}
-              </LambdaInfoColumn>
-              <LambdaInfoColumn>
-                {lambda.runtime && (
-                  <InfoText trigger={tab}>
-                    runtime:
-                    <Value>{lambda.runtime}</Value>
-                  </InfoText>
-                )}
-                {lambda.size && (
-                  <InfoText trigger={tab}>
-                    memory size:
-                    <Value>{lambda.size}MB</Value>
-                  </InfoText>
-                )}
-                {lambda.timeout && (
-                  <InfoText trigger={tab}>
-                    timeout:
-                    <Value>{lambda.timeout}s</Value>
-                  </InfoText>
-                )}
-              </LambdaInfoColumn>
-            </LambdaInfo>
-          </Tab>
-        )}
-        <TabIndicator
-          color={tab ? colors.primaryTab : colors.secondaryTab}
-          index={tab}
-          steps={TABS_AMOUNT}
-          onClick={i => setTab(i)}
-        />
+        <Tab>
+          <Header>
+            <div>
+              {tab === 0 ? `Top ${data.length} ${header}` : `${tab === 1 ? '' : toOrdinal(tab)} ${lambdaHeader}`}
+            </div>
+            <TabIndicator index={tab} steps={TABS_AMOUNT} onClick={i => setTab(i)} />
+          </Header>
+          {tab === 0 && (
+            <>
+              {map(data, x => (
+                <Text key={x.lambdaName} trigger={tab}>
+                  <div>{x.lambdaName}</div>
+                  <div>{summaryFormatter(x)}</div>
+                </Text>
+              ))}
+            </>
+          )}
+          {tab > 0 && (
+            <>
+              <Text>{data[tab - 1].lambdaName}</Text>
+              <GraphContainer>
+                <ResponsiveContainer>
+                  <LineChart data={dataPoints} margin={{ top: 0, right: -25, left: -25, bottom: 0 }}>
+                    <XAxis
+                      dataKey="dateTime"
+                      stroke={tab ? colors.axis : colors.secondaryAxis}
+                      tick={{ fontSize: 12 }}
+                      tickLine={false}
+                      tickFormatter={x => DateTime.fromISO(x).toFormat(timeAxisFormat)}
+                    />
+                    <YAxis
+                      stroke={tab ? colors.axis : colors.secondaryAxis}
+                      tick={{ fontSize: 12 }}
+                      tickLine={false}
+                      type="number"
+                      padding={{ top: 20, bottom: 5 }}
+                      tickFormatter={yAxisFormatter}
+                    />
+                    <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
+                    <Line
+                      type="linear"
+                      dataKey={unit}
+                      stroke={colors.svgLines}
+                      dot={dataPoints.length < 3}
+                      strokeWidth={3}
+                    />
+                    <StyledTooltip
+                      wrapperStyle={{ opacity: 0.9 }}
+                      contentStyle={{ background: colors.tooltipBackground }}
+                      labelStyle={{
+                        fontSize: 12,
+                        lineHeight: '12px',
+                        marginBottom: 10,
+                        color: colors.lines,
+                      }}
+                      itemStyle={{ fontSize: 12, lineHeight: '12px' }}
+                      formatter={tooltipFormatter}
+                      labelFormatter={(value: string) => DateTime.fromISO(value).toFormat('d LLL HH:mm')}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </GraphContainer>
+              <LambdaInfo>
+                <LambdaInfoColumn>
+                  {map(lambdaInfo, x => lambda[x.unit] && (
+                    <InfoText key={x.unit} trigger={tab}>
+                      {x.text}:
+                      <Value>{x.valueFn(lambda[x.unit])}</Value>
+                    </InfoText>
+                  ))}
+                </LambdaInfoColumn>
+                <LambdaInfoColumn>
+                  {lambda.runtime && (
+                    <InfoText trigger={tab}>
+                      runtime:
+                      <Value>{lambda.runtime}</Value>
+                    </InfoText>
+                  )}
+                  {lambda.size && (
+                    <InfoText trigger={tab}>
+                      memory size:
+                      <Value>{lambda.size}MB</Value>
+                    </InfoText>
+                  )}
+                  {lambda.timeout && (
+                    <InfoText trigger={tab}>
+                      timeout:
+                      <Value>{lambda.timeout}s</Value>
+                    </InfoText>
+                  )}
+                </LambdaInfoColumn>
+              </LambdaInfo>
+            </>
+          )}
+        </Tab>
       </Content>
     </StyledCard>
   )

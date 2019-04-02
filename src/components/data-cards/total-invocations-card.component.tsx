@@ -15,19 +15,23 @@ const StyledCard = styled(Card)`
   margin: auto;
   width: 100%;
   min-width: 500px;
-  height: 300px;
+  height: 310px;
   ${Card.Content} {
     background: ${p => p.theme.dataCard.background};
     flex-direction: column;
     align-items: flex-start;
   }
+  @media (max-width: 800px) {
+    min-width: auto;
+    max-width: 100%;
+  }
 `
 const Header = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: calc(100% - 80px);
+  width: calc(100% - 75px);
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-left: 50px;
   margin-top: 20px;
   margin-bottom: 15px;
@@ -123,8 +127,8 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
             padding={{ top: 20, bottom: 5 }}
             tickFormatter={tickFormatters[tab]}
           />
-          <CartesianGrid stroke={colors.axis} strokeOpacity={0.35} />
-          <Line type="linear" dataKey="value" stroke={colors.lines} dot={false} strokeWidth={1.5} />
+          <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
+          <Line type="linear" dataKey="value" stroke={colors.svgLines} dot={false} strokeWidth={3} />
           <StyledTooltip
             wrapperStyle={{ opacity: 0.9 }}
             contentStyle={{ background: colors.tooltipBackground }}

@@ -18,8 +18,8 @@ const Wrapper = styled.div`
   position: relative;
   align-items: center;
   height: 100%;
-  min-height: calc(100vh - 180px);
-  padding: 0 20px 60px 20px;
+  min-height: calc(100vh - 80px);
+  padding: 0 20px;
   background: ${p => p.theme.colors.backgroundGradient};
   background-size: contain;
 `

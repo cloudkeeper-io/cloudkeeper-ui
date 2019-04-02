@@ -39,3 +39,11 @@ export const msToSeconds = (x: string | number) => Duration.fromObject({ millise
 
 // eslint-disable-next-line max-len,no-nested-ternary
 export const toOrdinal = (n: number) => n + (n % 10 === 1 && n % 100 !== 11 ? 'st' : n % 10 === 2 && n % 100 !== 12 ? 'nd' : n % 10 === 3 && n % 100 !== 13 ? 'rd' : 'th')
+
+export const safeParse = (parseString: string) => {
+  try {
+    return JSON.parse(parseString)
+  } catch (e) {
+    return null
+  }
+}
