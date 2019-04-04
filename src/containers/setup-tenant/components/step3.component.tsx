@@ -1,9 +1,10 @@
-import React, { useState, memo } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
 import { Mutation, MutationFn } from 'react-apollo'
-import { map } from 'lodash'
+import map from 'lodash/map'
+import get from 'lodash/get'
 
 import TextArea from '../../../components/form/text-area.components'
 import Select from '../../../components/form/select.components'
@@ -11,6 +12,8 @@ import Error from '../../../components/form/error-message.components'
 import Icon from '../../../components/icon.component'
 import { Text, Code, CopyButton, ButtonWrapper, NavigationButton } from '../setup-tenant.styles'
 import { tenantsQuery, createTenant } from '../../../graphql'
+import { trackEvent } from '../../../utils/amplitude'
+import { SmallField } from '../../../components/form/field.components'
 
 const mapRegions = (options: string[]): any => map(options, (x: string) => ({ value: x, label: x }))
 
@@ -18,7 +21,7 @@ const StyledForm = styled.form`
   margin-top: 20px;
 `
 const StyledSelect = styled(Select)`
-  height: 100px;
+  height: 80px;
   .react-select__menu-list {
     max-height: 120px;
   }
@@ -31,6 +34,7 @@ const ServerError = styled(Error)`
 `
 
 interface Values {
+  name: string
   keys: string
   region: string
 }
@@ -45,21 +49,28 @@ export default memo(({ code, onBack, regions }: StepsProps) => {
   const [loading, setLoading] = useState(false)
   const [serverError, setServerError] = useState('')
 
+  useEffect(() => trackEvent('Setup Step 3'), [])
+
   const onSubmit = async (v: Values, mutation: MutationFn) => {
-    setLoading(false)
+    setLoading(true)
     setServerError('')
     try {
       const keys = JSON.parse(v.keys).AccessKey
       const parameters = {
-        name: 'default tenant',
+        name: v.name,
         region: v.region,
         accessKey: keys.AccessKeyId,
         secretKey: keys.SecretAccessKey,
       }
 
       await mutation({ variables: parameters })
+      trackEvent('Created Tenant')
     } catch (err) {
-      setServerError('Server Error. Try Again Later')
+      if (get(err, 'graphQLErrors.0.message') === 'KEYS_ISSUE') {
+        setServerError('Access keys are incorrect, try again or contact support.')
+      } else {
+        setServerError('Server Error. Try Again Later')
+      }
     } finally {
       setLoading(false)
     }
@@ -68,7 +79,7 @@ export default memo(({ code, onBack, regions }: StepsProps) => {
   const validate = (values: Values) => {
     const errors = {} as Values
     if (!values.keys) {
-      errors.keys = 'Your Response is Required'
+      errors.keys = 'Your Response is required'
     }
 
     try {
@@ -82,8 +93,13 @@ export default memo(({ code, onBack, regions }: StepsProps) => {
     }
 
     if (!values.region) {
-      errors.region = 'Region is Required'
+      errors.region = 'Region is required'
     }
+
+    if (!values.name) {
+      errors.name = 'Project name is required'
+    }
+
     return errors
   }
 
@@ -111,6 +127,10 @@ export default memo(({ code, onBack, regions }: StepsProps) => {
                   Choose your region:
                 </Text>
                 <StyledSelect name="region" placeholder="AWS Region" options={mapRegions(regions)} />
+                <Text>
+                  Lastly, give your project a name:
+                </Text>
+                <SmallField name="name" placeholder="Your Project Name" />
                 <ButtonWrapper>
                   <ServerError>{serverError}</ServerError>
                   <NavigationButton onClick={onBack} type="button">
