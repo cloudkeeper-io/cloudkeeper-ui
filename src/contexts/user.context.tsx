@@ -7,7 +7,7 @@ import { User, Session } from '../models'
 import { postLogin, postSignUp, updatedToken } from '../utils'
 import { BACK_URL_KEY, SESSION_KEY } from '../constants'
 import { getApolloClient } from '../apollo.config'
-import { trackEvent } from '../utils/amplitude'
+import { setUserId, trackEvent } from '../utils/amplitude'
 
 interface UserProviderProps {
   history: History
@@ -91,6 +91,7 @@ export const UserProvider = ({ children, history }: UserProviderProps) => {
   }, [history])
 
   const login = async (email: string, password: string) => {
+    setUserId(email)
     trackEvent('User Logged In')
     const backUrl = localStorage.getItem(BACK_URL_KEY)
     setUser(current => ({ ...current, loading: true }))
@@ -108,6 +109,7 @@ export const UserProvider = ({ children, history }: UserProviderProps) => {
     setUser(current => ({ ...current, loading: true }))
     try {
       const session = await postSignUp(email, password)
+      setUserId(email)
       trackEvent('User Signed Up')
       localStorage.removeItem(BACK_URL_KEY)
       await setSession(session)
