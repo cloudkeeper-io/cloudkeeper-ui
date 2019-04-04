@@ -9,7 +9,6 @@ interface HeadProps {
 }
 
 export default memo(withTheme(({ theme }: HeadProps) => {
-  console.log(getConfig())
   return (
     <Helmet>
       <title>Cloud Keeper</title>

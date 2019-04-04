@@ -1,7 +1,6 @@
 export const trackEvent = (eventName: string) => {
-  // @ts-ignore
-  if (window.amplitude) {
-    // @ts-ignore
-    window.amplitude.getInstance().logEvent(eventName)
+  const anyWindow = window as any
+  if (anyWindow.amplitude) {
+    anyWindow.amplitude.getInstance().logEvent(eventName)
   }
 }
