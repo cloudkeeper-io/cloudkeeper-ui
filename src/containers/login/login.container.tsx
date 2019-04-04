@@ -1,6 +1,7 @@
-import React, { useState, memo, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components/macro'
 import { History } from 'history'
+import { withRouter } from 'react-router-dom'
 
 import Card from '../../components/card.component'
 import Tabs from '../../components/tabs.component'
@@ -57,7 +58,7 @@ interface LoginProps {
   history: History
 }
 
-export default memo(({ history, history: { location: { pathname } } }: LoginProps) => {
+export default withRouter(({ history, history: { location: { pathname } } }: LoginProps) => {
   const [tab, setTab] = useState(0)
   const { user, login, signUp } = useContext(UserContext)
 

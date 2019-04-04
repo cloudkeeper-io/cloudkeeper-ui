@@ -10,6 +10,7 @@ import {
   faArrowLeft,
   faPlay,
   faPause,
+  faCog,
 } from '@fortawesome/free-solid-svg-icons'
 import { faLightbulb as faRegularLightbulb } from '@fortawesome/free-regular-svg-icons'
 
@@ -24,3 +25,4 @@ library.add(faArrowRight)
 library.add(faArrowLeft)
 library.add(faPlay)
 library.add(faPause)
+library.add(faCog)

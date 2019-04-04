@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createBrowserHistory } from 'history'
 import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 
 import Head from './head'
 import RootContainer from './containers/root.container'
@@ -17,16 +18,18 @@ ReactDOM.render((
   <UserProvider history={history}>
     {({ client }) => (client ? (
       <ApolloProvider client={client}>
-        <ThemeProvider>
-          <TimerProvider>
-            <>
-              <SvgDefs />
-              <Head />
-              <GlobalStyles />
-              <RootContainer history={history} />
-            </>
-          </TimerProvider>
-        </ThemeProvider>
+        <ApolloHooksProvider client={client}>
+          <ThemeProvider>
+            <TimerProvider>
+              <>
+                <SvgDefs />
+                <Head />
+                <GlobalStyles />
+                <RootContainer history={history} />
+              </>
+            </TimerProvider>
+          </ThemeProvider>
+        </ApolloHooksProvider>
       </ApolloProvider>
     ) : <div />)}
   </UserProvider>
