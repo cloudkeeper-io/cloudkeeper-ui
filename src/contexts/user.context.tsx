@@ -7,7 +7,7 @@ import { User, Session } from '../models'
 import { postLogin, postSignUp, updatedToken } from '../utils'
 import { BACK_URL_KEY, SESSION_KEY } from '../constants'
 import { getApolloClient } from '../apollo.config'
-import {trackEvent} from "../utils/amplitude";
+import { trackEvent } from '../utils/amplitude'
 
 interface UserProviderProps {
   history: History

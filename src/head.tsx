@@ -13,8 +13,8 @@ export default memo(withTheme(({ theme }: HeadProps) => {
   return (
     <Helmet>
       <title>Cloud Keeper</title>
-      <meta name="theme-color" content={theme.colors.background} data-react-helmet="true"/>
-      <link rel="shortcut icon" href={theme.favicon}/>
+      <meta name="theme-color" content={theme.colors.background} data-react-helmet="true" />
+      <link rel="shortcut icon" href={theme.favicon} />
       <script>{
         `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -24,5 +24,5 @@ export default memo(withTheme(({ theme }: HeadProps) => {
       }
       </script>
     </Helmet>
-  );
+  )
 }))
