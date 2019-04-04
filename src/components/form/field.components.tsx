@@ -53,10 +53,10 @@ interface FieldProps {
   autoComplete?: string
 }
 
-export default ({ name, label, placeholder, type = 'text', className, ...props }: FieldProps) => (
-  <FormField name={name} className={className}>
+const Field = ({ name, label, placeholder, type = 'text', className, ...props }: FieldProps) => (
+  <FormField name={name}>
     {({ input, meta }) => (
-      <InputWrapper>
+      <InputWrapper className={className}>
         {label && <div>{label}</div>}
         <StyledInput {...input} type={type} placeholder={placeholder} {...props} />
         {meta.error && meta.touched && <ErrorMessage>{meta.error}</ErrorMessage>}
@@ -64,3 +64,15 @@ export default ({ name, label, placeholder, type = 'text', className, ...props }
     )}
   </FormField>
 )
+
+export default Field
+
+export const SmallField = styled(Field)`
+  height: 42px;
+  min-height: 42px;
+  ${StyledInput} {
+    height: 37px;
+    padding: 0 8px;
+    font-size: 12px;
+  }
+`

@@ -56,6 +56,8 @@ export default ({ tenants }: DashboardProps) => {
     }
   }, [isDataLoaded, setActive, setVisibility])
 
+  // TODO: update pollInterval when the data isProcessing to something like 10 seconds
+
   return (
     <Query query={dashboardQuery} variables={{ tenantId: get(last(tenants), 'id') }} pollInterval={30 * 60 * 1000}>
       {({ data, loading, error }) => {
@@ -70,6 +72,15 @@ export default ({ tenants }: DashboardProps) => {
         // onLoad Actions
         if (!isDataLoaded) {
           setDataLoaded(true)
+        }
+
+        if (data.lambdasData.processing || data.dynamoData.processing) {
+          return (
+            <div>
+              We&apos;re processing your data. It will take several minutes to do so.
+              We will automatically show the data when we have it.
+            </div>
+          )
         }
 
         return (
