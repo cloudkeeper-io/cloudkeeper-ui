@@ -56,7 +56,7 @@ jobs:
           command: mkdir -p reports/junit
 
       - run: yarn lint --format junit -o reports/junit/js-lint-results.xml
-      - run: yarn typecheck
+      - run: yarn tsc
       - run:
           name: Run tests
           environment:
