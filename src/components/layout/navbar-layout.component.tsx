@@ -1,12 +1,13 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
+import get from 'lodash/get'
 
 import HeaderLink from './header-link.component'
 import ErrorContainer from '../../containers/error.container'
 import Timer from '../timer.component'
 import { User } from '../../models'
-import { Wrapper, HeaderWrapper, Header, PageWrapper, PageContent, Flex } from './navbar-layout.styles'
-import { ThemeConsumer, TimerConsumer } from '../../contexts'
+import { Wrapper, HeaderWrapper, Header, PageWrapper, PageContent, Flex, TenantName } from './navbar-layout.styles'
+import { ThemeConsumer, TimerConsumer, TenantConsumer } from '../../contexts'
 
 interface NavbarLayoutProps extends RouteComponentProps {
   user: User
@@ -50,7 +51,15 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
         <HeaderWrapper background={background}>
           <Header>
             {session && <HeaderLink active={pathname === '/'} icon="home" to="/" />}
-            {session && <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings" />}
+            {session && (
+              <TenantConsumer>
+                {({ tenant }) => (
+                  <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings">
+                    <TenantName>{get(tenant, 'name')}</TenantName>
+                  </HeaderLink>
+                )}
+              </TenantConsumer>
+            )}
             <TimerConsumer>
               {({ count, delay, isActive, isVisible, setActiveAndSave }) => isVisible && (
                 <>

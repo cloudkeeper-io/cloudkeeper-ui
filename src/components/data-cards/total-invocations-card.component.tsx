@@ -9,7 +9,6 @@ import { formatNumber, processDataPoints } from '../../utils'
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
-import AnimatedText from '../animated-text.component'
 
 const StyledCard = styled(Card)`
   margin: auto;
@@ -36,7 +35,7 @@ const Header = styled.div`
   margin-top: 20px;
   margin-bottom: 15px;
 `
-const Value = styled(AnimatedText)`
+const Value = styled.div`
   position: relative;
   min-height: 58px;
   min-width: 1px;
@@ -47,7 +46,7 @@ const Value = styled(AnimatedText)`
     will-change: transform, opacity;
   }
 `
-const Description = styled(AnimatedText)`
+const Description = styled.div`
   position: relative;
   width: 100%;
   font-size: 12px;

@@ -21,7 +21,6 @@ const Wrapper = styled.div`
   height: 100%;
   min-height: calc(100vh - 80px);
   padding: 0 20px;
-  background: ${p => p.theme.colors.backgroundGradient};
   background-size: contain;
 `
 const Content = styled.div`

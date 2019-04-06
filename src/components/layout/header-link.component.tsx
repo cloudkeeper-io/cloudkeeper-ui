@@ -19,7 +19,6 @@ const LinkContent = styled.div<{ active?: boolean, noPadding?: boolean }>`
   filter: blur(0.25px);
   overflow: visible;
   transition: background-color 0.5s;
-  text-transform: uppercase;
   white-space: nowrap;
   &:focus {
     outline: none;
@@ -36,15 +35,17 @@ interface HeaderLinkProps {
   iconSize?: SizeProp
   icon?: IconProp
   width?: number
+  children?: JSX.Element
   onClick?: () => void
 }
 
-export default ({ active, to, icon = 'home', iconSize = 'lg', onClick }: HeaderLinkProps) => {
+export default ({ active, to, icon = 'home', iconSize = 'lg', children, onClick }: HeaderLinkProps) => {
   if (to) {
     return (
       <Link to={to}>
         <LinkContent active={active}>
           <Icon size={iconSize} icon={icon} />
+          {children}
         </LinkContent>
       </Link>
     )
@@ -53,6 +54,7 @@ export default ({ active, to, icon = 'home', iconSize = 'lg', onClick }: HeaderL
   return (
     <LinkContent active={active} role="button" onClick={onClick}>
       <Icon size={iconSize} icon={icon} />
+      {children}
     </LinkContent>
   )
 }

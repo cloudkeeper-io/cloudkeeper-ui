@@ -8,7 +8,7 @@ import Head from './head'
 import RootContainer from './containers/root.container'
 import GlobalStyles from './styles/global.styles'
 import SvgDefs from './styles/svg.defs'
-import { ThemeProvider, UserProvider, TimerProvider } from './contexts'
+import { ThemeProvider, UserProvider, TimerProvider, TenantProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
 import './icons.config'
 
@@ -21,12 +21,14 @@ ReactDOM.render((
         <ApolloHooksProvider client={client}>
           <ThemeProvider>
             <TimerProvider>
-              <>
-                <SvgDefs />
-                <Head />
-                <GlobalStyles />
-                <RootContainer history={history} />
-              </>
+              <TenantProvider>
+                <>
+                  <SvgDefs />
+                  <Head />
+                  <GlobalStyles />
+                  <RootContainer history={history} />
+                </>
+              </TenantProvider>
             </TimerProvider>
           </ThemeProvider>
         </ApolloHooksProvider>

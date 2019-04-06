@@ -1,5 +1,5 @@
 export interface Tenant {
-  tenantId: string
+  id: string
   name: boolean
   isSetupCompleted: boolean
 }

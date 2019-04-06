@@ -19,6 +19,15 @@ const colors = {
   activeSecondary: '#FF5F99',
 }
 
+const controls = {
+  color: `${transparentize(0.7, colors.primary)}`,
+  gradient: 'linear-gradient(0deg, #EDECEC, #EDECEC), linear-gradient(90deg, #FF5F99 0%, #FFAA6E 101.56%)',
+  activeColor: `${mix(0.5, colors.activeSecondary, colors.active)}`,
+  activeGradient: `linear-gradient(90deg, ${colors.activeSecondary} 0%, ${colors.active} 100%)`,
+  secondaryActiveColor: '#fff',
+  shadow: transparentize(0.5, colors.active),
+}
+
 const card = {
   background: '#FFFFFF',
   clipPath: 'none',
@@ -77,12 +86,6 @@ const tabs = {
   activeText: '#4A4A4A',
 }
 
-const steps = {
-  color: 'linear-gradient(0deg, #EDECEC, #EDECEC), linear-gradient(90deg, #FF5F99 0%, #FFAA6E 101.56%)',
-  activeColor: `linear-gradient(90deg, ${colors.activeSecondary} 0%, ${colors.active} 100%)`,
-  shadow: transparentize(0.5, colors.active),
-}
-
 const select = {
   color: colors.text,
   listBackground: colors.background,
@@ -100,12 +103,12 @@ export default {
   favicon: 'light-favicon.png',
   font: 'Roboto',
   colors,
+  controls,
   card,
   dataCard,
   input,
   buttons,
   tabs,
-  steps,
   select,
   login,
 }

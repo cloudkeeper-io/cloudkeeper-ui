@@ -1,5 +1,8 @@
 import React from 'react'
 import styled, { withTheme } from 'styled-components/macro'
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { DateTime } from 'luxon'
+import { transparentize } from 'polished'
 import map from 'lodash/map'
 import startCase from 'lodash/startCase'
 import toLower from 'lodash/toLower'
@@ -7,14 +10,11 @@ import first from 'lodash/first'
 import last from 'lodash/last'
 import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { DateTime } from 'luxon'
-import { transparentize } from 'polished'
 
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
+import { Header as CommonHeader, Text as CommonText } from '../typography.component'
 import StepIndicator from '../steps-indicator.component'
-import AnimatedText from '../animated-text.component'
 import { bytesToSize, toOrdinal, processDataPoints } from '../../utils'
 
 const StyledCard = styled(Card)`  
@@ -41,11 +41,9 @@ const Content = styled.div`
   justify-content: flex-start;
   padding: 0 20px 0 50px;
 `
-const Header = styled.div`
+const Header = styled(CommonHeader)`
   display: flex;
   justify-content: space-between;
-  font-size: 22px;
-  line-height: 24px;
   margin-top: 10px;
   margin-bottom: 5px;
 `
@@ -54,11 +52,9 @@ const TabIndicator = styled(StepIndicator)`
   justify-content: center;
   align-items: center;
 `
-const Text = styled(AnimatedText)`
+const Text = styled(CommonText)`
   position: relative;
   margin-bottom: 8px;
-  font-size: 14px;
-  line-height: 19px;
   white-space: nowrap;
 `
 const InfoText = styled(Text)`
@@ -84,10 +80,9 @@ const Tab = styled.div`
   max-height: calc(100% - 22px);
   flex: 1;
 `
-const LegendItem = styled.div`
+const LegendItem = styled(CommonText)`
   display: flex;
   align-items: center;
-  font-size: 14px;
   min-height: 25px;
 `
 const LegendCircle = styled.div<{ color: string }>`
@@ -186,7 +181,7 @@ const DataCard = (props: TopDynamoCardProps) => {
           {tab === 0 && (
             <>
               {map(data, x => (
-                <Text key={x.name} trigger={tab}>
+                <Text key={x.name}>
                   <div>{x.name}</div>
                   <div>{summaryFormatter(x)}</div>
                 </Text>
@@ -195,7 +190,7 @@ const DataCard = (props: TopDynamoCardProps) => {
           )}
           {tab > 0 && (
             <>
-              <Text trigger={tab}>
+              <Text>
                 {data[tab - 1].name}
               </Text>
               <GraphContainer>
@@ -217,15 +212,6 @@ const DataCard = (props: TopDynamoCardProps) => {
                       tickFormatter={yAxisFormatter}
                     />
                     <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
-
-                    <Line
-                      type="linear"
-                      dataKey={first(units)!.value}
-                      name={first(units)!.label}
-                      stroke={colors.svgLines}
-                      dot={dataPoints.length < 3}
-                      strokeWidth={3}
-                    />
                     {dynamo.billingMode === 'PROVISIONED' && (
                       <Line
                         type="linear"
@@ -236,6 +222,14 @@ const DataCard = (props: TopDynamoCardProps) => {
                         strokeWidth={3}
                       />
                     )}
+                    <Line
+                      type="linear"
+                      dataKey={first(units)!.value}
+                      name={first(units)!.label}
+                      stroke={colors.svgLines}
+                      dot={dataPoints.length < 3}
+                      strokeWidth={3}
+                    />
                     <StyledTooltip
                       wrapperStyle={{ opacity: 0.9 }}
                       contentStyle={{ background: tab ? colors.tooltipBackground : colors.secondaryTooltipBackground }}
@@ -261,7 +255,7 @@ const DataCard = (props: TopDynamoCardProps) => {
                 ))}
                 <DynamoInfoColumn>
                   {map(dynamoInfo, x => !isNil(dynamo[x.unit]) && (
-                    <InfoText key={x.unit} trigger={tab}>
+                    <InfoText key={x.unit}>
                       {x.text}:
                       <Value>{x.valueFn(dynamo[x.unit])}</Value>
                     </InfoText>
@@ -269,19 +263,19 @@ const DataCard = (props: TopDynamoCardProps) => {
                 </DynamoInfoColumn>
                 <DynamoInfoColumn>
                   {dynamo.items && (
-                    <InfoText trigger={tab}>
+                    <InfoText>
                       items:
                       <Value>{dynamo.items.toLocaleString('ru')}</Value>
                     </InfoText>
                   )}
                   {dynamo.sizeBytes && (
-                    <InfoText trigger={tab}>
+                    <InfoText>
                       size:
                       <Value>{bytesToSize(dynamo.sizeBytes)}</Value>
                     </InfoText>
                   )}
                   {dynamo.billingMode && (
-                    <InfoText trigger={tab}>
+                    <InfoText>
                       billing mode:
                       <Value>{toLower(startCase(dynamo.billingMode))}</Value>
                     </InfoText>

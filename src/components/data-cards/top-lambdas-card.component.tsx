@@ -8,8 +8,8 @@ import { DateTime } from 'luxon'
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
-import AnimatedText from '../animated-text.component'
 import { processDataPoints, toOrdinal } from '../../utils'
+import { Header as CommonHeader, Text as CommonText } from '../typography.component'
 
 const StyledCard = styled(Card)`  
   margin: auto;
@@ -35,11 +35,9 @@ const Content = styled.div`
   justify-content: flex-start;
   padding: 0 20px 0 50px;
 `
-const Header = styled.div`
+const Header = styled(CommonHeader)`
   display: flex;
   justify-content: space-between;
-  font-size: 22px;
-  line-height: 24px;
   margin-top: 10px;
   margin-bottom: 5px;
 `
@@ -48,10 +46,9 @@ const TabIndicator = styled(StepIndicator)`
   justify-content: center;
   align-items: center;
 `
-const Text = styled(AnimatedText)`
+const Text = styled(CommonText)`
   position: relative;
   margin-bottom: 8px;
-  font-size: 14px;
   line-height: 19px;
 
 `
@@ -157,7 +154,7 @@ const DataCard = (props: MostInvokedCardProps) => {
           {tab === 0 && (
             <>
               {map(data, x => (
-                <Text key={x.lambdaName} trigger={tab}>
+                <Text key={x.lambdaName}>
                   <div>{x.lambdaName}</div>
                   <div>{summaryFormatter(x)}</div>
                 </Text>
@@ -212,7 +209,7 @@ const DataCard = (props: MostInvokedCardProps) => {
               <LambdaInfo>
                 <LambdaInfoColumn>
                   {map(lambdaInfo, x => lambda[x.unit] && (
-                    <InfoText key={x.unit} trigger={tab}>
+                    <InfoText key={x.unit}>
                       {x.text}:
                       <Value>{x.valueFn(lambda[x.unit])}</Value>
                     </InfoText>
@@ -220,19 +217,19 @@ const DataCard = (props: MostInvokedCardProps) => {
                 </LambdaInfoColumn>
                 <LambdaInfoColumn>
                   {lambda.runtime && (
-                    <InfoText trigger={tab}>
+                    <InfoText>
                       runtime:
                       <Value>{lambda.runtime}</Value>
                     </InfoText>
                   )}
                   {lambda.size && (
-                    <InfoText trigger={tab}>
+                    <InfoText>
                       memory size:
                       <Value>{lambda.size}MB</Value>
                     </InfoText>
                   )}
                   {lambda.timeout && (
-                    <InfoText trigger={tab}>
+                    <InfoText>
                       timeout:
                       <Value>{lambda.timeout}s</Value>
                     </InfoText>

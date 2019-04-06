@@ -2,11 +2,11 @@ import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { useQuery } from 'react-apollo-hooks'
 import get from 'lodash/get'
-import last from 'lodash/last'
 import isBoolean from 'lodash/isBoolean'
 
 import Loading from '../../components/loading.component'
 import Processing from '../../components/processing.component'
+import { Title } from '../../components/typography.component'
 import { dashboardQuery } from '../../graphql'
 import { Tenant } from '../../models'
 import { TimerContext } from '../../contexts'
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   position: relative;
   padding: 0 20px 20px 20px;
 `
-const Title = styled.div`
+const StyledTitle = styled(Title)`
   display: flex;
   align-items: center;
   font-size: 18px;
@@ -41,14 +41,14 @@ const POLL_INTERVAL = 30 * 60 * 1000 // 30 min
 const PROCESSING_REFETCH_DELAY = 10000 // 10 sec
 
 interface DashboardProps {
-  tenants: Tenant[]
+  tenant: Tenant
 }
 
-export default ({ tenants }: DashboardProps) => {
+export default ({ tenant }: DashboardProps) => {
   const [isDataLoaded, setDataLoaded] = useState(false)
   const { count, setActive, setVisibility } = useContext(TimerContext)
   const { data, loading, error, refetch } = useQuery(dashboardQuery, {
-    variables: { tenantId: get(last(tenants), 'id') },
+    variables: { tenantId: get(tenant, 'id') },
     pollInterval: POLL_INTERVAL,
   })
 
@@ -88,16 +88,16 @@ export default ({ tenants }: DashboardProps) => {
 
   return (
     <Wrapper>
-      <Title>
+      <StyledTitle>
         Last 24h
-      </Title>
+      </StyledTitle>
       <CardsWrapper>
         <LambdasGraphs timeAxisFormat="HH:mm" count={count} data={data.lambdasData.last24Hours} />
         <DynamoGraphs timeAxisFormat="HH:mm" count={count} data={data.dynamoData.last24Hours} />
       </CardsWrapper>
-      <Title>
+      <StyledTitle>
         Last 30 days
-      </Title>
+      </StyledTitle>
       <CardsWrapper>
         <LambdasGraphs timeAxisFormat="LLL d" count={count} data={data.lambdasData.last30Days} />
         <DynamoGraphs timeAxisFormat="LLL d" count={count} data={data.dynamoData.last30Days} />

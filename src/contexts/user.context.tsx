@@ -45,7 +45,7 @@ export const UserProvider = ({ children, history }: UserProviderProps) => {
         }
       }
     } catch (e) {
-      console.log('SignOut Error')
+      console.log('SignOut Error', e)
     } finally {
       localStorage.removeItem(SESSION_KEY)
       localStorage.removeItem('apollo-cache-persist')
