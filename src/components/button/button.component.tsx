@@ -27,9 +27,9 @@ const Border = styled.div<{ disabled?: boolean, showBorder: boolean }>`
 const Button = styled.button<{ loading?: boolean, background?: string, color?: string }>`
   cursor: pointer;
   width: calc(100%);
-  height: calc(100% + 1px);
+  height: 100%;
   position: relative;
-  top: 1.5px;
+  top: 2px;
   left: 2px;
   background: ${p => (p.disabled ? p.theme.buttons.primary.disabled : p.background)};
   box-sizing: border-box;

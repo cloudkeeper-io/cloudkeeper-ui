@@ -25,7 +25,7 @@ export const getBorderClipPath = (x: number, y: number) =>
      calc(100% - ${x * multiplier + y}px) calc(100% - ${y + y}px),
      calc(100% - ${y + y}px) calc(100% - ${x + y}px),
      calc(100% - ${y + y}px) ${y + y}px,
-     ${x * multiplier + y}px ${y + y}px, 
+     ${x * multiplier}px ${y + y}px, 
      ${y + y}px ${x + y}px, 
      ${y + y}px calc(100% - ${y}px), 
      0 100%

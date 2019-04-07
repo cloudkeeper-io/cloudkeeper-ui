@@ -66,8 +66,8 @@ const input = {
 
 const buttons = {
   borderRadius: 0,
-  clipPath: getClipPath(22),
-  borderClipPath: getBorderClipPath(23, 1),
+  clipPath: getClipPath(21),
+  borderClipPath: getBorderClipPath(22, 1),
   login: {
     background: 'transparent',
   },

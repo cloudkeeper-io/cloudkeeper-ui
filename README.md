@@ -2,7 +2,7 @@
 
 dev:  [https://dev.cloudkeeper.io/](https://dev.cloudkeeper.io/)
 
-prod (coming soon): [http://cloudkeeper.io/](http://cloudkeeper.io/)
+prod: [http://app.cloudkeeper.io/](http://app.cloudkeeper.io/)
 
 ![CloudKeeper.png](https://s3.eu-central-1.amazonaws.com/bb-image-drai/CloudKeeper.png)
 
