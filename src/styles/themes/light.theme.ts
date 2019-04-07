@@ -1,4 +1,4 @@
-import { darken, mix, transparentize } from 'polished'
+import { mix, tint, transparentize } from 'polished'
 
 const PRIMARY = mix(0.5, '#FFAA6E', '#FF5F99') // '#4A90E2'
 
@@ -68,7 +68,7 @@ const buttons = {
   },
   primary: {
     background: colors.primary,
-    active: darken(0.15, colors.primary),
+    active: tint(0.15, colors.primary),
     color: '#FFFFFF',
     disabled: 'rgba(171, 171, 171, 0.1)',
     borderDisabled: 'transparent',

@@ -37,6 +37,7 @@ const card = {
   borderClipPath: getBorderClipPath(41, 1),
   shadow: colors.shadow,
   showBorder: true,
+  borderRadius: '0',
 }
 
 const dataCard = {

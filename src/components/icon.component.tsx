@@ -4,7 +4,8 @@ import { FontAwesomeIcon, Props as FaIconProps } from '@fortawesome/react-fontaw
 import { transparentize } from 'polished'
 
 interface IconProps extends FaIconProps {
-  children?: any
+  children?: JSX.Element
+  onClick?: () => void
 }
 
 const StyledIcon = styled(FontAwesomeIcon)<IconProps>`

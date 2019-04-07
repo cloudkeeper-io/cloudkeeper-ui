@@ -17,7 +17,7 @@ const SetupTenant = lazy(() => import('./setup-tenant/setup-tenant.container'))
 const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
 const Login = lazy(() => import('./login/login.container'))
 const Error = lazy(() => import('./error.container'))
-const Settings = lazy(() => import('./settings.container'))
+const Settings = lazy(() => import('./settings/settings.container'))
 
 interface RootContainerProps {
   history: History
@@ -49,7 +49,11 @@ const AuthorizedRoutes = () => {
         setAndSaveTenant(first(tenants)!)
       }
     }
-  }, [tenant, tenants, setAndSaveTenant])
+    if (isEmpty(tenants) && !loading) {
+      setAndSaveTenant(null!)
+    }
+  },
+  [tenant, loading, tenants, setAndSaveTenant])
 
   if (loading) {
     return <LoadingPage />
@@ -72,7 +76,10 @@ const AuthorizedRoutes = () => {
         </Route>
       )}
       <Route exact path="/settings">
-        <Settings tenants={tenants} />
+        <Settings />
+      </Route>
+      <Route exact path="/setup-tenant">
+        <SetupTenant />
       </Route>
       <Route>
         <Redirect to="/" />

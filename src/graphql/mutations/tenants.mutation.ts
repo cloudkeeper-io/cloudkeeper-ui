@@ -9,3 +9,13 @@ export const createTenant = gql`
         }
     }
 `
+
+export const removeTenant = gql`
+    mutation removeTenant($id: String!) {
+        deleteTenant(id: $id) {
+            id
+            name
+            isSetupCompleted
+        }
+    }
+`
