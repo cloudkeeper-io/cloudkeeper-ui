@@ -109,7 +109,7 @@ jobs:
           name: Deploy
           command: |
             aws s3 sync build/. s3://app.cloudkeeper.io/ --delete
-            aws cloudfront create-invalidation --distribution-id E3BY0OT5J5F7FP --paths "/*"
+            aws cloudfront create-invalidation --distribution-id E1DQKG4ZR52C0F --paths "/*"
 
 workflows:
   version: 2
