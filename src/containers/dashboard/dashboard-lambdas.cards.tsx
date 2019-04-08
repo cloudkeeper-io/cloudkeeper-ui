@@ -1,6 +1,4 @@
-/* eslint-disable react/no-multi-comp */
 import React, { memo } from 'react'
-import { Duration } from 'luxon'
 import round from 'lodash/round'
 
 import LambdaSummaryCard from '../../components/data-cards/lambda-summary-card.component'
