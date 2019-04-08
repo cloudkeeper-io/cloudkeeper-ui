@@ -46,6 +46,7 @@ const dataCard = {
   linesSecondary: mix(0.5, '#2FF6F5', '#0470FE'),
   svgLines: 'url(#lightLine)',
   svgLinesSecondary: 'url(#lightLineSecondary)',
+  lineFilter: 'url(#lightLineShadow)',
   secondaryLines: colors.activeText,
   tooltipBackground: '#FFFFFF',
   secondaryTooltipBackground: '#0E0B20',

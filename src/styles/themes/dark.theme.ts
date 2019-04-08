@@ -49,6 +49,7 @@ const dataCard = {
   linesSecondary: '#DB60FF',
   svgLines: 'url(#darkLine)',
   svgLinesSecondary: 'url(#darkLineSecondary)',
+  lineFilter: '',
   secondaryLines: colors.primary,
   tooltipBackground: '#0E0B20',
   secondaryTooltipBackground: '#0E0B20',

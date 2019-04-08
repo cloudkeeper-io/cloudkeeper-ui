@@ -208,13 +208,14 @@ const DataCard = (props: TopDynamoCardProps) => {
                       tick={{ fontSize: 12 }}
                       tickLine={false}
                       type="number"
-                      padding={{ top: 20, bottom: 5 }}
+                      padding={{ top: 20, bottom: 10 }}
                       tickFormatter={yAxisFormatter}
                     />
                     <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
                     {dynamo.billingMode === 'PROVISIONED' && (
                       <Line
                         type="linear"
+                        filter={colors.lineFilter}
                         dataKey={last(units)!.value}
                         name={last(units)!.label}
                         stroke={colors.svgLinesSecondary}
@@ -224,6 +225,7 @@ const DataCard = (props: TopDynamoCardProps) => {
                     )}
                     <Line
                       type="linear"
+                      filter={colors.lineFilter}
                       dataKey={first(units)!.value}
                       name={first(units)!.label}
                       stroke={colors.svgLines}

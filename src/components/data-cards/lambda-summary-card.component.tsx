@@ -124,11 +124,18 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
             tick={{ fontSize: 12 }}
             tickLine={false}
             type="number"
-            padding={{ top: 20, bottom: 5 }}
+            padding={{ top: 20, bottom: 15 }}
             tickFormatter={tickFormatters[tab]}
           />
           <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
-          <Line type="linear" dataKey="value" stroke={colors.svgLines} dot={false} strokeWidth={3} />
+          <Line
+            filter={colors.lineFilter}
+            type="linear"
+            dataKey="value"
+            stroke={colors.svgLines}
+            dot={false}
+            strokeWidth={3}
+          />
           <StyledTooltip
             wrapperStyle={{ opacity: 0.9 }}
             contentStyle={{ background: colors.tooltipBackground }}

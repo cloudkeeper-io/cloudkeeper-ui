@@ -24,8 +24,8 @@ const StepLine = styled.div<{ active: boolean, color?: string }>`
     p.color || p.theme.controls.activeGradient :
     p.color ? transparentize(0.6, p.color) : p.theme.controls.color
   )};
-  box-shadow: 0 0 4px ${p => (p.active ?
-    (p.color ? transparentize(0.6, p.color) : p.theme.controls.shadow) :
+  box-shadow: 0 3px 5px ${p => (p.active ?
+    (p.color ? transparentize(0.4, p.color) : p.theme.controls.shadow) :
     'transparent'
   )};
   transition: 0.5s background;

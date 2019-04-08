@@ -179,12 +179,13 @@ const DataCard = (props: MostInvokedCardProps) => {
                       tick={{ fontSize: 12 }}
                       tickLine={false}
                       type="number"
-                      padding={{ top: 20, bottom: 5 }}
+                      padding={{ top: 20, bottom: 15 }}
                       tickFormatter={yAxisFormatter}
                     />
                     <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
                     <Line
                       type="linear"
+                      filter={colors.lineFilter}
                       dataKey={unit}
                       stroke={colors.svgLines}
                       dot={dataPoints.length < 3}

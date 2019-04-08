@@ -53,12 +53,12 @@ export const LambdasGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps)
         {
           unit: 'averageDuration',
           text: 'average',
-          valueFn: x => `${Duration.fromObject({ milliseconds: x }).toFormat('s')}s`,
+          valueFn: x => `${msToSeconds(x)}s`,
         },
         {
           unit: 'maxDuration',
           text: 'max',
-          valueFn: x => `${Duration.fromObject({ milliseconds: x }).toFormat('s')}s`,
+          valueFn: x => `${msToSeconds(x)}s`,
         },
       ]}
     />
