@@ -81,7 +81,7 @@ interface TotalInvocationsCardProps {
 type Units = 'invocations' | 'errors' | 'cost'
 
 const tabs: Array<Units> = ['invocations', 'errors', 'cost']
-const descriptions = ['Lambdas Executions', 'Lambdas Errors', 'Lambdas Cost']
+const descriptions = ['Lambda Executions', 'Lambda Errors', 'Lambda Cost']
 const formatters = [
   (x: number) => x.toLocaleString('ru'),
   (x: number) => x.toLocaleString('ru'),

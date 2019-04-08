@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 import { Duration } from 'luxon'
 import round from 'lodash/round'
 
-import TotalInvocationsCard from '../../components/data-cards/total-invocations-card.component'
+import LambdaSummaryCard from '../../components/data-cards/lambda-summary-card.component'
 import TopLambdasCard from '../../components/data-cards/top-lambdas-card.component'
 import { formatNumber, msToSeconds } from '../../utils'
 
@@ -15,7 +15,7 @@ interface GraphsProps {
 
 export const LambdasGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps) => (
   <>
-    <TotalInvocationsCard count={count} data={data.totals} timeAxisFormat={timeAxisFormat} />
+    <LambdaSummaryCard count={count} data={data.totals} timeAxisFormat={timeAxisFormat} />
     <TopLambdasCard
       header="Most Invoked Lambdas"
       lambdaHeader="Most Invoked Lambda"

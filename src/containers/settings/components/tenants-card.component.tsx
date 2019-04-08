@@ -4,6 +4,7 @@ import styled from 'styled-components/macro'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { Mutation } from 'react-apollo'
 import map from 'lodash/map'
+import get from 'lodash/get'
 
 import { useQuery } from 'react-apollo-hooks'
 import Button from '../../../components/button/button.component'
@@ -97,7 +98,7 @@ const Settings = ({ history }: TenantsCardProps) => {
                 <Row key={tenant.id}>
                   <RadioButton
                     label={tenant.name}
-                    checked={currentTenant.id === tenant.id}
+                    checked={get(currentTenant, 'id') === tenant.id}
                     onChange={() => onTenantClick(tenant)}
                   />
                   <RemoveIcon icon="trash-alt" size="1x" onClick={() => openRemoveModal(tenant)} />
