@@ -3,6 +3,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
 import { Mutation, MutationFn } from 'react-apollo'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import map from 'lodash/map'
 import get from 'lodash/get'
 
@@ -39,13 +40,13 @@ interface Values {
   region: string
 }
 
-interface StepsProps {
+interface StepsProps extends RouteComponentProps {
   code: string,
   onBack: () => void,
   regions: string[]
 }
 
-export default memo(({ code, onBack, regions }: StepsProps) => {
+export default memo(withRouter(({ code, onBack, history, regions }: StepsProps) => {
   const [loading, setLoading] = useState(false)
   const [serverError, setServerError] = useState('')
 
@@ -65,6 +66,7 @@ export default memo(({ code, onBack, regions }: StepsProps) => {
 
       await mutation({ variables: parameters })
       trackEvent('Created Tenant')
+      history.push('./')
     } catch (err) {
       if (get(err, 'graphQLErrors.0.message') === 'KEYS_ISSUE') {
         setServerError('Access keys are incorrect, try again or contact support.')
@@ -147,4 +149,4 @@ export default memo(({ code, onBack, regions }: StepsProps) => {
       </Mutation>
     </>
   )
-})
+}))

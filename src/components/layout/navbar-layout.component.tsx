@@ -1,6 +1,8 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
+import screenfull from 'screenfull'
 import get from 'lodash/get'
+import noop from 'lodash/noop'
 
 import HeaderLink from './header-link.component'
 import ErrorContainer from '../../containers/error.container'
@@ -17,7 +19,16 @@ interface NavbarLayoutProps extends RouteComponentProps {
 }
 
 class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
-  public state = { hasError: false }
+  public state = {
+    hasError: false,
+    isFullscreen: false,
+  }
+
+  public componentDidMount() {
+    if (screenfull) {
+      screenfull.on('change', this.setFullScreen)
+    }
+  }
 
   public componentDidUpdate(prevProps: Readonly<NavbarLayoutProps>) {
     const { history: { location: { pathname } }, user: { session } } = this.props
@@ -29,6 +40,14 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
   public componentDidCatch() {
     this.setState({ hasError: true })
   }
+
+  public componentWillUnmount() {
+    if (screenfull) {
+      screenfull.off('change', this.setFullScreen)
+    }
+  }
+
+  public setFullScreen = () => this.setState({ isFullscreen: screenfull ? screenfull.isFullscreen : false })
 
   public isActive = (link: any) => {
     const { location: { pathname } } = window
@@ -43,7 +62,7 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
 
   public render() {
     const { children, background, user: { session } } = this.props
-    const { hasError } = this.state
+    const { hasError, isFullscreen } = this.state
     const { pathname } = window.location
 
     return (
@@ -74,6 +93,12 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
               )}
             </TimerConsumer>
             <Flex />
+            {session && pathname === '/' && (
+              <HeaderLink
+                icon={isFullscreen ? 'compress' : 'expand'}
+                onClick={() => (screenfull ? screenfull.toggle() : noop)}
+              />
+            )}
             <ThemeConsumer>
               {({ toggleTheme }) => (
                 <HeaderLink icon="lightbulb" iconSize="1x" onClick={toggleTheme} />

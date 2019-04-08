@@ -13,6 +13,7 @@ import {
   faCog,
   faTrashAlt,
   faPlus,
+  faCompress,
 } from '@fortawesome/free-solid-svg-icons'
 import { faLightbulb as faRegularLightbulb } from '@fortawesome/free-regular-svg-icons'
 
@@ -30,3 +31,4 @@ library.add(faPause)
 library.add(faCog)
 library.add(faTrashAlt)
 library.add(faPlus)
+library.add(faCompress)
