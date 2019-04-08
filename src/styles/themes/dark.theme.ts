@@ -14,7 +14,7 @@ const colors = {
   icon: PRIMARY,
   activeText: PRIMARY,
   disabled: '#ababab',
-  spinner: 'url(#spinner-gradient)',
+  spinner: 'url(#dark-spinner-gradient)',
   shadow: 'rgba(79, 250, 197, 0.3)',
 
   active: '#129F7C',

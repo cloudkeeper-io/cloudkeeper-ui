@@ -50,12 +50,6 @@ interface SpinnerProps {
 
 export default ({ size = 50, color = '', strokeWidth = 2, className }: SpinnerProps) => (
   <Svg className={className} style={{ width: size, height: size }} viewBox="25 25 50 50">
-    <defs>
-      <linearGradient id="spinner-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#129F7C" />
-        <stop offset="100%" stopColor="#6F20A0" />
-      </linearGradient>
-    </defs>
     <Circle color={color} cx="50" cy="50" r="20" fill="none" strokeWidth={strokeWidth} strokeMiterlimit="10" />
   </Svg>
 )
