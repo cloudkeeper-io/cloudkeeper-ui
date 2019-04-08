@@ -208,7 +208,7 @@ const DataCard = (props: TopDynamoCardProps) => {
                       tick={{ fontSize: 12 }}
                       tickLine={false}
                       type="number"
-                      padding={{ top: 20, bottom: 10 }}
+                      padding={{ top: 20, bottom: 15 }}
                       tickFormatter={yAxisFormatter}
                     />
                     <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />

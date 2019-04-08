@@ -67,8 +67,8 @@ export const DynamoGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps) 
       count={count}
       data={data.mostExpensiveTables}
       summaryFormatter={x => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
-      yAxisFormatter={x => formatNumber(x)}
-      tooltipFormatter={x => Number(x).toLocaleString()}
+      yAxisFormatter={x => `$ ${formatNumber(x)}`}
+      tooltipFormatter={x => `$ ${Number(x).toLocaleString()}`}
       timeAxisFormat={timeAxisFormat}
       dynamoInfo={[
         { unit: 'readPrice', text: 'read price', valueFn: x => `$ ${x.toLocaleString('en')}` },
