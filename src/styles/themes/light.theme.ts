@@ -6,7 +6,7 @@ const colors = {
   primary: PRIMARY,
   background: '#F5F7FA',
   transparentBackground: 'rgb(248, 248, 248, 0.6)',
-  backgroundGradient: 'linear-gradient(180deg, #F8F8F8 60px, #F7F7F7 100%)',
+  backgroundGradient: 'linear-gradient(180deg, #F8F8FF 60px, #F7F7FF 100%)',
   borderColor: PRIMARY,
   text: '#4A4A4A',
   icon: PRIMARY,
