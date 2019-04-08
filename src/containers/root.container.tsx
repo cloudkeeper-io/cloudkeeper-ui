@@ -56,7 +56,7 @@ const AuthorizedRoutes = () => {
   [tenant, loading, tenants, setAndSaveTenant])
 
   if (loading) {
-    return <LoadingPage />
+    return <LoadingPage height="calc(100vh - 80px)" />
   }
 
   if (error) {
