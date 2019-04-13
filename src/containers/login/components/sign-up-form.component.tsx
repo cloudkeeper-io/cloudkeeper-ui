@@ -1,20 +1,22 @@
 import React, { memo, useState } from 'react'
 
 import { Form } from 'react-final-form'
+
+import CheckboxField from '../../../components/form/checkbox-field.component'
 import Field from '../../../components/form/field.components'
 import { User } from '../../../models'
 import { FormContent, ServerError, StyledForm, SubmitButton } from './login-components.styles'
-
 
 interface Values {
   email: string
   password: string
   repeatPassword: string
+  subscribedToEmails: boolean
 }
 
 interface RegisterProps {
   user: User
-  signUp: (email: string, password: string) => any
+  signUp: (email: string, password: string, subscribedToEmails: boolean) => any
 }
 
 export default memo(({ user, signUp }: RegisterProps) => {
@@ -28,7 +30,7 @@ export default memo(({ user, signUp }: RegisterProps) => {
     setServerError('')
 
     try {
-      await signUp(values.email, values.password)
+      await signUp(values.email, values.password, values.subscribedToEmails)
     } catch (error) {
       setServerError(error.message || 'Server error')
     }
@@ -62,6 +64,10 @@ export default memo(({ user, signUp }: RegisterProps) => {
             <Field name="email" placeholder="Email Address" autoComplete="email" />
             <Field name="password" placeholder="Password" autoComplete="password" type="password" />
             <Field name="repeatPassword" placeholder="Repeat Password" autoComplete="password" type="password" />
+            <CheckboxField
+              name="subscribedToEmails"
+              label="Subscribe to get occasional emails about cloudkeeper updates"
+            />
             <ServerError>{serverError}</ServerError>
             <SubmitButton type="submit" disabled={pristine || invalid} loading={user.loading!}>Sign Up</SubmitButton>
           </FormContent>

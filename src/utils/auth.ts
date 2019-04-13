@@ -19,14 +19,14 @@ export const postLogin = async (email: string, password: string) => {
   return result.json()
 }
 
-export const postSignUp = async (email: string, password: string) => {
+export const postSignUp = async (email: string, password: string, subscribedToEmails: boolean) => {
   const result = await fetch(`${config.authUrl}/local/register`, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     method: 'POST',
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, password, subscribedToEmails }),
   })
 
   if (result.status !== 200) {

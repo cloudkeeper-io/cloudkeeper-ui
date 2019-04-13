@@ -18,7 +18,7 @@ interface UserState {
   user: User,
 
   login: (email: string, password: string) => any
-  signUp: (email: string, password: string) => any
+  signUp: (email: string, password: string, subscribedToEmails: boolean) => any
   signOut: () => void
 }
 
@@ -105,10 +105,10 @@ export const UserProvider = ({ children, history }: UserProviderProps) => {
     }
   }
 
-  const signUp = async (email: string, password: string) => {
+  const signUp = async (email: string, password: string, subscribedToEmails: boolean) => {
     setUser(current => ({ ...current, loading: true }))
     try {
-      const session = await postSignUp(email, password)
+      const session = await postSignUp(email, password, subscribedToEmails)
       setUserId(email)
       trackEvent('User Signed Up')
       localStorage.removeItem(BACK_URL_KEY)
