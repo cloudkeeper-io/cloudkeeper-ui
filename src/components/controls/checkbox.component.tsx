@@ -29,6 +29,7 @@ const ControlIndicator = styled.div`
 interface CheckboxProps {
   label?: any
   className?: string
+  name?: string
   type?: string
   disabled?: boolean
   defaultChecked?: boolean
