@@ -23,12 +23,11 @@ interface FieldProps {
 
 export default ({ name, label, type = 'checkbox', ...props }: FieldProps) => (
   <FormField name={name} type="checkbox">
-    {({ input, meta }) =>
-      (
-        <>
-          <Checkbox label={label} checked={input.value} {...input} type={type} {...props} />
-          {meta.error && meta.touched && <ErrorMessage>{meta.error}</ErrorMessage>}
-        </>
-      )}
+    {({ input, meta }) => (
+      <>
+        <Checkbox label={label} checked={input.value} {...input} type={type} {...props} />
+        {meta.error && meta.touched && <ErrorMessage>{meta.error}</ErrorMessage>}
+      </>
+    )}
   </FormField>
 )
