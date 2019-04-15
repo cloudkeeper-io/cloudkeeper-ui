@@ -13,7 +13,6 @@ import LoadingPage from '../components/loading-page.component'
 import { tenantsQuery } from '../graphql'
 import { TenantContext, UserContext } from '../contexts'
 
-const SetupTenant = lazy(() => import('./setup-tenant/setup-tenant.container'))
 const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
 const Login = lazy(() => import('./login/login.container'))
 const Error = lazy(() => import('./error.container'))
@@ -67,7 +66,7 @@ const AuthorizedRoutes = () => {
     <Switch>
       {isEmpty(tenants) && (
         <Route exact path="/">
-          <SetupTenant />
+          <Settings />
         </Route>
       )}
       {!isEmpty(tenants) && (
@@ -77,9 +76,6 @@ const AuthorizedRoutes = () => {
       )}
       <Route exact path="/settings">
         <Settings />
-      </Route>
-      <Route exact path="/setup-tenant">
-        <SetupTenant />
       </Route>
       <Route>
         <Redirect to="/" />
