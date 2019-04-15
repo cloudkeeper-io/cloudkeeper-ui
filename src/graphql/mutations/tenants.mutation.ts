@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export const createTenantMutation = gql`
-  mutation createTenant($name: String!) {
+  mutation CreateTenant($name: String!) {
     createTenant(name: $name) {
       id
       name
@@ -12,7 +12,7 @@ export const createTenantMutation = gql`
 `
 
 export const removeTenant = gql`
-  mutation removeTenant($id: String!) {
+  mutation RemoveTenant($id: String!) {
     deleteTenant(id: $id) {
       id
       name
