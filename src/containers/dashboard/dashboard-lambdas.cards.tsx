@@ -89,15 +89,15 @@ export const LambdasGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps)
       unit="cost"
       count={count}
       data={data.mostExpensiveLambdas}
-      summaryFormatter={x => `$ ${round(x.cost!, 2).toLocaleString('en')}`}
-      yAxisFormatter={x => `$ ${round(x, 2).toLocaleString('en')}`}
-      tooltipFormatter={x => `$${round(Number(x), 2).toLocaleString('en')}`}
+      summaryFormatter={x => `$ ${formatNumber(x.cost!, 6).toLocaleString('en')}`}
+      yAxisFormatter={x => `$ ${formatNumber(x, 4).toLocaleString('en')}`}
+      tooltipFormatter={x => `$${formatNumber(Number(x), 6).toLocaleString('en')}`}
       timeAxisFormat={timeAxisFormat}
       lambdaInfo={[
         {
           unit: 'cost',
           text: 'cost',
-          valueFn: x => `$ ${round(x, 2).toLocaleString('en')}`,
+          valueFn: x => `$ ${formatNumber(x, 6).toLocaleString('en')}`,
         },
       ]}
     />

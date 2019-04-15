@@ -1,9 +1,10 @@
 import React from 'react'
 import styled, { withTheme } from 'styled-components/macro'
-import map from 'lodash/map'
-import isEmpty from 'lodash/isEmpty'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime } from 'luxon'
+import map from 'lodash/map'
+import isEmpty from 'lodash/isEmpty'
+import isNil from 'lodash/isNil'
 
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
@@ -209,7 +210,7 @@ const DataCard = (props: MostInvokedCardProps) => {
               </GraphContainer>
               <LambdaInfo>
                 <LambdaInfoColumn>
-                  {map(lambdaInfo, x => lambda[x.unit] && (
+                  {map(lambdaInfo, x => !isNil(lambda[x.unit]) && (
                     <InfoText key={x.unit}>
                       {x.text}:
                       <Value>{x.valueFn(lambda[x.unit])}</Value>

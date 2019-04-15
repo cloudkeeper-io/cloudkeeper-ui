@@ -50,8 +50,6 @@ const dataCard = {
   secondaryLines: colors.activeText,
   tooltipBackground: '#FFFFFF',
   secondaryTooltipBackground: '#0E0B20',
-  primaryTab: colors.primary,
-  secondaryTab: '#FFFFFF',
   cartesianGrid: '#EDF0F2',
 }
 
@@ -102,7 +100,7 @@ const login = {
 export default {
   name: 'light',
   favicon: 'light-favicon.png',
-  font: 'Roboto',
+  font: 'Muli',
   colors,
   controls,
   card,

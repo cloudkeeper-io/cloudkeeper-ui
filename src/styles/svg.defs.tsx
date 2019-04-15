@@ -4,8 +4,8 @@ export default () => (
   <svg style={{ width: 0, height: 0 }}>
     <defs>
       <linearGradient id="dark-spinner-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#129F7C" />
-        <stop offset="100%" stopColor="#6F20A0" />
+        <stop offset="0%" stopColor="#48E385" />
+        <stop offset="100%" stopColor="#018EFF" />
       </linearGradient>
       <linearGradient id="light-spinner-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
         <stop offset="0%" stopColor="#2FF6F5" />
@@ -23,12 +23,12 @@ export default () => (
       </linearGradient>
 
       <linearGradient id="darkLine" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stopColor="#B9FFEC" />
-        <stop offset="100%" stopColor="#B9FFEC" />
+        <stop offset="0%" stopColor="#48E385" />
+        <stop offset="100%" stopColor="#018EFF" />
       </linearGradient>
       <linearGradient id="darkLineSecondary" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stopColor="#DB60FF" />
-        <stop offset="100%" stopColor="#DB60FF" />
+        <stop offset="0%" stopColor="#FFFC00" />
+        <stop offset="100%" stopColor="#00B81D" />
       </linearGradient>
 
       <filter id="lightLineShadow" x="0" y="-150px" width="200%" height="300px">
