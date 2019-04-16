@@ -22,11 +22,8 @@ const StyledCard = styled(Card)`
   width: 100%;
   min-width: 500px;
   height: 310px;
-  ${Card.Content} {
-    background: ${p => p.theme.dataCard.background};
-    color: ${p => p.theme.colors.text};
-    overflow: hidden;
-  }
+  background: ${p => p.theme.dataCard.background};
+  overflow: hidden;
   @media (max-width: 800px) {
     min-width: auto;
     max-width: 100%;
@@ -214,7 +211,7 @@ const DataCard = (props: TopDynamoCardProps) => {
                     <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
                     {dynamo.billingMode === 'PROVISIONED' && (
                       <Line
-                        type="linear"
+                        type="monotone"
                         filter={colors.lineFilter}
                         dataKey={last(units)!.value}
                         name={last(units)!.label}
@@ -224,7 +221,7 @@ const DataCard = (props: TopDynamoCardProps) => {
                       />
                     )}
                     <Line
-                      type="linear"
+                      type="monotone"
                       filter={colors.lineFilter}
                       dataKey={first(units)!.value}
                       name={first(units)!.label}

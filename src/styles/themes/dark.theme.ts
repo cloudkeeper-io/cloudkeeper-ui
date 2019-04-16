@@ -1,15 +1,13 @@
-/* eslint-disable */
+/* eslint-disable max-len */
 import { mix, transparentize } from 'polished'
 
-import { getClipPath, getBorderClipPath } from '../../utils'
-
-const PRIMARY = '#4FFAC5'; //mix(0.5, '#48E385', '#018EFF'); //
+const PRIMARY = '#4FFAC5' // mix(0.5, '#48E385', '#018EFF'); //
 
 const colors = {
   primary: PRIMARY,
   background: '#0E0B20',
   transparentBackground: 'rgb(14, 11, 32, 0.4)',
-  backgroundGradient: 'linear-gradient(180deg, #0E0B20 0, #112531 100%)',
+  mainBackground: 'linear-gradient(180deg, #0E0B20 0, #112531 100%)',
   borderColor: '#4FFAC5',
   text: '#FFFFFF',
   icon: PRIMARY,
@@ -34,11 +32,9 @@ const controls = {
 const card = {
   background: 'transparent',
   borderColor: colors.borderColor,
-  clipPath: getClipPath(40),
-  borderClipPath: getBorderClipPath(41, 1),
-  shadow: colors.shadow,
+  shadow: 'none',
   showBorder: true,
-  borderRadius: '0',
+  borderRadius: '0 40px 0 40px',
 }
 
 const dataCard = {
@@ -65,20 +61,13 @@ const input = {
 }
 
 const buttons = {
-  borderRadius: 0,
-  clipPath: getClipPath(21),
-  borderClipPath: getBorderClipPath(22, 1),
-  login: {
-    background: 'transparent',
-  },
+  borderRadius: '0 21px 0 21px',
   primary: {
-    background: '#142330',
-    active: mix(0.85, '#142330', colors.primary),
+    background: mix(0.85, '#142330', colors.primary),
+    active: mix(0.65, '#142330', colors.primary),
     color: colors.text,
     disabled: '#374856',
-    borderDisabled: '#374856',
     disabledText: '#ababab',
-    borderColor: '#4FFAC5',
   },
   icon: {
     background: '#142330',
@@ -86,13 +75,10 @@ const buttons = {
 }
 
 const tabs = {
-  clipPath: getClipPath(40),
-  borderClipPath: getBorderClipPath(41, 1),
-  background: '#0F1222',
-  active: '#142330',
+  background: 'transparent',
+  active: mix(0.85, '#142330', colors.primary),
   text: colors.primary,
   activeText: colors.primary,
-  tabListRight: '60px',
 }
 
 const select = {
@@ -105,6 +91,10 @@ const select = {
 const login = {
   treesOpacity: 1,
   particlesColor: '#FFFFFF',
+}
+
+const dashboard = {
+  background: '#0F1D3D url(/dark-dashboard.png) 100% 100% no-repeat',
 }
 
 export default {
@@ -120,4 +110,5 @@ export default {
   tabs,
   select,
   login,
+  dashboard,
 }

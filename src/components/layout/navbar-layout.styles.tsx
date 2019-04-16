@@ -30,12 +30,8 @@ export const PageWrapper = styled.div`
   justify-content: center;
 `
 export const PageContent = styled.div`
-   margin-top: 60px;
-   width: 100%;
-   @media (max-width: 800px) {
-     margin-top: 60px;
-     width: 100%;
-   }
+  width: 100%;
+  margin-top: 60px;
 `
 export const Flex = styled.div`
   flex: 1;

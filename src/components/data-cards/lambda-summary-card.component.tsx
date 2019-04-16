@@ -15,8 +15,8 @@ const StyledCard = styled(Card)`
   width: 100%;
   min-width: 500px;
   height: 310px;
+  background: ${p => p.theme.dataCard.background};
   ${Card.Content} {
-    background: ${p => p.theme.dataCard.background};
     flex-direction: column;
     align-items: flex-start;
   }
@@ -130,7 +130,7 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
           <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
           <Line
             filter={colors.lineFilter}
-            type="linear"
+            type="monotone"
             dataKey="value"
             stroke={colors.svgLines}
             dot={false}
