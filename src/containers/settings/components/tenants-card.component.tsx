@@ -58,7 +58,7 @@ const AddButton = styled(Button)`
 
 interface TenantsCardProps extends RouteComponentProps {}
 
-const Settings = ({ history }: TenantsCardProps) => {
+const Settings = () => {
   const { data, loading, error } = useQuery(tenantsQuery)
   const { tenant: currentTenant, setAndSaveTenant } = useContext(TenantContext)
   const [isRemoveModalOpen, setRemoveModalOpen] = useState(false)
