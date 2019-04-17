@@ -1,17 +1,18 @@
 import gql from 'graphql-tag'
 
-export const createTenant = gql`
-  mutation createTenant($name: String!, $accessKey: String!, $secretKey: String!, $region: String!) {
-    createTenant(name: $name, accessKey: $accessKey, secretKey: $secretKey, region: $region) {
+export const createTenantMutation = gql`
+  mutation CreateTenant($name: String!) {
+    createTenant(name: $name) {
       id
       name
+      createdAt
       isSetupCompleted
     }
   }
 `
 
 export const removeTenant = gql`
-  mutation removeTenant($id: String!) {
+  mutation RemoveTenant($id: String!) {
     deleteTenant(id: $id) {
       id
       name

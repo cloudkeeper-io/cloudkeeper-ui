@@ -6,7 +6,7 @@ const colors = {
   primary: PRIMARY,
   background: '#F5F7FA',
   transparentBackground: 'rgb(248, 248, 248, 0.6)',
-  backgroundGradient: 'linear-gradient(180deg, #F8F8FF 60px, #F7F7FF 100%)',
+  mainBackground: 'linear-gradient(180deg, #F8F8FF 60px, #F7F7FF 100%)',
   borderColor: PRIMARY,
   text: '#4A4A4A',
   icon: PRIMARY,
@@ -50,8 +50,6 @@ const dataCard = {
   secondaryLines: colors.activeText,
   tooltipBackground: '#FFFFFF',
   secondaryTooltipBackground: '#0E0B20',
-  primaryTab: colors.primary,
-  secondaryTab: '#FFFFFF',
   cartesianGrid: '#EDF0F2',
 }
 
@@ -64,9 +62,6 @@ const input = {
 
 const buttons = {
   borderRadius: '20px',
-  login: {
-    background: colors.primary,
-  },
   primary: {
     background: colors.primary,
     active: tint(0.15, colors.primary),
@@ -99,10 +94,14 @@ const login = {
   particlesColor: colors.primary,
 }
 
+const dashboard = {
+  background: '#E4E4EB url(/light-dashboard.svg) center center no-repeat',
+}
+
 export default {
   name: 'light',
   favicon: 'light-favicon.png',
-  font: 'Roboto',
+  font: 'Muli',
   colors,
   controls,
   card,
@@ -112,4 +111,5 @@ export default {
   tabs,
   select,
   login,
+  dashboard,
 }

@@ -10,6 +10,7 @@ import { useQuery } from 'react-apollo-hooks'
 import Button from '../../../components/button/button.component'
 import RadioButton from '../../../components/controls/radio.component'
 import RemoveModal from './remove-tenant-modal.component'
+import CreateTenantModal from './create-tenant/create-tenant-modal.component'
 import CommonCard from '../../../components/card.component'
 import Loading from '../../../components/loading.component'
 import { Tenant } from '../../../models'
@@ -57,10 +58,11 @@ const AddButton = styled(Button)`
 
 interface TenantsCardProps extends RouteComponentProps {}
 
-const Settings = ({ history }: TenantsCardProps) => {
+const Settings = () => {
   const { data, loading, error } = useQuery(tenantsQuery)
   const { tenant: currentTenant, setAndSaveTenant } = useContext(TenantContext)
   const [isRemoveModalOpen, setRemoveModalOpen] = useState(false)
+  const [isCreateModalOpen, setCreateModalOpen] = useState(false)
   const [tenantToRemove, setTenantToRemove] = useState<Tenant>(null!)
 
   const onTenantClick = (tenant: Tenant) => {
@@ -104,7 +106,7 @@ const Settings = ({ history }: TenantsCardProps) => {
                   <RemoveIcon icon="trash-alt" size="1x" onClick={() => openRemoveModal(tenant)} />
                 </Row>
               ))}
-              <AddButton onClick={() => history.push('/setup-tenant')}>Add Tenant</AddButton>
+              <AddButton onClick={() => setCreateModalOpen(true)}>Add Project</AddButton>
             </Content>
           </Card>
           <RemoveModal
@@ -115,6 +117,12 @@ const Settings = ({ history }: TenantsCardProps) => {
             onClose={closeRemoveModal}
             isOpen={isRemoveModalOpen}
             tenant={tenantToRemove!}
+          />
+          <CreateTenantModal
+            onClose={() => {
+              setCreateModalOpen(false)
+            }}
+            isOpen={isCreateModalOpen}
           />
         </>
       )}

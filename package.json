@@ -9,7 +9,8 @@
     "eject": "react-scripts eject",
     "tsc": "tsc",
     "lint": "eslint \"src/**\"",
-    "lint:fix": "eslint \"src/**\" --fix"
+    "lint:fix": "eslint \"src/**\" --fix",
+    "generate-types": "apollo codegen:generate --localSchemaFile=schema.graphql --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
@@ -63,6 +64,7 @@
     "@types/styled-components": "^4.1.13",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@typescript-eslint/parser": "^1.6.0",
+    "apollo": "^2.8.3",
     "babel-plugin-styled-components": "^1.10.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-plugin-import": "^2.14.0",

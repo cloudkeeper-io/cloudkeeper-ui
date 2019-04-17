@@ -1,12 +1,12 @@
 import gql from 'graphql-tag'
 
-export const tenantsQuery = gql`{
-  tenants {
-    id
-    name
-    region
-    createdAt
-    isSetupCompleted
+export const tenantsQuery = gql`
+  query Tenants {
+    tenants {
+      id
+      name
+      createdAt
+      isSetupCompleted
+    }
   }
-}
 `

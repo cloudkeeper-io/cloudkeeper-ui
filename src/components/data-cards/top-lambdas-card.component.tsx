@@ -1,9 +1,10 @@
 import React from 'react'
 import styled, { withTheme } from 'styled-components/macro'
-import map from 'lodash/map'
-import isEmpty from 'lodash/isEmpty'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { DateTime } from 'luxon'
+import map from 'lodash/map'
+import isEmpty from 'lodash/isEmpty'
+import isNil from 'lodash/isNil'
 
 import { useSwitchTab } from '../../hooks'
 import Card from '../card.component'
@@ -16,11 +17,8 @@ const StyledCard = styled(Card)`
   width: 100%;
   min-width: 500px;
   height: 310px;
-  ${Card.Content} {
-    background: ${p => p.theme.dataCard.background};
-    color: ${p => p.theme.colors.text};
-    overflow: hidden;
-  }
+  background: ${p => p.theme.dataCard.background};
+  overflow: hidden;
   @media (max-width: 800px) {
     min-width: auto;
     max-width: 100%;
@@ -184,7 +182,7 @@ const DataCard = (props: MostInvokedCardProps) => {
                     />
                     <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
                     <Line
-                      type="linear"
+                      type="monotone"
                       filter={colors.lineFilter}
                       dataKey={unit}
                       stroke={colors.svgLines}
@@ -209,7 +207,7 @@ const DataCard = (props: MostInvokedCardProps) => {
               </GraphContainer>
               <LambdaInfo>
                 <LambdaInfoColumn>
-                  {map(lambdaInfo, x => lambda[x.unit] && (
+                  {map(lambdaInfo, x => !isNil(lambda[x.unit]) && (
                     <InfoText key={x.unit}>
                       {x.text}:
                       <Value>{x.valueFn(lambda[x.unit])}</Value>
