@@ -38,14 +38,15 @@ const AnonRoutes = () => (
 
 const AuthorizedRoutes = () => {
   const { data, loading, error } = useQuery(tenantsQuery)
-  const { tenant, setAndSaveTenant } = useContext(TenantContext)
+  const { tenantId, setAndSaveTenant } = useContext(TenantContext)
 
   const tenants = get(data, 'tenants', []) as Tenant []
+  const tenant: Tenant = find(tenants, { id: tenantId }) as Tenant
 
   useEffect(() => {
     if (!isEmpty(tenants)) {
-      if (!find(tenants, { id: get(tenant, 'id') })) {
-        setAndSaveTenant(first(tenants)!)
+      if (!tenant) {
+        setAndSaveTenant(first(tenants)!.id)
       }
     }
     if (isEmpty(tenants) && !loading) {
@@ -69,17 +70,16 @@ const AuthorizedRoutes = () => {
           <Settings />
         </Route>
       )}
-      {!isEmpty(tenants) && (
-        <Route exact path="/">
-          <Dashboard tenant={tenant} />
-        </Route>
-      )}
+      <Route exact path="/tenants/:tenantId/dashboard">
+        <Dashboard tenant={tenant} tenants={tenants} />
+      </Route>
       <Route exact path="/settings">
         <Settings />
       </Route>
-      <Route>
-        <Redirect to="/" />
-      </Route>
+      {tenant && (
+        <Redirect from="/" to={`/tenants/${tenant.id}/dashboard`} />
+      )}
+      <Redirect from="*" to="/" />
     </Switch>
   )
 }
@@ -87,13 +87,16 @@ const AuthorizedRoutes = () => {
 export default ({ history }: RootContainerProps) => {
   const { user, signOut } = useContext(UserContext)
 
+  const { data } = useQuery(tenantsQuery)
+  const tenants = get(data, 'tenants', []) as Tenant []
+
   if (!user.isUserLoaded) {
     return <LoadingPage />
   }
 
   return (
     <Router history={history}>
-      <NavbarLayout background={user.session ? '' : 'transparent'} user={user} signOut={signOut}>
+      <NavbarLayout background={user.session ? '' : 'transparent'} tenants={tenants} user={user} signOut={signOut}>
         <Suspense fallback={<LoadingPage />}>
           {user.session ? <AuthorizedRoutes /> : <AnonRoutes />}
         </Suspense>

@@ -11,6 +11,15 @@ export const createTenantMutation = gql`
   }
 `
 
+export const setupTenantMutation = gql`
+  mutation SetupTenant($tenantId: String!, $roleArn: String!){
+    setupTenant(tenantId: $tenantId, roleArn: $roleArn) {
+      functions
+      status
+    }
+  }
+`
+
 export const removeTenant = gql`
   mutation RemoveTenant($id: String!) {
     deleteTenant(id: $id) {

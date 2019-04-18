@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
 import { Mutation, MutationFn } from 'react-apollo'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
+import get from 'lodash/get'
 
 import Error from '../../../../components/form/error-message.components'
 import { Text, ButtonWrapper, NavigationButton } from './create-tenant.styles'
@@ -28,11 +29,11 @@ interface StepsProps extends RouteComponentProps {
   onClose: () => void
 }
 
-export default memo(withRouter(({ onClose }: StepsProps) => {
+export default memo(withRouter(({ onClose, history }: StepsProps) => {
   const [loading, setLoading] = useState(false)
   const [serverError, setServerError] = useState('')
 
-  useEffect(() => trackEvent('Setup Step 3'), [])
+  useEffect(() => trackEvent('Opened Create Project'), [])
 
   const onSubmit = async (v: Values, mutation: MutationFn) => {
     setLoading(true)
@@ -42,9 +43,10 @@ export default memo(withRouter(({ onClose }: StepsProps) => {
         name: v.name,
       }
 
-      await mutation({ variables: parameters })
-      trackEvent('Created Tenant')
-      onClose()
+      const response = await mutation({ variables: parameters })
+      const tenantId = get(response, 'data.createTenant.id')
+      trackEvent('Created Project')
+      await history.push(`/tenant/${tenantId}/dashboard`)
     } catch (err) {
       setServerError('Server Error. Try Again Later')
     } finally {

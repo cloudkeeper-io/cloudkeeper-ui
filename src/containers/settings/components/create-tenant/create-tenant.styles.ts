@@ -30,7 +30,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   position: relative;
   margin-top: 35px;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
 `
 export const NavigationButton = styled(Button)`

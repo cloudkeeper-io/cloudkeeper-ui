@@ -2,14 +2,17 @@ import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { useQuery } from 'react-apollo-hooks'
 import get from 'lodash/get'
+import find from 'lodash/find'
 import isBoolean from 'lodash/isBoolean'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import Loading from '../../components/loading.component'
+import SetupTenant from '../settings/components/setup-tenant/setup-tenant.component'
 import Processing from '../../components/processing.component'
 import { Title } from '../../components/typography.component'
 import { dashboardQuery } from '../../graphql'
 import { Tenant } from '../../models'
-import { TimerContext } from '../../contexts'
+import { TenantContext, TimerContext } from '../../contexts'
 import { LambdasGraphs } from './dashboard-lambdas.cards'
 import { DynamoGraphs } from './dashboard-dynamo.cards'
 import { safeParse } from '../../utils'
@@ -40,12 +43,21 @@ const CardsWrapper = styled.div`
 const POLL_INTERVAL = 30 * 60 * 1000 // 30 min
 const PROCESSING_REFETCH_DELAY = 10000 // 10 sec
 
-interface DashboardProps {
+interface DashboardProps extends RouteComponentProps {
   tenant: Tenant
+  tenants: Tenant[]
 }
 
-export default ({ tenant }: DashboardProps) => {
+export default withRouter<DashboardProps>(({ tenant, tenants, match: { params } }) => {
   const [isDataLoaded, setDataLoaded] = useState(false)
+  const { setAndSaveTenant } = useContext(TenantContext)
+
+  // @ts-ignore
+  if (params.tenantId !== tenant.id) {
+    // @ts-ignore
+    setAndSaveTenant(find(tenants, { id: params.tenantId }).id)
+  }
+
   const { count, setActive, setVisibility } = useContext(TimerContext)
   const { data, loading, error, refetch } = useQuery(dashboardQuery, {
     variables: { tenantId: get(tenant, 'id') },
@@ -77,6 +89,10 @@ export default ({ tenant }: DashboardProps) => {
     throw error
   }
 
+  if (!tenant.isSetupCompleted) {
+    return <SetupTenant tenant={tenant} />
+  }
+
   if (isProcessing) {
     return <Processing />
   }
@@ -104,4 +120,4 @@ export default ({ tenant }: DashboardProps) => {
       </CardsWrapper>
     </Wrapper>
   )
-}
+})
