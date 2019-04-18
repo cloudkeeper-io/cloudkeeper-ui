@@ -46,7 +46,7 @@ export default memo(withRouter(({ onClose, history }: StepsProps) => {
       const response = await mutation({ variables: parameters })
       const tenantId = get(response, 'data.createTenant.id')
       trackEvent('Created Project')
-      await history.push(`/tenant/${tenantId}/dashboard`)
+      history.push(`/tenant/${tenantId}/dashboard`)
     } catch (err) {
       setServerError('Server Error. Try Again Later')
     } finally {
