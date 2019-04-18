@@ -13,13 +13,13 @@ import { ReactComponent as SVGLogo } from './images/logo.svg'
 import { UserContext } from '../../contexts'
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: relative;
   align-items: center;
   height: 100%;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 60px);
   padding: 0 20px;
   background-size: contain;
 `
@@ -27,12 +27,13 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 60px;
+  margin-top: -140px;
 `
 const MainCard = styled(Card)`
   width: 450px;
   max-width: 90vw;
   min-height: 300px;
+  overflow: hidden;
   ${Card.Content} {
     display: block;
   }

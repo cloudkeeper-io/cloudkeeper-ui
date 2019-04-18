@@ -96,7 +96,12 @@ export default ({ history }: RootContainerProps) => {
 
   return (
     <Router history={history}>
-      <NavbarLayout background={user.session ? '' : 'transparent'} tenants={tenants} user={user} signOut={signOut}>
+      <NavbarLayout
+        background={user.session ? '' : 'transparent'}
+        tenants={tenants}
+        user={user}
+        signOut={signOut}
+      >
         <Suspense fallback={<LoadingPage />}>
           {user.session ? <AuthorizedRoutes /> : <AnonRoutes />}
         </Suspense>

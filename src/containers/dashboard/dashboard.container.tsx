@@ -19,9 +19,20 @@ import { safeParse } from '../../utils'
 import { useInterval } from '../../hooks'
 import { TIMER_KEY } from '../../constants'
 
+const Background = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: ${p => p.theme.dashboard.background};
+  background-size: cover;
+  z-index: 0;
+`
 const Wrapper = styled.div`
   position: relative;
-  padding: 0 20px 20px 20px;
+  padding: 60px 20px 20px 20px;
+  margin-top: -60px;
 `
 const StyledTitle = styled(Title)`
   display: flex;
@@ -104,6 +115,7 @@ export default withRouter<DashboardProps>(({ tenant, tenants, match: { params } 
 
   return (
     <Wrapper>
+      <Background />
       <StyledTitle>
         Last 24h
       </StyledTitle>

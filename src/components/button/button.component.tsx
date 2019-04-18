@@ -10,20 +10,6 @@ const Wrapper = styled.div<{ width: string, height: string }>`
   width: ${p => p.width};
   height: ${p => p.height};
 `
-const Border = styled.div<{ disabled?: boolean, showBorder: boolean }>`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  padding: 2px;
-  background: ${(p) => {
-    if (!p.showBorder) {
-      return 'transparent'
-    }
-    return (p.disabled ? p.theme.buttons.primary.borderDisabled : p.theme.buttons.primary.borderColor)
-  }};
-  clip-path: ${p => p.theme.buttons.borderClipPath};
-`
 const Button = styled.button<{ loading?: boolean, background?: string, color?: string }>`
   cursor: pointer;
   width: calc(100%);
@@ -104,7 +90,6 @@ const ButtonComponent = ({ ...buttonProps }: ButtonProps) => {
     width = '200px',
     height = '50px',
     disabled,
-    showBorder = true,
     background = buttonProps.background || theme.buttons.primary.background,
     color = buttonProps.color || theme.buttons.primary.color,
     ...props
@@ -112,13 +97,11 @@ const ButtonComponent = ({ ...buttonProps }: ButtonProps) => {
 
   return (
     <Wrapper className={className} width={width} height={height}>
-      <Border disabled={disabled} showBorder={showBorder} />
       <Button {...props} disabled={disabled} background={background} color={color}>{children}</Button>
     </Wrapper>
   )
 }
 
-ButtonComponent.Border = Border
 ButtonComponent.Content = Button
 
 export default ButtonComponent

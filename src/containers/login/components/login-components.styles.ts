@@ -4,7 +4,6 @@ import Button from '../../../components/button/button.component'
 export const StyledForm = styled.form`
   width: 100%;
   min-height: 300px;
-  clip-path: ${p => p.theme.clipPath};
 `
 export const FormContent = styled.div`
   display: flex;
@@ -23,7 +22,6 @@ export const ServerError = styled.div`
 `
 export const SubmitButton = styled(Button)`
   ${Button.Content} {
-    background: ${p => p.theme.buttons.login.background};
     &:disabled {
       background: ${p => p.theme.buttons.primary.disabled};
     }
