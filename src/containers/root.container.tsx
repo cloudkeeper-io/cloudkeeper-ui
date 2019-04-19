@@ -1,6 +1,5 @@
 import React, { lazy, Suspense, useContext, useEffect } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { History } from 'history'
 import { useQuery } from 'react-apollo-hooks'
 import isEmpty from 'lodash/isEmpty'
 import get from 'lodash/get'

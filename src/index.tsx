@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { createBrowserHistory } from 'history'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
+import { Router } from 'react-router-dom'
 
 import Head from './head'
 import RootContainer from './containers/root.container'
@@ -11,7 +12,6 @@ import SvgDefs from './styles/svg.defs'
 import { ThemeProvider, UserProvider, TimerProvider, TenantProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
 import './icons.config'
-import { Router } from 'react-router-dom'
 
 const history = createBrowserHistory()
 
