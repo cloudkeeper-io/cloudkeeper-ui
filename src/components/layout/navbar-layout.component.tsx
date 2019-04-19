@@ -74,7 +74,7 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
             {session && <HeaderLink active={pathname === '/'} icon="home" to="/" />}
             {session && (
               <TenantConsumer>
-                {({ tenantId }: any) => (
+                {({ tenantId }) => (
                   <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings">
                     <TenantName>{get(find(tenants, { id: tenantId }), 'name')}</TenantName>
                   </HeaderLink>

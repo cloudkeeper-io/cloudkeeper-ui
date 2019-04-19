@@ -1,8 +1,9 @@
-import React, { Dispatch, memo, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import { TENANT_KEY } from '../constants'
 
-interface TenantProviderProps {
+interface TenantProviderProps extends RouteComponentProps {
   children: JSX.Element
 }
 
@@ -14,12 +15,22 @@ interface TenantState {
 
 const TenantContext = React.createContext({} as TenantState)
 
-const TenantProvider = memo(({ children }: TenantProviderProps) => {
+const anyWindow = window as any
+
+const TenantProvider = withRouter<TenantProviderProps>(({ children }) => {
   const [tenantId, setTenant] = useState(localStorage.getItem(TENANT_KEY) || null)
 
   const setAndSaveTenant = (newTenantId: string) => {
     localStorage.setItem(TENANT_KEY, newTenantId)
     setTenant(newTenantId)
+  }
+
+  if (/^\/tenants\/[A-z0-9-]+\//.test(anyWindow.location.pathname)) {
+    const tenantIdPathParam = anyWindow.location.pathname.split('/')[2]
+
+    if (tenantIdPathParam !== tenantId) {
+      setAndSaveTenant(tenantIdPathParam)
+    }
   }
 
   return (

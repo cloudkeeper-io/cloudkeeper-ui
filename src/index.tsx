@@ -11,30 +11,33 @@ import SvgDefs from './styles/svg.defs'
 import { ThemeProvider, UserProvider, TimerProvider, TenantProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
 import './icons.config'
+import { Router } from 'react-router-dom'
 
 const history = createBrowserHistory()
 
 ReactDOM.render((
-  <UserProvider history={history}>
-    {({ client }) => (client ? (
-      <ApolloProvider client={client}>
-        <ApolloHooksProvider client={client}>
-          <ThemeProvider>
-            <TimerProvider>
-              <TenantProvider>
-                <>
-                  <SvgDefs />
-                  <Head />
-                  <GlobalStyles />
-                  <RootContainer history={history} />
-                </>
-              </TenantProvider>
-            </TimerProvider>
-          </ThemeProvider>
-        </ApolloHooksProvider>
-      </ApolloProvider>
-    ) : <div />)}
-  </UserProvider>
+  <Router history={history}>
+    <UserProvider history={history}>
+      {({ client }) => (client ? (
+        <ApolloProvider client={client}>
+          <ApolloHooksProvider client={client}>
+            <ThemeProvider>
+              <TimerProvider>
+                <TenantProvider>
+                  <>
+                    <SvgDefs />
+                    <Head />
+                    <GlobalStyles />
+                    <RootContainer />
+                  </>
+                </TenantProvider>
+              </TimerProvider>
+            </ThemeProvider>
+          </ApolloHooksProvider>
+        </ApolloProvider>
+      ) : <div />)}
+    </UserProvider>
+  </Router>
 ), document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change

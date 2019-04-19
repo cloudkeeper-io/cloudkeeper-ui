@@ -4,7 +4,6 @@ import { useQuery } from 'react-apollo-hooks'
 import get from 'lodash/get'
 import find from 'lodash/find'
 import isBoolean from 'lodash/isBoolean'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import Loading from '../../components/loading.component'
 import SetupTenant from '../settings/components/setup-tenant/setup-tenant.component'
@@ -54,22 +53,13 @@ const CardsWrapper = styled.div`
 const POLL_INTERVAL = 30 * 60 * 1000 // 30 min
 const PROCESSING_REFETCH_DELAY = 10000 // 10 sec
 
-interface DashboardRouteParams {
-  tenantId: string
-}
-
-interface DashboardProps extends RouteComponentProps<DashboardRouteParams> {
+interface DashboardProps {
   tenants: Tenant[]
 }
 
-export default withRouter<DashboardProps>(({ tenants, match: { params } }) => {
+export default ({ tenants }: DashboardProps) => {
   const [isDataLoaded, setDataLoaded] = useState(false)
-  const { setAndSaveTenant } = useContext(TenantContext)
-
-  const { tenantId } = params
-
-  setAndSaveTenant(tenantId)
-
+  const { tenantId } = useContext(TenantContext)
   const tenant = find(tenants, { id: tenantId }) as Tenant
 
   const { count, setActive, setVisibility } = useContext(TimerContext)
@@ -135,4 +125,4 @@ export default withRouter<DashboardProps>(({ tenants, match: { params } }) => {
       </CardsWrapper>
     </Wrapper>
   )
-})
+}

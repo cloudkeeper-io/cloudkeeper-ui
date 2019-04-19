@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Mutation, MutationFn } from 'react-apollo'
 import { Form } from 'react-final-form'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import map from 'lodash/map'
 
+import { DataProxy } from 'apollo-cache/lib/types'
 import { trackEvent } from '../../../../utils/amplitude'
 import { setupTenantMutation } from '../../../../graphql/mutations'
 import { tenantsQuery } from '../../../../graphql/queries'
@@ -12,6 +13,7 @@ import { SmallField } from '../../../../components/form/field.components'
 import { Tenant } from '../../../../models'
 import Error from '../../../../components/form/error-message.components'
 import { AccentText, Title, Text } from '../../../../components/typography.component'
+import { Tenants } from '../../../../graphql/queries/types/Tenants'
 
 interface Values {
   roleArn: string
@@ -97,29 +99,31 @@ export default (({ tenant }: SetupTenantProps) => {
     return errors
   }
 
+  const update = (cache: DataProxy) => {
+    const { tenants } = cache.readQuery<Tenants>({ query: tenantsQuery })!
+
+    const newTenants = map(tenants, (newTenant) => {
+      if (newTenant!.id === tenant.id) {
+        return {
+          ...newTenant,
+          isSetupCompleted: true,
+        }
+      }
+
+      return newTenant
+    })
+
+    cache.writeQuery({
+      query: tenantsQuery,
+      data: { tenants: newTenants },
+    })
+  }
+
   return (
     <>
       <Mutation
         mutation={setupTenantMutation}
-        update={(cache) => {
-          const { tenants } = cache.readQuery<any>({ query: tenantsQuery })
-
-          const newTenants = map(tenants, (newTenant) => {
-            if (newTenant.id === tenant.id) {
-              return {
-                ...newTenant,
-                isSetupCompleted: true,
-              }
-            }
-
-            return newTenant
-          })
-
-          cache.writeQuery({
-            query: tenantsQuery,
-            data: { tenants: newTenants },
-          })
-        }}
+        update={update}
       >
         {mutation => (
           <Form onSubmit={v => onSubmit(v as Values, mutation)} validate={v => validate(v as Values)}>

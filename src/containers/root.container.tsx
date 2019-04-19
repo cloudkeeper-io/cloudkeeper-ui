@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useContext, useEffect } from 'react'
-import { Redirect, Route, Router, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import { History } from 'history'
 import { useQuery } from 'react-apollo-hooks'
 import isEmpty from 'lodash/isEmpty'
@@ -18,10 +18,6 @@ const Login = lazy(() => import('./login/login.container'))
 const Error = lazy(() => import('./error.container'))
 const Settings = lazy(() => import('./settings/settings.container'))
 
-interface RootContainerProps {
-  history: History
-}
-
 const AnonRoutes = () => (
   <Switch>
     <Route exact path="/">
@@ -37,7 +33,7 @@ const AnonRoutes = () => (
 )
 
 const AuthorizedRoutes = () => {
-  const { data, loading, error } = useQuery(tenantsQuery)
+  const { data, loading, error } = useQuery(tenantsQuery, { fetchPolicy: 'cache-and-network' })
   const { tenantId, setAndSaveTenant } = useContext(TenantContext)
 
   const tenants = get(data, 'tenants', []) as Tenant []
@@ -84,7 +80,7 @@ const AuthorizedRoutes = () => {
   )
 }
 
-export default ({ history }: RootContainerProps) => {
+export default () => {
   const { user, signOut } = useContext(UserContext)
 
   const { data } = useQuery(tenantsQuery)
@@ -95,17 +91,15 @@ export default ({ history }: RootContainerProps) => {
   }
 
   return (
-    <Router history={history}>
-      <NavbarLayout
-        background={user.session ? '' : 'transparent'}
-        tenants={tenants}
-        user={user}
-        signOut={signOut}
-      >
-        <Suspense fallback={<LoadingPage />}>
-          {user.session ? <AuthorizedRoutes /> : <AnonRoutes />}
-        </Suspense>
-      </NavbarLayout>
-    </Router>
+    <NavbarLayout
+      background={user.session ? '' : 'transparent'}
+      tenants={tenants}
+      user={user}
+      signOut={signOut}
+    >
+      <Suspense fallback={<LoadingPage />}>
+        {user.session ? <AuthorizedRoutes /> : <AnonRoutes />}
+      </Suspense>
+    </NavbarLayout>
   )
 }
