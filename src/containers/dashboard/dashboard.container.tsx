@@ -54,24 +54,27 @@ const CardsWrapper = styled.div`
 const POLL_INTERVAL = 30 * 60 * 1000 // 30 min
 const PROCESSING_REFETCH_DELAY = 10000 // 10 sec
 
-interface DashboardProps extends RouteComponentProps {
-  tenant: Tenant
+interface DashboardRouteParams {
+  tenantId: string
+}
+
+interface DashboardProps extends RouteComponentProps<DashboardRouteParams> {
   tenants: Tenant[]
 }
 
-export default withRouter<DashboardProps>(({ tenant, tenants, match: { params } }) => {
+export default withRouter<DashboardProps>(({ tenants, match: { params } }) => {
   const [isDataLoaded, setDataLoaded] = useState(false)
   const { setAndSaveTenant } = useContext(TenantContext)
 
-  // @ts-ignore
-  if (params.tenantId !== tenant.id) {
-    // @ts-ignore
-    setAndSaveTenant(find(tenants, { id: params.tenantId }).id)
-  }
+  const { tenantId } = params
+
+  setAndSaveTenant(tenantId)
+
+  const tenant = find(tenants, { id: tenantId }) as Tenant
 
   const { count, setActive, setVisibility } = useContext(TimerContext)
   const { data, loading, error, refetch } = useQuery(dashboardQuery, {
-    variables: { tenantId: get(tenant, 'id') },
+    variables: { tenantId },
     pollInterval: POLL_INTERVAL,
   })
 

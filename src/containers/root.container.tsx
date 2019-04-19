@@ -71,7 +71,7 @@ const AuthorizedRoutes = () => {
         </Route>
       )}
       <Route exact path="/tenants/:tenantId/dashboard">
-        <Dashboard tenant={tenant} tenants={tenants} />
+        <Dashboard tenants={tenants} />
       </Route>
       <Route exact path="/settings">
         <Settings />
