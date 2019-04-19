@@ -1,14 +1,12 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { darken } from 'polished'
 import styled from 'styled-components/macro'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom'
 import { Mutation } from 'react-apollo'
 import map from 'lodash/map'
-import get from 'lodash/get'
 
 import { useQuery } from 'react-apollo-hooks'
 import Button from '../../../components/button/button.component'
-import RadioButton from '../../../components/controls/radio.component'
 import RemoveModal from './remove-tenant-modal.component'
 import CreateTenantModal from './create-tenant/create-tenant-modal.component'
 import CommonCard from '../../../components/card.component'
@@ -16,7 +14,6 @@ import Loading from '../../../components/loading.component'
 import { Tenant } from '../../../models'
 import Icon from '../../../components/icon.component'
 import { Header as CommonHeader } from '../../../components/typography.component'
-import { TenantContext } from '../../../contexts'
 import { tenantsQuery, removeTenant } from '../../../graphql'
 
 const Header = styled(CommonHeader)`
@@ -60,14 +57,9 @@ interface TenantsCardProps extends RouteComponentProps {}
 
 const Settings = () => {
   const { data, loading, error } = useQuery(tenantsQuery)
-  const { tenant: currentTenant, setAndSaveTenant } = useContext(TenantContext)
   const [isRemoveModalOpen, setRemoveModalOpen] = useState(false)
   const [isCreateModalOpen, setCreateModalOpen] = useState(false)
   const [tenantToRemove, setTenantToRemove] = useState<Tenant>(null!)
-
-  const onTenantClick = (tenant: Tenant) => {
-    setAndSaveTenant(tenant)
-  }
 
   const openRemoveModal = useCallback((tenant: Tenant) => {
     setTenantToRemove(tenant)
@@ -98,15 +90,11 @@ const Settings = () => {
               <Header>Your projects: </Header>
               {map(tenants, tenant => (
                 <Row key={tenant.id}>
-                  <RadioButton
-                    label={tenant.name}
-                    checked={get(currentTenant, 'id') === tenant.id}
-                    onChange={() => onTenantClick(tenant)}
-                  />
+                  <Link to={`/tenants/${tenant.id}/dashboard`}>{tenant.name}</Link>
                   <RemoveIcon icon="trash-alt" size="1x" onClick={() => openRemoveModal(tenant)} />
                 </Row>
               ))}
-              <AddButton onClick={() => setCreateModalOpen(true)}>Add Project</AddButton>
+              <AddButton onClick={() => setCreateModalOpen(true)}>Create Project</AddButton>
             </Content>
           </Card>
           <RemoveModal

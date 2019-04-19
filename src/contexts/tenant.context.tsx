@@ -1,31 +1,40 @@
-import React, { Dispatch, memo, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import { TENANT_KEY } from '../constants'
-import { Tenant } from '../models'
-import { safeParse } from '../utils'
 
-interface TenantProviderProps {
+interface TenantProviderProps extends RouteComponentProps {
   children: JSX.Element
 }
 
 interface TenantState {
-  tenant: Tenant
-  setTenant: Dispatch<SetStateAction<Tenant>>
-  setAndSaveTenant: (tenant: Tenant) => void
+  tenantId: string | null
+  setTenant: Dispatch<SetStateAction<string | null>>
+  setAndSaveTenant: (tenantId: string) => void
 }
 
 const TenantContext = React.createContext({} as TenantState)
 
-const TenantProvider = memo(({ children }: TenantProviderProps) => {
-  const [tenant, setTenant] = useState(safeParse(localStorage.getItem(TENANT_KEY)!) || null)
+const anyWindow = window as any
 
-  const setAndSaveTenant = (newTenant: Tenant) => {
-    localStorage.setItem(TENANT_KEY, JSON.stringify(newTenant))
-    setTenant(newTenant)
+const TenantProvider = withRouter<TenantProviderProps>(({ children }) => {
+  const [tenantId, setTenant] = useState(localStorage.getItem(TENANT_KEY) || null)
+
+  const setAndSaveTenant = (newTenantId: string) => {
+    localStorage.setItem(TENANT_KEY, newTenantId)
+    setTenant(newTenantId)
+  }
+
+  if (/^\/tenants\/[A-z0-9-]+\//.test(anyWindow.location.pathname)) {
+    const tenantIdPathParam = anyWindow.location.pathname.split('/')[2]
+
+    if (tenantIdPathParam !== tenantId) {
+      setAndSaveTenant(tenantIdPathParam)
+    }
   }
 
   return (
-    <TenantContext.Provider value={{ tenant, setTenant, setAndSaveTenant }}>
+    <TenantContext.Provider value={{ tenantId, setTenant, setAndSaveTenant }}>
       {children}
     </TenantContext.Provider>
   )

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { createBrowserHistory } from 'history'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
+import { Router } from 'react-router-dom'
 
 import Head from './head'
 import RootContainer from './containers/root.container'
@@ -15,26 +16,28 @@ import './icons.config'
 const history = createBrowserHistory()
 
 ReactDOM.render((
-  <UserProvider history={history}>
-    {({ client }) => (client ? (
-      <ApolloProvider client={client}>
-        <ApolloHooksProvider client={client}>
-          <ThemeProvider>
-            <TimerProvider>
-              <TenantProvider>
-                <>
-                  <SvgDefs />
-                  <Head />
-                  <GlobalStyles />
-                  <RootContainer history={history} />
-                </>
-              </TenantProvider>
-            </TimerProvider>
-          </ThemeProvider>
-        </ApolloHooksProvider>
-      </ApolloProvider>
-    ) : <div />)}
-  </UserProvider>
+  <Router history={history}>
+    <UserProvider history={history}>
+      {({ client }) => (client ? (
+        <ApolloProvider client={client}>
+          <ApolloHooksProvider client={client}>
+            <ThemeProvider>
+              <TimerProvider>
+                <TenantProvider>
+                  <>
+                    <SvgDefs />
+                    <Head />
+                    <GlobalStyles />
+                    <RootContainer />
+                  </>
+                </TenantProvider>
+              </TimerProvider>
+            </ThemeProvider>
+          </ApolloHooksProvider>
+        </ApolloProvider>
+      ) : <div />)}
+    </UserProvider>
+  </Router>
 ), document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
