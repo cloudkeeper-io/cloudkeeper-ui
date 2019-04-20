@@ -82,7 +82,7 @@ const AuthorizedRoutes = () => {
 export default () => {
   const { user, signOut } = useContext(UserContext)
 
-  const { data } = useQuery(tenantsQuery)
+  const { data } = useQuery(tenantsQuery, { skip: !user.session })
   const tenants = get(data, 'tenants', []) as Tenant []
 
   if (!user.isUserLoaded) {
