@@ -4,6 +4,7 @@ import screenfull from 'screenfull'
 import get from 'lodash/get'
 import find from 'lodash/find'
 import noop from 'lodash/noop'
+import endsWith from 'lodash/endsWith'
 
 import HeaderLink from './header-link.component'
 import ErrorContainer from '../../containers/error.container'
@@ -95,7 +96,7 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
               )}
             </TimerConsumer>
             <Flex />
-            {session && pathname === '/' && (
+            {session && endsWith(pathname, '/dashboard') && (
               <HeaderLink
                 icon={isFullscreen ? 'compress' : 'expand'}
                 onClick={() => (screenfull ? screenfull.toggle() : noop)}

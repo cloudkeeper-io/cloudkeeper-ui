@@ -43,20 +43,20 @@ export const LambdasGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps)
       unit="averageDuration"
       count={count}
       data={data.slowestLambdas}
-      summaryFormatter={x => `${msToSeconds(x.averageDuration!)} sec average`}
-      yAxisFormatter={x => `${msToSeconds(x)}s`}
-      tooltipFormatter={x => `${msToSeconds(x)}s`}
+      summaryFormatter={x => `${msToSeconds(x.averageDuration!)} average`}
+      yAxisFormatter={x => `${msToSeconds(x)}`}
+      tooltipFormatter={x => `${msToSeconds(x)}`}
       timeAxisFormat={timeAxisFormat}
       lambdaInfo={[
         {
           unit: 'averageDuration',
           text: 'average',
-          valueFn: x => `${msToSeconds(x)}s`,
+          valueFn: x => `${msToSeconds(x)}`,
         },
         {
           unit: 'maxDuration',
           text: 'max',
-          valueFn: x => `${msToSeconds(x)}s`,
+          valueFn: x => `${msToSeconds(x)}`,
         },
       ]}
     />

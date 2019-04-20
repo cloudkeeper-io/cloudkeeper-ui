@@ -1,39 +1,33 @@
-import React, { useContext } from 'react'
+/* eslint-disable max-len */
 import styled, { css } from 'styled-components/macro'
 import { tint } from 'polished'
 
 import Icon from '../icon.component'
-import { ThemeContext } from '../../contexts'
 
-const Wrapper = styled.div<{ width: string, height: string }>`
-  position: relative;
-  width: ${p => p.width};
-  height: ${p => p.height};
-`
-const Button = styled.button<{ loading?: boolean, background?: string, color?: string }>`
+export default styled.button<{ loading?: boolean, background?: string, color?: string }>`
   cursor: pointer;
-  width: calc(100%);
-  height: 100%;
+  width: 200px;
+  height: 50px;
   position: relative;
   top: 2px;
   left: 2px;
-  background: ${p => (p.disabled ? p.theme.buttons.primary.disabled : p.background)};
+  background: ${p => (p.disabled ? p.theme.buttons.primary.disabled : p.background || p.theme.buttons.primary.background)};
   box-sizing: border-box;
   border-radius: ${p => p.theme.buttons.borderRadius};
   border: none;
-  color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.color)};
+  color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.color || p.theme.buttons.primary.color)};
   font-weight: 500;
   font-size: 16px;
   clip-path: ${p => p.theme.buttons.clipPath};
   transition: 0.5s background;
   ${Icon} {
-    color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.color)};
+    color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.color || p.theme.buttons.primary.color)};
   }
   &:focus {
    outline: none;
   }
   &:hover {
-   background:  ${p => (p.disabled ? p.theme.buttons.primary.disabled : tint(0.2, p.background!))};
+   background:  ${p => (p.disabled ? p.theme.buttons.primary.disabled : tint(0.2, p.background || p.theme.buttons.primary.background))};
   }
   &::-moz-focus-inner {
     border: 0;
@@ -70,38 +64,3 @@ const Button = styled.button<{ loading?: boolean, background?: string, color?: s
     }
   ` : '')}
 `
-
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children?: JSX.Element | string
-  className?: string,
-  width?: string,
-  height?: string,
-  loading?: boolean
-  background?: string
-  color?: string
-  showBorder?: boolean
-}
-
-const ButtonComponent = ({ ...buttonProps }: ButtonProps) => {
-  const { theme } = useContext(ThemeContext)
-  const {
-    children,
-    className,
-    width = '200px',
-    height = '50px',
-    disabled,
-    background = buttonProps.background || theme.buttons.primary.background,
-    color = buttonProps.color || theme.buttons.primary.color,
-    ...props
-  } = buttonProps
-
-  return (
-    <Wrapper className={className} width={width} height={height}>
-      <Button {...props} disabled={disabled} background={background} color={color}>{children}</Button>
-    </Wrapper>
-  )
-}
-
-ButtonComponent.Content = Button
-
-export default ButtonComponent

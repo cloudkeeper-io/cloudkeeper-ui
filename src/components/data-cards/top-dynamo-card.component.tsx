@@ -12,71 +12,20 @@ import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
 
 import { useSwitchTab } from '../../hooks'
-import Card from '../card.component'
-import { Header as CommonHeader, Text as CommonText } from '../typography.component'
-import StepIndicator from '../steps-indicator.component'
+import { Text as CommonText } from '../typography.component'
 import { bytesToSize, toOrdinal, processDataPoints } from '../../utils'
+import {
+  StyledCard,
+  Content,
+  Header,
+  Text,
+  InfoText,
+  TabIndicator,
+  Value,
+  GraphContainer,
+  Tab,
+} from './data-card.styles'
 
-const StyledCard = styled(Card)`  
-  margin: auto;
-  width: 100%;
-  min-width: 500px;
-  height: 310px;
-  background: ${p => p.theme.dataCard.background};
-  overflow: hidden;
-  @media (max-width: 800px) {
-    min-width: auto;
-    max-width: 100%;
-  }
-`
-const Content = styled.div`
-  display: flex;
-  width: 100%;
-  height: calc(100% - 10px);
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0 20px 0 50px;
-`
-const Header = styled(CommonHeader)`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 5px;
-`
-const TabIndicator = styled(StepIndicator)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-const Text = styled(CommonText)`
-  position: relative;
-  margin-bottom: 8px;
-  white-space: nowrap;
-`
-const InfoText = styled(Text)`
-  display: flex;
-  justify-content: space-between;
-  :last-child {
-    margin-bottom: 0;
-  }
-`
-const Value = styled.span`
-  margin-left: 15px;
-`
-const GraphContainer = styled.div`
-  width: 100%;
-  height: 130px;
-  margin-left: -32px;
-  svg {
-    overflow: visible;
-  }
-`
-const Tab = styled.div`
-  width: 100%;
-  max-height: calc(100% - 22px);
-  flex: 1;
-`
 const LegendItem = styled(CommonText)`
   display: flex;
   align-items: center;
@@ -166,7 +115,7 @@ const DataCard = (props: TopDynamoCardProps) => {
   const dataPoints = processDataPoints(dynamo ? dynamo.dataPoints : [], map(units, x => x.value))
 
   return (
-    <StyledCard showBorder={false} className={className}>
+    <StyledCard className={className}>
       <Content>
         <Tab>
           <Header>

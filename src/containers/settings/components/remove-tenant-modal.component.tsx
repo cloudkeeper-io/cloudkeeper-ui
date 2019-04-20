@@ -44,20 +44,10 @@ export default ({ isOpen, onRemove, onClose, tenant }: ModalProps) => (
     <Title>Remove Tenant</Title>
     <Text>Your tenant <Name>{get(tenant, 'name')}</Name> will be removed. Are you sure about that?</Text>
     <ButtonsWrapper>
-      <CancelButton
-        background="#797070"
-        color="#FFF"
-        showBorder={false}
-        onClick={onClose}
-      >
+      <CancelButton background="#797070" color="#FFF" onClick={onClose}>
         Cancel
       </CancelButton>
-      <RemoveButton
-        background="#de4141"
-        color="#FFF"
-        showBorder={false}
-        onClick={() => onRemove(tenant)}
-      >
+      <RemoveButton background="#de4141" color="#FFF" onClick={() => onRemove(tenant)}>
         Remove
       </RemoveButton>
     </ButtonsWrapper>

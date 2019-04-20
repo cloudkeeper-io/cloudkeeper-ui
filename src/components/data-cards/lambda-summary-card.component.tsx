@@ -4,47 +4,28 @@ import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YA
 import { DateTime } from 'luxon'
 import round from 'lodash/round'
 import map from 'lodash/map'
+import every from 'lodash/every'
+import first from 'lodash/first'
 
 import { formatNumber, processDataPoints } from '../../utils'
 import { useSwitchTab } from '../../hooks'
-import Card from '../card.component'
 import StepIndicator from '../steps-indicator.component'
+import { StyledCard } from './data-card.styles'
 
-const StyledCard = styled(Card)`
-  margin: auto;
-  width: 100%;
-  min-width: 500px;
-  height: 310px;
-  background: ${p => p.theme.dataCard.background};
-  ${Card.Content} {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  @media (max-width: 800px) {
-    min-width: auto;
-    max-width: 100%;
-  }
-`
 const Header = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: calc(100% - 75px);
+  width: calc(100% - 50px);
   justify-content: space-between;
   align-items: flex-start;
-  margin-left: 50px;
-  margin-top: 20px;
-  margin-bottom: 15px;
+  margin: 20px 0 10px 0;
+  padding: 0 20px 0 30px;
 `
 const Value = styled.div`
   position: relative;
   min-height: 58px;
   min-width: 1px;
   font-size: 48px;
-  color: ${p => p.theme.colors.text};
-  > div {
-    position: absolute;
-    will-change: transform, opacity;
-  }
 `
 const Description = styled.div`
   position: relative;
@@ -52,7 +33,6 @@ const Description = styled.div`
   font-size: 12px;
   min-height: 11px;
   min-width: 1px;
-  color: ${p => p.theme.colors.text};
 `
 const StyledTooltip = Tooltip as any
 
@@ -98,9 +78,10 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
   const [tab, setTab] = useSwitchTab(count, tabs.length)
   const unit = tabs[tab]
   const dataPoints = processDataPoints(map(data.dataPoints, x => ({ ...x, value: x[unit] })), ['value'])
+  const isStraightLine = every(dataPoints, point => point.value === first(dataPoints).value)
 
   return (
-    <StyledCard showBorder={false} className={className}>
+    <StyledCard className={className}>
       <Header>
         <Value>
           {formatters[tab](data[unit])}
@@ -111,7 +92,7 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
         </Description>
       </Header>
       <ResponsiveContainer>
-        <LineChart data={dataPoints} margin={{ top: 20, right: 30, left: -5, bottom: 30 }}>
+        <LineChart data={dataPoints} margin={{ top: 15, right: 30, left: -5, bottom: 30 }}>
           <XAxis
             dataKey="dateTime"
             stroke={colors.axis}
@@ -132,7 +113,7 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
             filter={colors.lineFilter}
             type="monotone"
             dataKey="value"
-            stroke={colors.svgLines}
+            stroke={isStraightLine ? colors.lines : colors.svgLines}
             dot={false}
             strokeWidth={3}
           />

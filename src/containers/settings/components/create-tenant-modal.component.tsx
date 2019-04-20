@@ -5,12 +5,24 @@ import { Mutation, MutationFn } from 'react-apollo'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import get from 'lodash/get'
 
-import Error from '../../../../components/form/error-message.components'
-import { Text, ButtonWrapper, NavigationButton } from './create-tenant.styles'
-import { tenantsQuery, createTenantMutation } from '../../../../graphql'
-import { trackEvent } from '../../../../utils/amplitude'
-import { SmallField } from '../../../../components/form/field.components'
+import Error from '../../../components/form/error-message.components'
+import { tenantsQuery, createTenantMutation } from '../../../graphql'
+import { CreateTenant, CreateTenantVariables } from '../../../graphql/mutations/types/CreateTenant'
+import { trackEvent } from '../../../utils/amplitude'
+import { SmallField } from '../../../components/form/field.components'
+import Modal from '../../../components/modal.component'
+import Button from '../../../components/button/button.component'
+import { Title } from '../../../components/typography.component'
 
+class CreateTenantMutation extends Mutation<CreateTenant, CreateTenantVariables> {}
+
+const ModalStyles = {
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+  },
+}
 const StyledForm = styled.form`
   margin-top: 20px;
 `
@@ -20,6 +32,21 @@ const ServerError = styled(Error)`
   right: 0;
   transform: translateY(calc(-100% - 5px));
 `
+const Text = styled.div`
+  margin-bottom: 10px;
+`
+const ButtonWrapper = styled.div`
+  display: flex;
+  margin-top: 35px;
+  justify-content: flex-end;
+`
+const CancelButton = styled(Button)`
+  max-width: calc(45% - 10px);
+`
+const CreateButton = styled(Button)`
+  max-width: calc(45% - 10px);
+  margin-left: 10px;
+`
 
 interface Values {
   name: string
@@ -27,15 +54,16 @@ interface Values {
 
 interface StepsProps extends RouteComponentProps {
   onClose: () => void
+  isOpen: boolean
 }
 
-export default memo(withRouter(({ onClose, history }: StepsProps) => {
+export default memo(withRouter(({ onClose, isOpen, history }: StepsProps) => {
   const [loading, setLoading] = useState(false)
   const [serverError, setServerError] = useState('')
 
   useEffect(() => trackEvent('Opened Create Project'), [])
 
-  const onSubmit = async (v: Values, mutation: MutationFn) => {
+  const onSubmit = async (v: Values, mutation: MutationFn<CreateTenant, CreateTenantVariables>) => {
     setLoading(true)
     setServerError('')
     try {
@@ -64,11 +92,13 @@ export default memo(withRouter(({ onClose, history }: StepsProps) => {
   }
 
   return (
-    <>
-      <Mutation
+    <Modal isOpen={isOpen} onRequestClose={onClose} style={ModalStyles}>
+      <Title>Create Project</Title>
+      <CreateTenantMutation
         mutation={createTenantMutation}
-        update={(cache, { data: { createTenant } }) => {
-          const { tenants } = cache.readQuery<any>({ query: tenantsQuery })
+        update={(cache, { data }) => {
+          const { createTenant } = data!
+          const { tenants } = cache.readQuery({ query: tenantsQuery }) as any
           cache.writeQuery({
             query: tenantsQuery,
             data: { tenants: tenants.concat([createTenant]) },
@@ -85,18 +115,18 @@ export default memo(withRouter(({ onClose, history }: StepsProps) => {
                 <SmallField name="name" placeholder="Your Project Name" />
                 <ButtonWrapper>
                   <ServerError>{serverError}</ServerError>
-                  <NavigationButton onClick={onClose} type="button">
+                  <CancelButton background="#797070" color="#FFF" onClick={onClose} type="button">
                     Cancel
-                  </NavigationButton>
-                  <NavigationButton loading={loading} disabled={pristine || invalid}>
+                  </CancelButton>
+                  <CreateButton loading={loading} disabled={pristine || invalid}>
                     Create
-                  </NavigationButton>
+                  </CreateButton>
                 </ButtonWrapper>
               </StyledForm>
             )}
           </Form>
         )}
-      </Mutation>
-    </>
+      </CreateTenantMutation>
+    </Modal>
   )
 }))

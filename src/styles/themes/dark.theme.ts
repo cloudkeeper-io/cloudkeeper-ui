@@ -30,15 +30,14 @@ const controls = {
 }
 
 const card = {
-  background: 'transparent',
+  background: 'linear-gradient(180deg, rgba(0, 1, 0, 0.5) 0%, rgba(18, 24, 50, 0.5) 100%), rgba(21, 76, 108, 0.8)',
   borderColor: colors.borderColor,
   shadow: 'none',
-  showBorder: true,
   borderRadius: '0 40px 0 40px',
 }
 
 const dataCard = {
-  background: 'linear-gradient(180deg, rgba(71, 203, 203, 0.1) 0%, rgba(18, 24, 50, 0.1) 100%), rgba(102, 157, 189, 0.12)',
+  background: 'linear-gradient(180deg, rgba(0, 1, 0, 0.5) 0%, rgba(18, 24, 50, 0.5) 100%), rgba(21, 76, 108, 0.8)',
   secondaryBackground: 'linear-gradient(180deg, #129F7C -0.31%, #6F20A0 100%)',
   axis: '#8492B9',
   secondaryAxis: colors.primary,
@@ -79,6 +78,8 @@ const tabs = {
   active: mix(0.85, '#142330', colors.primary),
   text: colors.primary,
   activeText: colors.primary,
+  borderLeft: '0',
+  borderRight: '0 21px 0 0',
 }
 
 const select = {

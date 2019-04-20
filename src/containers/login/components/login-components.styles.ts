@@ -20,14 +20,4 @@ export const ServerError = styled.div`
   margin-bottom: 10px;
   height: 20px;
 `
-export const SubmitButton = styled(Button)`
-  ${Button.Content} {
-    &:disabled {
-      background: ${p => p.theme.buttons.primary.disabled};
-    }
-    &:active,
-    &:hover {
-      background: ${p => p.theme.buttons.primary.active};
-    }
-  }
-`
+export const SubmitButton = styled(Button)``

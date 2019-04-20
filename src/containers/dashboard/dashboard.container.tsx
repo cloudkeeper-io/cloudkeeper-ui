@@ -6,7 +6,7 @@ import find from 'lodash/find'
 import isBoolean from 'lodash/isBoolean'
 
 import Loading from '../../components/loading.component'
-import SetupTenant from '../settings/components/setup-tenant/setup-tenant.component'
+import SetupTenant from './components/setup-tenant.component'
 import Processing from '../../components/processing.component'
 import { Title } from '../../components/typography.component'
 import { dashboardQuery } from '../../graphql'
@@ -34,10 +34,21 @@ const Wrapper = styled.div`
   margin-top: -60px;
 `
 const StyledTitle = styled(Title)`
+  position: relative;
   display: flex;
   align-items: center;
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 20px 0;
+  text-transform: uppercase;
+`
+const Hr = styled.div`
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: ${p => p.theme.colors.primary};
+  margin-bottom: 30px;
 `
 const CardsWrapper = styled.div`
   display: grid;
@@ -112,6 +123,7 @@ export default ({ tenants }: DashboardProps) => {
       <StyledTitle>
         Last 24h
       </StyledTitle>
+      <Hr />
       <CardsWrapper>
         <LambdasGraphs timeAxisFormat="HH:mm" count={count} data={data.lambdasData.last24Hours} />
         <DynamoGraphs timeAxisFormat="HH:mm" count={count} data={data.dynamoData.last24Hours} />
@@ -119,6 +131,7 @@ export default ({ tenants }: DashboardProps) => {
       <StyledTitle>
         Last 30 days
       </StyledTitle>
+      <Hr />
       <CardsWrapper>
         <LambdasGraphs timeAxisFormat="LLL d" count={count} data={data.lambdasData.last30Days} />
         <DynamoGraphs timeAxisFormat="LLL d" count={count} data={data.dynamoData.last30Days} />

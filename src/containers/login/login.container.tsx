@@ -30,13 +30,11 @@ const Content = styled.div`
   margin-top: -140px;
 `
 const MainCard = styled(Card)`
+  display: block;
   width: 450px;
   max-width: 90vw;
   min-height: 300px;
   overflow: hidden;
-  ${Card.Content} {
-    display: block;
-  }
 `
 const Logo = styled(SVGLogo)`
   fill: ${p => p.theme.colors.icon};

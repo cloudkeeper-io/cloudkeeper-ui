@@ -35,9 +35,8 @@ export const bytesToSize = (bytes: number) => {
   return i ? `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}` : `${bytes} ${sizes[i]}`
 }
 
-export const msToSeconds = (x: string | number) => round(
-  Duration.fromObject({ milliseconds: Number(x) }).as('second'), 2,
-)
+export const msToSeconds = (x: string | number) => (x >= 1000 ?
+  `${round(Duration.fromObject({ milliseconds: Number(x) }).as('second'), 2)}s` : `${round(Number(x))}ms`)
 
 // eslint-disable-next-line max-len,no-nested-ternary
 export const toOrdinal = (n: number) => n + (n % 10 === 1 && n % 100 !== 11 ? 'st' : n % 10 === 2 && n % 100 !== 12 ? 'nd' : n % 10 === 3 && n % 100 !== 13 ? 'rd' : 'th')

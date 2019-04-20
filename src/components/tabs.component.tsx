@@ -5,29 +5,23 @@ import Button from './button/button.component'
 
 const TabList = styled.div`
   position: relative;
-  right: ${p => p.theme.tabs.tabListRight};
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${p => `calc(100% + ${p.theme.tabs.tabListRight || 0})`};
 `
 const TabButton = styled(Button)<{ active?: boolean }>`
   position: relative;
   width: 50%;
   height: 60px;
-  top: -2px;
-  left: -2px;
+  background: ${p => (p.active ? p.theme.tabs.active : p.theme.tabs.background)};
+  color: ${p => (p.active ? p.theme.tabs.text : p.theme.tabs.activeText)};
+  clip-path: ${p => p.theme.tabs.clipPath};
+  border-radius: ${p => p.theme.tabs.borderRight};
   &:first-child {
-    transform: ${p => `translateX(${p.theme.tabs.tabListRight})`};
-    ${Button.Content} {
-      border-radius: 6px 0 0 0;
-    }
-  }
-  ${Button.Content} {
-    background: ${p => (p.active ? p.theme.tabs.active : p.theme.tabs.background)};
-    color: ${p => (p.active ? p.theme.tabs.text : p.theme.tabs.activeText)};
-    clip-path: ${p => p.theme.tabs.clipPath};
-    border-radius: 0 6px 0 0;
+    border-radius: ${p => p.theme.tabs.borderLeft};
   }
 `
 

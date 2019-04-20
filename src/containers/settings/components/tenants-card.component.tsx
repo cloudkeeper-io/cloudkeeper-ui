@@ -8,31 +8,31 @@ import map from 'lodash/map'
 import { useQuery } from 'react-apollo-hooks'
 import Button from '../../../components/button/button.component'
 import RemoveModal from './remove-tenant-modal.component'
-import CreateTenantModal from './create-tenant/create-tenant-modal.component'
+import CreateTenantModal from './create-tenant-modal.component'
 import CommonCard from '../../../components/card.component'
 import Loading from '../../../components/loading.component'
 import { Tenant } from '../../../models'
 import Icon from '../../../components/icon.component'
 import { Header as CommonHeader } from '../../../components/typography.component'
 import { tenantsQuery, removeTenant } from '../../../graphql'
+import { RemoveTenant, RemoveTenantVariables } from '../../../graphql/mutations/types/RemoveTenant'
 
 const Header = styled(CommonHeader)`
   margin-bottom: 20px;
 `
 const Card = styled(CommonCard)`
-  width: 300px;
-`
-const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: calc(100% - 70px);
-  height: calc(100% - 65px);
-  padding: 10px 30px 35px 40px;
+  width: 400px;
+  max-width: calc(100vw - 60px);
+  overflow: hidden;
+  padding: 20px;
 `
 const Overlay = styled.div`
   position: absolute;
   top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   background-color: rgba(0,0,0, 0.4);
@@ -41,6 +41,10 @@ const Overlay = styled.div`
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 10px 0;
+`
+const TenantLink = styled(Link)`
+  text-decoration: underline;
 `
 const RemoveIcon = styled(Icon)`
   cursor: pointer;
@@ -50,8 +54,9 @@ const RemoveIcon = styled(Icon)`
 `
 const AddButton = styled(Button)`
   margin: 15px auto 0 auto;
-  width: 75%;
 `
+
+class RemoveTenantMutation extends Mutation<RemoveTenant, RemoveTenantVariables> {}
 
 interface TenantsCardProps extends RouteComponentProps {}
 
@@ -77,7 +82,7 @@ const Settings = () => {
   const { tenants } = data
 
   return (
-    <Mutation mutation={removeTenant} refetchQueries={[{ query: tenantsQuery }]}>
+    <RemoveTenantMutation mutation={removeTenant} refetchQueries={[{ query: tenantsQuery }]}>
       {(mutation, { loading: removing }) => (
         <>
           <Card>
@@ -86,16 +91,14 @@ const Settings = () => {
                 <Loading height="100%" />
               </Overlay>
             ) : <div />}
-            <Content>
-              <Header>Your projects: </Header>
-              {map(tenants, tenant => (
-                <Row key={tenant.id}>
-                  <Link to={`/tenants/${tenant.id}/dashboard`}>{tenant.name}</Link>
-                  <RemoveIcon icon="trash-alt" size="1x" onClick={() => openRemoveModal(tenant)} />
-                </Row>
-              ))}
-              <AddButton onClick={() => setCreateModalOpen(true)}>Create Project</AddButton>
-            </Content>
+            <Header>Your projects: </Header>
+            {map(tenants, tenant => (
+              <Row key={tenant.id}>
+                <TenantLink to={`/tenants/${tenant.id}/dashboard`}>{tenant.name}</TenantLink>
+                <RemoveIcon icon="trash-alt" size="1x" onClick={() => openRemoveModal(tenant)} />
+              </Row>
+            ))}
+            <AddButton onClick={() => setCreateModalOpen(true)}>Create Project</AddButton>
           </Card>
           <RemoveModal
             onRemove={(tenant) => {
@@ -107,14 +110,12 @@ const Settings = () => {
             tenant={tenantToRemove!}
           />
           <CreateTenantModal
-            onClose={() => {
-              setCreateModalOpen(false)
-            }}
+            onClose={() => setCreateModalOpen(false)}
             isOpen={isCreateModalOpen}
           />
         </>
       )}
-    </Mutation>
+    </RemoveTenantMutation>
   )
 }
 
