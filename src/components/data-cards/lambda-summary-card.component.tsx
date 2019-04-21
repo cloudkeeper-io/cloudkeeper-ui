@@ -110,7 +110,7 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
           />
           <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
           <Line
-            filter={colors.lineFilter}
+            filter={isStraightLine ? '' : colors.lineFilter}
             type="monotone"
             dataKey="value"
             stroke={isStraightLine ? colors.lines : colors.svgLines}

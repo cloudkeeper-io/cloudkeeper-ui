@@ -158,17 +158,15 @@ const DataCard = (props: TopDynamoCardProps) => {
                       tickFormatter={yAxisFormatter}
                     />
                     <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
-                    {dynamo.billingMode === 'PROVISIONED' && (
-                      <Line
-                        type="monotone"
-                        filter={colors.lineFilter}
-                        dataKey={last(units)!.value}
-                        name={last(units)!.label}
-                        stroke={colors.svgLinesSecondary}
-                        dot={dataPoints.length < 3}
-                        strokeWidth={3}
-                      />
-                    )}
+                    <Line
+                      type="monotone"
+                      filter={colors.lineFilter}
+                      dataKey={last(units)!.value}
+                      name={last(units)!.label}
+                      stroke={colors.svgLinesSecondary}
+                      dot={dataPoints.length < 3}
+                      strokeWidth={3}
+                    />
                     <Line
                       type="monotone"
                       filter={colors.lineFilter}

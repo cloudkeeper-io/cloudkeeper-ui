@@ -30,14 +30,13 @@ const controls = {
 }
 
 const card = {
-  background: 'linear-gradient(180deg, rgba(0, 1, 0, 0.5) 0%, rgba(18, 24, 50, 0.5) 100%), rgba(21, 76, 108, 0.8)',
+  background: 'linear-gradient(180deg, rgba(0, 1, 0, 0.4) 0%, rgba(18, 24, 50, 0.4) 100%), rgba(21, 76, 108, 0.4)',
   borderColor: colors.borderColor,
   shadow: 'none',
   borderRadius: '0 40px 0 40px',
 }
 
 const dataCard = {
-  background: 'linear-gradient(180deg, rgba(0, 1, 0, 0.5) 0%, rgba(18, 24, 50, 0.5) 100%), rgba(21, 76, 108, 0.8)',
   secondaryBackground: 'linear-gradient(180deg, #129F7C -0.31%, #6F20A0 100%)',
   axis: '#8492B9',
   secondaryAxis: colors.primary,
@@ -45,7 +44,7 @@ const dataCard = {
   linesSecondary: mix(0.5, '#FFFC00', '#00B81D'),
   svgLines: 'url(#darkLine)',
   svgLinesSecondary: 'url(#darkLineSecondary)',
-  lineFilter: '',
+  lineFilter: 'url(#darkLineShadow)',
   secondaryLines: colors.primary,
   tooltipBackground: '#0E0B20',
   secondaryTooltipBackground: '#0E0B20',
@@ -95,7 +94,7 @@ const login = {
 }
 
 const dashboard = {
-  background: '#0F1D3D url(/dark-dashboard.png) 100% 100% no-repeat',
+  background: '#0F1D3D url(/dark-dashboard.svg) 100% 100% no-repeat',
 }
 
 export default {
