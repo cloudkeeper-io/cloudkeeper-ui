@@ -8,12 +8,12 @@
 
 export interface Tenants_tenants {
   __typename: "Tenant";
-  id: string | null;
-  name: string | null;
-  createdAt: string | null;
-  isSetupCompleted: boolean | null;
+  id: string;
+  name: string;
+  createdAt: string;
+  isSetupCompleted: boolean;
 }
 
 export interface Tenants {
-  tenants: (Tenants_tenants | null)[] | null;
+  tenants: Tenants_tenants[] | null;
 }

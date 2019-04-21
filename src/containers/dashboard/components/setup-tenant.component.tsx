@@ -131,10 +131,7 @@ export default (({ tenant }: SetupTenantProps) => {
   return (
     <Wrapper>
       <Content>
-        <SetupTenantMutation
-          mutation={setupTenantMutation}
-          update={update}
-        >
+        <SetupTenantMutation mutation={setupTenantMutation} update={update}>
           {mutation => (
             <Form onSubmit={v => onSubmit(v as Values, mutation)} validate={v => validate(v as Values)}>
               {({ handleSubmit, pristine, invalid }) => (

@@ -1,15 +1,10 @@
 import React, { lazy, Suspense, useContext, useEffect } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { useQuery } from 'react-apollo-hooks'
 import isEmpty from 'lodash/isEmpty'
-import get from 'lodash/get'
-import find from 'lodash/find'
 import first from 'lodash/first'
 
-import { Tenant } from '../models'
 import NavbarLayout from '../components/layout/navbar-layout.component'
 import LoadingPage from '../components/loading-page.component'
-import { tenantsQuery } from '../graphql'
 import { TenantContext, UserContext } from '../contexts'
 
 const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
@@ -32,15 +27,11 @@ const AnonRoutes = () => (
 )
 
 const AuthorizedRoutes = () => {
-  const { data, loading, error } = useQuery(tenantsQuery, { fetchPolicy: 'cache-and-network' })
-  const { tenantId, setAndSaveTenant } = useContext(TenantContext)
-
-  const tenants = get(data, 'tenants', []) as Tenant []
-  const tenant: Tenant = find(tenants, { id: tenantId }) as Tenant
+  const { tenants, loading, error, currentTenant, setAndSaveTenant } = useContext(TenantContext)
 
   useEffect(() => {
     if (!isEmpty(tenants)) {
-      if (!tenant) {
+      if (!currentTenant) {
         setAndSaveTenant(first(tenants)!.id)
       }
     }
@@ -48,7 +39,7 @@ const AuthorizedRoutes = () => {
       setAndSaveTenant(null!)
     }
   },
-  [tenant, loading, tenants, setAndSaveTenant])
+  [currentTenant, loading, tenants, setAndSaveTenant])
 
   if (loading) {
     return <LoadingPage height="calc(100vh - 80px)" />
@@ -71,8 +62,8 @@ const AuthorizedRoutes = () => {
       <Route exact path="/settings">
         <Settings />
       </Route>
-      {tenant && (
-        <Redirect from="/" to={`/tenants/${tenant.id}/dashboard`} />
+      {currentTenant && (
+        <Redirect from="/" to={`/tenants/${currentTenant.id}/dashboard`} />
       )}
       <Redirect from="*" to="/" />
     </Switch>
@@ -82,9 +73,6 @@ const AuthorizedRoutes = () => {
 export default () => {
   const { user, signOut } = useContext(UserContext)
 
-  const { data } = useQuery(tenantsQuery, { skip: !user.session })
-  const tenants = get(data, 'tenants', []) as Tenant []
-
   if (!user.isUserLoaded) {
     return <LoadingPage />
   }
@@ -92,7 +80,6 @@ export default () => {
   return (
     <NavbarLayout
       background={user.session ? '' : 'transparent'}
-      tenants={tenants}
       user={user}
       signOut={signOut}
     >

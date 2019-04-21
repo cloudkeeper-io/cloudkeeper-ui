@@ -15,8 +15,8 @@ const colors = {
   spinner: 'url(#light-spinner-gradient)',
   shadow: 'rgba(190, 180, 185, 0.2)',
 
-  active: '#2FF6F5',
-  activeSecondary: '#0470FE',
+  active: '#FFAA6E',
+  activeSecondary: '#FF5F99',
 }
 
 const controls = {
@@ -41,7 +41,7 @@ const dataCard = {
   axis: '#9A9DAD',
   secondaryAxis: transparentize(0.3, colors.activeText),
   lines: mix(0.5, colors.active, colors.activeSecondary),
-  linesSecondary: mix(0.5, '#FFAA6E', '#FF5F99'),
+  linesSecondary: mix(0.5, '#2FF6F5', '#0470FE'),
   svgLines: 'url(#lightLine)',
   svgLinesSecondary: 'url(#lightLineSecondary)',
   lineFilter: 'url(#lightLineShadow)',
@@ -87,6 +87,8 @@ const select = {
   listBackground: colors.background,
   focusedListBackground: transparentize(0.7, colors.primary),
   selectedListBackground: transparentize(0.4, colors.primary),
+  shadow: colors.shadow,
+  borderColor: PRIMARY,
 }
 
 const login = {
@@ -96,6 +98,8 @@ const login = {
 
 const dashboard = {
   background: '#E4E4EB url(/light-dashboard.svg) center center no-repeat',
+  header: colors.text,
+  hr: '#FFFFFF',
 }
 
 export default {

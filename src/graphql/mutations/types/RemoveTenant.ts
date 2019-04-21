@@ -8,9 +8,9 @@
 
 export interface RemoveTenant_deleteTenant {
   __typename: "Tenant";
-  id: string | null;
-  name: string | null;
-  isSetupCompleted: boolean | null;
+  id: string;
+  name: string;
+  isSetupCompleted: boolean;
 }
 
 export interface RemoveTenant {

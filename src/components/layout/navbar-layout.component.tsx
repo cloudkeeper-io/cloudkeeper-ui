@@ -1,23 +1,20 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import screenfull from 'screenfull'
-import get from 'lodash/get'
-import find from 'lodash/find'
 import noop from 'lodash/noop'
 import endsWith from 'lodash/endsWith'
 
 import HeaderLink from './header-link.component'
 import ErrorContainer from '../../containers/error.container'
 import Timer from '../timer.component'
-import { Tenant, User } from '../../models'
-import { Wrapper, HeaderWrapper, Header, PageWrapper, PageContent, Flex, TenantName } from './navbar-layout.styles'
-import { ThemeConsumer, TimerConsumer, TenantConsumer } from '../../contexts'
+import { User } from '../../models'
+import { Wrapper, HeaderWrapper, Header, PageWrapper, PageContent, Flex, TenantSelect } from './navbar-layout.styles'
+import { ThemeConsumer, TimerConsumer } from '../../contexts'
 
 interface NavbarLayoutProps extends RouteComponentProps {
   user: User
   signOut: () => void
   background?: string
-  tenants: Tenant[]
   children?: React.ReactChildren | JSX.Element
 }
 
@@ -64,7 +61,7 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
   public logout = () => this.props.signOut()
 
   public render() {
-    const { children, background, user: { session }, tenants } = this.props
+    const { children, background, user: { session } } = this.props
     const { hasError, isFullscreen } = this.state
     const { pathname } = window.location
 
@@ -74,14 +71,9 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
           <Header>
             {session && <HeaderLink active={pathname === '/'} icon="home" to="/" />}
             {session && (
-              <TenantConsumer>
-                {({ tenantId }) => (
-                  <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings">
-                    <TenantName>{get(find(tenants, { id: tenantId }), 'name')}</TenantName>
-                  </HeaderLink>
-                )}
-              </TenantConsumer>
+              <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings" />
             )}
+            {session && <TenantSelect />}
             <TimerConsumer>
               {({ count, delay, isActive, isVisible, setActiveAndSave }) => isVisible && (
                 <>

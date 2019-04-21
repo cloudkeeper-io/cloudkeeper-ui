@@ -86,6 +86,8 @@ const select = {
   listBackground: '#142330',
   focusedListBackground: transparentize(0.7, colors.primary),
   selectedListBackground: transparentize(0.4, colors.primary),
+  shadow: colors.shadow,
+  borderColor: PRIMARY,
 }
 
 const login = {
@@ -95,6 +97,8 @@ const login = {
 
 const dashboard = {
   background: '#0F1D3D url(/dark-dashboard.svg) 100% 100% no-repeat',
+  header: colors.primary,
+  hr: colors.primary,
 }
 
 export default {

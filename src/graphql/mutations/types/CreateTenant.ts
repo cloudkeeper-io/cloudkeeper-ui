@@ -8,10 +8,10 @@
 
 export interface CreateTenant_createTenant {
   __typename: "Tenant";
-  id: string | null;
-  name: string | null;
-  createdAt: string | null;
-  isSetupCompleted: boolean | null;
+  id: string;
+  name: string;
+  createdAt: string;
+  isSetupCompleted: boolean;
 }
 
 export interface CreateTenant {

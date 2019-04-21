@@ -7,7 +7,7 @@ import map from 'lodash/map'
 import every from 'lodash/every'
 import first from 'lodash/first'
 
-import { formatNumber, processDataPoints } from '../../utils'
+import { formatNumber } from '../../utils'
 import { useSwitchTab } from '../../hooks'
 import StepIndicator from '../steps-indicator.component'
 import { StyledCard } from './data-card.styles'
@@ -77,8 +77,8 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
   const { dataCard: colors } = theme
   const [tab, setTab] = useSwitchTab(count, tabs.length)
   const unit = tabs[tab]
-  const dataPoints = processDataPoints(map(data.dataPoints, x => ({ ...x, value: x[unit] })), ['value'])
-  const isStraightLine = every(dataPoints, point => point.value === first(dataPoints).value)
+  const dataPoints = map(data.dataPoints, x => ({ ...x, value: x[unit] }))
+  const isStraightLine = every(dataPoints, point => point.value === first(dataPoints)!.value)
 
   return (
     <StyledCard className={className}>

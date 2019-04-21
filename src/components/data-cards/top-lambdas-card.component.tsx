@@ -7,7 +7,7 @@ import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
 
 import { useSwitchTab } from '../../hooks'
-import { processDataPoints, toOrdinal } from '../../utils'
+import { checkDataPoints, toOrdinal } from '../../utils'
 import {
   StyledCard,
   Content,
@@ -23,6 +23,7 @@ import {
 const LambdaInfo = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
+  margin-left: 25px;
   ${Text} {
     margin-bottom: 3px;
   }
@@ -85,7 +86,8 @@ const DataCard = (props: MostInvokedCardProps) => {
     return null
   }
 
-  const dataPoints = processDataPoints(lambda ? lambda.dataPoints : [], [unit])
+  const dataPoints = lambda ? lambda.dataPoints : []
+  const [isStraightLine] = checkDataPoints(dataPoints, [unit])
 
   return (
     <StyledCard className={className}>
@@ -131,9 +133,9 @@ const DataCard = (props: MostInvokedCardProps) => {
                     <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
                     <Line
                       type="monotone"
-                      filter={colors.lineFilter}
+                      filter={isStraightLine ? '' : colors.lineFilter}
                       dataKey={unit}
-                      stroke={colors.svgLines}
+                      stroke={isStraightLine ? colors.lines : colors.svgLines}
                       dot={dataPoints.length < 3}
                       strokeWidth={3}
                     />

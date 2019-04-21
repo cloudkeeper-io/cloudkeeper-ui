@@ -1,11 +1,10 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { darken } from 'polished'
 import styled from 'styled-components/macro'
 import { RouteComponentProps, withRouter, Link } from 'react-router-dom'
 import { Mutation } from 'react-apollo'
 import map from 'lodash/map'
 
-import { useQuery } from 'react-apollo-hooks'
 import Button from '../../../components/button/button.component'
 import RemoveModal from './remove-tenant-modal.component'
 import CreateTenantModal from './create-tenant-modal.component'
@@ -16,6 +15,7 @@ import Icon from '../../../components/icon.component'
 import { Header as CommonHeader } from '../../../components/typography.component'
 import { tenantsQuery, removeTenant } from '../../../graphql'
 import { RemoveTenant, RemoveTenantVariables } from '../../../graphql/mutations/types/RemoveTenant'
+import { TenantContext } from '../../../contexts'
 
 const Header = styled(CommonHeader)`
   margin-bottom: 20px;
@@ -61,7 +61,7 @@ class RemoveTenantMutation extends Mutation<RemoveTenant, RemoveTenantVariables>
 interface TenantsCardProps extends RouteComponentProps {}
 
 const Settings = () => {
-  const { data, loading, error } = useQuery(tenantsQuery)
+  const { tenants, loading, error } = useContext(TenantContext)
   const [isRemoveModalOpen, setRemoveModalOpen] = useState(false)
   const [isCreateModalOpen, setCreateModalOpen] = useState(false)
   const [tenantToRemove, setTenantToRemove] = useState<Tenant>(null!)
@@ -78,8 +78,6 @@ const Settings = () => {
   if (error) {
     throw error
   }
-
-  const { tenants } = data
 
   return (
     <RemoveTenantMutation mutation={removeTenant} refetchQueries={[{ query: tenantsQuery }]}>

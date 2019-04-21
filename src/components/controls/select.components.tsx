@@ -5,19 +5,23 @@ import React from 'react'
 
 export const SelectWrapper = styled.div`
   height: 50px;
-  .react-select__control {
+  .react-select__control, .react-select__control--is-focused {
     background: transparent;
-    border-color: ${p => p.theme.colors.borderColor} !important;
     border-radius: 0;
-    border-width: 2px;
-      box-shadow: 0 0 4px ${p => p.theme.card.shadow} !important;
+    border: 1px solid ${p => p.theme.select.borderColor} !important;;
+    box-shadow: 0 0 4px ${p => p.theme.select.shadow} !important;
   }
   .react-select__single-value, .react-select__input, .react-select__menu-notice {
     color: ${p => p.theme.select.color} !important;
   }
   .react-select__menu-list {
     background: ${p => p.theme.select.listBackground};
-    border: 1px solid ${p => p.theme.colors.borderColor};
+    border: 1px solid ${p => p.theme.select.borderColor};
+  }
+  .react-select__option {
+    &:active {
+      background: ${p => p.theme.select.selectedListBackground};
+    }
   }
   .react-select__option--is-focused {
     background: ${p => p.theme.select.focusedListBackground};
@@ -27,6 +31,12 @@ export const SelectWrapper = styled.div`
   }
   .react-select__placeholder {
     color: ${p => p.theme.input.placeholder};
+  }
+  .react-select__indicator-separator {
+    background: ${p => p.theme.colors.primary};
+  }
+  .react-select__indicator svg path{
+    fill: ${p => p.theme.colors.primary} !important;
   }
 `
 

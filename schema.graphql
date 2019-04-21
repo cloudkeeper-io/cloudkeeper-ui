@@ -173,7 +173,7 @@ type Query {
     awsRegions: [String]
     dynamoData(tenantId: String): DashboardDynamoData
     lambdasData(tenantId: String): DashboardLambdasData
-    tenants: [Tenant]
+    tenants: [Tenant!]
 }
 
 type SlowLambdaData {
@@ -195,10 +195,10 @@ type SlowLambdaDataPoint {
 }
 
 type Tenant {
-    createdAt: String
-    id: String
-    isSetupCompleted: Boolean
-    name: String
+    createdAt: String!
+    id: String!
+    isSetupCompleted: Boolean!
+    name: String!
 }
 
 type Totals {

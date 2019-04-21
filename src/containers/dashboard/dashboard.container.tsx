@@ -41,13 +41,14 @@ const StyledTitle = styled(Title)`
   font-weight: bold;
   font-size: 24px;
   margin: 20px 0;
+  color: ${p => p.theme.dashboard.header};
   text-transform: uppercase;
 `
 const Hr = styled.div`
   position: relative;
   width: 100%;
   height: 4px;
-  background: ${p => p.theme.colors.primary};
+  background: ${p => p.theme.dashboard.hr};
   margin-bottom: 30px;
 `
 const CardsWrapper = styled.div`

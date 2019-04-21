@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro'
-import { Text } from '../typography.component'
+
+import Select from '../tenant-select.component'
 
 export const Wrapper = styled.div`
 `
@@ -36,10 +37,6 @@ export const PageContent = styled.div`
 export const Flex = styled.div`
   flex: 1;
 `
-export const TenantName = styled(Text)`
-  margin-left: 10px;
-  color: ${p => p.theme.colors.primary};
-  max-width: 75px;
-  text-overflow: ellipsis;
-  overflow: hidden;
+export const TenantSelect = styled(Select)`
+  margin-top: 10px;
 `

@@ -13,7 +13,7 @@ import isNil from 'lodash/isNil'
 
 import { useSwitchTab } from '../../hooks'
 import { Text as CommonText } from '../typography.component'
-import { bytesToSize, toOrdinal, processDataPoints } from '../../utils'
+import { bytesToSize, toOrdinal, checkDataPoints } from '../../utils'
 import {
   StyledCard,
   Content,
@@ -42,6 +42,7 @@ const LegendCircle = styled.div<{ color: string }>`
 const DynamoInfo = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
+  margin-left: 25px;
   ${Text} {
     margin-bottom: 3px;
   }
@@ -112,7 +113,8 @@ const DataCard = (props: TopDynamoCardProps) => {
     return null
   }
 
-  const dataPoints = processDataPoints(dynamo ? dynamo.dataPoints : [], map(units, x => x.value))
+  const dataPoints = dynamo ? dynamo.dataPoints : []
+  const isStraightLines = checkDataPoints(dataPoints, map(units, x => x.value))
 
   return (
     <StyledCard className={className}>
@@ -160,19 +162,19 @@ const DataCard = (props: TopDynamoCardProps) => {
                     <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
                     <Line
                       type="monotone"
-                      filter={colors.lineFilter}
+                      filter={last(isStraightLines) ? '' : colors.lineFilter}
                       dataKey={last(units)!.value}
                       name={last(units)!.label}
-                      stroke={colors.svgLinesSecondary}
+                      stroke={last(isStraightLines) ? colors.linesSecondary : colors.svgLinesSecondary}
                       dot={dataPoints.length < 3}
                       strokeWidth={3}
                     />
                     <Line
                       type="monotone"
-                      filter={colors.lineFilter}
+                      filter={first(isStraightLines) ? '' : colors.lineFilter}
                       dataKey={first(units)!.value}
                       name={first(units)!.label}
-                      stroke={colors.svgLines}
+                      stroke={first(isStraightLines) ? colors.lines : colors.svgLines}
                       dot={dataPoints.length < 3}
                       strokeWidth={3}
                     />

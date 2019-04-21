@@ -14,12 +14,12 @@ export const StyledCard = styled(Card)`
 `
 export const Content = styled.div`
   display: flex;
-  width: calc(100% - 70px);
+  width: calc(100% - 40px);
   height: calc(100% - 10px);
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 0 20px 0 50px;
+  padding: 10px 20px 0 30px;
 `
 export const Header = styled(CommonHeader)`
   display: flex;
@@ -31,12 +31,12 @@ export const TabIndicator = styled(StepIndicator)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
 `
 export const Text = styled(CommonText)`
   position: relative;
   margin-bottom: 8px;
   line-height: 19px;
-
 `
 export const InfoText = styled(Text)`
   display: flex;
@@ -49,9 +49,9 @@ export const Value = styled.div`
   margin-left: 15px;
 `
 export const GraphContainer = styled.div`
-  width: 100%;
+  width: calc(100% - 30px);
   height: 130px;
-  margin-left: -32px;
+  margin-left: -10px;
   svg {
     overflow: visible;
   }
