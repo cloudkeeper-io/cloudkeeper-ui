@@ -24,6 +24,7 @@
     "apollo-link-context": "^1.0.17",
     "apollo-link-http": "^1.5.14",
     "final-form": "^4.12.0",
+    "firebase": "^5.10.0",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
     "history": "^4.9.0",
@@ -48,6 +49,7 @@
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
+    "@types/firebase": "^3.2.1",
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash": "^4.14.123",
     "@types/luxon": "^1.12.0",

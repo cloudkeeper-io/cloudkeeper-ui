@@ -1,14 +1,3 @@
-import { ApolloClient } from 'apollo-client'
+import * as firebase from 'firebase/app'
 
-export interface Session {
-  accessToken: string,
-  refreshToken: string,
-}
-
-export interface User {
-  username: string
-  loading: boolean
-  isUserLoaded: boolean
-  session?: Session | null | undefined
-  apolloClient: ApolloClient<any> | null
-}
+export interface User extends firebase.User {}

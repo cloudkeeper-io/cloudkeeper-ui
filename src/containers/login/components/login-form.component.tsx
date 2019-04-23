@@ -2,7 +2,6 @@ import React, { useState, memo } from 'react'
 
 import { Form } from 'react-final-form'
 import Field from '../../../components/form/field.components'
-import { User } from '../../../models'
 import { FormContent, ServerError, StyledForm, SubmitButton } from './login-components.styles'
 
 interface Values {
@@ -11,24 +10,26 @@ interface Values {
 }
 
 interface LoginProps {
-  user: User
   login: (email: string, password: string) => any
 }
 
-export default memo(({ user, login }: LoginProps) => {
+export default memo(({ login }: LoginProps) => {
   const [serverError, setServerError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const onLogin = async (values: Values) => {
-    if (user.loading) {
+    if (loading) {
       return
     }
 
+    setLoading(true)
     setServerError('')
 
     try {
       await login(values.email, values.password)
     } catch (error) {
       setServerError(error.message || 'Server error')
+      setLoading(false)
     }
   }
 
@@ -54,7 +55,7 @@ export default memo(({ user, login }: LoginProps) => {
             <Field name="email" placeholder="Email Address" autoComplete="email" />
             <Field name="password" placeholder="Password" autoComplete="password" type="password" />
             <ServerError>{serverError}</ServerError>
-            <SubmitButton type="submit" disabled={pristine || invalid} loading={user.loading!}>Log in</SubmitButton>
+            <SubmitButton type="submit" disabled={pristine || invalid} loading={loading}>Log in</SubmitButton>
           </FormContent>
         </StyledForm>
       )}

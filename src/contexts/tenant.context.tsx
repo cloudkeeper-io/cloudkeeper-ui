@@ -5,8 +5,8 @@ import get from 'lodash/get'
 import find from 'lodash/find'
 
 import { TENANT_KEY } from '../constants'
-import { UserContext } from './user.context'
 import { tenantsQuery } from '../graphql/queries'
+import { FirebaseContext } from './firebase.context'
 import { Tenant } from '../models'
 import { Tenants } from '../graphql/queries/types/Tenants'
 
@@ -32,8 +32,8 @@ const anyWindow = window as any
 
 const TenantProvider = withRouter<TenantProviderProps>(({ children }) => {
   const [tenantId, setTenant] = useState(localStorage.getItem(TENANT_KEY) || null)
-  const { user: { session } } = useContext(UserContext)
-  const { data, loading, error } = useQuery<Tenants>(tenantsQuery, { skip: !session })
+  const { user } = useContext(FirebaseContext)
+  const { data, loading, error } = useQuery<Tenants>(tenantsQuery, { skip: !user })
   const tenants = get(data, 'tenants', []) as Tenant []
   const currentTenant = useMemo(() => (find(tenants, { id: tenantId }) || {}) as Tenant, [tenantId, tenants])
 

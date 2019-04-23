@@ -10,7 +10,7 @@ import SignUpForm from './components/sign-up-form.component'
 import Stars from '../../components/stars.component'
 import treeline from './images/treeline.svg'
 import { ReactComponent as SVGLogo } from './images/logo.svg'
-import { UserContext } from '../../contexts'
+import { FirebaseContext } from '../../contexts'
 
 const Wrapper = styled.div`
   position: relative;
@@ -58,7 +58,7 @@ interface LoginProps {
 
 export default withRouter(({ history, history: { location: { pathname } } }: LoginProps) => {
   const [tab, setTab] = useState(0)
-  const { user, login, signUp } = useContext(UserContext)
+  const { signIn, signUp } = useContext(FirebaseContext)
 
   useEffect(() => setTab(pathname === '/sign-up' ? 1 : 0), [pathname])
 
@@ -74,7 +74,7 @@ export default withRouter(({ history, history: { location: { pathname } } }: Log
             selectedIndex={tab}
             onChange={i => (i ? history.push('/sign-up') : history.push('/'))}
           />
-          {tab ? <SignUpForm user={user} signUp={signUp} /> : <LoginForm user={user} login={login} />}
+          {tab ? <SignUpForm signUp={signUp} /> : <LoginForm login={signIn} />}
         </MainCard>
       </Content>
     </Wrapper>

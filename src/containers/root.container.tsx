@@ -5,7 +5,7 @@ import first from 'lodash/first'
 
 import NavbarLayout from '../components/layout/navbar-layout.component'
 import LoadingPage from '../components/loading-page.component'
-import { TenantContext, UserContext } from '../contexts'
+import { FirebaseContext, TenantContext } from '../contexts'
 
 const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
 const Login = lazy(() => import('./login/login.container'))
@@ -71,20 +71,20 @@ const AuthorizedRoutes = () => {
 }
 
 export default () => {
-  const { user, signOut } = useContext(UserContext)
+  const { user, isUserLoaded, signOut } = useContext(FirebaseContext)
 
-  if (!user.isUserLoaded) {
+  if (!isUserLoaded) {
     return <LoadingPage />
   }
 
   return (
     <NavbarLayout
-      background={user.session ? '' : 'transparent'}
-      user={user}
+      background={user ? '' : 'transparent'}
+      user={user!}
       signOut={signOut}
     >
       <Suspense fallback={<LoadingPage />}>
-        {user.session ? <AuthorizedRoutes /> : <AnonRoutes />}
+        {user ? <AuthorizedRoutes /> : <AnonRoutes />}
       </Suspense>
     </NavbarLayout>
   )

@@ -14,4 +14,4 @@ const config: any = {
 }
 
 
-export const getConfig = () => config[env]
+export const getEnvConfig = () => config[env]

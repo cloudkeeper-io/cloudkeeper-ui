@@ -31,8 +31,8 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
   }
 
   public componentDidUpdate(prevProps: Readonly<NavbarLayoutProps>) {
-    const { history: { location: { pathname } }, user: { session } } = this.props
-    if (prevProps.history.location.pathname !== pathname || session !== prevProps.user.session) {
+    const { history: { location: { pathname } } } = this.props
+    if (prevProps.history.location.pathname !== pathname) {
       this.setState({ hasError: false })
     }
   }
@@ -61,7 +61,7 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
   public logout = () => this.props.signOut()
 
   public render() {
-    const { children, background, user: { session } } = this.props
+    const { children, background, user } = this.props
     const { hasError, isFullscreen } = this.state
     const { pathname } = window.location
 
@@ -69,11 +69,11 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
       <Wrapper>
         <HeaderWrapper background={background}>
           <Header>
-            {session && <HeaderLink active={pathname === '/'} icon="home" to="/" />}
-            {session && (
+            {user && <HeaderLink active={pathname === '/'} icon="home" to="/" />}
+            {user && (
               <HeaderLink active={pathname.includes('/settings')} icon="cogs" to="/settings" />
             )}
-            {session && <TenantSelect />}
+            {user && <TenantSelect />}
             <TimerConsumer>
               {({ count, delay, isActive, isVisible, setActiveAndSave }) => isVisible && (
                 <>
@@ -88,7 +88,7 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
               )}
             </TimerConsumer>
             <Flex />
-            {session && endsWith(pathname, '/dashboard') && (
+            {user && endsWith(pathname, '/dashboard') && (
               <HeaderLink
                 icon={isFullscreen ? 'compress' : 'expand'}
                 onClick={() => (screenfull ? screenfull.toggle() : noop)}
@@ -99,7 +99,7 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
                 <HeaderLink icon="lightbulb" iconSize="1x" onClick={toggleTheme} />
               )}
             </ThemeConsumer>
-            {session && <HeaderLink icon="sign-out-alt" onClick={this.logout} />}
+            {user && <HeaderLink icon="sign-out-alt" onClick={this.logout} />}
           </Header>
         </HeaderWrapper>
         <PageWrapper>

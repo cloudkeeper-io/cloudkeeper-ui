@@ -4,7 +4,6 @@ import { Form } from 'react-final-form'
 
 import CheckboxField from '../../../components/form/checkbox-field.component'
 import Field from '../../../components/form/field.components'
-import { User } from '../../../models'
 import { FormContent, ServerError, StyledForm, SubmitButton } from './login-components.styles'
 
 interface Values {
@@ -15,24 +14,26 @@ interface Values {
 }
 
 interface RegisterProps {
-  user: User
   signUp: (email: string, password: string, subscribedToEmails: boolean) => any
 }
 
-export default memo(({ user, signUp }: RegisterProps) => {
+export default memo(({ signUp }: RegisterProps) => {
   const [serverError, setServerError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const onSignUp = async (values: Values) => {
-    if (user.loading) {
+    if (loading) {
       return
     }
 
+    setLoading(true)
     setServerError('')
 
     try {
       await signUp(values.email, values.password, values.subscribedToEmails)
     } catch (error) {
       setServerError(error.message || 'Server error')
+      setLoading(false)
     }
   }
 
@@ -69,7 +70,7 @@ export default memo(({ user, signUp }: RegisterProps) => {
               label="Subscribe to get occasional emails about cloudkeeper updates"
             />
             <ServerError>{serverError}</ServerError>
-            <SubmitButton type="submit" disabled={pristine || invalid} loading={user.loading!}>Sign Up</SubmitButton>
+            <SubmitButton type="submit" disabled={pristine || invalid} loading={loading}>Sign Up</SubmitButton>
           </FormContent>
         </StyledForm>
       )}

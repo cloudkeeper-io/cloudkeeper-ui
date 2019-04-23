@@ -4,7 +4,7 @@ import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import ApolloClient from 'apollo-client'
 
-import { getConfig } from './utils'
+import { getEnvConfig } from './env.config'
 
 const PERSIST_LAST_PURGE_KEY = 'PERSIST_LAST_PURGE_KEY'
 const PERSIST_TTL = 1000 * 60 * 20 // 20 minutes
@@ -30,7 +30,7 @@ export const getApolloClient = (getIdToken: () => Promise<string>) => {
       .catch(err => console.log(`Cache restore error: ${err}`))
   }
 
-  const httpLink = createHttpLink({ uri: getConfig().apolloUri })
+  const httpLink = createHttpLink({ uri: getEnvConfig().apolloUri })
 
   const middlewareLink = setContext(async () => {
     const jwtToken = await getIdToken()
