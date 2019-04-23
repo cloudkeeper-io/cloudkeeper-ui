@@ -1,6 +1,7 @@
-import React, { useState, memo, useEffect, useMemo } from 'react'
+import React, { useState, memo, useEffect, useMemo, useCallback } from 'react'
 import * as firebase from 'firebase/app'
 import { ApolloProvider } from 'react-apollo'
+import ApolloClient from 'apollo-client'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import 'firebase/auth'
 import 'firebase/database'
@@ -24,7 +25,16 @@ const signUp = async (email: string, password: string, subscribedToEmails: boole
 const signIn = async (email: string, password: string) => firebase.auth().signInWithEmailAndPassword(email, password)
 
 // signOut
-const signOut = () => firebase.auth().signOut()
+const signOutAndResetApollo = async (client: ApolloClient<any>) => {
+  try {
+    if (client) {
+      await client.resetStore()
+    }
+  } finally {
+    localStorage.removeItem('apollo-cache-persist')
+    await firebase.auth().signOut()
+  }
+}
 
 // Google SingIn
 const googleSignIn = () => firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
@@ -48,7 +58,7 @@ interface FirebaseState {
 
 export const FirebaseContext = React.createContext({} as FirebaseState)
 
-export const FirebaseProvider = memo(({ children }: FirebaseProviderProps) => {
+export const FirebaseProvider = memo(({ children } : FirebaseProviderProps) => {
   const [user, setUser] = useState<firebase.User>()
   const [isUserLoaded, setUserLoaded] = useState(false)
 
@@ -58,6 +68,7 @@ export const FirebaseProvider = memo(({ children }: FirebaseProviderProps) => {
   }), [])
 
   const client = useMemo(() => getApolloClient(async () => (user ? user!.getIdToken() : '')), [user])
+  const signOut = useCallback(() => signOutAndResetApollo(client), [client])
 
   return (
     <FirebaseContext.Provider value={{ user, isUserLoaded, signIn, signUp, signOut, googleSignIn, githubSignIn }}>

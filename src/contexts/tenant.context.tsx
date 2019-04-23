@@ -1,8 +1,9 @@
-import React, { Dispatch, SetStateAction, useContext, useMemo, useState } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useMemo, useEffect, useState, useCallback } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { useQuery } from 'react-apollo-hooks'
 import get from 'lodash/get'
 import find from 'lodash/find'
+import includes from 'lodash/includes'
 
 import { TENANT_KEY } from '../constants'
 import { tenantsQuery } from '../graphql/queries'
@@ -20,7 +21,7 @@ interface TenantState {
   tenants: Tenant []
   loading: boolean
   error: any
-  currentTenant: Tenant
+  currentTenant?: Tenant
 
   setTenant: Dispatch<SetStateAction<string | null>>
   setAndSaveTenant: (tenantId: string) => void
@@ -28,27 +29,27 @@ interface TenantState {
 
 const TenantContext = React.createContext({} as TenantState)
 
-const anyWindow = window as any
-
-const TenantProvider = withRouter<TenantProviderProps>(({ children }) => {
+const TenantProvider = withRouter<TenantProviderProps>(({ children, location: { pathname } }) => {
   const [tenantId, setTenant] = useState(localStorage.getItem(TENANT_KEY) || null)
   const { user } = useContext(FirebaseContext)
   const { data, loading, error } = useQuery<Tenants>(tenantsQuery, { skip: !user })
   const tenants = get(data, 'tenants', []) as Tenant []
-  const currentTenant = useMemo(() => (find(tenants, { id: tenantId }) || {}) as Tenant, [tenantId, tenants])
+  const currentTenant = useMemo(() => find(tenants, { id: tenantId }) as Tenant, [tenantId, tenants])
 
-  const setAndSaveTenant = (newTenantId: string) => {
+  const setAndSaveTenant = useCallback((newTenantId: string) => {
     localStorage.setItem(TENANT_KEY, newTenantId)
     setTenant(newTenantId)
-  }
+  }, [setTenant])
 
-  if (/^\/tenants\/[A-z0-9-]+\//.test(anyWindow.location.pathname)) {
-    const tenantIdPathParam = anyWindow.location.pathname.split('/')[2]
+  useEffect(() => {
+    if (/^\/tenants\/[A-z0-9-]+\//.test(pathname)) {
+      const tenantIdPathParam = pathname.split('/')[2]
 
-    if (tenantIdPathParam !== tenantId) {
-      setAndSaveTenant(tenantIdPathParam)
+      if (tenantIdPathParam !== tenantId && includes(tenants, { id: tenantIdPathParam })) {
+        setAndSaveTenant(tenantIdPathParam)
+      }
     }
-  }
+  }, [pathname])
 
   return (
     <TenantContext.Provider value={{ currentTenant, loading, error, tenants, tenantId, setTenant, setAndSaveTenant }}>

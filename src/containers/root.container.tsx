@@ -20,9 +20,7 @@ const AnonRoutes = () => (
     <Route exact path="/sign-up">
       {props => <Login {...props} />}
     </Route>
-    <Route>
-      <Error />
-    </Route>
+    <Redirect to="/" />
   </Switch>
 )
 
@@ -65,7 +63,9 @@ const AuthorizedRoutes = () => {
       {currentTenant && (
         <Redirect from="/" to={`/tenants/${currentTenant.id}/dashboard`} />
       )}
-      <Redirect from="*" to="/" />
+      <Route>
+        <Error />
+      </Route>
     </Switch>
   )
 }
