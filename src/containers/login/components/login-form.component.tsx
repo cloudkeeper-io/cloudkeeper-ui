@@ -1,19 +1,22 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useContext } from 'react'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import { Form } from 'react-final-form'
 import Field from '../../../components/form/field.components'
-import { FormContent, ServerError, StyledForm, SubmitButton } from './login-components.styles'
+import Button from '../../../components/button/button.component'
+import ServerError from '../../../components/form/error-message.components'
+import { FormContent, StyledForm } from './login-components.styles'
+import { UserContext } from '../../../contexts'
 
 interface Values {
   email: string
   password: string
 }
 
-interface LoginProps {
-  login: (email: string, password: string) => any
-}
+interface LoginProps extends RouteComponentProps {}
 
-export default memo(({ login }: LoginProps) => {
+export default memo(withRouter(({ history }: LoginProps) => {
+  const { signIn } = useContext(UserContext)
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -26,7 +29,8 @@ export default memo(({ login }: LoginProps) => {
     setServerError('')
 
     try {
-      await login(values.email, values.password)
+      await signIn(values.email, values.password)
+      history.push('/')
     } catch (error) {
       setServerError(error.message || 'Server error')
       setLoading(false)
@@ -55,10 +59,10 @@ export default memo(({ login }: LoginProps) => {
             <Field name="email" placeholder="Email Address" autoComplete="email" />
             <Field name="password" placeholder="Password" autoComplete="password" type="password" />
             <ServerError>{serverError}</ServerError>
-            <SubmitButton type="submit" disabled={pristine || invalid} loading={loading}>Log in</SubmitButton>
+            <Button type="submit" disabled={pristine || invalid} loading={loading}>Log in</Button>
           </FormContent>
         </StyledForm>
       )}
     </Form>
   )
-})
+}))

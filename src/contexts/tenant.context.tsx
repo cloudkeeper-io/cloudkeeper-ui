@@ -7,7 +7,7 @@ import includes from 'lodash/includes'
 
 import { TENANT_KEY } from '../constants'
 import { tenantsQuery } from '../graphql/queries'
-import { FirebaseContext } from './firebase.context'
+import { UserContext } from './user.context'
 import { Tenant } from '../models'
 import { Tenants } from '../graphql/queries/types/Tenants'
 
@@ -31,7 +31,7 @@ const TenantContext = React.createContext({} as TenantState)
 
 const TenantProvider = withRouter<TenantProviderProps>(({ children, location: { pathname } }) => {
   const [tenantId, setTenant] = useState(localStorage.getItem(TENANT_KEY) || null)
-  const { user } = useContext(FirebaseContext)
+  const { user } = useContext(UserContext)
   const { data, loading, error } = useQuery<Tenants>(tenantsQuery, { skip: !user })
   const tenants = get(data, 'tenants', []) as Tenant []
   const currentTenant = useMemo(() => find(tenants, { id: tenantId }) as Tenant, [tenantId, tenants])
@@ -49,7 +49,7 @@ const TenantProvider = withRouter<TenantProviderProps>(({ children, location: { 
         setAndSaveTenant(tenantIdPathParam)
       }
     }
-  }, [pathname])
+  }, [pathname, setAndSaveTenant, tenantId, tenants])
 
   return (
     <TenantContext.Provider value={{ currentTenant, loading, error, tenants, tenantId, setTenant, setAndSaveTenant }}>

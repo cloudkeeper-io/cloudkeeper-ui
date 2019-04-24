@@ -5,14 +5,14 @@ import { Mutation, MutationFn } from 'react-apollo'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import get from 'lodash/get'
 
-import Error from '../../../components/form/error-message.components'
-import { tenantsQuery, createTenantMutation } from '../../../graphql'
-import { CreateTenant, CreateTenantVariables } from '../../../graphql/mutations/types/CreateTenant'
-import { trackEvent } from '../../../utils/amplitude'
-import { SmallField } from '../../../components/form/field.components'
-import Modal from '../../../components/modal.component'
-import Button from '../../../components/button/button.component'
-import { Title } from '../../../components/typography.component'
+import Error from '../../../../components/form/error-message.components'
+import { tenantsQuery, createTenantMutation } from '../../../../graphql'
+import { CreateTenant, CreateTenantVariables } from '../../../../graphql/mutations/types/CreateTenant'
+import { trackEvent } from '../../../../utils/amplitude'
+import { SmallField } from '../../../../components/form/field.components'
+import Modal from '../../../../components/modal.component'
+import Button from '../../../../components/button/button.component'
+import { Title } from '../../../../components/typography.component'
 
 class CreateTenantMutation extends Mutation<CreateTenant, CreateTenantVariables> {}
 
