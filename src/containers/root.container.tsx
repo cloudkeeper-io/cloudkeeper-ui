@@ -5,7 +5,7 @@ import first from 'lodash/first'
 
 import NavbarLayout from '../components/layout/navbar-layout.component'
 import LoadingPage from '../components/loading-page.component'
-import { FirebaseContext, TenantContext } from '../contexts'
+import { UserContext, TenantContext } from '../contexts'
 
 const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
 const Login = lazy(() => import('./login/login.container'))
@@ -20,7 +20,7 @@ const AnonRoutes = () => (
     <Route exact path="/sign-up">
       {props => <Login {...props} />}
     </Route>
-    <Redirect to="/" />
+    <Error title="404" text="Page not found" />
   </Switch>
 )
 
@@ -63,15 +63,13 @@ const AuthorizedRoutes = () => {
       {currentTenant && (
         <Redirect from="/" to={`/tenants/${currentTenant.id}/dashboard`} />
       )}
-      <Route>
-        <Error />
-      </Route>
+      <Error title="404" text="Page not found" />
     </Switch>
   )
 }
 
 export default () => {
-  const { user, isUserLoaded, signOut } = useContext(FirebaseContext)
+  const { user, isUserLoaded, signOut } = useContext(UserContext)
 
   if (!isUserLoaded) {
     return <LoadingPage />

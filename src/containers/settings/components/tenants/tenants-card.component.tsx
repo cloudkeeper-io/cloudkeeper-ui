@@ -5,17 +5,17 @@ import { RouteComponentProps, withRouter, Link } from 'react-router-dom'
 import { Mutation } from 'react-apollo'
 import map from 'lodash/map'
 
-import Button from '../../../components/button/button.component'
+import Button from '../../../../components/button/button.component'
 import RemoveModal from './remove-tenant-modal.component'
 import CreateTenantModal from './create-tenant-modal.component'
-import CommonCard from '../../../components/card.component'
-import Loading from '../../../components/loading.component'
-import { Tenant } from '../../../models'
-import Icon from '../../../components/icon.component'
-import { Header as CommonHeader } from '../../../components/typography.component'
-import { tenantsQuery, removeTenant } from '../../../graphql'
-import { RemoveTenant, RemoveTenantVariables } from '../../../graphql/mutations/types/RemoveTenant'
-import { TenantContext } from '../../../contexts'
+import CommonCard from '../../../../components/card.component'
+import Loading from '../../../../components/loading.component'
+import { Tenant } from '../../../../models'
+import Icon from '../../../../components/icon.component'
+import { Header as CommonHeader } from '../../../../components/typography.component'
+import { tenantsQuery, removeTenant } from '../../../../graphql'
+import { RemoveTenant, RemoveTenantVariables } from '../../../../graphql/mutations/types/RemoveTenant'
+import { TenantContext } from '../../../../contexts'
 
 const Header = styled(CommonHeader)`
   margin-bottom: 20px;
@@ -24,8 +24,7 @@ const Card = styled(CommonCard)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 400px;
-  max-width: calc(100vw - 60px);
+  width: 100%;
   overflow: hidden;
   padding: 20px;
 `

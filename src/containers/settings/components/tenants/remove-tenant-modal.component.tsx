@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import get from 'lodash/get'
 
-import Modal from '../../../components/modal.component'
-import Button from '../../../components/button/button.component'
-import { Text, Title } from '../../../components/typography.component'
-import { Tenant } from '../../../models'
+import Modal from '../../../../components/modal.component'
+import Button from '../../../../components/button/button.component'
+import { Text, Title } from '../../../../components/typography.component'
+import { Tenant } from '../../../../models'
 
 
 const CancelButton = styled(Button)`

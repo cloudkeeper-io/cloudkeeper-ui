@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro'
-import Button from '../../../components/button/button.component'
 
 export const StyledForm = styled.form`
   width: 100%;
@@ -13,11 +12,3 @@ export const FormContent = styled.div`
   padding: 25px;
   justify-content: space-around;
 `
-export const ServerError = styled.div`
-  color: #ff1744;
-  font-size: 12px;
-  text-align: center;
-  margin-bottom: 10px;
-  height: 20px;
-`
-export const SubmitButton = styled(Button)``

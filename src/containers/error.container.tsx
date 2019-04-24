@@ -23,11 +23,13 @@ const Text = styled.p`
 interface ErrorContainerProps {
   minHeight?: string
   className?: string
+  title?: string
+  text?: string
 }
 
-export default ({ minHeight, className }: ErrorContainerProps) => (
+export default ({ minHeight, title = 'Error', text, className }: ErrorContainerProps) => (
   <Wrapper minHeight={minHeight} className={className}>
-    <Title>Error</Title>
-    <Text>Something went wrong. Please refresh the page and try again</Text>
+    <Title>{title}</Title>
+    <Text>{text || 'Something went wrong. Please refresh the page and try again'}</Text>
   </Wrapper>
 )

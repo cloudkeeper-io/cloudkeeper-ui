@@ -1,10 +1,13 @@
-import React, { memo, useState } from 'react'
-
+import React, { memo, useContext, useState } from 'react'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Form } from 'react-final-form'
 
 import CheckboxField from '../../../components/form/checkbox-field.component'
 import Field from '../../../components/form/field.components'
-import { FormContent, ServerError, StyledForm, SubmitButton } from './login-components.styles'
+import Button from '../../../components/button/button.component'
+import ServerError from '../../../components/form/error-message.components'
+import { FormContent, StyledForm } from './login-components.styles'
+import { UserContext } from '../../../contexts'
 
 interface Values {
   email: string
@@ -13,11 +16,10 @@ interface Values {
   subscribedToEmails: boolean
 }
 
-interface RegisterProps {
-  signUp: (email: string, password: string, subscribedToEmails: boolean) => any
-}
+interface RegisterProps extends RouteComponentProps {}
 
-export default memo(({ signUp }: RegisterProps) => {
+export default memo(withRouter(({ history }: RegisterProps) => {
+  const { signUp } = useContext(UserContext)
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -31,6 +33,7 @@ export default memo(({ signUp }: RegisterProps) => {
 
     try {
       await signUp(values.email, values.password, values.subscribedToEmails)
+      history.push('/')
     } catch (error) {
       setServerError(error.message || 'Server error')
       setLoading(false)
@@ -70,10 +73,10 @@ export default memo(({ signUp }: RegisterProps) => {
               label="Subscribe to get occasional emails about cloudkeeper updates"
             />
             <ServerError>{serverError}</ServerError>
-            <SubmitButton type="submit" disabled={pristine || invalid} loading={loading}>Sign Up</SubmitButton>
+            <Button type="submit" disabled={pristine || invalid} loading={loading}>Sign Up</Button>
           </FormContent>
         </StyledForm>
       )}
     </Form>
   )
-})
+}))

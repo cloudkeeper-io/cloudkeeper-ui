@@ -7,7 +7,7 @@ import Head from './head'
 import RootContainer from './containers/root.container'
 import GlobalStyles from './styles/global.styles'
 import SvgDefs from './styles/svg.defs'
-import { ThemeProvider, TimerProvider, TenantProvider, FirebaseProvider } from './contexts'
+import { ThemeProvider, TimerProvider, TenantProvider, FirebaseProvider, UserSettingsProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
 import './configs/icons.config'
 
@@ -19,12 +19,14 @@ ReactDOM.render((
       <ThemeProvider>
         <TimerProvider>
           <TenantProvider>
-            <>
-              <SvgDefs />
-              <Head />
-              <GlobalStyles />
-              <RootContainer />
-            </>
+            <UserSettingsProvider>
+              <>
+                <SvgDefs />
+                <Head />
+                <GlobalStyles />
+                <RootContainer />
+              </>
+            </UserSettingsProvider>
           </TenantProvider>
         </TimerProvider>
       </ThemeProvider>
