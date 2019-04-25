@@ -11,6 +11,7 @@ const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
 const Login = lazy(() => import('./login/login.container'))
 const Error = lazy(() => import('./error.container'))
 const Settings = lazy(() => import('./settings/settings.container'))
+const Welcome = lazy(() => import('./welcome/welcome.container'))
 
 const AnonRoutes = () => (
   <Switch>
@@ -50,8 +51,8 @@ const AuthorizedRoutes = () => {
   return (
     <Switch>
       {isEmpty(tenants) && (
-        <Route path="/">
-          <Settings />
+        <Route exact path="/">
+          <Welcome />
         </Route>
       )}
       <Route exact path="/tenants/:tenantId/dashboard">
