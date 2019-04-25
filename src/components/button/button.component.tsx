@@ -43,10 +43,11 @@ export default styled.button<{ loading?: boolean, background?: string, color?: s
       top: 50%;
       left: 50%;
       margin: -12px 0 0 -12px;
-      min-width: 24px;
-      min-height: 24px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       border: 4px solid rgba(0,0,0,.15);
+      box-sizing: initial;
     }
     &:after {
       border: 4px solid;
