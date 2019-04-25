@@ -1,6 +1,6 @@
 import React, { memo, useContext, useState } from 'react'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Form } from 'react-final-form'
+import { History } from 'history'
 
 import CheckboxField from '../../../components/form/checkbox-field.component'
 import Field from '../../../components/form/field.components'
@@ -16,9 +16,11 @@ interface Values {
   subscribedToEmails: boolean
 }
 
-interface RegisterProps extends RouteComponentProps {}
+interface RegisterProps {
+  history: History
+}
 
-export default memo(withRouter(({ history }: RegisterProps) => {
+export default memo(({ history }: RegisterProps) => {
   const { signUp } = useContext(UserContext)
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -79,4 +81,4 @@ export default memo(withRouter(({ history }: RegisterProps) => {
       )}
     </Form>
   )
-}))
+})

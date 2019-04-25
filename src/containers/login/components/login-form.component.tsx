@@ -1,5 +1,7 @@
 import React, { useState, memo, useContext } from 'react'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import styled from 'styled-components/macro'
+import { Link } from 'react-router-dom'
+import { History } from 'history'
 
 import { Form } from 'react-final-form'
 import Field from '../../../components/form/field.components'
@@ -8,14 +10,23 @@ import ServerError from '../../../components/form/error-message.components'
 import { FormContent, StyledForm } from './login-components.styles'
 import { UserContext } from '../../../contexts'
 
+const ForgotPassword = styled(Link)`
+  text-decoration: underline;
+  color: ${p => p.theme.colors.primary};
+  margin-bottom: 3px;
+  margin-right: 3px;
+`
+
 interface Values {
   email: string
   password: string
 }
 
-interface LoginProps extends RouteComponentProps {}
+interface LoginProps {
+  history: History
+}
 
-export default memo(withRouter(({ history }: LoginProps) => {
+export default memo(({ history }: LoginProps) => {
   const { signIn } = useContext(UserContext)
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -59,10 +70,11 @@ export default memo(withRouter(({ history }: LoginProps) => {
             <Field name="email" placeholder="Email Address" autoComplete="email" />
             <Field name="password" placeholder="Password" autoComplete="password" type="password" />
             <ServerError>{serverError}</ServerError>
+            <ForgotPassword to="/forgot-password">Forgot password?</ForgotPassword>
             <Button type="submit" disabled={pristine || invalid} loading={loading}>Log in</Button>
           </FormContent>
         </StyledForm>
       )}
     </Form>
   )
-}))
+})

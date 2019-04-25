@@ -15,6 +15,7 @@ const ControlIndicator = styled.div`
   box-shadow: 0 0 4px ${p => p.theme.controls.shadow};
   &:after {
     content: '';
+    box-sizing: initial;
     position: absolute;
     display: none;
     left: 5px;

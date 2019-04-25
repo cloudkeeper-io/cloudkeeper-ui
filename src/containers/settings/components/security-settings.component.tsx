@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useState } from 'react'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
+import { message } from 'antd'
 import first from 'lodash/first'
 import get from 'lodash/get'
 
@@ -65,6 +66,7 @@ export default () => {
     setError('')
     try {
       await updatePassword(password, newPassword)
+      message.success('Your password has been changed')
     } catch (e) {
       setError(e.message || 'Server Error.')
     } finally {

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro'
+import 'antd/dist/antd.css'
 
 export default createGlobalStyle`
   html, body, #root {
@@ -13,6 +14,10 @@ export default createGlobalStyle`
     * {
       font-family: ${p => p.theme.font}, sans-serif;
     }
+  }
+  
+  div {
+    color: ${p => p.theme.colors.text};
   }
   
   a {

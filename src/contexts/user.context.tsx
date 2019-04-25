@@ -1,9 +1,9 @@
 import React, { useState, memo, useEffect, useMemo, useCallback } from 'react'
 import * as firebase from 'firebase/app'
 import { ApolloProvider } from 'react-apollo'
+import { History } from 'history'
 import ApolloClient from 'apollo-client'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 import noop from 'lodash/noop'
 import 'firebase/auth'
 import 'firebase/firestore'
@@ -25,7 +25,7 @@ const signUp = async (email: string, password: string, subscribedToEmails: boole
 }
 
 // email SingIn
-const signIn = async (email: string, password: string) => firebase.auth().signInWithEmailAndPassword(email, password)
+const signIn = (email: string, password: string) => firebase.auth().signInWithEmailAndPassword(email, password)
 
 // signOut
 const signOutAndResetApollo = async (client: ApolloClient<any>) => {
@@ -39,6 +39,9 @@ const signOutAndResetApollo = async (client: ApolloClient<any>) => {
   }
 }
 
+// Reset Password
+const resetPassword = (email: string) => firebase.auth().sendPasswordResetEmail(email)
+
 // Google SingIn
 const googleSignIn = () => {
   const provider = new firebase.auth.GoogleAuthProvider()
@@ -49,8 +52,9 @@ const googleSignIn = () => {
 // Github SingIn
 const githubSignIn = () => firebase.auth().signInWithPopup(new firebase.auth.GithubAuthProvider())
 
-interface UserProviderProps extends RouteComponentProps {
+interface UserProviderProps {
   children: JSX.Element
+  history: History
 }
 
 interface UserState {
@@ -61,12 +65,13 @@ interface UserState {
   googleSignIn: () => Promise<firebase.auth.UserCredential>
   githubSignIn: () => Promise<firebase.auth.UserCredential>
   updatePassword: (password: string, newPassword: string) => Promise<any>
+  resetPassword: (email: string) => Promise<any>
   signOut: () => Promise<void>
 }
 
 export const UserContext = React.createContext({} as UserState)
 
-export const FirebaseProvider = memo(withRouter(({ children, history }: UserProviderProps) => {
+export const UserProvider = memo(({ children, history }: UserProviderProps) => {
   const [user, setUser] = useState<firebase.User>()
   const [isUserLoaded, setUserLoaded] = useState(false)
 
@@ -96,7 +101,7 @@ export const FirebaseProvider = memo(withRouter(({ children, history }: UserProv
 
   return (
     <UserContext.Provider
-      value={{ user, isUserLoaded, signIn, signUp, signOut, googleSignIn, githubSignIn, updatePassword }}
+      value={{ user, isUserLoaded, signIn, signUp, signOut, googleSignIn, githubSignIn, updatePassword, resetPassword }}
     >
       <ApolloProvider client={client}>
         <ApolloHooksProvider client={client}>
@@ -105,4 +110,4 @@ export const FirebaseProvider = memo(withRouter(({ children, history }: UserProv
       </ApolloProvider>
     </UserContext.Provider>
   )
-}))
+})

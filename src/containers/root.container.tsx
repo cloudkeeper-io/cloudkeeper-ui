@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useContext, useEffect } from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import first from 'lodash/first'
 
@@ -7,19 +7,25 @@ import NavbarLayout from '../components/layout/navbar-layout.component'
 import LoadingPage from '../components/loading-page.component'
 import { UserContext, TenantContext } from '../contexts'
 
-const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
 const Login = lazy(() => import('./login/login.container'))
-const Error = lazy(() => import('./error.container'))
+const ForgotPassword = lazy(() => import('./forgot-password.container'))
+
+const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
 const Settings = lazy(() => import('./settings/settings.container'))
-const Welcome = lazy(() => import('./welcome/welcome.container'))
+const Welcome = lazy(() => import('./welcome.container'))
+
+const Error = lazy(() => import('./error.container'))
 
 const AnonRoutes = () => (
   <Switch>
     <Route exact path="/">
-      {props => <Login {...props} />}
+      <Login />
     </Route>
     <Route exact path="/sign-up">
-      {props => <Login {...props} />}
+      <Login />
+    </Route>
+    <Route exact path="/forgot-password">
+      <ForgotPassword />
     </Route>
     <Error title="404" text="Page not found" />
   </Switch>
@@ -69,7 +75,7 @@ const AuthorizedRoutes = () => {
   )
 }
 
-export default () => {
+export default withRouter(() => {
   const { user, isUserLoaded, signOut } = useContext(UserContext)
 
   if (!isUserLoaded) {
@@ -87,4 +93,4 @@ export default () => {
       </Suspense>
     </NavbarLayout>
   )
-}
+})

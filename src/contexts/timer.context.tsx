@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useCallback, useState } from 'react'
+import React, { Dispatch, SetStateAction, useCallback, useState, memo } from 'react'
 import noop from 'lodash/noop'
 
 import { useInterval } from '../hooks'
@@ -36,7 +36,7 @@ const TimerContext = React.createContext(initialState)
 
 const DELAY = 10000
 
-const TimerProvider = ({ children }: TimerProviderProps) => {
+const TimerProvider = memo(({ children }: TimerProviderProps) => {
   const [count, setCount] = useState(1)
   const [delay, setDelay] = useState(DELAY)
   const [isActive, setActive] = useState(false)
@@ -58,7 +58,7 @@ const TimerProvider = ({ children }: TimerProviderProps) => {
       {children}
     </TimerContext.Provider>
   )
-}
+})
 
 const TimerConsumer = TimerContext.Consumer
 

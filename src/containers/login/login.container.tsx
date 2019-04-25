@@ -101,7 +101,7 @@ export default withRouter(({ history, history: { location: { pathname } } }: Log
             selectedIndex={tab}
             onChange={i => (i ? history.push('/sign-up') : history.push('/'))}
           />
-          {tab ? <SignUpForm /> : <LoginForm />}
+          {tab ? <SignUpForm history={history} /> : <LoginForm history={history} />}
         </MainCard>
       </Content>
     </Wrapper>

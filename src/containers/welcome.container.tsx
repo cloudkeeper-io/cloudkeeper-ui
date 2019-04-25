@@ -2,17 +2,16 @@ import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import Card from '../../components/card.component'
-import { AccentText, Title, Text } from '../../components/typography.component'
-import CreateTenantModal from '../settings/components/tenants/create-tenant-modal.component'
-import Button from '../../components/button/button.component'
+import Card from '../components/card.component'
+import { AccentText, Title, Text } from '../components/typography.component'
+import CreateTenantModal from './settings/components/tenants/create-tenant-modal.component'
+import Button from '../components/button/button.component'
 
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: calc(100% - 40px);
   min-height: calc(100vh - 100px);
   padding: 0 20px;
   align-items: center;
@@ -24,6 +23,7 @@ const Wrapper = styled.div`
 const Content = styled(Card)`
   padding: 20px;
   width: 750px;
+  max-width: calc(100vw - 40px);
 `
 
 const Section = styled.div`
@@ -35,7 +35,7 @@ const AddButton = styled(Button)`
 `
 
 interface WelcomeContainerProps extends RouteComponentProps {
-    className?: string
+  className?: string
 }
 
 const Welcome = ({ className }: WelcomeContainerProps) => {
@@ -47,7 +47,7 @@ const Welcome = ({ className }: WelcomeContainerProps) => {
         <Title>Welcome to Cloudkeeper!</Title>
         <Section>
           <Text>
-              You don&apos;t have any projects yet. To start using the cloudkeeper create your first project.
+            You don&apos;t have any projects yet. To start using the cloudkeeper create your first project.
           </Text>
           <br />
           <Text>After that we&apos;ll guide you through a simple setup process which will take around

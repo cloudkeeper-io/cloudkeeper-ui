@@ -13,6 +13,7 @@ const ControlIndicator = styled.div`
   transition: all 0.3s;
   box-shadow: 0 0 4px ${p => p.theme.controls.shadow};
   &:after {
+    box-sizing: initial;
     content: '';
     position: absolute;
     display: none;

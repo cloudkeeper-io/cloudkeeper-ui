@@ -7,7 +7,7 @@ import Head from './head'
 import RootContainer from './containers/root.container'
 import GlobalStyles from './styles/global.styles'
 import SvgDefs from './styles/svg.defs'
-import { ThemeProvider, TimerProvider, TenantProvider, FirebaseProvider, UserSettingsProvider } from './contexts'
+import { ThemeProvider, TimerProvider, TenantProvider, UserProvider, UserSettingsProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
 import './configs/icons.config'
 
@@ -15,7 +15,7 @@ const history = createBrowserHistory()
 
 ReactDOM.render((
   <Router history={history}>
-    <FirebaseProvider>
+    <UserProvider history={history}>
       <ThemeProvider>
         <TimerProvider>
           <TenantProvider>
@@ -30,7 +30,7 @@ ReactDOM.render((
           </TenantProvider>
         </TimerProvider>
       </ThemeProvider>
-    </FirebaseProvider>
+    </UserProvider>
   </Router>
 ), document.getElementById('root'))
 

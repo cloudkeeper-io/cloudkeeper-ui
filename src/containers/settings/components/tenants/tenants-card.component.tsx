@@ -44,6 +44,7 @@ const Row = styled.div`
 `
 const TenantLink = styled(Link)`
   text-decoration: underline;
+  color: ${p => p.theme.colors.text};
 `
 const RemoveIcon = styled(Icon)`
   cursor: pointer;
