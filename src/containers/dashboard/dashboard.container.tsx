@@ -72,7 +72,7 @@ interface DashboardProps {
 export default ({ tenants }: DashboardProps) => {
   const [isDataLoaded, setDataLoaded] = useState(false)
   const { tenantId } = useContext(TenantContext)
-  const tenant = find(tenants, { id: tenantId }) as Tenant
+  const tenant = find<Tenant []>(tenants, { id: tenantId! }) as Tenant
 
   const { count, setActive, setVisibility } = useContext(TimerContext)
   const { data, loading, error, refetch } = useQuery(dashboardQuery, {

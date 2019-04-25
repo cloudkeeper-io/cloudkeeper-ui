@@ -40,7 +40,11 @@ const signOutAndResetApollo = async (client: ApolloClient<any>) => {
 }
 
 // Google SingIn
-const googleSignIn = () => firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
+const googleSignIn = () => {
+  const provider = new firebase.auth.GoogleAuthProvider()
+  provider.addScope('https://www.googleapis.com/auth/userinfo.email')
+  return firebase.auth().signInWithPopup(provider)
+}
 
 // Github SingIn
 const githubSignIn = () => firebase.auth().signInWithPopup(new firebase.auth.GithubAuthProvider())

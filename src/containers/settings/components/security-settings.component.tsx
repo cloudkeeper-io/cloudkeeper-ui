@@ -1,6 +1,8 @@
 import React, { useCallback, useContext, useState } from 'react'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
+import first from 'lodash/first'
+import get from 'lodash/get'
 
 import ServerError from '../../../components/form/error-message.components'
 import { SmallField } from '../../../components/form/field.components'
@@ -70,7 +72,9 @@ export default () => {
     }
   }, [updatePassword])
 
-  if (user!.providerId === 'firebase') {
+  const providerId = get(first(user!.providerData), 'providerId')
+
+  if (providerId === 'password') {
     return (
       <Wrapper>
         <Header>Security Settings</Header>

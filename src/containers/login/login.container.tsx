@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components/macro'
 import { History } from 'history'
 import { withRouter } from 'react-router-dom'
 
 import Card from '../../components/card.component'
 import Tabs from '../../components/tabs.component'
+import Button from '../../components/button/button.component'
+import Icon from '../../components/icon.component'
 import LoginForm from './components/login-form.component'
 import SignUpForm from './components/sign-up-form.component'
 import Stars from '../../components/stars.component'
 import treeline from './images/treeline.svg'
 import { ReactComponent as SVGLogo } from './images/logo.svg'
+import { UserContext } from '../../contexts'
 
 const Wrapper = styled.div`
   position: relative;
@@ -37,7 +40,7 @@ const MainCard = styled(Card)`
 `
 const Logo = styled(SVGLogo)`
   fill: ${p => p.theme.colors.icon};
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   z-index: 2;
 `
 const Trees = styled.div`
@@ -50,6 +53,23 @@ const Trees = styled.div`
   opacity: ${p => p.theme.login.treesOpacity};
   pointer-events: none;
 `
+const SocialWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 450px;
+  max-width: 90vw;
+  margin-bottom: 15px;
+`
+const SocialButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-right: 15px;
+`
+const SocialIcon = styled(Icon)`
+  margin: 0 5px;
+`
 
 interface LoginProps {
   history: History
@@ -57,6 +77,7 @@ interface LoginProps {
 
 export default withRouter(({ history, history: { location: { pathname } } }: LoginProps) => {
   const [tab, setTab] = useState(0)
+  const { googleSignIn, githubSignIn } = useContext(UserContext)
 
   useEffect(() => setTab(pathname === '/sign-up' ? 1 : 0), [pathname])
 
@@ -66,6 +87,14 @@ export default withRouter(({ history, history: { location: { pathname } } }: Log
       <Trees />
       <Content>
         <Logo />
+        <SocialWrapper>
+          <SocialButton onClick={googleSignIn}>
+            <SocialIcon icon={['fab', 'google']} />SignIn with Google
+          </SocialButton>
+          <SocialButton onClick={githubSignIn}>
+            <SocialIcon icon={['fab', 'github']} />SignIn with Github
+          </SocialButton>
+        </SocialWrapper>
         <MainCard>
           <Tabs
             tabs={['Sign In', 'Sign Up']}

@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react'
 import styled from 'styled-components/macro'
 import isEmpty from 'lodash/isEmpty'
 
-import { UserSettingsContext } from '../../../contexts'
+import { UserSettingsContext, Settings } from '../../../contexts'
 import Switch from '../../../components/controls/switch.component'
 import Loading from '../../../components/loading.component'
 import Card from '../../../components/card.component'
@@ -28,7 +28,7 @@ const SwitchWrapper = styled.div`
 
 export default () => {
   const { settings, updateSettings } = useContext(UserSettingsContext)
-  const { isSubscribedToEmails } = settings
+  const { isSubscribedToEmails } = settings || {} as Settings
 
   const updateEmailSubscription = useCallback(() => (
     updateSettings({ isSubscribedToEmails: !isSubscribedToEmails })

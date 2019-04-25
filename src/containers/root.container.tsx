@@ -50,7 +50,7 @@ const AuthorizedRoutes = () => {
   return (
     <Switch>
       {isEmpty(tenants) && (
-        <Route exact path="/">
+        <Route path="/">
           <Settings />
         </Route>
       )}

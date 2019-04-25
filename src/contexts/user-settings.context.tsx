@@ -9,7 +9,7 @@ interface UserSettingsProviderProps {
   children: JSX.Element
 }
 
-interface Settings {
+export interface Settings {
   isSubscribedToEmails: boolean
 }
 
