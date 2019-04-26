@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createBrowserHistory } from 'history'
 import { Router } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 import Head from './head'
 import RootContainer from './containers/root.container'
@@ -31,6 +32,7 @@ ReactDOM.render((
         </TimerProvider>
       </ThemeProvider>
     </UserProvider>
+    <ToastContainer />
   </Router>
 ), document.getElementById('root'))
 

@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState } from 'react'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
-import { message } from 'antd'
+import { toast } from 'react-toastify'
 import first from 'lodash/first'
 import get from 'lodash/get'
 
@@ -66,7 +66,7 @@ export default () => {
     setError('')
     try {
       await updatePassword(password, newPassword)
-      message.success('Your password has been changed')
+      toast('Your password has been changed')
     } catch (e) {
       setError(e.message || 'Server Error.')
     } finally {
@@ -102,6 +102,11 @@ export default () => {
             </form>
           )}
         </Form>
+        <Button
+          onClick={() => toast('We send to you instruction for password reset. Check your email.')}
+        >
+          AAAAAAA
+        </Button>
       </Wrapper>
     )
   }

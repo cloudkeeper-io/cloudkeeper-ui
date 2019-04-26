@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro'
-import 'antd/dist/antd.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default createGlobalStyle`
   html, body, #root {
@@ -14,9 +14,6 @@ export default createGlobalStyle`
     * {
       font-family: ${p => p.theme.font}, sans-serif;
     }
-    *, *::before, *::after {
-      box-sizing: initial;
-    }
   }
   
   div {
@@ -26,6 +23,22 @@ export default createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
+  }
+  
+  // toast
+  .Toastify__toast--default {
+    background: ${p => p.theme.colors.background} no-repeat 100%  100% !important;
+    color: ${p => p.theme.colors.text} !important;
+    text-align: center;
+    box-shadow: 0 0 4px ${p => p.theme.colors.shadow} !important;
+  }
+  
+  .Toastify__close-button {
+    color: ${p => p.theme.colors.primary} !important;
+  }
+  
+  .Toastify__progress-bar  {
+    background: ${p => p.theme.colors.primary} no-repeat 100%  100% !important;
   }
   
     // modal

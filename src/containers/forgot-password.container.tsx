@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState } from 'react'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
-import { message } from 'antd'
+import { toast } from 'react-toastify'
 
 import Card from '../components/card.component'
 import Field from '../components/form/field.components'
@@ -50,7 +50,7 @@ export default () => {
     setError('')
     try {
       await resetPassword(email)
-      message.success('We send to you instruction for password reset. Check your email.')
+      toast('We sent to you instruction for password reset. Check your email.')
     } catch (e) {
       setError(e.message || 'Server Error.')
     } finally {
