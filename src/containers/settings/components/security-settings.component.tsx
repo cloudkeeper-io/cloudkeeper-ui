@@ -102,11 +102,6 @@ export default () => {
             </form>
           )}
         </Form>
-        <Button
-          onClick={() => toast('We send to you instruction for password reset. Check your email.')}
-        >
-          AAAAAAA
-        </Button>
       </Wrapper>
     )
   }
