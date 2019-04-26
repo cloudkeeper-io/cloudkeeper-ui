@@ -14,6 +14,9 @@ export default createGlobalStyle`
     * {
       font-family: ${p => p.theme.font}, sans-serif;
     }
+    *, *::before, *::after {
+      box-sizing: initial;
+    }
   }
   
   div {
