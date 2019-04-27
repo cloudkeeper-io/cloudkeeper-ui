@@ -85,8 +85,7 @@ jobs:
             - v1-yarn-{{ .Branch }}-
             - v1-yarn-
 
-      - run: yarn build
-      - run: yarn build-storybook
+      - run: (echo yarn build; echo yarn build-storybook) | parallel
       - run: aws s3 sync build/. s3://dev.cloudkeeper.io/ --delete
 
   prod-build-deploy:
@@ -104,9 +103,7 @@ jobs:
             - v1-yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
             - v1-yarn-{{ .Branch }}-
             - v1-yarn-
-
-      - run: REACT_APP_ENV="prod" yarn build
-      - run: yarn build-storybook
+      - run: REACT_APP_ENV="prod" (echo yarn build; echo yarn build-storybook) | parallel
       - run:
           name: Deploy
           command: |
