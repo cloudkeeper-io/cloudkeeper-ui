@@ -181,12 +181,7 @@ const DataCard = (props: TopDynamoCardProps) => {
                     <StyledTooltip
                       wrapperStyle={{ opacity: 0.9 }}
                       contentStyle={{ background: tab ? colors.tooltipBackground : colors.secondaryTooltipBackground }}
-                      labelStyle={{
-                        fontSize: 12,
-                        lineHeight: '12px',
-                        marginBottom: 10,
-                        color: colors.lines,
-                      }}
+                      labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
                       itemStyle={{ fontSize: 12, lineHeight: '12px' }}
                       formatter={tooltipFormatter}
                       labelFormatter={(value: string) => DateTime.fromISO(value).toFormat('d LLL HH:mm')}
