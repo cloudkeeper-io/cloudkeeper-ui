@@ -54,10 +54,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
-    "@storybook/addon-actions": "^5.0.10",
-    "@storybook/addon-links": "^5.0.10",
+    "@storybook/addon-info": "^5.0.10",
+    "@storybook/addon-knobs": "^5.0.10",
+    "@storybook/addon-viewport": "^5.0.10",
     "@storybook/addons": "^5.0.10",
     "@storybook/react": "^5.0.10",
+    "@storybook/theming": "^5.0.10",
     "@types/firebase": "^3.2.1",
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash": "^4.14.123",
@@ -73,6 +75,7 @@
     "@types/recharts": "^1.1.16",
     "@types/screenfull": "^4.1.0",
     "@types/storybook__addon-actions": "^3.4.2",
+    "@types/storybook__addon-knobs": "^5.0.0",
     "@types/storybook__addon-links": "^3.3.4",
     "@types/storybook__react": "^4.0.1",
     "@types/styled-components": "^4.1.14",
@@ -88,6 +91,7 @@
     "jest-junit": "^6.3.0",
     "react-scripts": "^3.0.0",
     "source-map-explorer": "^1.8.0",
+    "storybook-addon-figma": "^0.1.0",
     "typescript": "3.3.4000"
   },
   "browserslist": [
