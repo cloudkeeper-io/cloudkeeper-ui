@@ -27,6 +27,7 @@ const TabButton = styled(Header)<{ active?: boolean }>`
   margin: 10px;
   cursor: pointer;
   transition: opacity, font-size 0.6s;
+  user-select: none;
 `
 export const TabContent = styled.div`
   position: relative;
