@@ -36,15 +36,7 @@ const Wrapper = styled.div`
   overflow-x: hidden;
 `
 const StyledTitle = styled(Title)`
-  position: relative;
-  display: flex;
-  align-items: center;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
   margin: 20px 0;
-  color: ${p => p.theme.dashboard.header};
-  text-transform: uppercase;
 `
 const Hr = styled.div`
   position: relative;
