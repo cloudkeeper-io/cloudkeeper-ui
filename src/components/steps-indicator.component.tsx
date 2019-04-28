@@ -5,7 +5,6 @@ import { transparentize } from 'polished'
 import times from 'lodash/times'
 import noop from 'lodash/noop'
 
-
 const getBackground = (p: any) => {
   if (p.active) {
     return p.color || p.theme.controls.activeGradient

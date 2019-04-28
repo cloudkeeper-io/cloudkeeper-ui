@@ -79,6 +79,7 @@ const tabs = {
   activeText: colors.primary,
   borderLeft: '0',
   borderRight: '0 21px 0 0',
+  gradient: 'linear-gradient(270deg, #018EFF -18.75%, #48E385 100%)',
 }
 
 const select = {

@@ -80,6 +80,7 @@ const tabs = {
   activeText: '#4A4A4A',
   borderLeft: '10px 0 0 0',
   borderRight: '0 10px 0 0',
+  gradient: 'linear-gradient(90deg, #2FF6F5 0%, #0470FE 100%)',
 }
 
 const select = {

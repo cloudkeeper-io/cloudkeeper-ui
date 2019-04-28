@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components/macro'
-import { transparentize } from 'polished'
 import sum from 'lodash/sum'
 
 import { Header } from './typography.component'
@@ -40,8 +39,9 @@ const TabIndicator = styled.div<{ indicatorWidth: number, indicatorX: number }>`
   bottom: 0;
   width: ${p => p.indicatorWidth}px;
   height: 100%;
-  background-color: ${p => transparentize(0.75, p.theme.colors.primary)};
-  transition: transform 0.6s ease;
+  background: ${p => p.theme.tabs.gradient};
+  transition: width 0.6s ease, transform 0.6s ease;
+  opacity: 0.1;
   transform: translateX(${p => p.indicatorX}px);
 `
 
