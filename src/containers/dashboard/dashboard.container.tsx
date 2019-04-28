@@ -8,6 +8,7 @@ import isBoolean from 'lodash/isBoolean'
 import Loading from '../../components/loading.component'
 import SetupTenant from './components/setup-tenant.component'
 import Processing from '../../components/processing.component'
+import HeaderTabs, { TabContent } from '../../components/header-tabs.component'
 import { Title } from '../../components/typography.component'
 import { dashboardQuery } from '../../graphql'
 import { Tenant } from '../../models'
@@ -32,6 +33,7 @@ const Wrapper = styled.div`
   position: relative;
   padding: 60px 20px 20px 20px;
   margin-top: -60px;
+  overflow-x: hidden;
 `
 const StyledTitle = styled(Title)`
   position: relative;
@@ -70,6 +72,7 @@ interface DashboardProps {
 }
 
 export default ({ tenants }: DashboardProps) => {
+  const [tab, setTab] = useState(0)
   const [isDataLoaded, setDataLoaded] = useState(false)
   const { tenantId } = useContext(TenantContext)
   const tenant = find<Tenant []>(tenants, { id: tenantId! }) as Tenant
@@ -122,21 +125,29 @@ export default ({ tenants }: DashboardProps) => {
     <Wrapper>
       <Background />
       <StyledTitle>
-        Last 24h
+        <HeaderTabs
+          tabs={['Last 24h', 'Last 30 days']}
+          selectedIndex={tab}
+          onChange={i => setTab(i)}
+        />
       </StyledTitle>
       <Hr />
-      <CardsWrapper>
-        <LambdasGraphs timeAxisFormat="HH:mm" count={count} data={data.lambdasData.last24Hours} />
-        <DynamoGraphs timeAxisFormat="HH:mm" count={count} data={data.dynamoData.last24Hours} />
-      </CardsWrapper>
-      <StyledTitle>
-        Last 30 days
-      </StyledTitle>
-      <Hr />
-      <CardsWrapper>
-        <LambdasGraphs timeAxisFormat="LLL d" count={count} data={data.lambdasData.last30Days} />
-        <DynamoGraphs timeAxisFormat="LLL d" count={count} data={data.dynamoData.last30Days} />
-      </CardsWrapper>
+      {tab === 0 && (
+        <TabContent>
+          <CardsWrapper>
+            <LambdasGraphs timeAxisFormat="HH:mm" count={count} data={data.lambdasData.last24Hours} />
+            <DynamoGraphs timeAxisFormat="HH:mm" count={count} data={data.dynamoData.last24Hours} />
+          </CardsWrapper>
+        </TabContent>
+      )}
+      {tab === 1 && (
+        <TabContent>
+          <CardsWrapper>
+            <LambdasGraphs timeAxisFormat="LLL d" count={count} data={data.lambdasData.last30Days} />
+            <DynamoGraphs timeAxisFormat="LLL d" count={count} data={data.dynamoData.last30Days} />
+          </CardsWrapper>
+        </TabContent>
+      )}
     </Wrapper>
   )
 }

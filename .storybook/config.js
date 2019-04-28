@@ -9,12 +9,12 @@ import GlobalStyles from '../src/styles/global.styles'
 import Icon from '../src/components/icon.component'
 
 const Wrapper = styled.div`
-  padding: 20px;
+  padding: 30px 20px 20px 20px;
 `
 const ThemeToggleIcon = styled(Icon)`
   position: fixed;
   right: 30px;
-  top: 30px;
+  top: 10px;
   cursor: pointer;
   user-select: none;
 `
