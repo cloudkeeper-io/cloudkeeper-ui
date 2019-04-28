@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components/macro'
 import { History } from 'history'
 import { withRouter } from 'react-router-dom'
@@ -76,10 +76,8 @@ interface LoginProps {
 }
 
 export default withRouter(({ history, history: { location: { pathname } } }: LoginProps) => {
-  const [tab, setTab] = useState(0)
   const { googleSignIn, githubSignIn } = useContext(UserContext)
-
-  useEffect(() => setTab(pathname === '/sign-up' ? 1 : 0), [pathname])
+  const tab = pathname === '/sign-up' ? 1 : 0
 
   return (
     <Wrapper>
