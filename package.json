@@ -82,7 +82,6 @@
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",
     "apollo": "^2.9.0",
-    "babel-jest": "24.7.1",
     "babel-loader": "^8.0.5",
     "eslint-config-airbnb": "17.1.0",
     "eslint-plugin-import": "^2.17.2",
