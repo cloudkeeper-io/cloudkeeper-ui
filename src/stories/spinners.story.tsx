@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react'
 
 import Spinner from '../components/spinners/spinner.component'
 import SquareSpinner from '../components/spinners/square-spinner.component'
+import SpringSpinner from '../components/spinners/spring-spinner.component'
 
 storiesOf('Spinners', module)
   .add('Simple Spinners', () => (
@@ -17,5 +18,10 @@ storiesOf('Spinners', module)
   .add('Square Spinners', () => (
     <>
       <SquareSpinner />
+    </>
+  ))
+  .add('React-Spring Spinners', () => (
+    <>
+      <SpringSpinner />
     </>
   ))
