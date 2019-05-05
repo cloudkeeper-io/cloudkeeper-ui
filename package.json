@@ -33,7 +33,7 @@
     "history": "^4.9.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
-    "luxon": "^1.12.1",
+    "luxon": "^1.13.0",
     "polished": "^3.2.0",
     "react": "^16.8.6",
     "react-apollo": "^2.5.5",

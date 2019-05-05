@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import { ThemeConsumer, ThemeProvider } from '../src/contexts/theme.context'
 import GlobalStyles from '../src/styles/global.styles'
+import SVGDefs from '../src/styles/svg.defs'
 import Icon from '../src/components/icon.component'
 
 const Wrapper = styled.div`
@@ -26,6 +27,7 @@ const StyledDecorator = story => (
         <Wrapper>
           <ThemeToggleIcon icon="lightbulb" size="1x" onClick={toggleTheme} />
           <GlobalStyles />
+          <SVGDefs />
           {story()}
         </Wrapper>
       )}

@@ -5,7 +5,7 @@ import get from 'lodash/get'
 import find from 'lodash/find'
 import isBoolean from 'lodash/isBoolean'
 
-import Loading from '../../components/loading.component'
+import Loading from '../../components/spinners/loading.component'
 import SetupTenant from './components/setup-tenant.component'
 import Processing from '../../components/processing.component'
 import HeaderTabs, { TabContent } from '../../components/header-tabs.component'

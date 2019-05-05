@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty'
 
 import { UserSettingsContext, Settings } from '../../../contexts'
 import Switch from '../../../components/controls/switch.component'
-import Loading from '../../../components/loading.component'
+import Loading from '../../../components/spinners/loading.component'
 import Card from '../../../components/card.component'
 import { Header as CommonHeader } from '../../../components/typography.component'
 

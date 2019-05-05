@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty'
 import first from 'lodash/first'
 
 import NavbarLayout from '../components/layout/navbar-layout.component'
-import LoadingPage from '../components/loading-page.component'
+import LoadingPage from '../components/spinners/loading-page.component'
 import { UserContext, TenantContext } from '../contexts'
 
 const Login = lazy(() => import('./login/login.container'))
