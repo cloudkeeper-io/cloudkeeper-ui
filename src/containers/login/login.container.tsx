@@ -4,14 +4,13 @@ import { History } from 'history'
 import { withRouter } from 'react-router-dom'
 
 import Card from '../../components/card.component'
-import Tabs from '../../components/tabs.component'
 import Button from '../../components/button/button.component'
-import Icon from '../../components/icon.component'
+import IconButton from '../../components/button/icon-button.component'
 import LoginForm from './components/login-form.component'
 import SignUpForm from './components/sign-up-form.component'
 import Stars from '../../components/stars.component'
 import treeline from './images/treeline.svg'
-import { ReactComponent as SVGLogo } from './images/logo.svg'
+import background from './images/light-background.svg'
 import { UserContext } from '../../contexts'
 
 const Wrapper = styled.div`
@@ -31,17 +30,30 @@ const Content = styled.div`
   align-items: center;
   margin-top: -140px;
 `
-const MainCard = styled(Card)`
-  display: block;
-  width: 450px;
-  max-width: 90vw;
-  min-height: 300px;
-  overflow: hidden;
+const Title = styled.div`
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  margin-top: 30px;
 `
-const Logo = styled(SVGLogo)`
-  fill: ${p => p.theme.colors.icon};
-  margin-bottom: 15px;
-  z-index: 2;
+const MainCard = styled(Card)`
+  display: flex;
+  width: 810px;
+  background: url("${background}");
+  overflow: hidden;
+  transition: all 0.7s;
+`
+const CardContent = styled.div<{ isLogin: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 480px;
+  max-width: 90vw;
+  background: white;
+  transition: all 0.7s;
+  clip-path: ${p => (p.isLogin ? 'polygon(0 0, 480px 0, 480px 480px, 0 480px)' : 'polygon(100% 0, calc(100% - 480px) 0, calc(100% - 480px) 100%, 100% 100%)')};
+  padding-left: ${p => (p.isLogin ? 0 : '350px')};
+  padding-right: ${p => (p.isLogin ? '350px' : 0)};
 `
 const Trees = styled.div`
   position: absolute;
@@ -56,19 +68,26 @@ const Trees = styled.div`
 const SocialWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  width: 450px;
-  max-width: 90vw;
-  margin-bottom: 15px;
+  justify-content: center;
+  margin: 20px 0;
+  transition: all 0.7s;
 `
-const SocialButton = styled(Button)`
+const SocialButton = styled(IconButton)`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding-right: 15px;
+  margin: 0 10px;
 `
-const SocialIcon = styled(Icon)`
-  margin: 0 5px;
+const Text = styled.div`
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #9A9DAD;
+`
+const SwitchContent = styled.div<{ left: number | string }>`
+  position: absolute;
+  left: ${p => p.left};
+  transition: all 0.7s;  
 `
 
 interface LoginProps {
@@ -78,28 +97,28 @@ interface LoginProps {
 export default withRouter(({ history, history: { location: { pathname } } }: LoginProps) => {
   const { googleSignIn, githubSignIn } = useContext(UserContext)
   const tab = pathname === '/sign-up' ? 1 : 0
+  const isLogin = !tab
 
   return (
     <Wrapper>
       <Stars />
       <Trees />
       <Content>
-        <Logo />
-        <SocialWrapper>
-          <SocialButton onClick={googleSignIn}>
-            <SocialIcon icon={['fab', 'google']} />SignIn with Google
-          </SocialButton>
-          <SocialButton onClick={githubSignIn}>
-            <SocialIcon icon={['fab', 'github']} />SignIn with Github
-          </SocialButton>
-        </SocialWrapper>
         <MainCard>
-          <Tabs
-            tabs={['Sign In', 'Sign Up']}
-            selectedIndex={tab}
-            onChange={i => (i ? history.push('/sign-up') : history.push('/'))}
-          />
-          {tab ? <SignUpForm history={history} /> : <LoginForm history={history} />}
+          <SwitchContent left={isLogin ? '80%' : 0}>
+            <Button onClick={() => (tab ? history.push('/') : history.push('/sign-up'))}>
+              {isLogin ? 'Sign Up' : 'Sign In'}
+            </Button>
+          </SwitchContent>
+          <CardContent isLogin={isLogin}>
+            <Title>Sign in to Cloudkeeper</Title>
+            <SocialWrapper>
+              <SocialButton icon={['fab', 'google']} onClick={googleSignIn} />
+              <SocialButton icon={['fab', 'github']} onClick={githubSignIn} />
+            </SocialWrapper>
+            <Text>or use your email account:</Text>
+            {tab ? <SignUpForm history={history} /> : <LoginForm history={history} />}
+          </CardContent>
         </MainCard>
       </Content>
     </Wrapper>
