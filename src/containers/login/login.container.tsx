@@ -88,8 +88,8 @@ const SwitchWrapper = styled.div<{ isLogin: boolean }>`
   background: url("${background}") center center;
   background-size: cover;
   clip-path: ${p => (p.isLogin ?
-  'polygon(0 0, 330px 0, 330px 100%, 0 100%)' :
-  'polygon(490px 0, 100% 0, 100% 100%, 490px 100%)')};
+    'polygon(0 0, 330px 0, 330px 100%, 0 100%)' :
+    'polygon(490px 0, 100% 0, 100% 100%, 490px 100%)')};
   transition: all ${transitionTime};
 `
 const SwitchContent = styled.div<{ isLogin: boolean }>`
