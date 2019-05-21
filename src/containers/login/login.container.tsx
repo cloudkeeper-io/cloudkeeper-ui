@@ -13,6 +13,8 @@ import treeline from './images/treeline.svg'
 import background from './images/light-background.svg'
 import { UserContext } from '../../contexts'
 
+const transitionTime = '0.7s ease-out'
+
 const Wrapper = styled.div`
   position: relative;
   display: flex;
@@ -28,7 +30,6 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -140px;
 `
 const Title = styled.div`
   font-weight: 500;
@@ -39,21 +40,18 @@ const Title = styled.div`
 const MainCard = styled(Card)`
   display: flex;
   width: 810px;
-  background: url("${background}");
+  height: 100%;
   overflow: hidden;
-  transition: all 0.7s;
 `
 const CardContent = styled.div<{ isLogin: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 480px;
-  max-width: 90vw;
+  width: 810px;
   background: white;
-  transition: all 0.7s;
-  clip-path: ${p => (p.isLogin ? 'polygon(0 0, 480px 0, 480px 480px, 0 480px)' : 'polygon(100% 0, calc(100% - 480px) 0, calc(100% - 480px) 100%, 100% 100%)')};
-  padding-left: ${p => (p.isLogin ? 0 : '350px')};
-  padding-right: ${p => (p.isLogin ? '350px' : 0)};
+  padding-left: ${p => (p.isLogin ? '330px' : 0)};
+  padding-right: ${p => (p.isLogin ? 0 : '350px')};
+  transition: padding ${transitionTime};
 `
 const Trees = styled.div`
   position: absolute;
@@ -70,7 +68,6 @@ const SocialWrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin: 20px 0;
-  transition: all 0.7s;
 `
 const SocialButton = styled(IconButton)`
   display: flex;
@@ -84,10 +81,22 @@ const Text = styled.div`
   text-align: center;
   color: #9A9DAD;
 `
-const SwitchContent = styled.div<{ left: number | string }>`
+const SwitchWrapper = styled.div<{ isLogin: boolean }>`
   position: absolute;
-  left: ${p => p.left};
-  transition: all 0.7s;  
+  width: 810px;
+  height: 100%;
+  background: url("${background}") center center;
+  background-size: cover;
+  clip-path: ${p => (p.isLogin ?
+  'polygon(0 0, 330px 0, 330px 100%, 0 100%)' :
+  'polygon(490px 0, 100% 0, 100% 100%, 490px 100%)')};
+  transition: all ${transitionTime};
+`
+const SwitchContent = styled.div<{ isLogin: boolean }>`
+  position: absolute;
+  width: 330px;
+  left: ${p => (p.isLogin ? 0 : '490px')};
+  transition: all ${transitionTime};
 `
 
 interface LoginProps {
@@ -96,8 +105,7 @@ interface LoginProps {
 
 export default withRouter(({ history, history: { location: { pathname } } }: LoginProps) => {
   const { googleSignIn, githubSignIn } = useContext(UserContext)
-  const tab = pathname === '/sign-up' ? 1 : 0
-  const isLogin = !tab
+  const isLogin = pathname === '/'
 
   return (
     <Wrapper>
@@ -105,20 +113,22 @@ export default withRouter(({ history, history: { location: { pathname } } }: Log
       <Trees />
       <Content>
         <MainCard>
-          <SwitchContent left={isLogin ? '80%' : 0}>
-            <Button onClick={() => (tab ? history.push('/') : history.push('/sign-up'))}>
-              {isLogin ? 'Sign Up' : 'Sign In'}
-            </Button>
-          </SwitchContent>
           <CardContent isLogin={isLogin}>
-            <Title>Sign in to Cloudkeeper</Title>
+            <Title>{isLogin ? 'Sign In' : 'Sign Up'} in to Cloudkeeper</Title>
             <SocialWrapper>
               <SocialButton icon={['fab', 'google']} onClick={googleSignIn} />
               <SocialButton icon={['fab', 'github']} onClick={githubSignIn} />
             </SocialWrapper>
             <Text>or use your email account:</Text>
-            {tab ? <SignUpForm history={history} /> : <LoginForm history={history} />}
+            {isLogin ? <LoginForm history={history} /> : <SignUpForm history={history} />}
           </CardContent>
+          <SwitchWrapper isLogin={isLogin}>
+            <SwitchContent isLogin={isLogin}>
+              <Button onClick={() => (isLogin ? history.push('/sign-up') : history.push('/'))}>
+                {isLogin ? 'Sign Up' : 'Sign In'}
+              </Button>
+            </SwitchContent>
+          </SwitchWrapper>
         </MainCard>
       </Content>
     </Wrapper>
