@@ -1,4 +1,4 @@
-import { mix, tint, transparentize } from 'polished'
+import { mix, transparentize } from 'polished'
 
 const PRIMARY = '#0D8EFC' // mix(0.5, '#2FF6F5', '#0470FE') // '#4A90E2'
 
@@ -59,14 +59,14 @@ const input = {
 }
 
 const buttons = {
-  borderRadius: '20px',
+  borderRadius: '45px',
   primary: {
-    background: colors.primary,
-    active: tint(0.15, colors.primary),
+    background: transparentize(0.2, colors.primary),
     color: '#FFFFFF',
     disabled: 'rgba(171, 171, 171, 0.1)',
     borderDisabled: 'transparent',
     disabledText: '#ababab',
+    boxShadow: '0 6px 12px rgba(54, 176, 245, 0.16), 0 16px 24px rgba(54, 123, 245, 0.16)',
   },
   icon: {
     background: '#FFFFFF',

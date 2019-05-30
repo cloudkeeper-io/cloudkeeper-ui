@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import ReactSelect from 'react-select'
+// eslint-disable-next-line import/no-unresolved
 import { Props } from 'react-select/lib/Select'
 import React from 'react'
 

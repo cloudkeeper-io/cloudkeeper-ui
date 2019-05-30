@@ -6,7 +6,7 @@ import CheckboxField from '../../../components/form/checkbox-field.component'
 import Field from '../../../components/form/field.components'
 import Button from '../../../components/button/button.component'
 import ServerError from '../../../components/form/error-message.components'
-import { FormContent, StyledForm } from './login-components.styles'
+import { FormContent, StyledForm } from '../login.styles'
 import { UserContext } from '../../../contexts'
 
 interface Values {

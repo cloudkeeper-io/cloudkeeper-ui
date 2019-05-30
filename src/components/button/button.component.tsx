@@ -1,13 +1,13 @@
 /* eslint-disable max-len */
 import styled, { css } from 'styled-components/macro'
-import { tint } from 'polished'
+import { opacify } from 'polished'
 
 import Icon from '../icon.component'
 
 export default styled.button<{ loading?: boolean, background?: string, color?: string }>`
   cursor: pointer;
-  width: 200px;
-  height: 50px;
+  width: 170px;
+  height: 48px;
   position: relative;
   top: 2px;
   left: 2px;
@@ -20,6 +20,7 @@ export default styled.button<{ loading?: boolean, background?: string, color?: s
   font-size: 16px;
   clip-path: ${p => p.theme.buttons.clipPath};
   transition: 0.5s background;
+  box-shadow: ${p => p.theme.buttons.primary.boxShadow};
   ${Icon} {
     color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.color || p.theme.buttons.primary.color)};
   }
@@ -27,7 +28,7 @@ export default styled.button<{ loading?: boolean, background?: string, color?: s
    outline: none;
   }
   &:hover {
-   background:  ${p => (p.disabled ? p.theme.buttons.primary.disabled : tint(0.2, p.background || p.theme.buttons.primary.background))};
+   background:  ${p => (p.disabled ? p.theme.buttons.primary.disabled : opacify(1, p.background || p.theme.buttons.primary.background))};
   }
   &::-moz-focus-inner {
     border: 0;

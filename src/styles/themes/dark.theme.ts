@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { mix, transparentize } from 'polished'
 
-const PRIMARY = '#4FFAC5' // mix(0.5, '#48E385', '#018EFF'); //
+const PRIMARY = '#00E092' // mix(0.5, '#48E385', '#018EFF'); //
 
 const colors = {
   primary: PRIMARY,
@@ -59,13 +59,13 @@ const input = {
 }
 
 const buttons = {
-  borderRadius: '0 21px 0 21px',
+  borderRadius: '45px',
   primary: {
-    background: mix(0.85, '#142330', colors.primary),
-    active: mix(0.65, '#142330', colors.primary),
+    background: transparentize(0.2, colors.primary),
     color: colors.text,
     disabled: '#374856',
     disabledText: '#ababab',
+    boxShadow: '',
   },
   icon: {
     background: '#142330',

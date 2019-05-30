@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 
 import Card from '../components/card.component'
 import Field from '../components/form/field.components'
-import { FormContent } from './login/components/login-components.styles'
+import { FormContent } from './login/login.styles'
 import ServerError from '../components/form/error-message.components'
 import Button from '../components/button/button.component'
 import { Header } from '../components/typography.component'
