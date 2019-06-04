@@ -3,7 +3,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { useQuery } from 'react-apollo-hooks'
 import get from 'lodash/get'
 import find from 'lodash/find'
-import includes from 'lodash/includes'
+import some from 'lodash/some'
 
 import { TENANT_KEY } from '../constants'
 import { tenantsQuery } from '../graphql/queries'
@@ -45,7 +45,7 @@ const TenantProvider = withRouter<TenantProviderProps>(({ children, location: { 
     if (/^\/tenants\/[A-z0-9-]+\//.test(pathname)) {
       const tenantIdPathParam = pathname.split('/')[2]
 
-      if (tenantIdPathParam !== tenantId && includes(tenants, { id: tenantIdPathParam })) {
+      if (tenantIdPathParam !== tenantId && some(tenants, { id: tenantIdPathParam })) {
         setAndSaveTenant(tenantIdPathParam)
       }
     }

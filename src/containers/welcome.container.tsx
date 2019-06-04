@@ -50,8 +50,8 @@ const Welcome = ({ className }: WelcomeContainerProps) => {
             You don&apos;t have any projects yet. To start using the cloudkeeper create your first project.
           </Text>
           <br />
-          <Text>After that we&apos;ll guide you through a simple setup process which will take around
-            <AccentText>2 minutes</AccentText> and will require <AccentText>no code changes.</AccentText>
+          <Text>After that we&apos;ll guide you through a simple setup process which will take
+            around <AccentText>2 minutes</AccentText> and will require <AccentText>no code changes.</AccentText>
           </Text>
         </Section>
         <AddButton onClick={() => setCreateModalOpen(true)}>Create Project</AddButton>

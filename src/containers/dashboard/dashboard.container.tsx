@@ -127,7 +127,6 @@ export default ({ tenants }: DashboardProps) => {
       {tab === 0 && (
         <TabContent>
           <CardsWrapper>
-            <LambdasGraphs timeAxisFormat="HH:mm" count={count} data={data.lambdasData.last24Hours} />
             <DynamoGraphs timeAxisFormat="HH:mm" count={count} data={data.dynamoData.last24Hours} />
           </CardsWrapper>
         </TabContent>
@@ -135,7 +134,6 @@ export default ({ tenants }: DashboardProps) => {
       {tab === 1 && (
         <TabContent>
           <CardsWrapper>
-            <LambdasGraphs timeAxisFormat="LLL d" count={count} data={data.lambdasData.last30Days} />
             <DynamoGraphs timeAxisFormat="LLL d" count={count} data={data.dynamoData.last30Days} />
           </CardsWrapper>
         </TabContent>
