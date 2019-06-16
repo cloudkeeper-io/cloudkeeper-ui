@@ -44,7 +44,7 @@ export default withRouter(({ history, history: { location: { pathname } } }: Log
               <SocialButton icon={['fab', 'github']} onClick={githubSignIn} />
             </SocialWrapper>
             <Text>or use your email account:</Text>
-            {isLogin ? <LoginForm history={history} /> : <SignUpForm history={history} />}
+            {isLogin ? <LoginForm /> : <SignUpForm history={history} />}
           </CardContent>
           <SwitchWrapper isLogin={isLogin}>
             <SwitchContent isLogin={isLogin}>

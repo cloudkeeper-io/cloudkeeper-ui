@@ -11,7 +11,7 @@ import CreateTenantModal from './create-tenant-modal.component'
 import CommonCard from '../../../../components/card.component'
 import Loading from '../../../../components/spinners/loading.component'
 import { Tenant } from '../../../../models'
-import Icon from '../../../../components/icon.component'
+import FaIcon from '../../../../components/icons/fa-icon.component'
 import { Header as CommonHeader } from '../../../../components/typography.component'
 import { tenantsQuery, removeTenant } from '../../../../graphql'
 import { RemoveTenant, RemoveTenantVariables } from '../../../../graphql/mutations/types/RemoveTenant'
@@ -46,7 +46,7 @@ const TenantLink = styled(Link)`
   text-decoration: underline;
   color: ${p => p.theme.colors.text};
 `
-const RemoveIcon = styled(Icon)`
+const RemoveIcon = styled(FaIcon)`
   cursor: pointer;
   &:hover {
     color: ${p => darken(0.2, p.theme.colors.icon)};

@@ -22,10 +22,10 @@ const colors = {
 const controls = {
   color: `${transparentize(0.7, colors.primary)}`,
   gradient: 'linear-gradient(0deg, #EDECEC, #EDECEC), linear-gradient(90deg, #FF5F99 0%, #FFAA6E 101.56%)',
-  activeColor: `${mix(0.5, colors.activeSecondary, colors.active)}`,
+  activeColor: colors.primary,
   activeGradient: `linear-gradient(90deg, ${colors.activeSecondary} 0%, ${colors.active} 100%)`,
   secondaryActiveColor: '#fff',
-  shadow: transparentize(0.5, colors.active),
+  shadow: transparentize(0.5, colors.primary),
 }
 
 const card = {
@@ -52,10 +52,11 @@ const dataCard = {
 }
 
 const input = {
-  background: 'transparent',
-  color: colors.primary,
+  background: '#F3F4F5',
+  color: '#4a4a4a',
+  iconColor: '#9A9DAD',
   border: colors.borderColor,
-  placeholder: transparentize(0.4, colors.primary),
+  placeholder: transparentize(0.3, '#9A9DAD'),
 }
 
 const buttons = {

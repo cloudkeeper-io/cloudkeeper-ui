@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import { Field as FormField } from 'react-final-form'
 
-import ErrorMessage from './error-message.components'
+import ErrorMessage from './error-message.component'
 
 const StyledInput = styled.textarea`
   background: transparent !important;

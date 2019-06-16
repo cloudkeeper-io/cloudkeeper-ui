@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
 import { transparentize } from 'polished'
 
-import Icon from '../icon.component'
+import FaIcon from '../icons/fa-icon.component'
 
 const LinkContent = styled.div<{ active?: boolean, noPadding?: boolean }>`
   position: relative;
@@ -23,7 +23,7 @@ const LinkContent = styled.div<{ active?: boolean, noPadding?: boolean }>`
   &:focus {
     outline: none;
   }
-  ${Icon} {
+  ${FaIcon} {
     filter: ${p => `drop-shadow(0px 0px 2px ${transparentize(p.active ? 0.15 : 0.85, p.theme.colors.icon)})`};
   }
 `
@@ -44,7 +44,7 @@ export default ({ active, to, icon = 'home', iconSize = 'lg', children, onClick 
     return (
       <Link to={to}>
         <LinkContent active={active}>
-          <Icon size={iconSize} icon={icon} />
+          <FaIcon size={iconSize} icon={icon} />
           {children}
         </LinkContent>
       </Link>
@@ -53,7 +53,7 @@ export default ({ active, to, icon = 'home', iconSize = 'lg', children, onClick 
 
   return (
     <LinkContent active={active} role="button" onClick={onClick}>
-      <Icon size={iconSize} icon={icon} />
+      <FaIcon size={iconSize} icon={icon} />
       {children}
     </LinkContent>
   )

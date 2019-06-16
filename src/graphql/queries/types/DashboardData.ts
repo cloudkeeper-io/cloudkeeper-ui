@@ -22,85 +22,9 @@ export interface DashboardData_lambdasData_last24Hours_totals {
   dataPoints: (DashboardData_lambdasData_last24Hours_totals_dataPoints | null)[] | null;
 }
 
-export interface DashboardData_lambdasData_last24Hours_slowestLambdas_dataPoints {
-  __typename: "SlowLambdaDataPoint";
-  averageDuration: number | null;
-  maxDuration: number | null;
-  dateTime: string | null;
-}
-
-export interface DashboardData_lambdasData_last24Hours_slowestLambdas {
-  __typename: "SlowLambdaData";
-  lambdaName: string | null;
-  runtime: string | null;
-  size: number | null;
-  codeSize: number | null;
-  timeout: number | null;
-  averageDuration: number | null;
-  maxDuration: number | null;
-  dataPoints: (DashboardData_lambdasData_last24Hours_slowestLambdas_dataPoints | null)[] | null;
-}
-
-export interface DashboardData_lambdasData_last24Hours_mostInvokedLambdas_dataPoints {
-  __typename: "MostInvokedLambdaDataPoint";
-  invocations: number | null;
-  dateTime: string | null;
-}
-
-export interface DashboardData_lambdasData_last24Hours_mostInvokedLambdas {
-  __typename: "MostInvokedLambdaData";
-  lambdaName: string | null;
-  invocations: number | null;
-  runtime: string | null;
-  size: number | null;
-  codeSize: number | null;
-  timeout: number | null;
-  invocationsPerSecond: number | null;
-  dataPoints: (DashboardData_lambdasData_last24Hours_mostInvokedLambdas_dataPoints | null)[] | null;
-}
-
-export interface DashboardData_lambdasData_last24Hours_mostErrorsLambdas_dataPoints {
-  __typename: "MostErrorsLambdaDataPoint";
-  errors: number | null;
-  dateTime: string | null;
-}
-
-export interface DashboardData_lambdasData_last24Hours_mostErrorsLambdas {
-  __typename: "MostErrorsLambdaData";
-  lambdaName: string | null;
-  errors: number | null;
-  runtime: string | null;
-  size: number | null;
-  codeSize: number | null;
-  errorRate: number | null;
-  timeout: number | null;
-  dataPoints: (DashboardData_lambdasData_last24Hours_mostErrorsLambdas_dataPoints | null)[] | null;
-}
-
-export interface DashboardData_lambdasData_last24Hours_mostExpensiveLambdas_dataPoints {
-  __typename: "MostExpensiveLambdaDataPoint";
-  cost: number | null;
-  dateTime: string | null;
-}
-
-export interface DashboardData_lambdasData_last24Hours_mostExpensiveLambdas {
-  __typename: "MostExpensiveLambdaData";
-  lambdaName: string | null;
-  runtime: string | null;
-  size: number | null;
-  codeSize: number | null;
-  timeout: number | null;
-  cost: number | null;
-  dataPoints: (DashboardData_lambdasData_last24Hours_mostExpensiveLambdas_dataPoints | null)[] | null;
-}
-
 export interface DashboardData_lambdasData_last24Hours {
   __typename: "DashboardLambdaDataForPeriod";
   totals: DashboardData_lambdasData_last24Hours_totals | null;
-  slowestLambdas: (DashboardData_lambdasData_last24Hours_slowestLambdas | null)[] | null;
-  mostInvokedLambdas: (DashboardData_lambdasData_last24Hours_mostInvokedLambdas | null)[] | null;
-  mostErrorsLambdas: (DashboardData_lambdasData_last24Hours_mostErrorsLambdas | null)[] | null;
-  mostExpensiveLambdas: (DashboardData_lambdasData_last24Hours_mostExpensiveLambdas | null)[] | null;
 }
 
 export interface DashboardData_lambdasData_last30Days_totals_dataPoints {
@@ -119,85 +43,9 @@ export interface DashboardData_lambdasData_last30Days_totals {
   dataPoints: (DashboardData_lambdasData_last30Days_totals_dataPoints | null)[] | null;
 }
 
-export interface DashboardData_lambdasData_last30Days_slowestLambdas_dataPoints {
-  __typename: "SlowLambdaDataPoint";
-  averageDuration: number | null;
-  maxDuration: number | null;
-  dateTime: string | null;
-}
-
-export interface DashboardData_lambdasData_last30Days_slowestLambdas {
-  __typename: "SlowLambdaData";
-  lambdaName: string | null;
-  runtime: string | null;
-  size: number | null;
-  codeSize: number | null;
-  timeout: number | null;
-  maxDuration: number | null;
-  averageDuration: number | null;
-  dataPoints: (DashboardData_lambdasData_last30Days_slowestLambdas_dataPoints | null)[] | null;
-}
-
-export interface DashboardData_lambdasData_last30Days_mostInvokedLambdas_dataPoints {
-  __typename: "MostInvokedLambdaDataPoint";
-  invocations: number | null;
-  dateTime: string | null;
-}
-
-export interface DashboardData_lambdasData_last30Days_mostInvokedLambdas {
-  __typename: "MostInvokedLambdaData";
-  lambdaName: string | null;
-  runtime: string | null;
-  size: number | null;
-  timeout: number | null;
-  codeSize: number | null;
-  invocations: number | null;
-  invocationsPerSecond: number | null;
-  dataPoints: (DashboardData_lambdasData_last30Days_mostInvokedLambdas_dataPoints | null)[] | null;
-}
-
-export interface DashboardData_lambdasData_last30Days_mostErrorsLambdas_dataPoints {
-  __typename: "MostErrorsLambdaDataPoint";
-  errors: number | null;
-  dateTime: string | null;
-}
-
-export interface DashboardData_lambdasData_last30Days_mostErrorsLambdas {
-  __typename: "MostErrorsLambdaData";
-  lambdaName: string | null;
-  runtime: string | null;
-  size: number | null;
-  timeout: number | null;
-  codeSize: number | null;
-  errors: number | null;
-  errorRate: number | null;
-  dataPoints: (DashboardData_lambdasData_last30Days_mostErrorsLambdas_dataPoints | null)[] | null;
-}
-
-export interface DashboardData_lambdasData_last30Days_mostExpensiveLambdas_dataPoints {
-  __typename: "MostExpensiveLambdaDataPoint";
-  cost: number | null;
-  dateTime: string | null;
-}
-
-export interface DashboardData_lambdasData_last30Days_mostExpensiveLambdas {
-  __typename: "MostExpensiveLambdaData";
-  lambdaName: string | null;
-  runtime: string | null;
-  size: number | null;
-  timeout: number | null;
-  codeSize: number | null;
-  cost: number | null;
-  dataPoints: (DashboardData_lambdasData_last30Days_mostExpensiveLambdas_dataPoints | null)[] | null;
-}
-
 export interface DashboardData_lambdasData_last30Days {
   __typename: "DashboardLambdaDataForPeriod";
   totals: DashboardData_lambdasData_last30Days_totals | null;
-  slowestLambdas: (DashboardData_lambdasData_last30Days_slowestLambdas | null)[] | null;
-  mostInvokedLambdas: (DashboardData_lambdasData_last30Days_mostInvokedLambdas | null)[] | null;
-  mostErrorsLambdas: (DashboardData_lambdasData_last30Days_mostErrorsLambdas | null)[] | null;
-  mostExpensiveLambdas: (DashboardData_lambdasData_last30Days_mostExpensiveLambdas | null)[] | null;
 }
 
 export interface DashboardData_lambdasData {

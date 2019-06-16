@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro'
+
 import Button from '../../components/button/button.component'
 import Card from '../../components/card.component'
 import treeline from './images/treeline.svg'
@@ -35,7 +36,7 @@ export const Wrapper = styled.div`
   height: 100%;
   min-height: calc(100vh - 60px);
   padding: 0 20px;
-  background-size: contain;
+  transition: all ${transitionTime};
 `
 export const Content = styled.div`
   display: flex;
@@ -51,7 +52,8 @@ export const Title = styled.div`
 export const MainCard = styled(Card)`
   display: flex;
   width: 810px;
-  height: 100%;
+  height: 610px;
+  justify-content: space-around;
   overflow: hidden;
 `
 export const CardContent = styled.div<{ isLogin: boolean }>`
@@ -108,12 +110,11 @@ export const SwitchContent = styled.div<{ isLogin: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;+
-  margin: 20px 10px;
-  color: #FFFFFF;
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 40px;
+  justify-content: center;
+  width: 330px;
+  height: 100%;
+  left: ${p => (p.isLogin ? 0 : '490px')};
+  transition: left ${transitionTime};
 `
 export const SwitchText = styled.div`
   margin: 20px 10px;

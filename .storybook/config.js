@@ -7,12 +7,12 @@ import styled from 'styled-components'
 import { ThemeConsumer, ThemeProvider } from '../src/contexts/theme.context'
 import GlobalStyles from '../src/styles/global.styles'
 import SVGDefs from '../src/styles/svg.defs'
-import Icon from '../src/components/icon.component'
+import FaIcon from '../src/components/icons/fa-icon.component'
 
 const Wrapper = styled.div`
   padding: 30px 20px 20px 20px;
 `
-const ThemeToggleIcon = styled(Icon)`
+const ThemeToggleIcon = styled(FaIcon)`
   position: fixed;
   right: 30px;
   top: 10px;

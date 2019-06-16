@@ -2,7 +2,7 @@
 import styled, { css } from 'styled-components/macro'
 import { opacify } from 'polished'
 
-import Icon from '../icon.component'
+import FaIcon from '../icons/fa-icon.component'
 
 export default styled.button<{ loading?: boolean, background?: string, color?: string }>`
   cursor: pointer;
@@ -20,8 +20,8 @@ export default styled.button<{ loading?: boolean, background?: string, color?: s
   font-size: 16px;
   clip-path: ${p => p.theme.buttons.clipPath};
   transition: 0.5s background;
-  box-shadow: ${p => p.theme.buttons.primary.boxShadow};
-  ${Icon} {
+  box-shadow: ${p => (p.disabled ? '' : p.theme.buttons.primary.boxShadow)};
+  ${FaIcon} {
     color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.color || p.theme.buttons.primary.color)};
   }
   &:focus {

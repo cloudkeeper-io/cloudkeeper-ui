@@ -5,13 +5,14 @@ import { getInput, getLabel } from './controls.styles'
 
 const ControlIndicator = styled.div`
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
   min-height: 15px;
   min-width: 15px;
-  background: ${p => p.theme.controls.color};
+  border: 1px solid ${p => p.theme.controls.color};
+  border-radius: 2px;
+  transform: translateY(-50%);
   transition: all 0.3s;
-  box-shadow: 0 0 4px ${p => p.theme.controls.shadow};
   &:after {
     box-sizing: initial;
     content: '';

@@ -23,7 +23,7 @@ const colors = {
 const controls = {
   color: transparentize(0.7, colors.primary),
   gradient: 'linear-gradient(270deg, #018EFF -18.75%, #48E385 100%)',
-  activeColor: `${mix(0.5, colors.activeSecondary, colors.active)}`,
+  activeColor: transparentize(0.7, colors.primary),
   activeGradient: `linear-gradient(90deg, ${colors.activeSecondary} 0%, ${colors.active} 100%)`,
   secondaryActiveColor: colors.activeSecondary,
   shadow: transparentize(0.8, colors.primary),
@@ -52,10 +52,11 @@ const dataCard = {
 }
 
 const input = {
-  background: 'transparent',
-  color: colors.primary,
+  background: 'rgba(102, 157, 189, 0.14)',
+  color: colors.text,
+  iconColor: '#8EA4B9',
   border: colors.borderColor,
-  placeholder: transparentize(0.4, colors.primary),
+  placeholder: transparentize(0.45, colors.text),
 }
 
 const buttons = {

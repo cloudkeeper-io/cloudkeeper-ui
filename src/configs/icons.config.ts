@@ -14,6 +14,8 @@ import {
   faTrashAlt,
   faPlus,
   faCompress,
+  faEnvelope,
+  faLock,
 } from '@fortawesome/free-solid-svg-icons'
 import { faLightbulb as faRegularLightbulb } from '@fortawesome/free-regular-svg-icons'
 import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -35,3 +37,5 @@ library.add(faPlus)
 library.add(faCompress)
 library.add(faGoogle)
 library.add(faGithub)
+library.add(faEnvelope)
+library.add(faLock)

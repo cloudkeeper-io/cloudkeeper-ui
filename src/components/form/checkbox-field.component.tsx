@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import { Field as FormField } from 'react-final-form'
 
 import Checkbox from '../controls/checkbox.component'
-import Error from './error-message.components'
+import Error from './error-message.component'
 
 const ErrorMessage = styled(Error)`
   font-size: 12px;

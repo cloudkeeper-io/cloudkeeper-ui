@@ -3,11 +3,12 @@ import { Form } from 'react-final-form'
 import { History } from 'history'
 
 import CheckboxField from '../../../components/form/checkbox-field.component'
-import Field from '../../../components/form/field.components'
+import Field from '../../../components/form/field.component'
 import Button from '../../../components/button/button.component'
-import ServerError from '../../../components/form/error-message.components'
+import ServerError from '../../../components/form/error-message.component'
 import { FormContent, StyledForm } from '../login.styles'
 import { UserContext } from '../../../contexts'
+import IconInput from '../../../components/form/icon-input.component'
 
 interface Values {
   email: string
@@ -67,9 +68,23 @@ export default memo(({ history }: RegisterProps) => {
       {({ handleSubmit, pristine, invalid }) => (
         <StyledForm onSubmit={handleSubmit}>
           <FormContent>
-            <Field name="email" placeholder="Email Address" autoComplete="email" />
-            <Field name="password" placeholder="Password" autoComplete="password" type="password" />
-            <Field name="repeatPassword" placeholder="Repeat Password" autoComplete="password" type="password" />
+            <Field name="email" placeholder="Email Address" autoComplete="email" component={IconInput} icon="mail" />
+            <Field
+              name="password"
+              placeholder="Password"
+              autoComplete="password"
+              type="password"
+              component={IconInput}
+              icon="lock"
+            />
+            <Field
+              name="repeatPassword"
+              placeholder="Repeat Password"
+              autoComplete="password"
+              type="password"
+              component={IconInput}
+              icon="lock"
+            />
             <CheckboxField
               name="subscribedToEmails"
               label="Subscribe to get occasional emails about cloudkeeper updates"

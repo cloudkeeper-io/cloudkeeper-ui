@@ -1,12 +1,12 @@
 import React, { useState, memo, useContext } from 'react'
 import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
-import { History } from 'history'
 
 import { Form } from 'react-final-form'
-import Field from '../../../components/form/field.components'
+import Field from '../../../components/form/field.component'
+import IconInput from '../../../components/form/icon-input.component'
 import Button from '../../../components/button/button.component'
-import ServerError from '../../../components/form/error-message.components'
+import ServerError from '../../../components/form/error-message.component'
 import { FormContent, StyledForm } from '../login.styles'
 import { UserContext } from '../../../contexts'
 
@@ -22,11 +22,7 @@ interface Values {
   password: string
 }
 
-interface LoginProps {
-  history: History
-}
-
-export default memo(({ history }: LoginProps) => {
+export default memo(() => {
   const { signIn } = useContext(UserContext)
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -41,7 +37,6 @@ export default memo(({ history }: LoginProps) => {
 
     try {
       await signIn(values.email, values.password)
-      history.push('/')
     } catch (error) {
       setServerError(error.message || 'Server error')
       setLoading(false)
@@ -67,8 +62,15 @@ export default memo(({ history }: LoginProps) => {
       {({ handleSubmit, pristine, invalid }) => (
         <StyledForm onSubmit={handleSubmit}>
           <FormContent>
-            <Field name="email" placeholder="Email Address" autoComplete="email" />
-            <Field name="password" placeholder="Password" autoComplete="password" type="password" />
+            <Field name="email" placeholder="Email Address" autoComplete="email" component={IconInput} icon="lock" />
+            <Field
+              name="password"
+              placeholder="Password"
+              autoComplete="password"
+              type="password"
+              component={IconInput}
+              icon="mail"
+            />
             <ServerError>{serverError}</ServerError>
             <ForgotPassword to="/forgot-password">Forgot password?</ForgotPassword>
             <Button type="submit" disabled={pristine || invalid} loading={loading}>Log in</Button>

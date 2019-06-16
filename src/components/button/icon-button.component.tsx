@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import { mix, transparentize } from 'polished'
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
 
-import Icon from '../icon.component'
+import FaIcon from '../icons/fa-icon.component'
 
 const Wrapper = styled.button<{ size: string }>`
   min-width: ${p => p.size};
@@ -31,11 +31,11 @@ interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 
 const IconButton = ({ className, icon, size = '50px', iconSize = '2x', ...props }: IconButtonProps) => (
   <Wrapper className={className} size={size} {...props}>
-    <Icon size={iconSize} icon={icon!} />
+    <FaIcon size={iconSize} icon={icon!} />
   </Wrapper>
 )
 
 IconButton.Wrapper = Wrapper
-IconButton.Icon = Icon
+IconButton.Icon = FaIcon
 
 export default IconButton
