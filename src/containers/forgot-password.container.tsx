@@ -70,7 +70,7 @@ export default () => {
               <FormContent>
                 <Field name="email" placeholder="Email Address" autoComplete="email" />
                 <ServerError>{error}</ServerError>
-                <Button type="submit" disabled={pristine || invalid} loading={loading}>Reset Password</Button>
+                <Button type="submit" disabled={pristine || invalid} isLoading={loading}>Reset Password</Button>
               </FormContent>
             </form>
           )}

@@ -178,7 +178,7 @@ export default (({ tenant }: SetupTenantProps) => {
                   <Input name="roleArn" placeholder="arn:aws:iam::xxxxxxxxxxxx:role/CloudkeeperDelegationRole" />
                   <ButtonWrapper>
                     <ServerError>{serverError}</ServerError>
-                    <Button loading={loading} disabled={pristine || invalid}>
+                    <Button isLoading={loading} disabled={pristine || invalid}>
                       Submit
                     </Button>
                   </ButtonWrapper>

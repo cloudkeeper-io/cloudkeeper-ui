@@ -4,7 +4,7 @@ import { opacify } from 'polished'
 
 import FaIcon from '../icons/fa-icon.component'
 
-export default styled.button<{ loading?: boolean, background?: string, color?: string }>`
+export default styled.button<{ isLoading?: boolean, background?: string, color?: string }>`
   cursor: pointer;
   width: 170px;
   height: 48px;
@@ -33,7 +33,7 @@ export default styled.button<{ loading?: boolean, background?: string, color?: s
   &::-moz-focus-inner {
     border: 0;
   }
-   ${props => (props.loading ? css`
+   ${props => (props.isLoading ? css`
     position: relative;
     color: transparent;
     transition: none;

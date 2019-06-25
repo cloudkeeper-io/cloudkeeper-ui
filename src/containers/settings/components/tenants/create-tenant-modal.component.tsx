@@ -118,7 +118,7 @@ export default memo(withRouter(({ onClose, isOpen, history }: StepsProps) => {
                   <CancelButton background="#797070" color="#FFF" onClick={onClose} type="button">
                     Cancel
                   </CancelButton>
-                  <CreateButton loading={loading} disabled={pristine || invalid}>
+                  <CreateButton isLoading={loading} disabled={pristine || invalid}>
                     Create
                   </CreateButton>
                 </ButtonWrapper>

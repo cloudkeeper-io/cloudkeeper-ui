@@ -73,7 +73,7 @@ export default memo(() => {
             />
             <ServerError>{serverError}</ServerError>
             <ForgotPassword to="/forgot-password">Forgot password?</ForgotPassword>
-            <Button type="submit" disabled={pristine || invalid} loading={loading}>Log in</Button>
+            <Button type="submit" disabled={pristine || invalid} isLoading={loading}>Log in</Button>
           </FormContent>
         </StyledForm>
       )}

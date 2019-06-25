@@ -95,7 +95,7 @@ export default () => {
                   type="password"
                 />
                 <ServerError>{error}</ServerError>
-                <Button type="submit" disabled={pristine || invalid} loading={loading}>
+                <Button type="submit" disabled={pristine || invalid} isLoading={loading}>
                   Change Password
                 </Button>
               </FormContent>

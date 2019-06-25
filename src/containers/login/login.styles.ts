@@ -63,7 +63,7 @@ export const CardContent = styled.div<{ isLogin: boolean }>`
   width: 810px;
   background: white;
   padding-left: ${p => (p.isLogin ? '330px' : 0)};
-  padding-right: ${p => (p.isLogin ? 0 : '350px')};
+  padding-right: ${p => (p.isLogin ? 0 : '330px')};
   transition: padding ${transitionTime};
 `
 export const Trees = styled.div`

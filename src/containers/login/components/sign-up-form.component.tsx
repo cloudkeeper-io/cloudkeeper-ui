@@ -90,7 +90,7 @@ export default memo(({ history }: RegisterProps) => {
               label="Subscribe to get occasional emails about cloudkeeper updates"
             />
             <ServerError>{serverError}</ServerError>
-            <Button type="submit" disabled={pristine || invalid} loading={loading}>Sign Up</Button>
+            <Button type="submit" disabled={pristine || invalid} isLoading={loading}>Sign Up</Button>
           </FormContent>
         </StyledForm>
       )}
