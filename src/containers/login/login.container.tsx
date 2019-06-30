@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components/macro'
 import { History } from 'history'
 import { withRouter } from 'react-router-dom'
 
@@ -17,7 +16,8 @@ import {
   SocialButton,
   SwitchWrapper,
   SwitchContent,
-  CardContent,
+  LeftContent,
+  RightContent,
   SwitchTitle,
   SwitchText,
 } from './login.styles'
@@ -25,21 +25,6 @@ import {
 interface LoginProps {
   history: History
 }
-
-const ContentHolder = styled.div`
-  width: 100%;
-  position: relative;
-`
-const LeftContent = styled.div<{ isLogin: boolean }>`
-  position: absolute;
-  left: ${p => (p.isLogin ? 0 : '450px')};
-  transition: left 0.7s ease-in-out;
-`
-const RightContent = styled.div<{ isLogin: boolean }>`
-  position: absolute;
-  left: ${p => (p.isLogin ? '-810px' : '0')};
-  transition: left 0.7s ease-in-out;
-`
 
 export default withRouter(({ history, history: { location: { pathname } } }: LoginProps) => {
   const { googleSignIn, githubSignIn } = useContext(UserContext)
@@ -49,22 +34,15 @@ export default withRouter(({ history, history: { location: { pathname } } }: Log
     <Wrapper>
       <Content>
         <MainCard>
-          <CardContent isLogin={isLogin}>
-            <Title>{isLogin ? 'Sign In' : 'Sign Up'} in to Cloudkeeper</Title>
-            <SocialWrapper>\
+          <LeftContent isLogin={isLogin}>
+            <Title>Create Account</Title>
+            <SocialWrapper>
               <SocialButton icon={['fab', 'google']} onClick={googleSignIn} />
               <SocialButton icon={['fab', 'github']} onClick={githubSignIn} />
             </SocialWrapper>
-            <Text>or use your email account:</Text>
-            <ContentHolder>
-              <LeftContent isLogin={isLogin}>
-                <LoginForm />
-              </LeftContent>
-              <RightContent isLogin={isLogin}>
-                <SignUpForm history={history} />
-              </RightContent>
-            </ContentHolder>
-          </CardContent>
+            <Text>or use your email account for registration:</Text>
+            <SignUpForm history={history} />
+          </LeftContent>
           <SwitchWrapper isLogin={isLogin}>
             <SwitchContent isLogin={isLogin}>
               <SwitchTitle>Welcome Back!</SwitchTitle>
@@ -74,6 +52,15 @@ export default withRouter(({ history, history: { location: { pathname } } }: Log
               </LoginButton>
             </SwitchContent>
           </SwitchWrapper>
+          <RightContent isLogin={isLogin}>
+            <Title>Sign in to Cloudkeeper </Title>
+            <SocialWrapper>
+              <SocialButton icon={['fab', 'google']} onClick={googleSignIn} />
+              <SocialButton icon={['fab', 'github']} onClick={githubSignIn} />
+            </SocialWrapper>
+            <Text>or use your email account:</Text>
+            <LoginForm />
+          </RightContent>
         </MainCard>
       </Content>
     </Wrapper>

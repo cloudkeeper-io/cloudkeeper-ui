@@ -6,7 +6,7 @@ import treeline from './images/treeline.svg'
 import IconButton from '../../components/button/icon-button.component'
 import background from './images/light-background.svg'
 
-const transitionTime = '0.6s ease-in-out'
+const transitionTime = '2.6s ease-in-out'
 
 export const StyledForm = styled.form`
   width: 100%;
@@ -48,6 +48,7 @@ export const Title = styled.div`
   font-size: 32px;
   line-height: 40px;
   margin-top: 30px;
+  text-align: center;
 `
 export const MainCard = styled(Card)`
   display: flex;
@@ -55,16 +56,6 @@ export const MainCard = styled(Card)`
   height: 610px;
   justify-content: space-around;
   overflow: hidden;
-`
-export const CardContent = styled.div<{ isLogin: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 810px;
-  background: white;
-  padding-left: ${p => (p.isLogin ? '330px' : 0)};
-  padding-right: ${p => (p.isLogin ? 0 : '330px')};
-  transition: padding ${transitionTime};
 `
 export const Trees = styled.div`
   position: absolute;
@@ -104,6 +95,7 @@ export const SwitchWrapper = styled.div<{ isLogin: boolean }>`
     'polygon(0 0, 330px 0, 330px 100%, 0 100%)' :
     'polygon(490px 0, 100% 0, 100% 100%, 490px 100%)')};
   transition: all ${transitionTime};
+  z-index: 2;
 `
 export const SwitchContent = styled.div<{ isLogin: boolean }>`
   position: absolute;
@@ -114,6 +106,23 @@ export const SwitchContent = styled.div<{ isLogin: boolean }>`
   width: 330px;
   height: 100%;
   left: ${p => (p.isLogin ? 0 : '490px')};
+  transition: left ${transitionTime};
+`
+export const LeftContent = styled.div<{ isLogin: boolean }>`
+  position: absolute;
+  width: 480px;
+  left: ${p => (p.isLogin ? '330px' : '0')};
+  opacity: ${p => (p.isLogin ? '0' : '1')};
+  background: white;
+  overflow: hidden;
+  transition: left ${transitionTime}, opacity ${transitionTime};
+  z-index: 1;
+`
+export const RightContent = styled.div<{ isLogin: boolean }>`
+  position: absolute;
+  left: ${p => (p.isLogin ? '330px' : '0')};
+  width: 480px;
+  overflow: hidden;
   transition: left ${transitionTime};
 `
 export const SwitchText = styled.div`

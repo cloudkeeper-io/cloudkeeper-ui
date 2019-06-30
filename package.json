@@ -9,6 +9,7 @@
     "tsc": "tsc",
     "lint": "eslint \"src/**\"",
     "lint:fix": "eslint \"src/**\" --fix",
+    "lint:quiet": "eslint \"src/**\" --quiet",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "generate-types": "apollo codegen:generate --localSchemaFile=schema.graphql --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/graphql/types/graphql-global-types.ts types",
     "storybook": "start-storybook -p 9009 -s public",
