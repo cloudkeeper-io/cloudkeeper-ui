@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 // eslint-disable-next-line import/no-unresolved
-import { Props } from 'react-select/lib/Select'
+import { Props } from 'react-select/src/Select'
 import { Field } from 'react-final-form'
 import find from 'lodash/find'
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import styled from 'styled-components/macro'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
@@ -38,7 +38,7 @@ interface WelcomeContainerProps extends RouteComponentProps {
   className?: string
 }
 
-const Welcome = ({ className }: WelcomeContainerProps) => {
+export default withRouter(memo(({ className }: WelcomeContainerProps) => {
   const [isCreateModalOpen, setCreateModalOpen] = useState(false)
 
   return (
@@ -62,6 +62,4 @@ const Welcome = ({ className }: WelcomeContainerProps) => {
       />
     </Wrapper>
   )
-}
-
-export default withRouter<WelcomeContainerProps>(Welcome)
+}))

@@ -6,7 +6,7 @@ import treeline from './images/treeline.svg'
 import IconButton from '../../components/button/icon-button.component'
 import background from './images/light-background.svg'
 
-const transitionTime = '2.6s ease-in-out'
+const transitionTime = '0.6s cubic-bezier(0.9, 0.38, 0.38, 0.75)'
 
 export const StyledForm = styled.form`
   width: 100%;
@@ -121,9 +121,9 @@ export const LeftContent = styled.div<{ isLogin: boolean }>`
 export const RightContent = styled.div<{ isLogin: boolean }>`
   position: absolute;
   left: ${p => (p.isLogin ? '330px' : '0')};
+  opacity: ${p => (p.isLogin ? '1' : '0')};
   width: 480px;
-  overflow: hidden;
-  transition: left ${transitionTime};
+  transition: left ${transitionTime}, opacity ${transitionTime};
 `
 export const SwitchText = styled.div`
   margin: 20px 10px;

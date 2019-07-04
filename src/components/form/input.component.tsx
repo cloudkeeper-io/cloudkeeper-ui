@@ -13,6 +13,7 @@ export default styled.input`
   padding: 0 32px;
   outline: none;
   margin: 10px 0;
+  box-sizing: initial;
   &:focus, &:active {
     border: solid ${p => p.theme.input.border};
   }

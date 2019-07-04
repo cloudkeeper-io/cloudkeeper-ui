@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
-import { Mutation, MutationFn } from 'react-apollo'
+import { Mutation, MutationFunction } from 'react-apollo'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import get from 'lodash/get'
 
@@ -13,8 +13,6 @@ import { SmallField } from '../../../../components/form/field.component'
 import Modal from '../../../../components/modal.component'
 import Button from '../../../../components/button/button.component'
 import { Title } from '../../../../components/typography.component'
-
-class CreateTenantMutation extends Mutation<CreateTenant, CreateTenantVariables> {}
 
 const ModalStyles = {
   content: {
@@ -63,7 +61,7 @@ export default memo(withRouter(({ onClose, isOpen, history }: StepsProps) => {
 
   useEffect(() => trackEvent('Opened Create Project'), [])
 
-  const onSubmit = async (v: Values, mutation: MutationFn<CreateTenant, CreateTenantVariables>) => {
+  const onSubmit = async (v: Values, mutation: MutationFunction<CreateTenant, CreateTenantVariables>) => {
     setLoading(true)
     setServerError('')
     try {
@@ -94,9 +92,9 @@ export default memo(withRouter(({ onClose, isOpen, history }: StepsProps) => {
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose} style={ModalStyles}>
       <Title>Create Project</Title>
-      <CreateTenantMutation
+      <Mutation
         mutation={createTenantMutation}
-        update={(cache, { data }) => {
+        update={(cache: any, { data }: any) => {
           const { createTenant } = data!
           const { tenants } = cache.readQuery({ query: tenantsQuery }) as any
           cache.writeQuery({
@@ -105,7 +103,7 @@ export default memo(withRouter(({ onClose, isOpen, history }: StepsProps) => {
           })
         }}
       >
-        {mutation => (
+        {(mutation: any) => (
           <Form onSubmit={v => onSubmit(v as Values, mutation)} validate={v => validate(v as Values)}>
             {({ handleSubmit, pristine, invalid }) => (
               <StyledForm onSubmit={handleSubmit}>
@@ -126,7 +124,7 @@ export default memo(withRouter(({ onClose, isOpen, history }: StepsProps) => {
             )}
           </Form>
         )}
-      </CreateTenantMutation>
+      </Mutation>
     </Modal>
   )
 }))

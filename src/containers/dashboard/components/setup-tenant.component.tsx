@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Mutation, MutationFn } from 'react-apollo'
+import { Mutation, MutationFunction } from 'react-apollo'
 import { Form } from 'react-final-form'
 import styled from 'styled-components/macro'
 import map from 'lodash/map'
@@ -66,8 +66,6 @@ const getIntegrationUrl = (tenantId: string) => `https://console.aws.amazon.com/
 region=us-east-1#/stacks/create/review?stackName=cloudkeeper-delegation&param_ExternalId=${tenantId}&
 templateURL=https%3A%2F%2Fs3.eu-central-1.amazonaws.com%2Fcdn.cloudkeeper.io%2Fcloudformation.yml`
 
-class SetupTenantMutation extends Mutation<SetupTenant, SetupTenantVariables> {}
-
 interface Values {
   roleArn: string
 }
@@ -82,7 +80,7 @@ export default (({ tenant }: SetupTenantProps) => {
 
   useEffect(() => trackEvent('Opened Setup'), [])
 
-  const onSubmit = async (v: Values, mutation: MutationFn<SetupTenant, SetupTenantVariables>) => {
+  const onSubmit = async (v: Values, mutation: MutationFunction<SetupTenant, SetupTenantVariables>) => {
     setLoading(true)
     setServerError('')
     try {
@@ -131,8 +129,8 @@ export default (({ tenant }: SetupTenantProps) => {
   return (
     <Wrapper>
       <Content>
-        <SetupTenantMutation mutation={setupTenantMutation} update={update}>
-          {mutation => (
+        <Mutation mutation={setupTenantMutation} update={update}>
+          {(mutation: any) => (
             <Form onSubmit={v => onSubmit(v as Values, mutation)} validate={v => validate(v as Values)}>
               {({ handleSubmit, pristine, invalid }) => (
                 <form onSubmit={handleSubmit}>
@@ -186,7 +184,7 @@ export default (({ tenant }: SetupTenantProps) => {
               )}
             </Form>
           )}
-        </SetupTenantMutation>
+        </Mutation>
       </Content>
     </Wrapper>
   )
