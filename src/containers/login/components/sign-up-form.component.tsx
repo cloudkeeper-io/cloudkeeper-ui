@@ -87,6 +87,7 @@ export default memo(({ history }: RegisterProps) => {
             />
             <CheckboxField
               name="subscribedToEmails"
+              color="primary"
               label="Subscribe to get occasional emails about cloudkeeper updates"
             />
             <ServerError>{serverError}</ServerError>

@@ -15,6 +15,8 @@ const ForgotPassword = styled(Link)`
   color: ${p => p.theme.colors.primary};
   margin-bottom: 3px;
   margin-right: 3px;
+  width: 100%;
+  text-align: end;
 `
 
 interface Values {
@@ -71,8 +73,8 @@ export default memo(() => {
               component={IconInput}
               icon="mail"
             />
-            <ServerError>{serverError}</ServerError>
             <ForgotPassword to="/forgot-password">Forgot password?</ForgotPassword>
+            <ServerError>{serverError}</ServerError>
             <Button type="submit" disabled={pristine || invalid} isLoading={loading}>Log in</Button>
           </FormContent>
         </StyledForm>

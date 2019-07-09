@@ -2,11 +2,10 @@ import styled from 'styled-components/macro'
 
 import Button from '../../components/button/button.component'
 import Card from '../../components/card.component'
-import treeline from './images/treeline.svg'
 import IconButton from '../../components/button/icon-button.component'
 import background from './images/light-background.svg'
 
-const transitionTime = '0.6s cubic-bezier(0.9, 0.38, 0.38, 0.75)'
+const transitionTime = '0.4s cubic-bezier(0.9, 0.20, 0.20, 0.9)'
 
 export const StyledForm = styled.form`
   width: 100%;
@@ -15,8 +14,8 @@ export const StyledForm = styled.form`
 export const FormContent = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  padding: 25px;
+  align-items: center;
+  padding: 0 25px 15px 25px;
   justify-content: space-around;
 `
 export const LoginButton = styled(Button)`
@@ -57,16 +56,6 @@ export const MainCard = styled(Card)`
   justify-content: space-around;
   overflow: hidden;
 `
-export const Trees = styled.div`
-  position: absolute;
-  bottom: 0;
-  height: 100%;
-  width: 100%;
-  background: url("${treeline}") center bottom no-repeat;
-  background-size: contain;
-  opacity: ${p => p.theme.login.treesOpacity};
-  pointer-events: none;
-`
 export const SocialWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -95,7 +84,7 @@ export const SwitchWrapper = styled.div<{ isLogin: boolean }>`
     'polygon(0 0, 330px 0, 330px 100%, 0 100%)' :
     'polygon(490px 0, 100% 0, 100% 100%, 490px 100%)')};
   transition: all ${transitionTime};
-  z-index: 2;
+  z-index: 30;
 `
 export const SwitchContent = styled.div<{ isLogin: boolean }>`
   position: absolute;
@@ -107,23 +96,25 @@ export const SwitchContent = styled.div<{ isLogin: boolean }>`
   height: 100%;
   left: ${p => (p.isLogin ? 0 : '490px')};
   transition: left ${transitionTime};
+  z-index: 30;
 `
 export const LeftContent = styled.div<{ isLogin: boolean }>`
   position: absolute;
   width: 480px;
+  height: 100%;
   left: ${p => (p.isLogin ? '330px' : '0')};
   opacity: ${p => (p.isLogin ? '0' : '1')};
-  background: white;
+  z-index: ${p => (p.isLogin ? '-1' : '20')};
   overflow: hidden;
-  transition: left ${transitionTime}, opacity ${transitionTime};
-  z-index: 1;
+  transition: left ${transitionTime}, z-index ${transitionTime}, opacity ${transitionTime};
 `
 export const RightContent = styled.div<{ isLogin: boolean }>`
   position: absolute;
+  width: 480px;
   left: ${p => (p.isLogin ? '330px' : '0')};
   opacity: ${p => (p.isLogin ? '1' : '0')};
-  width: 480px;
-  transition: left ${transitionTime}, opacity ${transitionTime};
+  z-index: ${p => (p.isLogin ? '20' : '-1')};
+  transition: left ${transitionTime}, z-index ${transitionTime}, opacity ${transitionTime};
 `
 export const SwitchText = styled.div`
   margin: 20px 10px;

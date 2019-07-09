@@ -27,14 +27,12 @@ const ThemeContext = React.createContext({} as ThemeState)
 
 const ThemeProvider = memo(({ children }: ThemeProviderProps) => {
   const [themeType, setTheme] = usePersistState('theme', 'dark')
+  const type = includes(themeTypes, themeType) ? themeType : 'light'
+  const customTheme = get(themes, `[${type}]`, {})
 
   const theme = useMemo(() => createMuiTheme({
-    palette: {
-      type: includes(themeTypes, themeType) ? themeType : 'light',
-      primary: { main: '#017EA7' },
-      secondary: { main: '#000433' },
-    },
-  }), [themeType])
+    palette: { type, ...customTheme.palette },
+  }), [type, customTheme.palette])
 
   const toggleTheme = useCallback(() => {
     setTheme((current: ThemeType) => (current === 'dark' ? 'light' : 'dark'))
@@ -44,7 +42,7 @@ const ThemeProvider = memo(({ children }: ThemeProviderProps) => {
     <ThemeContext.Provider value={{ theme, themeType, toggleTheme }}>
       <MuiProvider theme={theme}>
         <StylesProvider injectFirst>
-          <StyledProvider theme={{ ...theme, ...get(themes, `[${theme.palette.type}]`, {}) }}>
+          <StyledProvider theme={{ ...customTheme, ...theme }}>
             <>
               <GlobalStyles />
               <CssBaseline />

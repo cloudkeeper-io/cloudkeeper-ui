@@ -2,6 +2,11 @@ import { mix, transparentize } from 'polished'
 
 const PRIMARY = '#0D8EFC' // mix(0.5, '#2FF6F5', '#0470FE') // '#4A90E2'
 
+const palette = {
+  primary: { main: PRIMARY },
+  secondary: { main: '#FFAA6E' },
+}
+
 const colors = {
   primary: PRIMARY,
   background: '#F5F7FA',
@@ -107,7 +112,8 @@ const dashboard = {
 export default {
   name: 'light',
   favicon: 'light-favicon.png',
-  font: 'Muli',
+  font: 'Quicksand',
+  palette,
   colors,
   controls,
   card,
