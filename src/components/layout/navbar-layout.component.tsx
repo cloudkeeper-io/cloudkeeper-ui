@@ -112,4 +112,4 @@ class NavbarLayout extends React.PureComponent<NavbarLayoutProps> {
   }
 }
 
-export default withRouter<NavbarLayoutProps>(NavbarLayout)
+export default withRouter(NavbarLayout)

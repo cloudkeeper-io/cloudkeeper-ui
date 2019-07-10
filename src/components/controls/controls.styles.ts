@@ -9,7 +9,6 @@ export const getLabel = (ControlIndicator: any, Input: any) => styled.label<Labe
   display: block;
   position: relative;
   padding-left: 30px;
-  margin-bottom: 15px;
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   &:hover {
     ${ControlIndicator} {
@@ -29,7 +28,7 @@ export const getInput = (ControlIndicator: any) => styled.input`
   opacity: 0;
   &:focus {
     ~ ${ControlIndicator} {
-      background: ${p => darken(0.1, p.theme.controls.color)};
+      background: ${p => p.theme.controls.color};
    }
   }
   &:checked {
@@ -42,7 +41,7 @@ export const getInput = (ControlIndicator: any) => styled.input`
   }
   &:checked:focus {
    ~ ${ControlIndicator} {
-      background: ${p => darken(0.2, p.theme.controls.activeColor)};
+      background: ${p => p.theme.controls.activeColor};
    }
   }
   &:disabled {

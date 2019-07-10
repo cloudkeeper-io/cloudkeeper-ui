@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify'
 
 import Head from './head'
 import RootContainer from './containers/root.container'
-import GlobalStyles from './styles/global.styles'
 import SvgDefs from './styles/svg.defs'
 import { ThemeProvider, TimerProvider, TenantProvider, UserProvider, UserSettingsProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
@@ -24,7 +23,6 @@ ReactDOM.render((
               <>
                 <SvgDefs />
                 <Head />
-                <GlobalStyles />
                 <RootContainer />
               </>
             </UserSettingsProvider>

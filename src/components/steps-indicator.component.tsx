@@ -22,6 +22,7 @@ const getBoxShadow = (p: any) => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  box-sizing: initial;
 `
 const Circle = styled.div<{ active: boolean, color?: string }>`
   position: absolute;

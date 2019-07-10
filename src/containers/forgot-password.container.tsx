@@ -4,9 +4,9 @@ import { Form } from 'react-final-form'
 import { toast } from 'react-toastify'
 
 import Card from '../components/card.component'
-import Field from '../components/form/field.components'
-import { FormContent } from './login/components/login-components.styles'
-import ServerError from '../components/form/error-message.components'
+import Field from '../components/form/field.component'
+import { FormContent } from './login/login.styles'
+import ServerError from '../components/form/error-message.component'
 import Button from '../components/button/button.component'
 import { Header } from '../components/typography.component'
 import { UserContext } from '../contexts'
@@ -70,7 +70,7 @@ export default () => {
               <FormContent>
                 <Field name="email" placeholder="Email Address" autoComplete="email" />
                 <ServerError>{error}</ServerError>
-                <Button type="submit" disabled={pristine || invalid} loading={loading}>Reset Password</Button>
+                <Button type="submit" disabled={pristine || invalid} isLoading={loading}>Reset Password</Button>
               </FormContent>
             </form>
           )}

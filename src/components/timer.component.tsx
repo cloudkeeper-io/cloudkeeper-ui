@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { keyframes, css } from 'styled-components/macro'
 
-import Icon from './icon.component'
+import FaIcon from './icons/fa-icon.component'
 
 const spinnerDash = keyframes`
   0% {
@@ -31,7 +31,7 @@ const Circle = styled.circle<{ time: number, active: boolean }>`
   stroke-linecap: round;
   stroke: ${props => props.color || props.theme.colors.primary};
 `
-const ActiveIcon = styled(Icon)<{ fontSize: number }>`
+const ActiveIcon = styled(FaIcon)<{ fontSize: number }>`
   position: absolute;
   height: 100%;
   width: 100%;

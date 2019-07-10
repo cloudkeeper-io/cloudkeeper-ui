@@ -1,6 +1,13 @@
-import { mix, tint, transparentize } from 'polished'
+import { mix, transparentize } from 'polished'
 
-const PRIMARY = '#4A90E2' // mix(0.5, '#2FF6F5', '#0470FE') // '#4A90E2'
+import loginBackground from '../images/light-login-background.png'
+
+const PRIMARY = '#0D8EFC' // mix(0.5, '#2FF6F5', '#0470FE') // '#4A90E2'
+
+const palette = {
+  primary: { main: PRIMARY },
+  secondary: { main: '#FFAA6E' },
+}
 
 const colors = {
   primary: PRIMARY,
@@ -22,10 +29,10 @@ const colors = {
 const controls = {
   color: `${transparentize(0.7, colors.primary)}`,
   gradient: 'linear-gradient(0deg, #EDECEC, #EDECEC), linear-gradient(90deg, #FF5F99 0%, #FFAA6E 101.56%)',
-  activeColor: `${mix(0.5, colors.activeSecondary, colors.active)}`,
+  activeColor: colors.primary,
   activeGradient: `linear-gradient(90deg, ${colors.activeSecondary} 0%, ${colors.active} 100%)`,
   secondaryActiveColor: '#fff',
-  shadow: transparentize(0.5, colors.active),
+  shadow: transparentize(0.5, colors.primary),
 }
 
 const card = {
@@ -52,21 +59,22 @@ const dataCard = {
 }
 
 const input = {
-  background: 'transparent',
-  color: colors.primary,
+  background: '#F3F4F5',
+  color: '#4a4a4a',
+  iconColor: '#9A9DAD',
   border: colors.borderColor,
-  placeholder: transparentize(0.4, colors.primary),
+  placeholder: transparentize(0.3, '#9A9DAD'),
 }
 
 const buttons = {
-  borderRadius: '20px',
+  borderRadius: '45px',
   primary: {
-    background: colors.primary,
-    active: tint(0.15, colors.primary),
+    background: transparentize(0.2, colors.primary),
     color: '#FFFFFF',
     disabled: 'rgba(171, 171, 171, 0.1)',
     borderDisabled: 'transparent',
     disabledText: '#ababab',
+    boxShadow: '0 6px 12px rgba(54, 176, 245, 0.16), 0 16px 24px rgba(54, 123, 245, 0.16)',
   },
   icon: {
     background: '#FFFFFF',
@@ -95,6 +103,7 @@ const select = {
 const login = {
   treesOpacity: 0,
   particlesColor: colors.primary,
+  background: loginBackground,
 }
 
 const dashboard = {
@@ -106,7 +115,8 @@ const dashboard = {
 export default {
   name: 'light',
   favicon: 'light-favicon.png',
-  font: 'Muli',
+  font: 'Quicksand',
+  palette,
   colors,
   controls,
   card,

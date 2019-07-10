@@ -9,10 +9,10 @@ const ControlIndicator = styled.div`
   left: 0;
   min-height: 15px;
   min-width: 15px;
-  background: ${p => p.theme.controls.color};
   border-radius: 50%;
   transition: all 0.3s;
-  box-shadow: 0 0 4px ${p => p.theme.controls.shadow};
+  box-shadow: 0 0 2px ${p => p.theme.controls.shadow};
+  border: 1px solid ${p => p.theme.controls.color};
   &:after {
     content: '';
     box-sizing: initial;
@@ -28,7 +28,7 @@ const ControlIndicator = styled.div`
 `
 
 interface RadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: any
+  label?: any
   className?: string
   name?: string
   disabled?: boolean
@@ -38,7 +38,7 @@ interface RadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const Input = getInput(ControlIndicator)
 const Label = getLabel(ControlIndicator, Input)
 
-export default ({ label, disabled, className, ...props }: RadioButtonProps) => (
+export default ({ label = '', disabled, className, ...props }: RadioButtonProps) => (
   <Label disabled={disabled} className={className}>
     {label}
     <Input disabled={disabled} type="radio" {...props} />

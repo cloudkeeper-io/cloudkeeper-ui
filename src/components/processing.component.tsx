@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-import Icon from './icon.component'
+import FaIcon from './icons/fa-icon.component'
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ const Cogs = styled.div`
   padding: 0 20px 20px 0;
   min-width: 132px;
 `
-const Cog = styled(Icon)`
+const Cog = styled(FaIcon)`
   text-shadow: none;
   animation-duration: 10s;
   filter: none;

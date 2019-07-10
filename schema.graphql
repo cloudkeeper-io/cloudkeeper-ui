@@ -1,223 +1,282 @@
 # This file was generated based on ".graphqlconfig". Do not edit manually.
 
 schema {
-    query: Query
-    mutation: Mutation
+  query: Query
+  mutation: Mutation
+}
+
+type CostsData {
+  costsPerService: [CostsPerServiceDataPoint]
+  costsPerStack: [CostsPerStackDataPoint]
+}
+
+type CostsPerServiceDataPoint {
+  date: String
+  serviceCosts: [ServiceCostItem]
+  total: Float
+}
+
+type CostsPerStackDataPoint {
+  date: String
+  stackCosts: [StackCostItem]
+  total: Float
 }
 
 type DashboardDynamoData {
-    last24Hours: DashboardDynamoDataForPeriod
-    last30Days: DashboardDynamoDataForPeriod
-    processing: Boolean
+  last24Hours: DashboardDynamoDataForPeriod
+  last30Days: DashboardDynamoDataForPeriod
+  processing: Boolean
 }
 
 type DashboardDynamoDataForPeriod {
-    mostExpensiveTables: [MostExpensiveTableData]
-    mostReadTables: [MostReadTableData]
-    mostThrottledTables: [MostThrottledTableData]
-    mostWritesTables: [MostWritesTableData]
+  mostExpensiveTables: [MostExpensiveTableData]
+  mostReadTables: [MostReadTableData]
+  mostThrottledTables: [MostThrottledTableData]
+  mostWritesTables: [MostWritesTableData]
+}
+
+type DashboardEventsData {
+  events: [Event]
+  processing: Boolean
 }
 
 type DashboardLambdaDataForPeriod {
-    mostErrorsLambdas: [MostErrorsLambdaData]
-    mostExpensiveLambdas: [MostExpensiveLambdaData]
-    mostInvokedLambdas: [MostInvokedLambdaData]
-    slowestLambdas: [SlowLambdaData]
-    totals: Totals
+  totals: Totals
 }
 
 type DashboardLambdasData {
-    last24Hours: DashboardLambdaDataForPeriod
-    last30Days: DashboardLambdaDataForPeriod
-    processing: Boolean
+  last24Hours: DashboardLambdaDataForPeriod
+  last30Days: DashboardLambdaDataForPeriod
+  processing: Boolean
+}
+
+type DynamoTableDetails {
+  billingMode: String
+  items: Int
+  name: String
+  region: String
+  sizeBytes: Int
+}
+
+type DynamoTableListItem {
+  avgConsumedRead: Float
+  avgConsumedWrite: Float
+  avgProvisionedRead: Float
+  avgProvisionedWrite: Float
+  billingMode: String
+  items: Int
+  name: String
+  region: String
+  sizeBytes: Int
+  throttledReads: Int
+  throttledWrites: Int
+}
+
+type DynamoTableStats {
+  dataPoints: [DynamoTableStatsDataPoint]
+  totalConsumedRead: Int
+  totalConsumedWrite: Int
+  totalProvisionedRead: Int
+  totalProvisionedWrite: Int
+  totalThrottledReads: Int
+  totalThrottledWrites: Int
+}
+
+type DynamoTableStatsDataPoint {
+  consumedRead: Int
+  consumedWrite: Int
+  dateTime: String
+  provisionedRead: Int
+  provisionedWrite: Int
+  throttledReads: Int
+  throttledWrites: Int
+}
+
+type Event {
+  dateTime: String
+  dimension: String
+  expectedValue: Float
+  message: String
+  serviceName: String
+  value: Float
 }
 
 type IntegrationData {
-    functions: Int
-    status: String
+  functions: Int
+  status: String
 }
 
-type MostErrorsLambdaData {
-    codeSize: Int
-    dataPoints: [MostErrorsLambdaDataPoint]
-    errorRate: Float
-    errors: Int
-    lambdaName: String
-    region: String
-    runtime: String
-    size: Int
-    timeout: Int
+type LambdaConfiguration {
+  codeSize: Int
+  name: String
+  region: String
+  runtime: String
+  size: Int
+  timeout: Int
 }
 
-type MostErrorsLambdaDataPoint {
-    dateTime: String
-    errors: Int
+type LambdaStats {
+  averageDuration: Float
+  dataPoints: [LambdaStatsDataPoint]
+  totalErrors: Int
+  totalInvocations: Int
 }
 
-type MostExpensiveLambdaData {
-    codeSize: Int
-    cost: Float
-    dataPoints: [MostExpensiveLambdaDataPoint]
-    lambdaName: String
-    region: String
-    runtime: String
-    size: Int
-    timeout: Int
+type LambdaStatsDataPoint {
+  averageDuration: Float
+  dateTime: String
+  errors: Int
+  invocations: Int
 }
 
-type MostExpensiveLambdaDataPoint {
-    cost: Float
-    dateTime: String
+type LambdasListItem {
+  avgExecutionTime: Float
+  codeSize: Int
+  cost: Float
+  errorRate: Float
+  errors: Int
+  invocations: Int
+  name: String
+  region: String
+  runtime: String
+  size: Int
+  tenantId: String
+  timeout: Int
 }
 
 type MostExpensiveTableData {
-    billingMode: String
-    dataPoints: [MostExpensiveTableDataPoint]
-    items: Int
-    name: String
-    readPrice: Float
-    region: String
-    sizeBytes: Int
-    storagePrice: Float
-    totalPrice: Float
-    writePrice: Float
+  billingMode: String
+  dataPoints: [MostExpensiveTableDataPoint]
+  items: Int
+  name: String
+  readPrice: Float
+  region: String
+  sizeBytes: Int
+  storagePrice: Float
+  totalPrice: Float
+  writePrice: Float
 }
 
 type MostExpensiveTableDataPoint {
-    dateTime: String
-    readPrice: Float
-    storagePrice: Float
-    totalPrice: Float
-    writePrice: Float
-}
-
-type MostInvokedLambdaData {
-    codeSize: Int
-    dataPoints: [MostInvokedLambdaDataPoint]
-    invocations: Int
-    invocationsPerSecond: Float
-    lambdaName: String
-    region: String
-    runtime: String
-    size: Int
-    timeout: Int
-}
-
-type MostInvokedLambdaDataPoint {
-    dateTime: String
-    invocations: Int
+  dateTime: String
+  readPrice: Float
+  storagePrice: Float
+  totalPrice: Float
+  writePrice: Float
 }
 
 type MostReadTableData {
-    averageConsumedRead: Float
-    billingMode: String
-    consumedRead: Int
-    dataPoints: [MostReadTableDataPoint]
-    items: Int
-    name: String
-    provisionedRead: Int
-    region: String
-    sizeBytes: Int
+  averageConsumedRead: Float
+  billingMode: String
+  consumedRead: Int
+  dataPoints: [MostReadTableDataPoint]
+  items: Int
+  name: String
+  provisionedRead: Int
+  region: String
+  sizeBytes: Int
 }
 
 type MostReadTableDataPoint {
-    consumedRead: Int
-    dateTime: String
-    provisionedRead: Int
+  consumedRead: Int
+  dateTime: String
+  provisionedRead: Int
 }
 
 type MostThrottledTableData {
-    billingMode: String
-    dataPoints: [MostThrottledTableDataPoint]
-    items: Int
-    name: String
-    region: String
-    sizeBytes: Int
-    throttledReads: Int
-    throttledRequests: Int
-    throttledWrites: Int
+  billingMode: String
+  dataPoints: [MostThrottledTableDataPoint]
+  items: Int
+  name: String
+  region: String
+  sizeBytes: Int
+  throttledReads: Int
+  throttledRequests: Int
+  throttledWrites: Int
 }
 
 type MostThrottledTableDataPoint {
-    dateTime: String
-    throttledReads: Int
-    throttledRequests: Int
-    throttledWrites: Int
+  dateTime: String
+  throttledReads: Int
+  throttledRequests: Int
+  throttledWrites: Int
 }
 
 type MostWritesTableData {
-    averageConsumedWrite: Float
-    billingMode: String
-    consumedWrite: Int
-    dataPoints: [MostWritesTableDataPoint]
-    items: Int
-    name: String
-    provisionedWrite: Int
-    region: String
-    sizeBytes: Int
+  averageConsumedWrite: Float
+  billingMode: String
+  consumedWrite: Int
+  dataPoints: [MostWritesTableDataPoint]
+  items: Int
+  name: String
+  provisionedWrite: Int
+  region: String
+  sizeBytes: Int
 }
 
 type MostWritesTableDataPoint {
-    consumedWrite: Int
-    dateTime: String
-    provisionedWrite: Int
+  consumedWrite: Int
+  dateTime: String
+  provisionedWrite: Int
 }
 
 type Mutation {
-    createTenant(name: String!): Tenant
-    deleteTenant(id: String!): Tenant
-    setupTenant(roleArn: String!, tenantId: String!): IntegrationData
+  createTenant(name: String!): Tenant
+  deleteTenant(id: String!): Tenant
+  setupTenant(roleArn: String!, tenantId: String!): IntegrationData
 }
 
 type Query {
-    awsRegions: [String]
-    dynamoData(tenantId: String): DashboardDynamoData
-    lambdasData(tenantId: String): DashboardLambdasData
-    tenants: [Tenant!]
+  awsRegions: [String]
+  costsData(tenantId: String): CostsData
+  dynamoData(tenantId: String): DashboardDynamoData
+  dynamoTable(name: String, region: String, tenantId: String): DynamoTableDetails
+  dynamoTableStats(endDate: String, name: String, region: String, startDate: String, tenantId: String): DynamoTableStats
+  dynamoTablesList(endDate: String, startDate: String, tenantId: String): [DynamoTableListItem]
+  events(tenantId: String): DashboardEventsData
+  lambda(name: String, region: String, tenantId: String): LambdaConfiguration
+  lambdaStats(endDate: String, name: String, region: String, startDate: String, tenantId: String): LambdaStats
+  lambdasData(tenantId: String): DashboardLambdasData
+  lambdasList(endDate: String, startDate: String, tenantId: String): [LambdasListItem]
+  tenants: [Tenant!]
 }
 
-type SlowLambdaData {
-    averageDuration: Float
-    codeSize: Int
-    dataPoints: [SlowLambdaDataPoint]
-    lambdaName: String
-    maxDuration: Float
-    region: String
-    runtime: String
-    size: Int
-    timeout: Int
+type ServiceCostItem {
+  date: String
+  serviceName: String
+  unblendedCost: Float
 }
 
-type SlowLambdaDataPoint {
-    averageDuration: Float
-    dateTime: String
-    maxDuration: Float
+type StackCostItem {
+  date: String
+  stackName: String
+  unblendedCost: Float
 }
 
 type Tenant {
-    createdAt: String!
-    id: String!
-    isSetupCompleted: Boolean!
-    name: String!
+  createdAt: String!
+  id: String!
+  isSetupCompleted: Boolean!
+  name: String!
 }
 
 type Totals {
-    cost: Float
-    dataPoints: [TotalsDataPoint]
-    errors: Int
-    invocations: Int
+  cost: Float
+  dataPoints: [TotalsDataPoint]
+  errors: Int
+  invocations: Int
 }
 
 type TotalsDataPoint {
-    cost: Float
-    dateTime: String
-    errors: Int
-    invocations: Int
+  cost: Float
+  dateTime: String
+  errors: Int
+  invocations: Int
 }
 
 enum CacheControlScope {
-    PRIVATE
-    PUBLIC
+  PRIVATE
+  PUBLIC
 }
 
 

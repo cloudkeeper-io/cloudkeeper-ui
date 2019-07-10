@@ -1,7 +1,14 @@
 /* eslint-disable max-len */
 import { mix, transparentize } from 'polished'
 
-const PRIMARY = '#4FFAC5' // mix(0.5, '#48E385', '#018EFF'); //
+import loginBackground from '../images/dark-login-background.png'
+
+const PRIMARY = '#00E092' // mix(0.5, '#48E385', '#018EFF'); //
+
+const palette = {
+  primary: { main: PRIMARY },
+  secondary: { main: '#018EFF' },
+}
 
 const colors = {
   primary: PRIMARY,
@@ -23,7 +30,7 @@ const colors = {
 const controls = {
   color: transparentize(0.7, colors.primary),
   gradient: 'linear-gradient(270deg, #018EFF -18.75%, #48E385 100%)',
-  activeColor: `${mix(0.5, colors.activeSecondary, colors.active)}`,
+  activeColor: transparentize(0.7, colors.primary),
   activeGradient: `linear-gradient(90deg, ${colors.activeSecondary} 0%, ${colors.active} 100%)`,
   secondaryActiveColor: colors.activeSecondary,
   shadow: transparentize(0.8, colors.primary),
@@ -52,20 +59,21 @@ const dataCard = {
 }
 
 const input = {
-  background: 'transparent',
-  color: colors.primary,
+  background: 'rgba(102, 157, 189, 0.14)',
+  color: colors.text,
+  iconColor: '#8EA4B9',
   border: colors.borderColor,
-  placeholder: transparentize(0.4, colors.primary),
+  placeholder: transparentize(0.45, colors.text),
 }
 
 const buttons = {
-  borderRadius: '0 21px 0 21px',
+  borderRadius: '45px',
   primary: {
-    background: mix(0.85, '#142330', colors.primary),
-    active: mix(0.65, '#142330', colors.primary),
+    background: transparentize(0.2, colors.primary),
     color: colors.text,
     disabled: '#374856',
     disabledText: '#ababab',
+    boxShadow: '',
   },
   icon: {
     background: '#142330',
@@ -94,6 +102,7 @@ const select = {
 const login = {
   treesOpacity: 1,
   particlesColor: '#FFFFFF',
+  background: loginBackground,
 }
 
 const dashboard = {
@@ -105,7 +114,8 @@ const dashboard = {
 export default {
   name: 'dark',
   favicon: 'dark-favicon.png',
-  font: 'Muli',
+  font: 'Quicksand',
+  palette,
   colors,
   controls,
   card,

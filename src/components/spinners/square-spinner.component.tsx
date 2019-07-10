@@ -58,6 +58,6 @@ interface SquareSpinnerProps {
 
 export default ({ size = 50, color = '', className }: SquareSpinnerProps) => (
   <Wrapper className={className} size={size}>
-    {times(9, index => <Cube index={index} color={color} />)}
+    {times(9, index => <Cube key={index} index={index} color={color} />)}
   </Wrapper>
 )

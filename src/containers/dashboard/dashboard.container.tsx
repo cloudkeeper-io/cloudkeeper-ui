@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components/macro'
-import { useQuery } from 'react-apollo-hooks'
+import { useQuery } from 'react-apollo'
 import get from 'lodash/get'
 import find from 'lodash/find'
 import isBoolean from 'lodash/isBoolean'

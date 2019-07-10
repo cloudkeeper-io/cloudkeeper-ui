@@ -20,6 +20,7 @@ export const Content = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   padding: 10px 20px 0 30px;
+  box-sizing: initial;
 `
 export const Header = styled(CommonHeader)`
   display: flex;

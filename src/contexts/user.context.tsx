@@ -3,7 +3,6 @@ import * as firebase from 'firebase/app'
 import { ApolloProvider } from 'react-apollo'
 import { History } from 'history'
 import ApolloClient from 'apollo-client'
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import noop from 'lodash/noop'
 import 'firebase/auth'
 import 'firebase/firestore'
@@ -104,9 +103,7 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
       value={{ user, isUserLoaded, signIn, signUp, signOut, googleSignIn, githubSignIn, updatePassword, resetPassword }}
     >
       <ApolloProvider client={client}>
-        <ApolloHooksProvider client={client}>
-          {children}
-        </ApolloHooksProvider>
+        {children}
       </ApolloProvider>
     </UserContext.Provider>
   )

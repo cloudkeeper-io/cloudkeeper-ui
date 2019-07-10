@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { Props } from 'react-select/lib/Select'
+// eslint-disable-next-line import/no-unresolved
+import { Props } from 'react-select/src/Select'
 import { Field } from 'react-final-form'
 import find from 'lodash/find'
 
-import Error from './error-message.components'
+import Error from './error-message.component'
 import Select from '../controls/select.components'
 
 const ErrorMessage = styled(Error)`

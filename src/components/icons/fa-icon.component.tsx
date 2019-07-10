@@ -1,23 +1,22 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { FontAwesomeIcon, Props as FaIconProps } from '@fortawesome/react-fontawesome'
-import { transparentize } from 'polished'
 
 interface IconProps extends FaIconProps {
+  color?: string
   children?: JSX.Element
   onClick?: () => void
 }
 
 const StyledIcon = styled(FontAwesomeIcon)<IconProps>`
-  color: ${p => p.theme.colors.icon};
+  color: ${p => p.color || p.theme.colors.icon};
   text-shadow: 0 0 4px #4FFAC5;
-  filter: ${p => `drop-shadow(0px 0px 2px ${transparentize(0.85, p.theme.colors.icon)})`};
   transition: all 0.5s;
 `
-const Icon = ({ size = 'lg', children, ...props }: IconProps) => (
-  <StyledIcon size={size} {...props}>
+const FaIcon = ({ size = 'lg', children, color, ...props }: IconProps) => (
+  <StyledIcon size={size} color={color} {...props}>
     {children}
   </StyledIcon>
 )
 
-export default styled(Icon)``
+export default styled(FaIcon)``

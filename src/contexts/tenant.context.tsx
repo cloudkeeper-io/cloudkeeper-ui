@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction, useContext, useMemo, useEffect, useState, useCallback } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useMemo, useEffect, useState, useCallback, memo } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { useQuery } from 'react-apollo-hooks'
+import { useQuery } from 'react-apollo'
 import get from 'lodash/get'
 import find from 'lodash/find'
 import some from 'lodash/some'
@@ -29,7 +29,7 @@ interface TenantState {
 
 const TenantContext = React.createContext({} as TenantState)
 
-const TenantProvider = withRouter<TenantProviderProps>(({ children, location: { pathname } }) => {
+const TenantProvider = withRouter(memo(({ children, location: { pathname } }: TenantProviderProps) => {
   const [tenantId, setTenant] = useState(localStorage.getItem(TENANT_KEY) || null)
   const { user } = useContext(UserContext)
   const { data, loading, error } = useQuery<Tenants>(tenantsQuery, { skip: !user })
@@ -56,8 +56,6 @@ const TenantProvider = withRouter<TenantProviderProps>(({ children, location: { 
       {children}
     </TenantContext.Provider>
   )
-})
+}))
 
-const TenantConsumer = TenantContext.Consumer
-
-export { TenantContext, TenantProvider, TenantConsumer }
+export { TenantContext, TenantProvider }

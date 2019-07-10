@@ -5,8 +5,8 @@ import { toast } from 'react-toastify'
 import first from 'lodash/first'
 import get from 'lodash/get'
 
-import ServerError from '../../../components/form/error-message.components'
-import { SmallField } from '../../../components/form/field.components'
+import ServerError from '../../../components/form/error-message.component'
+import { SmallField } from '../../../components/form/field.component'
 import Card from '../../../components/card.component'
 import Button from '../../../components/button/button.component'
 import { UserContext } from '../../../contexts'
@@ -95,7 +95,7 @@ export default () => {
                   type="password"
                 />
                 <ServerError>{error}</ServerError>
-                <Button type="submit" disabled={pristine || invalid} loading={loading}>
+                <Button type="submit" disabled={pristine || invalid} isLoading={loading}>
                   Change Password
                 </Button>
               </FormContent>

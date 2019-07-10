@@ -1,7 +1,7 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useState, memo } from 'react'
 import { darken } from 'polished'
 import styled from 'styled-components/macro'
-import { RouteComponentProps, withRouter, Link } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { Mutation } from 'react-apollo'
 import map from 'lodash/map'
 
@@ -11,10 +11,9 @@ import CreateTenantModal from './create-tenant-modal.component'
 import CommonCard from '../../../../components/card.component'
 import Loading from '../../../../components/spinners/loading.component'
 import { Tenant } from '../../../../models'
-import Icon from '../../../../components/icon.component'
+import FaIcon from '../../../../components/icons/fa-icon.component'
 import { Header as CommonHeader } from '../../../../components/typography.component'
 import { tenantsQuery, removeTenant } from '../../../../graphql'
-import { RemoveTenant, RemoveTenantVariables } from '../../../../graphql/mutations/types/RemoveTenant'
 import { TenantContext } from '../../../../contexts'
 
 const Header = styled(CommonHeader)`
@@ -46,7 +45,7 @@ const TenantLink = styled(Link)`
   text-decoration: underline;
   color: ${p => p.theme.colors.text};
 `
-const RemoveIcon = styled(Icon)`
+const RemoveIcon = styled(FaIcon)`
   cursor: pointer;
   &:hover {
     color: ${p => darken(0.2, p.theme.colors.icon)};
@@ -56,11 +55,7 @@ const AddButton = styled(Button)`
   margin: 15px auto 0 auto;
 `
 
-class RemoveTenantMutation extends Mutation<RemoveTenant, RemoveTenantVariables> {}
-
-interface TenantsCardProps extends RouteComponentProps {}
-
-const Settings = () => {
+export default memo(withRouter(() => {
   const { tenants, loading, error } = useContext(TenantContext)
   const [isRemoveModalOpen, setRemoveModalOpen] = useState(false)
   const [isCreateModalOpen, setCreateModalOpen] = useState(false)
@@ -80,8 +75,8 @@ const Settings = () => {
   }
 
   return (
-    <RemoveTenantMutation mutation={removeTenant} refetchQueries={[{ query: tenantsQuery }]}>
-      {(mutation, { loading: removing }) => (
+    <Mutation mutation={removeTenant} refetchQueries={[{ query: tenantsQuery }]}>
+      {(mutation: any, { loading: removing }: any) => (
         <>
           <Card>
             {(removing || loading) ? (
@@ -113,8 +108,6 @@ const Settings = () => {
           />
         </>
       )}
-    </RemoveTenantMutation>
+    </Mutation>
   )
-}
-
-export default withRouter<TenantsCardProps>(Settings)
+}))

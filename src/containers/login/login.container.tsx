@@ -1,75 +1,28 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components/macro'
 import { History } from 'history'
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { Tab } from '@material-ui/core'
 
-import Card from '../../components/card.component'
-import Tabs from '../../components/tabs.component'
-import Button from '../../components/button/button.component'
-import Icon from '../../components/icon.component'
 import LoginForm from './components/login-form.component'
 import SignUpForm from './components/sign-up-form.component'
-import Stars from '../../components/stars.component'
-import treeline from './images/treeline.svg'
-import { ReactComponent as SVGLogo } from './images/logo.svg'
 import { UserContext } from '../../contexts'
-
-const Wrapper = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  min-height: calc(100vh - 60px);
-  padding: 0 20px;
-  background-size: contain;
-`
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -140px;
-`
-const MainCard = styled(Card)`
-  display: block;
-  width: 450px;
-  max-width: 90vw;
-  min-height: 300px;
-  overflow: hidden;
-`
-const Logo = styled(SVGLogo)`
-  fill: ${p => p.theme.colors.icon};
-  margin-bottom: 15px;
-  z-index: 2;
-`
-const Trees = styled.div`
-  position: absolute;
-  bottom: 0;
-  height: 100%;
-  width: 100%;
-  background: url("${treeline}") center bottom no-repeat;
-  background-size: contain;
-  opacity: ${p => p.theme.login.treesOpacity};
-  pointer-events: none;
-`
-const SocialWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 450px;
-  max-width: 90vw;
-  margin-bottom: 15px;
-`
-const SocialButton = styled(Button)`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding-right: 15px;
-`
-const SocialIcon = styled(Icon)`
-  margin: 0 5px;
-`
+import {
+  Wrapper,
+  LoginButton,
+  Content,
+  MainCard,
+  Title,
+  Text,
+  Tabs,
+  SocialWrapper,
+  SocialButton,
+  SwitchWrapper,
+  SwitchContent,
+  LeftContent,
+  RightContent,
+  SwitchTitle,
+  SwitchText,
+} from './login.styles'
 
 interface LoginProps {
   history: History
@@ -77,29 +30,48 @@ interface LoginProps {
 
 export default withRouter(({ history, history: { location: { pathname } } }: LoginProps) => {
   const { googleSignIn, githubSignIn } = useContext(UserContext)
-  const tab = pathname === '/sign-up' ? 1 : 0
+  const isLogin = pathname === '/'
 
   return (
     <Wrapper>
-      <Stars />
-      <Trees />
       <Content>
-        <Logo />
-        <SocialWrapper>
-          <SocialButton onClick={googleSignIn}>
-            <SocialIcon icon={['fab', 'google']} />SignIn with Google
-          </SocialButton>
-          <SocialButton onClick={githubSignIn}>
-            <SocialIcon icon={['fab', 'github']} />SignIn with Github
-          </SocialButton>
-        </SocialWrapper>
         <MainCard>
           <Tabs
-            tabs={['Sign In', 'Sign Up']}
-            selectedIndex={tab}
-            onChange={i => (i ? history.push('/sign-up') : history.push('/'))}
-          />
-          {tab ? <SignUpForm history={history} /> : <LoginForm history={history} />}
+            value={Number(!isLogin)}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab component={Link} to="/" label="Sign In" />
+            <Tab component={Link} to="/sign-up" label="Sign Up" />
+          </Tabs>
+          <LeftContent isLogin={isLogin}>
+            <Title>Create Account</Title>
+            <SocialWrapper>
+              <SocialButton icon={['fab', 'google']} onClick={googleSignIn} />
+              <SocialButton icon={['fab', 'github']} onClick={githubSignIn} />
+            </SocialWrapper>
+            <Text>or use your email account for registration:</Text>
+            <SignUpForm history={history} />
+          </LeftContent>
+          <SwitchWrapper isLogin={isLogin}>
+            <SwitchContent isLogin={isLogin}>
+              <SwitchTitle>Welcome Back!</SwitchTitle>
+              <SwitchText>To keep connected with us please login with your personal info</SwitchText>
+              <LoginButton onClick={() => (isLogin ? history.push('/sign-up') : history.push('/'))}>
+                {isLogin ? 'Sign Up' : 'Sign In'}
+              </LoginButton>
+            </SwitchContent>
+          </SwitchWrapper>
+          <RightContent isLogin={isLogin}>
+            <Title>Sign in to Cloudkeeper </Title>
+            <SocialWrapper>
+              <SocialButton icon={['fab', 'google']} onClick={googleSignIn} />
+              <SocialButton icon={['fab', 'github']} onClick={githubSignIn} />
+            </SocialWrapper>
+            <Text>or use your email account:</Text>
+            <LoginForm />
+          </RightContent>
         </MainCard>
       </Content>
     </Wrapper>

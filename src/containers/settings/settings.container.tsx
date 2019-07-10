@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components/macro'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
@@ -27,7 +27,7 @@ interface SettingsContainerProps extends RouteComponentProps {
   className?: string
 }
 
-const Settings = ({ className }: SettingsContainerProps) => (
+export default withRouter(memo(({ className }: SettingsContainerProps) => (
   <Wrapper className={className}>
     <Content>
       <TenantsCard />
@@ -35,6 +35,4 @@ const Settings = ({ className }: SettingsContainerProps) => (
       <UserSettings />
     </Content>
   </Wrapper>
-)
-
-export default withRouter<SettingsContainerProps>(Settings)
+)))
