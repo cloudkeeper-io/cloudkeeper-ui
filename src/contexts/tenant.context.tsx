@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useContext, useMemo, useEffect, useState, useCallback, memo } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { useQuery } from 'react-apollo-hooks'
+import { useQuery } from 'react-apollo'
 import get from 'lodash/get'
 import find from 'lodash/find'
 import some from 'lodash/some'

@@ -21,9 +21,10 @@ export default styled.input`
   &:-webkit-autofill:hover, 
   &:-webkit-autofill:focus, 
   &:-webkit-autofill:active  {
-    -webkit-box-shadow: 0 0 0 30px ${p => p.theme.input.background} inset !important;
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
     -webkit-text-fill-color: ${p => p.theme.input.color} !important;
-    transition: background-color 999999999s ease-in-out 0s;
+    transition-property: background-color, color;
+    transition-delay: 99999999999s;
   }
   ::placeholder {
     color: ${p => p.theme.input.placeholder};

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { History } from 'history'
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { Tab } from '@material-ui/core'
 
 import LoginForm from './components/login-form.component'
 import SignUpForm from './components/sign-up-form.component'
@@ -12,6 +13,7 @@ import {
   MainCard,
   Title,
   Text,
+  Tabs,
   SocialWrapper,
   SocialButton,
   SwitchWrapper,
@@ -34,6 +36,15 @@ export default withRouter(({ history, history: { location: { pathname } } }: Log
     <Wrapper>
       <Content>
         <MainCard>
+          <Tabs
+            value={Number(!isLogin)}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab component={Link} to="/" label="Sign In" />
+            <Tab component={Link} to="/sign-up" label="Sign Up" />
+          </Tabs>
           <LeftContent isLogin={isLogin}>
             <Title>Create Account</Title>
             <SocialWrapper>

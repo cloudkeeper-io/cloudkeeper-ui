@@ -1,5 +1,7 @@
 import { mix, transparentize } from 'polished'
 
+import loginBackground from '../images/light-login-background.png'
+
 const PRIMARY = '#0D8EFC' // mix(0.5, '#2FF6F5', '#0470FE') // '#4A90E2'
 
 const palette = {
@@ -101,6 +103,7 @@ const select = {
 const login = {
   treesOpacity: 0,
   particlesColor: colors.primary,
+  background: loginBackground,
 }
 
 const dashboard = {

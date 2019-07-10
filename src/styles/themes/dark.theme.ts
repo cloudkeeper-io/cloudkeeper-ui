@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import { mix, transparentize } from 'polished'
 
+import loginBackground from '../images/dark-login-background.png'
+
 const PRIMARY = '#00E092' // mix(0.5, '#48E385', '#018EFF'); //
 
 const palette = {
@@ -100,6 +102,7 @@ const select = {
 const login = {
   treesOpacity: 1,
   particlesColor: '#FFFFFF',
+  background: loginBackground,
 }
 
 const dashboard = {
