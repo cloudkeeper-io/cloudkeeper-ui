@@ -116,11 +116,7 @@ export default ({ tenants }: DashboardProps) => {
     <Wrapper>
       <Background />
       <StyledTitle>
-        <HeaderTabs
-          tabs={['Last 24h', 'Last 30 days']}
-          selectedIndex={tab}
-          onChange={i => setTab(i)}
-        />
+        <HeaderTabs tabs={['Last 24h', 'Last 30 days']} selectedIndex={tab} onChange={i => setTab(i)} />
       </StyledTitle>
       <Hr />
       {tab === 0 && (

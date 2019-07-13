@@ -36,14 +36,13 @@ const controls = {
 }
 
 const card = {
-  background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, #F7FCFF 100%)',
+  background: 'rgba(255,255,255, 0.7)',
   shadow: colors.shadow,
   borderRadius: '10px',
   borderColor: '#FFFFFF',
 }
 
 const dataCard = {
-  background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, #F7FCFF 100%)',
   secondaryBackground: colors.primary,
   axis: '#9A9DAD',
   secondaryAxis: transparentize(0.3, colors.activeText),
