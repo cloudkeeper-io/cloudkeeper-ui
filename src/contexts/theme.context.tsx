@@ -26,7 +26,7 @@ const themeTypes = ['light', 'dark']
 const ThemeContext = React.createContext({} as ThemeState)
 
 const ThemeProvider = memo(({ children }: ThemeProviderProps) => {
-  const [themeType, setTheme] = usePersistState('theme', 'dark')
+  const [themeType, setTheme] = usePersistState('theme', 'light')
   const type = includes(themeTypes, themeType) ? themeType : 'light'
   const customTheme = get(themes, `[${type}]`, {})
 

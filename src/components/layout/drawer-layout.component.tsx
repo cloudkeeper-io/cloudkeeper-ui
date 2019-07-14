@@ -7,7 +7,6 @@ import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { ChevronLeft } from 'react-feather'
 
 import ElevationScroll from './elevation-scroll.component'
-import LoadingPage from '../spinners/loading-page.component'
 import TenantSwitcher from '../tenant-select.component'
 import ErrorContainer from '../../containers/error.container'
 import ThemeSwitcher from '../theme-switcher.component'
@@ -112,12 +111,8 @@ interface DrawerLayoutProps extends RouteComponentProps {
 
 export default withRouter(({ children }: DrawerLayoutProps) => {
   const { isExpanded, setExpanded } = useContext(AppBarContext)
-  const { currentTenant, loading, error } = useContext(TenantContext)
+  const { error } = useContext(TenantContext)
   const toggleExpand = useCallback(() => setExpanded(!isExpanded), [isExpanded, setExpanded])
-
-  if (loading || !currentTenant) {
-    return <LoadingPage />
-  }
 
   if (error) {
     return <ErrorContainer />

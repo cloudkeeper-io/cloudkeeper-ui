@@ -5,18 +5,16 @@ import TopDynamoCard from '../../components/data-cards/top-dynamo-card.component
 import { formatNumber } from '../../utils'
 
 interface GraphsProps {
-  count: number
   timeAxisFormat: string
   data: any
 }
 
-export const DynamoGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps) => (
+export const DynamoGraphs = memo(({ data, timeAxisFormat }: GraphsProps) => (
   <>
     <TopDynamoCard
       header="Read Heavy Tables"
       dynamoHeader="Most Read Table"
       units={[{ label: 'consumed', value: 'consumedRead' }, { label: 'provisioned', value: 'provisionedRead' }]}
-      count={count}
       data={data.mostReadTables}
       summaryFormatter={x => `${x.consumedRead!.toLocaleString('ru')} read units`}
       yAxisFormatter={x => formatNumber(x)}
@@ -31,7 +29,6 @@ export const DynamoGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps) 
       header="Write Heavy Tables"
       dynamoHeader="Most Written Table"
       units={[{ label: 'consumed', value: 'consumedWrite' }, { label: 'provisioned', value: 'provisionedWrite' }]}
-      count={count}
       data={data.mostWritesTables}
       summaryFormatter={x => `${x.consumedWrite!.toLocaleString('ru')} write units`}
       yAxisFormatter={x => formatNumber(x)}
@@ -49,7 +46,6 @@ export const DynamoGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps) 
         { label: 'throttled reads', value: 'throttledReads' },
         { label: 'throttled writes', value: 'throttledWrites' },
       ]}
-      count={count}
       data={data.mostThrottledTables}
       summaryFormatter={x => `${x.throttledRequests!.toLocaleString('ru')} throttled requests`}
       yAxisFormatter={x => formatNumber(x)}
@@ -64,7 +60,6 @@ export const DynamoGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps) 
       header="Expensive Tables"
       dynamoHeader="Most Expensive Table"
       units={[{ label: 'read price', value: 'readPrice' }, { label: 'write price', value: 'writePrice' }]}
-      count={count}
       data={data.mostExpensiveTables}
       summaryFormatter={x => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
       yAxisFormatter={x => `$ ${formatNumber(x)}`}

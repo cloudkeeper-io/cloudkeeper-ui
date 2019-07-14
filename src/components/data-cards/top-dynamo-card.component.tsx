@@ -85,7 +85,6 @@ interface DynamoInfoItem {
 
 interface TopDynamoCardProps {
   data: Data []
-  count: number
   timeAxisFormat: string
   header?: string
   dynamoHeader?: string
@@ -102,11 +101,11 @@ interface TopDynamoCardProps {
 }
 
 const DataCard = (props: TopDynamoCardProps) => {
-  const { data, dynamoInfo, count, theme, header, units, timeAxisFormat } = props
+  const { data, dynamoInfo, theme, header, units, timeAxisFormat } = props
   const { dynamoHeader, tooltipFormatter, yAxisFormatter, summaryFormatter, className } = props
   const TABS_AMOUNT = data.length + 1
   const { dataCard: colors } = theme
-  const [tab, setTab] = useSwitchTab(count, TABS_AMOUNT, 0)
+  const [tab, setTab] = useSwitchTab(0, TABS_AMOUNT, 0)
   const dynamo = data[tab - 1]
 
   if (isEmpty(data)) {
