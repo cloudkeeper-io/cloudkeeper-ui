@@ -18,6 +18,7 @@ interface LoadingProps {
 
 export default ({ error, height, className }: LoadingProps) => {
   if (error) {
+    // eslint-disable-next-line no-console
     console.log(error)
     return error.toString()
   }

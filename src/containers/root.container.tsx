@@ -1,37 +1,42 @@
-import React, { lazy, Suspense, useContext, useEffect } from 'react'
+import React, { memo, useContext, useEffect } from 'react'
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
+import Loadable from 'react-loadable'
 import isEmpty from 'lodash/isEmpty'
 import first from 'lodash/first'
 
-import NavbarLayout from '../components/layout/navbar-layout.component'
+import DrawerLayout from '../components/layout/drawer-layout.component'
+import ToolbarLayout from '../components/layout/toolbar-layout.component'
 import LoadingPage from '../components/spinners/loading-page.component'
 import { UserContext, TenantContext } from '../contexts'
 
-const Login = lazy(() => import('./login/login.container'))
-const ForgotPassword = lazy(() => import('./forgot-password.container'))
+const Login = Loadable({ loader: () => import('./login/login.container'), loading: LoadingPage })
+const ForgotPassword = Loadable({ loader: () => import('./forgot-password.container'), loading: LoadingPage })
 
-const Dashboard = lazy(() => import('./dashboard/dashboard.container'))
-const Settings = lazy(() => import('./settings/settings.container'))
-const Welcome = lazy(() => import('./welcome.container'))
+const Dashboard = Loadable({ loader: () => import('./dashboard/dashboard.container'), loading: LoadingPage })
+const Settings = Loadable({ loader: () => import('./settings/settings.container'), loading: LoadingPage })
+const Welcome = Loadable({ loader: () => import('./welcome.container'), loading: LoadingPage })
 
-const Error = lazy(() => import('./error.container'))
+const Error = Loadable({ loader: () => import('./error.container'), loading: LoadingPage })
 
-const AnonRoutes = () => (
-  <Switch>
-    <Route exact path="/">
-      <Login />
-    </Route>
-    <Route exact path="/sign-up">
-      <Login />
-    </Route>
-    <Route exact path="/forgot-password">
-      <ForgotPassword />
-    </Route>
-    <Error title="404" text="Page not found" />
-  </Switch>
-)
 
-const AuthorizedRoutes = () => {
+const AnonRoutes = memo(() => (
+  <ToolbarLayout>
+    <Switch>
+      <Route exact path="/">
+        <Login />
+      </Route>
+      <Route exact path="/sign-up">
+        <Login />
+      </Route>
+      <Route exact path="/forgot-password">
+        <ForgotPassword />
+      </Route>
+      <Error title="404" text="Page not found" />
+    </Switch>
+  </ToolbarLayout>
+))
+
+const AuthorizedRoutes = memo(() => {
   const { tenants, loading, error, currentTenant, setAndSaveTenant } = useContext(TenantContext)
 
   useEffect(() => {
@@ -73,24 +78,22 @@ const AuthorizedRoutes = () => {
       <Error title="404" text="Page not found" />
     </Switch>
   )
-}
+})
 
 export default withRouter(() => {
-  const { user, isUserLoaded, signOut } = useContext(UserContext)
+  const { user, isUserLoaded } = useContext(UserContext)
 
   if (!isUserLoaded) {
     return <LoadingPage />
   }
 
-  return (
-    <NavbarLayout
-      background={user ? '' : 'transparent'}
-      user={user!}
-      signOut={signOut}
-    >
-      <Suspense fallback={<LoadingPage />}>
-        {user ? <AuthorizedRoutes /> : <AnonRoutes />}
-      </Suspense>
-    </NavbarLayout>
-  )
+  if (user) {
+    return (
+      <DrawerLayout>
+        <AuthorizedRoutes />
+      </DrawerLayout>
+    )
+  }
+
+  return <AnonRoutes />
 })

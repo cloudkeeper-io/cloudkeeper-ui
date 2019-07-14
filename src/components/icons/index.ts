@@ -1,1 +1,1 @@
-export * from './arrow.component'
+export * from './icon.component'

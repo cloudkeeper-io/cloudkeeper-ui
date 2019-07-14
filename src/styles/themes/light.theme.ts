@@ -11,9 +11,9 @@ const palette = {
 
 const colors = {
   primary: PRIMARY,
-  background: '#F5F7FA',
+  background: '#FCFDFF',
   transparentBackground: 'rgb(248, 248, 248, 0.6)',
-  mainBackground: 'linear-gradient(180deg, #F8F8FF 60px, #F7F7FF 100%)',
+  mainBackground: 'linear-gradient(180deg, #FCFDFF 60px, #F7F7FF 100%)',
   borderColor: PRIMARY,
   text: '#4A4A4A',
   icon: PRIMARY,
@@ -111,10 +111,15 @@ const dashboard = {
   hr: '#FFFFFF',
 }
 
+const drawer = {
+  background: 'linear-gradient(180deg, #0970D4 60px, #1DC9D7 100%)',
+}
+
 export default {
   name: 'light',
   favicon: 'light-favicon.png',
   font: 'Quicksand',
+  drawer,
   palette,
   colors,
   controls,

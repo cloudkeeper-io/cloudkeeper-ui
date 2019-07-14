@@ -31,11 +31,11 @@ const style = {
   },
 }
 
-export default (props: ModalProps) => (
+export default ({ style: customStyles, ...props }: ModalProps) => (
   <ReactModal
     closeTimeoutMS={250}
     ariaHideApp={false}
     {...props}
-    style={merge(style, props.style)}
+    style={merge(style, customStyles)}
   />
 )

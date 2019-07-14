@@ -16,7 +16,7 @@ interface IconProps {
   onClick?: any
 }
 
-export default class Icon extends React.PureComponent<IconProps> {
+class IconComponent extends React.PureComponent<IconProps> {
   public render() {
     const { className, ...props } = this.props
     const icon = icons[props.icon]
@@ -33,3 +33,7 @@ export default class Icon extends React.PureComponent<IconProps> {
     return <Svg className={className} {...filteredProps} />
   }
 }
+
+export const Icon = styled(IconComponent)``
+
+export default Icon

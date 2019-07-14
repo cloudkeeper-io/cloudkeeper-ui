@@ -23,10 +23,12 @@ export const getApolloClient = (getIdToken: () => Promise<string>) => {
     localStorage.setItem(PERSIST_LAST_PURGE_KEY, String(Date.now()))
     persistor
       .purge()
+      // eslint-disable-next-line no-console
       .catch(err => console.log(`Cache purge error: ${err}`))
   } else {
     persistor
       .restore()
+      // eslint-disable-next-line no-console
       .catch(err => console.log(`Cache restore error: ${err}`))
   }
 

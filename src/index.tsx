@@ -7,7 +7,14 @@ import { ToastContainer } from 'react-toastify'
 import Head from './head'
 import RootContainer from './containers/root.container'
 import SvgDefs from './styles/svg.defs'
-import { ThemeProvider, TimerProvider, TenantProvider, UserProvider, UserSettingsProvider } from './contexts'
+import {
+  ThemeProvider,
+  TimerProvider,
+  TenantProvider,
+  AppBarProvider,
+  UserProvider,
+  UserSettingsProvider,
+} from './contexts'
 import * as serviceWorker from './serviceWorker'
 import './configs/icons.config'
 
@@ -20,11 +27,13 @@ ReactDOM.render((
         <TimerProvider>
           <TenantProvider>
             <UserSettingsProvider>
-              <>
-                <SvgDefs />
-                <Head />
-                <RootContainer />
-              </>
+              <AppBarProvider>
+                <>
+                  <SvgDefs />
+                  <Head />
+                  <RootContainer />
+                </>
+              </AppBarProvider>
             </UserSettingsProvider>
           </TenantProvider>
         </TimerProvider>

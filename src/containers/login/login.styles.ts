@@ -34,7 +34,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 64px);
   padding: 0;
   @media (max-width: 900px) {
     padding: 0 20px;

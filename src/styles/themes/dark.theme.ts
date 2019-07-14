@@ -12,9 +12,9 @@ const palette = {
 
 const colors = {
   primary: PRIMARY,
-  background: '#0E0B20',
+  background: '#040C2A',
   transparentBackground: 'rgb(14, 11, 32, 0.4)',
-  mainBackground: 'linear-gradient(180deg, #0E0B20 0, #112531 100%)',
+  mainBackground: 'linear-gradient(180deg, #040C2A 60px, #112531 100%)',
   borderColor: '#4FFAC5',
   text: '#FFFFFF',
   icon: PRIMARY,
@@ -111,10 +111,16 @@ const dashboard = {
   hr: colors.primary,
 }
 
+const drawer = {
+  background: 'linear-gradient(180deg, #07203D 60px, #061932 100%)',
+}
+
+
 export default {
   name: 'dark',
   favicon: 'dark-favicon.png',
   font: 'Quicksand',
+  drawer,
   palette,
   colors,
   controls,
