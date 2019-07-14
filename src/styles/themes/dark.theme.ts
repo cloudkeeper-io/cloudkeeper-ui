@@ -2,6 +2,7 @@
 import { mix, transparentize } from 'polished'
 
 import loginBackground from '../images/dark-login-background.png'
+import darkBackground from '../images/stars-background.jpg'
 
 const PRIMARY = '#00E092' // mix(0.5, '#48E385', '#018EFF'); //
 
@@ -14,7 +15,7 @@ const colors = {
   primary: PRIMARY,
   background: '#040C2A',
   transparentBackground: 'rgb(14, 11, 32, 0.4)',
-  mainBackground: 'linear-gradient(180deg, #040C2A 60px, #112531 100%)',
+  mainBackground: `url("${darkBackground}") center center / cover;`,
   borderColor: '#4FFAC5',
   text: '#FFFFFF',
   icon: PRIMARY,
@@ -103,6 +104,7 @@ const login = {
   treesOpacity: 1,
   particlesColor: '#FFFFFF',
   background: loginBackground,
+  headerColor: PRIMARY,
 }
 
 const dashboard = {

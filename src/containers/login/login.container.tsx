@@ -56,15 +56,15 @@ export default withRouter(({ history, history: { location: { pathname } } }: Log
           </LeftContent>
           <SwitchWrapper isLogin={isLogin}>
             <SwitchContent isLogin={isLogin}>
-              <SwitchTitle>Welcome Back!</SwitchTitle>
-              <SwitchText>To keep connected with us please login with your personal info</SwitchText>
+              <SwitchTitle>{isLogin ? 'Welcome Back!' : 'Welcome to Cloudkeeper'}</SwitchTitle>
+              <SwitchText>{isLogin ? 'Sign in to continue monitoring your projects' : 'Sign Up to start monitoring your projects'}</SwitchText>
               <LoginButton onClick={() => (isLogin ? history.push('/sign-up') : history.push('/'))}>
                 {isLogin ? 'Sign Up' : 'Sign In'}
               </LoginButton>
             </SwitchContent>
           </SwitchWrapper>
           <RightContent isLogin={isLogin}>
-            <Title>Sign in to Cloudkeeper </Title>
+            <Title>Sign in to Cloudkeeper</Title>
             <SocialWrapper>
               <SocialButton icon={['fab', 'google']} onClick={googleSignIn} />
               <SocialButton icon={['fab', 'github']} onClick={githubSignIn} />

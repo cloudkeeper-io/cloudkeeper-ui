@@ -58,7 +58,8 @@ export const Title = styled.div`
   line-height: 40px;
   margin-top: 30px;
   text-align: center;
-  padding: 0 20px
+  padding: 0 20px;
+  color: ${p => p.theme.login.headerColor};
 `
 export const MainCard = styled(Card)`
   display: flex;

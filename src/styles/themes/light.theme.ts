@@ -103,6 +103,7 @@ const login = {
   treesOpacity: 0,
   particlesColor: colors.primary,
   background: loginBackground,
+  headerColor: '#333333',
 }
 
 const dashboard = {
