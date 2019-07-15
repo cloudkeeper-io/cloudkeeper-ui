@@ -57,7 +57,10 @@ export default withRouter(({ history, history: { location: { pathname } } }: Log
           <SwitchWrapper isLogin={isLogin}>
             <SwitchContent isLogin={isLogin}>
               <SwitchTitle>{isLogin ? 'Welcome Back!' : 'Welcome to Cloudkeeper'}</SwitchTitle>
-              <SwitchText>{isLogin ? 'Sign in to continue monitoring your projects' : 'Sign Up to start monitoring your projects'}</SwitchText>
+              <SwitchText>{isLogin ?
+                'Sign in to continue monitoring your projects'
+                : 'Sign Up to start monitoring your projects'}
+              </SwitchText>
               <LoginButton onClick={() => (isLogin ? history.push('/sign-up') : history.push('/'))}>
                 {isLogin ? 'Sign Up' : 'Sign In'}
               </LoginButton>
