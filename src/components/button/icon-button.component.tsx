@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import { mix, transparentize } from 'polished'
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
+import Fab from '@material-ui/core/Fab'
 
 import FaIcon from '../icons/fa-icon.component'
 
@@ -24,15 +25,26 @@ const Wrapper = styled.button<{ size: string }>`
 
 interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string,
-  size?: string,
+  size?: 'small' | 'medium' | 'large',
   icon?: IconProp,
   iconSize?: SizeProp,
+  color?: "primary" | "secondary" | "default" | "inherit",
 }
 
-const IconButton = ({ className, icon, size = '50px', iconSize = '2x', ...props }: IconButtonProps) => (
-  <Wrapper className={className} size={size} {...props}>
+const ThemedFab = styled(Fab)`
+  background: ${p => p.theme.icon.background};
+  box-shadow: ${p => p.theme.icon.shadow};
+  border: ${p => p.theme.icon.border};
+  &:hover {
+    text-decoration: none;
+    background-color: ${p => p.theme.icon.hoverColor};
+  }
+`
+
+const IconButton = ({ className, icon, size = 'medium', iconSize = '2x', ...props }: IconButtonProps) => (
+  <ThemedFab className={className} size={size} {...props}>
     <FaIcon size={iconSize} icon={icon!} />
-  </Wrapper>
+  </ThemedFab>
 )
 
 IconButton.Wrapper = Wrapper

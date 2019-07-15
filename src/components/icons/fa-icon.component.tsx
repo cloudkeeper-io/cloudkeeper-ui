@@ -9,7 +9,7 @@ interface IconProps extends FaIconProps {
 }
 
 const StyledIcon = styled(FontAwesomeIcon)<IconProps>`
-  color: ${p => p.color || p.theme.colors.icon};
+  color: ${p => p.color || p.theme.icon.color};
   text-shadow: 0 0 4px #4FFAC5;
   transition: all 0.5s;
 `

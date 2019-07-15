@@ -107,6 +107,14 @@ const login = {
   headerColor: PRIMARY,
 }
 
+const icon = {
+  background: 'none',
+  color: '#DADADA',
+  shadow: '0px 10px 20px rgba(31, 32, 65, 0.1)',
+  hoverColor: 'rgba(242, 242, 242, 0.3)',
+  border: '1px solid #FFFFFF',
+}
+
 const dashboard = {
   background: '#0F1D3D url(/dark-dashboard.svg) 100% 100% no-repeat',
   header: colors.primary,
@@ -134,4 +142,5 @@ export default {
   select,
   login,
   dashboard,
+  icon,
 }

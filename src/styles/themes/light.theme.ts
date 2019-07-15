@@ -106,6 +106,14 @@ const login = {
   headerColor: '#333333',
 }
 
+const icon = {
+  background: 'white',
+  color: '#333333',
+  shadow: '0px 10px 20px rgba(31, 32, 65, 0.1)',
+  hoverColor: '#f2f2f2',
+  border: 'none',
+}
+
 const dashboard = {
   background: '#E4E4EB url(/light-dashboard.svg) center center no-repeat',
   header: colors.text,
@@ -132,4 +140,5 @@ export default {
   select,
   login,
   dashboard,
+  icon,
 }
