@@ -28,7 +28,7 @@ interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
   size?: 'small' | 'medium' | 'large',
   icon?: IconProp,
   iconSize?: SizeProp,
-  color?: "primary" | "secondary" | "default" | "inherit",
+  color?: 'primary' | 'secondary' | 'default' | 'inherit',
 }
 
 const ThemedFab = styled(Fab)`
