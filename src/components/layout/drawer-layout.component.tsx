@@ -111,7 +111,7 @@ interface DrawerLayoutProps extends RouteComponentProps {
 
 export default withRouter(({ children }: DrawerLayoutProps) => {
   const { isExpanded, setExpanded } = useContext(AppBarContext)
-  const { error } = useContext(TenantContext)
+  const { tenantId, error } = useContext(TenantContext)
   const toggleExpand = useCallback(() => setExpanded(!isExpanded), [isExpanded, setExpanded])
 
   if (error) {
@@ -135,7 +135,7 @@ export default withRouter(({ children }: DrawerLayoutProps) => {
       <Drawer variant="permanent" open={isExpanded}>
         <Link to="/"><Logo open={isExpanded} /></Link>
         <Hr open={isExpanded} />
-        <List>{getTopMenuItems()}</List>
+        <List>{getTopMenuItems(tenantId!)}</List>
         <Flex />
         <List>{getBottomMenuItems()}</List>
         <ArrowWrapper>

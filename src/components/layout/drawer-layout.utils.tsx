@@ -32,14 +32,14 @@ const ListItemIcon = styled(MaterialListItemIcon)`
 
 export const topMenuItems = [
   { primary: 'Dashboard', to: () => '/', icon: <Layout /> },
-  { primary: 'Lambdas', icon: <Icon icon="lambda" /> },
-  { primary: 'DynamoDB', icon: <Icon icon="dynamo" /> },
+  { primary: 'Lambdas', to: (tenantId: string) => `/tenants/${tenantId}/lambdas`, icon: <Icon icon="lambda" /> },
+  { primary: 'DynamoDB', to: (tenantId: string) => `/tenants/${tenantId}/dynamo-tables`, icon: <Icon icon="dynamo" /> },
 ]
 
-export const getTopMenuItems = () => map(topMenuItems, (item) => {
+export const getTopMenuItems = (tenantId: string) => map(topMenuItems, (item) => {
   if (item.to) {
     return (
-      <Link key={item.primary} to={item.to()}>
+      <Link key={item.primary} to={item.to(tenantId)}>
         <ListItem button>
           <ListItemIcon>{item.icon}</ListItemIcon>
           <ListItemText primary={item.primary} />

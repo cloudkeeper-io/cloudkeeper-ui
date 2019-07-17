@@ -13,6 +13,8 @@ const Login = Loadable({ loader: () => import('./login/login.container'), loadin
 const ForgotPassword = Loadable({ loader: () => import('./forgot-password.container'), loading: LoadingPage })
 
 const Dashboard = Loadable({ loader: () => import('./dashboard/dashboard.container'), loading: LoadingPage })
+const Lambdas = Loadable({ loader: () => import('./lambdas/lambdas.container'), loading: LoadingPage })
+const DynamoTables = Loadable({ loader: () => import('./dynamo-tables/dynamo-tables.container'), loading: LoadingPage })
 const Settings = Loadable({ loader: () => import('./settings/settings.container'), loading: LoadingPage })
 const Welcome = Loadable({ loader: () => import('./welcome.container'), loading: LoadingPage })
 
@@ -68,6 +70,12 @@ const AuthorizedRoutes = memo(() => {
       )}
       <Route exact path="/tenants/:tenantId/dashboard">
         <Dashboard tenants={tenants} />
+      </Route>
+      <Route exact path="/tenants/:tenantId/lambdas">
+        <Lambdas tenants={tenants} />
+      </Route>
+      <Route exact path="/tenants/:tenantId/dynamo-tables">
+        <DynamoTables tenants={tenants} />
       </Route>
       <Route exact path="/settings">
         <Settings />
