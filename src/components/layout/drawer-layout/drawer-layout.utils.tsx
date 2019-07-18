@@ -19,8 +19,8 @@ interface MenuItemsProps extends RouteComponentProps {
 
 export const topMenuItems = [
   { primary: 'Dashboard', to: (id: string) => `/tenant/${id}/dashboard`, icon: <Layout /> },
-  { primary: 'Lambdas', icon: <Icon icon="lambda" /> },
-  { primary: 'DynamoDB', icon: <Icon icon="dynamo" /> },
+  { primary: 'Lambdas', to: (tenantId: string) => `/tenants/${tenantId}/lambdas`, icon: <Icon icon="lambda" /> },
+  { primary: 'DynamoDB', to: (tenantId: string) => `/tenants/${tenantId}/dynamo-tables`, icon: <Icon icon="dynamo" /> },
 ]
 
 export const TopMenuItems = withRouter(memo((props: MenuItemsProps) => {

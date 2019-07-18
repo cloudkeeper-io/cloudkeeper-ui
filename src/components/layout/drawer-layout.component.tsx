@@ -7,7 +7,7 @@ import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { ChevronLeft } from 'react-feather'
 
 import ElevationScroll from './elevation-scroll.component'
-import TenantSwitcher from '../tenant-select.component'
+import TenantSwitcher from '../tenant-switcher.component'
 import ErrorContainer from '../../containers/error.container'
 import ThemeSwitcher from '../theme-switcher.component'
 import { UserMenu } from '../user'
