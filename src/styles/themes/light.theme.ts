@@ -81,12 +81,6 @@ const buttons = {
 }
 
 const tabs = {
-  background: '#FFFFFF',
-  active: colors.primary,
-  text: '#FFFFFF',
-  activeText: '#4A4A4A',
-  borderLeft: '10px 0 0 0',
-  borderRight: '0 10px 0 0',
   gradient: 'linear-gradient(90deg, #2FF6F5 0%, #0470FE 100%)',
 }
 
@@ -109,7 +103,6 @@ const login = {
 const icon = {
   background: 'white',
   color: '#333333',
-  shadow: '0px 10px 20px rgba(31, 32, 65, 0.1)',
   hoverColor: '#f2f2f2',
   border: 'none',
 }

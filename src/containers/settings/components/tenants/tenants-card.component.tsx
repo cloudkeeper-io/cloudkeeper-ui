@@ -87,7 +87,7 @@ export default memo(withRouter(() => {
             <Header>Your projects: </Header>
             {map(tenants, tenant => (
               <Row key={tenant.id}>
-                <TenantLink to={`/tenants/${tenant.id}/dashboard`}>{tenant.name}</TenantLink>
+                <TenantLink to={`/tenant/${tenant.id}/dashboard`}>{tenant.name}</TenantLink>
                 <RemoveIcon icon="trash-alt" size="1x" onClick={() => openRemoveModal(tenant)} />
               </Row>
             ))}

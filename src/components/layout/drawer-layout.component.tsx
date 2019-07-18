@@ -1,26 +1,24 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import styled from 'styled-components/macro'
 import MaterialAppBar from '@material-ui/core/AppBar'
 import MaterialDrawer from '@material-ui/core/Drawer'
-import { Theme, Toolbar, IconButton, List } from '@material-ui/core'
+import { Toolbar, IconButton, useMediaQuery } from '@material-ui/core'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
-import { ChevronLeft } from 'react-feather'
+import { ChevronLeft, Menu } from 'react-feather'
+import get from 'lodash/get'
 
 import ElevationScroll from './elevation-scroll.component'
-import TenantSwitcher from '../tenant-select.component'
+import TenantSwitcher from '../tenant-switcher.component'
 import ErrorContainer from '../../containers/error.container'
 import ThemeSwitcher from '../theme-switcher.component'
 import { UserMenu } from '../user'
+import { getTransition } from '../../utils'
 import { AppBarContext, TenantContext } from '../../contexts'
 import { ReactComponent as SvgLogo } from '../../svg/full-logo.svg'
-import { getBottomMenuItems, getTopMenuItems } from './drawer-layout.utils'
+import { TopMenuItems, BottomMenuItems } from './drawer-layout.utils'
 
 const drawerWidth = 240
 const smallDrawerWidth = 60
-const getTransition = (theme: Theme, units: string[]) => theme.transitions.create(units, {
-  easing: theme.transitions.easing.sharp,
-  duration: theme.transitions.duration.enteringScreen,
-})
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,9 +29,9 @@ const AppBar = styled(MaterialAppBar)<{ open: boolean }>`
   transition: ${p => getTransition(p.theme, ['width', 'margin'])};
   background: ${p => p.theme.colors.background};
 `
-const Drawer = styled(MaterialDrawer)<{ open: boolean }>`
+const Drawer = styled(MaterialDrawer)<{ open: boolean, expanded: boolean }>`
   .MuiPaper-root  {
-    width: ${p => (p.open ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
+    width: ${p => (p.expanded ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
     background: ${p => p.theme.drawer.background};
     color: white;
     overflow-x: hidden;
@@ -111,8 +109,14 @@ interface DrawerLayoutProps extends RouteComponentProps {
 
 export default withRouter(({ children }: DrawerLayoutProps) => {
   const { isExpanded, setExpanded } = useContext(AppBarContext)
-  const { error } = useContext(TenantContext)
+  const [isOpen, setOpen] = useState(false)
+  const { error, currentTenant } = useContext(TenantContext)
+  const isMobile = useMediaQuery('(max-width:800px)')
+  console.log(isMobile)
+
   const toggleExpand = useCallback(() => setExpanded(!isExpanded), [isExpanded, setExpanded])
+  const openSidebar = useCallback(() => setOpen(true), [setOpen])
+  const closeSidebar = useCallback(() => setOpen(false), [setOpen])
 
   if (error) {
     return <ErrorContainer />
@@ -123,6 +127,9 @@ export default withRouter(({ children }: DrawerLayoutProps) => {
       <ElevationScroll threshold={1}>
         <AppBar position="fixed" open={isExpanded}>
           <Toolbar>
+            <IconButton onClick={openSidebar}>
+              <Menu />
+            </IconButton>
             <TenantSwitcher />
             <Flex />
             <LeftAppbar>
@@ -132,12 +139,17 @@ export default withRouter(({ children }: DrawerLayoutProps) => {
           </Toolbar>
         </AppBar>
       </ElevationScroll>
-      <Drawer variant="permanent" open={isExpanded}>
+      <Drawer
+        variant={isMobile ? 'temporary' : 'permanent'}
+        open={!isMobile || isOpen}
+        expanded={isExpanded}
+        onClose={closeSidebar}
+      >
         <Link to="/"><Logo open={isExpanded} /></Link>
         <Hr open={isExpanded} />
-        <List>{getTopMenuItems()}</List>
+        <TopMenuItems tenantId={get(currentTenant, 'id', '')} isExpanded={isExpanded} />
         <Flex />
-        <List>{getBottomMenuItems()}</List>
+        <BottomMenuItems tenantId={get(currentTenant, 'id', '')} isExpanded={isExpanded} />
         <ArrowWrapper>
           <IconButton onClick={toggleExpand} style={{ color: 'white' }}>
             <ArrowIcon open={isExpanded} />

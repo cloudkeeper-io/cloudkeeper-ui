@@ -66,14 +66,14 @@ const AuthorizedRoutes = memo(() => {
           <Welcome />
         </Route>
       )}
-      <Route exact path="/tenants/:tenantId/dashboard">
+      <Route exact path="/tenant/:tenantId/dashboard">
         <Dashboard tenants={tenants} />
       </Route>
       <Route exact path="/settings">
         <Settings />
       </Route>
       {currentTenant && (
-        <Redirect from="/" to={`/tenants/${currentTenant.id}/dashboard`} />
+        <Redirect from="/" to={`/tenant/${currentTenant.id}/dashboard`} />
       )}
       <Error title="404" text="Page not found" />
     </Switch>
