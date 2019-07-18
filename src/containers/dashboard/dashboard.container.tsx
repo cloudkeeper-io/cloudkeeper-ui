@@ -11,7 +11,7 @@ import HeaderTabs, { TabContent } from '../../components/header-tabs.component'
 import { Title } from '../../components/typography.component'
 import { dashboardQuery } from '../../graphql'
 import { Tenant } from '../../models'
-import { TenantContext, TimerContext } from '../../contexts'
+import { TenantContext } from '../../contexts'
 import { DynamoGraphs } from './dashboard-dynamo.cards'
 import { useInterval } from '../../hooks'
 
@@ -55,7 +55,6 @@ export default ({ tenants }: DashboardProps) => {
   const { tenantId } = useContext(TenantContext)
   const tenant = find<Tenant []>(tenants, { id: tenantId! }) as Tenant
 
-  const { setActive, setVisibility } = useContext(TimerContext)
   const { data, loading, error, refetch } = useQuery(dashboardQuery, {
     variables: { tenantId },
     pollInterval: POLL_INTERVAL,
@@ -68,14 +67,14 @@ export default ({ tenants }: DashboardProps) => {
   useEffect(() => {
     if (isDataLoaded) {
       setDataLoaded(true)
-      setActive(true)
-      setVisibility(true)
+      // setActive(true)
+      // setVisibility(true)
     }
     return () => {
-      setActive(false)
-      setVisibility(false)
+      // setActive(false)
+      // setVisibility(false)
     }
-  }, [isDataLoaded, setActive, setVisibility])
+  }, [isDataLoaded])
 
   if (loading && !isDataLoaded) {
     return <Loading height="calc(100vh - 60px)" />

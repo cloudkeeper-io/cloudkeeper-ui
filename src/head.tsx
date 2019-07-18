@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { Helmet } from 'react-helmet'
 import { withTheme } from 'styled-components'
 
-import { getEnvConfig } from './configs/env.config'
+import { getEnvConfig } from './configs'
 
 interface HeadProps {
   theme: any

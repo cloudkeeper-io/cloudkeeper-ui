@@ -2,18 +2,16 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import MaterialAppBar from '@material-ui/core/AppBar'
 import MaterialDrawer from '@material-ui/core/Drawer'
-import { Toolbar } from '@material-ui/core'
-import { ChevronLeft } from 'react-feather'
+import Toolbar from '@material-ui/core/Toolbar'
 import MaterialListItem from '@material-ui/core/ListItem/ListItem'
-import { ListItemTextProps } from '@material-ui/core/ListItemText'
-import MaterialListItemText from '@material-ui/core/ListItemText/ListItemText'
+import MaterialListItemText, { ListItemTextProps } from '@material-ui/core/ListItemText'
 import MaterialListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon'
+import { ChevronLeft } from 'react-feather'
 
 import { ReactComponent as SvgFullLogo } from '../../../svg/full-logo.svg'
 import { ReactComponent as SvgLogo } from '../../../svg/logo.svg'
 import { Icon } from '../../icons'
 import { getTransition } from '../../../utils'
-
 
 const drawerWidth = 240
 const smallDrawerWidth = 60

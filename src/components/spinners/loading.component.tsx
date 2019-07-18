@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import Spinner from './spinner.component'
+import { CircularProgress } from '@material-ui/core'
 
 const SpinnerWrapper = styled.div<{ height?: string }>`
   width: 100%;
@@ -25,7 +25,7 @@ export default ({ error, height, className }: LoadingProps) => {
 
   return (
     <SpinnerWrapper height={height} className={className}>
-      <Spinner />
+      <CircularProgress />
     </SpinnerWrapper>
   )
 }

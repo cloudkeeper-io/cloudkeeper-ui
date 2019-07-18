@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Toolbar, IconButton, useMediaQuery } from '@material-ui/core'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import get from 'lodash/get'
@@ -32,7 +32,7 @@ interface DrawerLayoutProps extends RouteComponentProps {
   children: React.ReactElement
 }
 
-export default withRouter(({ children }: DrawerLayoutProps) => {
+export default withRouter(({ children, location: { pathname } }: DrawerLayoutProps) => {
   const { isExpanded, setExpanded } = useContext(AppBarContext)
   const [isOpen, setOpen] = useState(false)
   const { error, currentTenant } = useContext(TenantContext)
@@ -41,6 +41,8 @@ export default withRouter(({ children }: DrawerLayoutProps) => {
   const toggleExpand = useCallback(() => setExpanded(!isExpanded), [isExpanded, setExpanded])
   const openSidebar = useCallback(() => setOpen(true), [setOpen])
   const closeSidebar = useCallback(() => setOpen(false), [setOpen])
+
+  useEffect(closeSidebar, [pathname])
 
   if (error) {
     return <ErrorContainer />

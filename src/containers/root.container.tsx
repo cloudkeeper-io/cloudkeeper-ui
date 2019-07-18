@@ -39,19 +39,19 @@ const AnonRoutes = memo(() => (
 ))
 
 const AuthorizedRoutes = memo(() => {
-  const { tenants, loading, error, currentTenant, setAndSaveTenant } = useContext(TenantContext)
+  const { tenants, loading, error, currentTenant, setTenant } = useContext(TenantContext)
 
   useEffect(() => {
     if (!isEmpty(tenants)) {
       if (!currentTenant) {
-        setAndSaveTenant(first(tenants)!.id)
+        setTenant(first(tenants)!.id)
       }
     }
     if (isEmpty(tenants) && !loading) {
-      setAndSaveTenant(null!)
+      setTenant(null!)
     }
   },
-  [currentTenant, loading, tenants, setAndSaveTenant])
+  [currentTenant, loading, tenants, setTenant])
 
   if (loading) {
     return <LoadingPage height="calc(100vh - 80px)" />

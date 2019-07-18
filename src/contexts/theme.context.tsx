@@ -56,6 +56,4 @@ const ThemeProvider = memo(({ children }: ThemeProviderProps) => {
   )
 })
 
-const ThemeConsumer = ThemeContext.Consumer
-
-export { ThemeContext, ThemeProvider, ThemeConsumer }
+export { ThemeContext, ThemeProvider }

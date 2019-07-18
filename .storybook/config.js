@@ -4,15 +4,15 @@ import { withKnobs } from '@storybook/addon-knobs'
 import { themes } from '@storybook/theming'
 import styled from 'styled-components'
 
-import { ThemeConsumer, ThemeProvider } from '../src/contexts/theme.context'
+import { ThemeProvider } from '../src/contexts/theme.context'
 import GlobalStyles from '../src/styles/global.styles'
 import SVGDefs from '../src/styles/svg.defs'
-import FaIcon from '../src/components/icons/fa-icon.component'
+import ThemeSwitcher from '../src/components/theme-switcher.component'
 
 const Wrapper = styled.div`
   padding: 30px 20px 20px 20px;
 `
-const ThemeToggleIcon = styled(FaIcon)`
+const StyledThemeSwitcher = styled(ThemeSwitcher)`
   position: fixed;
   right: 30px;
   top: 10px;
@@ -22,16 +22,12 @@ const ThemeToggleIcon = styled(FaIcon)`
 
 const StyledDecorator = story => (
   <ThemeProvider>
-    <ThemeConsumer>
-      {({ toggleTheme }) => (
-        <Wrapper>
-          <ThemeToggleIcon icon="lightbulb" size="1x" onClick={toggleTheme} />
-          <GlobalStyles />
-          <SVGDefs />
-          {story()}
-        </Wrapper>
-      )}
-    </ThemeConsumer>
+    <Wrapper>
+      <StyledThemeSwitcher />
+      <GlobalStyles />
+      <SVGDefs />
+      {story()}
+    </Wrapper>
   </ThemeProvider>
 )
 

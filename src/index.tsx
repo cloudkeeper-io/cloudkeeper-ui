@@ -9,7 +9,6 @@ import RootContainer from './containers/root.container'
 import SvgDefs from './styles/svg.defs'
 import {
   ThemeProvider,
-  TimerProvider,
   TenantProvider,
   AppBarProvider,
   UserProvider,
@@ -24,19 +23,17 @@ ReactDOM.render((
   <Router history={history}>
     <UserProvider history={history}>
       <ThemeProvider>
-        <TimerProvider>
-          <TenantProvider>
-            <UserSettingsProvider>
-              <AppBarProvider>
-                <>
-                  <SvgDefs />
-                  <Head />
-                  <RootContainer />
-                </>
-              </AppBarProvider>
-            </UserSettingsProvider>
-          </TenantProvider>
-        </TimerProvider>
+        <TenantProvider>
+          <UserSettingsProvider>
+            <AppBarProvider>
+              <>
+                <SvgDefs />
+                <Head />
+                <RootContainer />
+              </>
+            </AppBarProvider>
+          </UserSettingsProvider>
+        </TenantProvider>
       </ThemeProvider>
     </UserProvider>
     <ToastContainer />

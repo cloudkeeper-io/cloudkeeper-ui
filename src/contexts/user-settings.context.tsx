@@ -28,7 +28,9 @@ export const UserSettingsProvider = memo(({ children }: UserSettingsProviderProp
   const settingsRef = useMemo(() => (user ? db.collection('users').doc(user.uid) : null), [user])
 
   const updateSettings = useCallback(async (newSettings: Partial<Settings>) => (
-    settingsRef ? settingsRef.update(newSettings) : null), [settingsRef])
+    // eslint-disable-next-line no-console
+    settingsRef ? settingsRef.update(newSettings).catch(console.error) : null),
+  [settingsRef])
 
   useEffect(() => {
     if (settingsRef && user) {
@@ -43,6 +45,7 @@ export const UserSettingsProvider = memo(({ children }: UserSettingsProviderProp
   useEffect(() => {
     if (!settings && settingsRef) {
       settingsRef.set({ isSubscribedToEmails: false })
+        .catch(console.error) // eslint-disable-line no-console
     }
   }, [settings, settingsRef])
 

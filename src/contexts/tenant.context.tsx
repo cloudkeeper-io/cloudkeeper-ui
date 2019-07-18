@@ -1,15 +1,15 @@
-import React, { Dispatch, SetStateAction, useContext, useMemo, useEffect, useState, useCallback, memo } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useMemo, useEffect, memo } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { useQuery } from 'react-apollo'
 import get from 'lodash/get'
 import find from 'lodash/find'
 import some from 'lodash/some'
 
-import { TENANT_KEY } from '../constants'
 import { tenantsQuery } from '../graphql/queries'
 import { UserContext } from './user.context'
 import { Tenant } from '../models'
 import { Tenants } from '../graphql/queries/types/Tenants'
+import { usePersistState } from '../hooks'
 
 interface TenantProviderProps extends RouteComponentProps {
   children: JSX.Element
@@ -24,35 +24,29 @@ interface TenantState {
   currentTenant?: Tenant
 
   setTenant: Dispatch<SetStateAction<string | null>>
-  setAndSaveTenant: (tenantId: string) => void
 }
 
 const TenantContext = React.createContext({} as TenantState)
 
 const TenantProvider = withRouter(memo(({ children, location: { pathname } }: TenantProviderProps) => {
-  const [tenantId, setTenant] = useState(localStorage.getItem(TENANT_KEY) || null)
+  const [tenantId, setTenant] = usePersistState('tenant')
   const { user } = useContext(UserContext)
   const { data, loading, error } = useQuery<Tenants>(tenantsQuery, { skip: !user })
   const tenants = get(data, 'tenants', []) as Tenant []
   const currentTenant = useMemo(() => find<Tenant []>(tenants, { id: tenantId! }) as Tenant, [tenantId, tenants])
-
-  const setAndSaveTenant = useCallback((newTenantId: string) => {
-    localStorage.setItem(TENANT_KEY, newTenantId)
-    setTenant(newTenantId)
-  }, [setTenant])
 
   useEffect(() => {
     if (/^\/tenants\/[A-z0-9-]+\//.test(pathname)) {
       const tenantIdPathParam = pathname.split('/')[2]
 
       if (tenantIdPathParam !== tenantId && some(tenants, { id: tenantIdPathParam })) {
-        setAndSaveTenant(tenantIdPathParam)
+        setTenant(tenantIdPathParam)
       }
     }
-  }, [pathname, setAndSaveTenant, tenantId, tenants])
+  }, [pathname, setTenant, tenantId, tenants])
 
   return (
-    <TenantContext.Provider value={{ currentTenant, loading, error, tenants, tenantId, setTenant, setAndSaveTenant }}>
+    <TenantContext.Provider value={{ currentTenant, loading, error, tenants, tenantId, setTenant }}>
       {children}
     </TenantContext.Provider>
   )

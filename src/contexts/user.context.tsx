@@ -87,7 +87,7 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
 
   const updatePassword = useCallback(async (password: string, newPassword: string) => {
     if (user && user.providerId === 'firebase') {
-      await user.reauthenticateAndRetrieveDataWithCredential(firebase.auth.EmailAuthProvider.credential(
+      await user.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(
         user.email!,
         password,
       ))

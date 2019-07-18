@@ -13,6 +13,7 @@ const StyledIcon = styled(FontAwesomeIcon)<IconProps>`
   text-shadow: 0 0 4px #4FFAC5;
   transition: all 0.5s;
 `
+
 const FaIcon = ({ size = 'lg', children, color, ...props }: IconProps) => (
   <StyledIcon size={size} color={color} {...props}>
     {children}
