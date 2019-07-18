@@ -1,5 +1,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 
+import { Theme } from '@material-ui/core'
+
 const multiplier = 1.5
 
 export const getClipPath = (x: number) =>
@@ -30,3 +32,8 @@ export const getBorderClipPath = (x: number, y: number) =>
      ${y + y}px calc(100% - ${y}px), 
      0 100%
 )`
+
+export const getTransition = (theme: Theme, units: string[]) => theme.transitions.create(units, {
+  easing: theme.transitions.easing.sharp,
+  duration: theme.transitions.duration.enteringScreen,
+})

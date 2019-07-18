@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { mix, transparentize } from 'polished'
+import { mix } from 'polished'
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core'
 import Fab from '@material-ui/core/Fab'
 
@@ -15,11 +15,23 @@ const Wrapper = styled.button<{ size: string }>`
   border-radius: 50%;
   cursor: pointer;
   background: ${p => p.theme.buttons.icon.background};
-  box-shadow: 0 0 4px ${p => transparentize(0.5, p.theme.colors.primary)};
   transition: 0.5s background;
   outline: none;
   &:hover {
     background: ${p => mix(0.85, p.theme.buttons.icon.background, p.theme.colors.primary)};
+  }
+`
+
+const ThemedFab = styled(Fab)`
+  background: ${p => p.theme.icon.background};
+  color: ${p => p.theme.icon.color};
+  border: ${p => p.theme.icon.border};
+  ${FaIcon} {
+    font-size: 22px;
+  }
+  &:hover {
+    text-decoration: none;
+    background-color: ${p => p.theme.icon.hoverColor};\
   }
 `
 
@@ -31,19 +43,9 @@ interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
   color?: 'primary' | 'secondary' | 'default' | 'inherit',
 }
 
-const ThemedFab = styled(Fab)`
-  background: ${p => p.theme.icon.background};
-  box-shadow: ${p => p.theme.icon.shadow};
-  border: ${p => p.theme.icon.border};
-  &:hover {
-    text-decoration: none;
-    background-color: ${p => p.theme.icon.hoverColor};
-  }
-`
-
-const IconButton = ({ className, icon, size = 'medium', iconSize = '2x', ...props }: IconButtonProps) => (
+const IconButton = ({ className, icon, size = 'medium', ...props }: IconButtonProps) => (
   <ThemedFab className={className} size={size} {...props}>
-    <FaIcon size={iconSize} icon={icon!} />
+    <FaIcon icon={icon!} />
   </ThemedFab>
 )
 

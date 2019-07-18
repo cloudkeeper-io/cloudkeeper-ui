@@ -4,7 +4,7 @@ import Loadable from 'react-loadable'
 import isEmpty from 'lodash/isEmpty'
 import first from 'lodash/first'
 
-import DrawerLayout from '../components/layout/drawer-layout.component'
+import DrawerLayout from '../components/layout/drawer-layout/drawer-layout.component'
 import ToolbarLayout from '../components/layout/toolbar-layout.component'
 import LoadingPage from '../components/spinners/loading-page.component'
 import { UserContext, TenantContext } from '../contexts'
@@ -68,7 +68,7 @@ const AuthorizedRoutes = memo(() => {
           <Welcome />
         </Route>
       )}
-      <Route exact path="/tenants/:tenantId/dashboard">
+      <Route exact path="/tenant/:tenantId/dashboard">
         <Dashboard tenants={tenants} />
       </Route>
       <Route exact path="/tenants/:tenantId/lambdas">
@@ -81,7 +81,7 @@ const AuthorizedRoutes = memo(() => {
         <Settings />
       </Route>
       {currentTenant && (
-        <Redirect from="/" to={`/tenants/${currentTenant.id}/dashboard`} />
+        <Redirect from="/" to={`/tenant/${currentTenant.id}/dashboard`} />
       )}
       <Error title="404" text="Page not found" />
     </Switch>

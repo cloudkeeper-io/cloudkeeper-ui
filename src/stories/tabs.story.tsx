@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { storiesOf } from '@storybook/react'
 import { text, number } from '@storybook/addon-knobs'
 
-import Tabs from '../components/tabs.component'
 import StepIndicator from '../components/steps-indicator.component'
 import HeaderTabs, { TabContent } from '../components/header-tabs.component'
 
@@ -12,22 +11,6 @@ import HeaderTabs, { TabContent } from '../components/header-tabs.component'
 const Wrapper = styled.div`
   width: 400px;
 `
-
-const ButtonTabs = () => {
-  const [tab, setTab] = useState(0)
-  return (
-    <Wrapper>
-      <Tabs
-        tabs={[text('Tab 1 header', 'Tab 1'), text('Tab 2 header', 'Tab 2')]}
-        selectedIndex={tab}
-        onChange={i => setTab(i)}
-      />
-      {tab ? (<div>{text('Tab 1 content', 'Tab 1 content')}</div>) :
-        (<div>{text('Tab 2 content', 'Tab 2 content')}</div>)
-      }
-    </Wrapper>
-  )
-}
 
 const Indicator = () => {
   const [tab, setTab] = useState(0)
@@ -56,6 +39,5 @@ const HeaderTab = () => {
 }
 
 storiesOf('Tabs and Indicators', module)
-  .add('Buttons Tabs', () => <ButtonTabs />)
   .add('Indicator', () => <Indicator />)
   .add('Header Tab', () => <HeaderTab />)

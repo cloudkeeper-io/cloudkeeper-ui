@@ -2,7 +2,7 @@
 import { mix, transparentize } from 'polished'
 
 import loginBackground from '../images/dark-login-background.png'
-import darkBackground from '../images/stars-background.jpg'
+// import darkBackground from '../images/stars-background.jpg'
 
 const PRIMARY = '#00E092' // mix(0.5, '#48E385', '#018EFF'); //
 
@@ -15,11 +15,11 @@ const colors = {
   primary: PRIMARY,
   background: '#040C2A',
   transparentBackground: 'rgb(14, 11, 32, 0.4)',
-  mainBackground: `url("${darkBackground}") center center / cover;`,
+  mainBackground: 'linear-gradient(180deg, #040C2A 60px, #112531 100%)', // `url("${darkBackground}") center center / cover;`,
   borderColor: '#4FFAC5',
   text: '#FFFFFF',
   icon: PRIMARY,
-  activeText: '#FFFFFF',
+  activeText: '#4FFAC5',
   disabled: '#ababab',
   spinner: 'url(#dark-spinner-gradient)',
   shadow: 'rgba(79, 250, 197, 0.3)',
@@ -82,12 +82,6 @@ const buttons = {
 }
 
 const tabs = {
-  background: 'transparent',
-  active: mix(0.85, '#142330', colors.primary),
-  text: colors.primary,
-  activeText: colors.primary,
-  borderLeft: '0',
-  borderRight: '0 21px 0 0',
   gradient: 'linear-gradient(270deg, #018EFF -18.75%, #48E385 100%)',
 }
 
@@ -109,10 +103,9 @@ const login = {
 
 const icon = {
   background: 'none',
-  color: '#DADADA',
-  shadow: '0px 10px 20px rgba(31, 32, 65, 0.1)',
+  color: '#FFFFFF',
   hoverColor: 'rgba(242, 242, 242, 0.3)',
-  border: '1px solid #FFFFFF',
+  border: '2px solid #FFFFFF',
 }
 
 const dashboard = {
