@@ -19,7 +19,7 @@ const colors = {
   borderColor: '#4FFAC5',
   text: '#FFFFFF',
   icon: PRIMARY,
-  activeText: '#FFFFFF',
+  activeText: '#4FFAC5',
   disabled: '#ababab',
   spinner: 'url(#dark-spinner-gradient)',
   shadow: 'rgba(79, 250, 197, 0.3)',

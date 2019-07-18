@@ -25,7 +25,7 @@
     "max-len": ["error", 120],
     "object-curly-newline": ["error", {"consistent": true}],
     "react/jsx-filename-extension": [1, {"extensions": [".tsx", ".jsx"]}],
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": ["error", {"ignoreRestSiblings": true}],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/sort-comp": "off",

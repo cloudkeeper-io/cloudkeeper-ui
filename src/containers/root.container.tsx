@@ -4,7 +4,7 @@ import Loadable from 'react-loadable'
 import isEmpty from 'lodash/isEmpty'
 import first from 'lodash/first'
 
-import DrawerLayout from '../components/layout/drawer-layout.component'
+import DrawerLayout from '../components/layout/drawer-layout/drawer-layout.component'
 import ToolbarLayout from '../components/layout/toolbar-layout.component'
 import LoadingPage from '../components/spinners/loading-page.component'
 import { UserContext, TenantContext } from '../contexts'

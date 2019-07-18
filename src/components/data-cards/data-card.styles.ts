@@ -11,6 +11,11 @@ export const StyledCard = styled(Card)`
   min-width: 500px;
   height: 310px;
   margin: auto;
+  @media (max-width: 800px) {
+    min-width: auto;
+    min-height: 310px;
+    height: auto;
+  }
 `
 export const Content = styled.div`
   display: flex;
