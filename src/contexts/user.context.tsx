@@ -8,6 +8,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 
 import { getFirebaseConfig, getApolloClient } from '../configs'
+import { setUserId } from '../utils/amplitude'
 
 firebase.initializeApp(getFirebaseConfig())
 
@@ -77,6 +78,9 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
   useEffect(() => firebase.auth().onAuthStateChanged((newUser) => {
     setUserLoaded(true)
     setUser(newUser!)
+    if (newUser) {
+      setUserId(newUser.uid)
+    }
   }), [])
 
   const client = useMemo(() => getApolloClient(async () => (user ? user!.getIdToken() : '')), [user])
