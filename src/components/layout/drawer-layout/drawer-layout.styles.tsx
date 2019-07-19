@@ -132,7 +132,7 @@ export const ListItem = styled(({ active, ...props }) => <MaterialListItem {...p
   color: ${p => (p.active ? p.theme.colors.activeText : '')};
   .MuiTypography-root, .MuiListItemText-root {
     color: ${p => (p.active ? p.theme.colors.activeText : '')} !important;
-    transition: ${p => getTransition(p.theme, ['color'])};
+    transition: ${p => getTransition(p.theme, ['opacity', 'color'])};
   }
   transition: ${p => getTransition(p.theme, ['border-left', 'color'])};
 `
