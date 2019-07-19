@@ -103,13 +103,13 @@ export const ArrowIcon = styled(({ expanded, ...props }) => <ChevronLeft {...pro
   transition: ${p => getTransition(p.theme, ['all'])} !important;
   color: ${p => p.theme.palette.common.white}
 `
-export const Content = styled.main<{ open: boolean }>`
+export const Content = styled.main<{ expanded: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: ${p => (p.open ? `calc(100% - ${drawerWidth}px)` : `calc(100% - ${smallDrawerWidth}px)`)};
+  width: ${p => (p.expanded ? `calc(100% - ${drawerWidth}px)` : `calc(100% - ${smallDrawerWidth}px)`)};
   min-height: 100vh;
-  margin-left: ${p => (p.open ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
+  margin-left: ${p => (p.expanded ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
   transition: ${p => getTransition(p.theme, ['width', 'margin'])};
   @media (${mediaQuery}) {
     width: 100%;

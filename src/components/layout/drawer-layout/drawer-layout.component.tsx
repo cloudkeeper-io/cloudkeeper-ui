@@ -86,7 +86,7 @@ export default withRouter(({ children, location: { pathname } }: DrawerLayoutPro
           </ArrowWrapper>
         )}
       </Drawer>
-      <Content open={isExpanded}>
+      <Content expanded={isExpanded}>
         <div>
           <Toolbar />
           {children}
