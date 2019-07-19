@@ -4,29 +4,22 @@ import { transparentize } from 'polished'
 import times from 'lodash/times'
 import noop from 'lodash/noop'
 
-const getBoxShadow = (p: any) => {
-  if (p.active) {
-    return p.color ? transparentize(0.4, p.color) : p.theme.controls.shadow
-  }
-  return 'transparent'
-}
-
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   box-sizing: initial;
 `
-const Circle = styled.div<{ active: boolean, color?: string }>`
+const Circle = styled.div<{ active: boolean }>`
   position: absolute;
   left: 50%;
   top: 50%;
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: ${p => (p.color ? transparentize(0.6, p.color) : p.theme.controls.color)};
+  background: ${p => (p.active ? p.theme.colors.active : p.theme.controls.color)};
   opacity: ${p => (p.active ? 0 : 1)};
   transform: translate(-50%,-50%);
-  transition: all 0.5s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
 `
 const Step = styled.div<{ active: boolean, cursor: string }>`
   position: relative;
@@ -37,11 +30,11 @@ const Step = styled.div<{ active: boolean, cursor: string }>`
   transition: width 0.5s ease-in-out 0s;
   cursor: ${p => p.cursor};
 `
-const StepLine = styled.div<{ active: boolean, color?: string }>`
+const StepLine = styled.div<{ active: boolean }>`
   height: 6px;
   border-radius: 6px;
   background: ${p => p.color || p.theme.controls.activeGradient};
-  box-shadow: ${p => getBoxShadow(p)};
+  box-shadow: ${p => `0px 6px 12px ${p.active && transparentize(0.6, p.color || p.theme.colors.active)}`};
   opacity: ${p => (p.active ? 1 : 0)};
   transition: all 0.5s ease-in-out 0s;
 `
@@ -54,12 +47,12 @@ interface StepsIndicatorProps {
   onClick?: (index: number) => void,
 }
 
-export default ({ steps, index, className, color, onClick = noop }: StepsIndicatorProps) => (
+export default ({ steps, index, className, onClick = noop }: StepsIndicatorProps) => (
   <Wrapper className={className}>
     {times(steps, i => (
       <Step key={i} active={i === index} onClick={() => onClick(i)} cursor={onClick === noop ? '' : 'pointer'}>
-        <StepLine active={i === index} color={color} />
-        <Circle active={i === index} color={color} />
+        <StepLine active={i === index} />
+        <Circle active={i === index} />
       </Step>
     ))}
   </Wrapper>
