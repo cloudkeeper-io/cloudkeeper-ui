@@ -1,6 +1,7 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState, memo } from 'react'
 import { Toolbar, IconButton, useMediaQuery } from '@material-ui/core'
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import useReactRouter from 'use-react-router'
 import get from 'lodash/get'
 
 import ElevationScroll from '../elevation-scroll.component'
@@ -28,11 +29,12 @@ import {
 } from './drawer-layout.styles'
 
 
-interface DrawerLayoutProps extends RouteComponentProps {
+interface DrawerLayoutProps {
   children: React.ReactElement
 }
 
-export default withRouter(({ children, location: { pathname } }: DrawerLayoutProps) => {
+export default memo(({ children }: DrawerLayoutProps) => {
+  const { location: { pathname } } = useReactRouter()
   const { isExpanded, setExpanded } = useContext(AppBarContext)
   const [isOpen, setOpen] = useState(false)
   const { error, currentTenant } = useContext(TenantContext)

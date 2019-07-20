@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
-import { History } from 'history'
-import { Link, withRouter } from 'react-router-dom'
+import React, { useContext, memo } from 'react'
+import useReactRouter from 'use-react-router'
+import { Link } from 'react-router-dom'
 import { Tab } from '@material-ui/core'
 
 import LoginForm from './components/login-form.component'
@@ -24,11 +24,8 @@ import {
   SwitchText,
 } from './login.styles'
 
-interface LoginProps {
-  history: History
-}
-
-export default withRouter(({ history, history: { location: { pathname } } }: LoginProps) => {
+export default memo(() => {
+  const { history, location: { pathname } } = useReactRouter()
   const { googleSignIn, githubSignIn } = useContext(UserContext)
   const isLogin = pathname === '/'
 

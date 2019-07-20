@@ -1,6 +1,5 @@
 import React, { memo } from 'react'
 import styled from 'styled-components/macro'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import TenantsCard from './components/tenants/tenants-card.component'
 import UserSettings from './components/subscription-settings.component'
@@ -23,11 +22,11 @@ const Content = styled.div`
   max-width: calc(100vw - 60px);
 `
 
-interface SettingsContainerProps extends RouteComponentProps {
+interface SettingsContainerProps {
   className?: string
 }
 
-export default withRouter(memo(({ className }: SettingsContainerProps) => (
+export default memo(({ className }: SettingsContainerProps) => (
   <Wrapper className={className}>
     <Content>
       <TenantsCard />
@@ -35,4 +34,4 @@ export default withRouter(memo(({ className }: SettingsContainerProps) => (
       <UserSettings />
     </Content>
   </Wrapper>
-)))
+))

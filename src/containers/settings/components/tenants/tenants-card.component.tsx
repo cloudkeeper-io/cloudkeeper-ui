@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState, memo } from 'react'
 import { darken } from 'polished'
 import styled from 'styled-components/macro'
-import { withRouter, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Mutation } from 'react-apollo'
 import map from 'lodash/map'
 
@@ -55,7 +55,7 @@ const AddButton = styled(Button)`
   margin: 15px auto 0 auto;
 `
 
-export default memo(withRouter(() => {
+export default memo(() => {
   const { tenants, loading, error } = useContext(TenantContext)
   const [isRemoveModalOpen, setRemoveModalOpen] = useState(false)
   const [isCreateModalOpen, setCreateModalOpen] = useState(false)
@@ -110,4 +110,4 @@ export default memo(withRouter(() => {
       )}
     </Mutation>
   )
-}))
+})

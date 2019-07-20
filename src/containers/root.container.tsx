@@ -1,5 +1,5 @@
 import React, { memo, useContext, useEffect } from 'react'
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import Loadable from 'react-loadable'
 import isEmpty from 'lodash/isEmpty'
 import first from 'lodash/first'
@@ -88,7 +88,7 @@ const AuthorizedRoutes = memo(() => {
   )
 })
 
-export default withRouter(() => {
+export default () => {
   const { user, isUserLoaded } = useContext(UserContext)
 
   if (!isUserLoaded) {
@@ -104,4 +104,4 @@ export default withRouter(() => {
   }
 
   return <AnonRoutes />
-})
+}

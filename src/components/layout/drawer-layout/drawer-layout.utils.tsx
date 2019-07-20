@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
-import List from '@material-ui/core/List'
-import Tooltip from '@material-ui/core/Tooltip'
-import { withRouter, RouteComponentProps, Link } from 'react-router-dom'
+import useReactRouter from 'use-react-router'
+import { List, Tooltip } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import { Layout, Settings } from 'react-feather'
 import map from 'lodash/map'
 import includes from 'lodash/includes'
@@ -12,7 +12,7 @@ import { ListItem, ListItemIcon, ListItemText } from './drawer-layout.styles'
 
 const isActive = (pathname: string, to: string) => includes(pathname, to)
 
-interface MenuItemsProps extends RouteComponentProps {
+interface MenuItemsProps {
   tenantId: string
   isExpanded: boolean
 }
@@ -23,8 +23,9 @@ export const topMenuItems = [
   { primary: 'DynamoDB', to: (tenantId: string) => `/tenants/${tenantId}/dynamo-tables`, icon: <Icon icon="dynamo" /> },
 ]
 
-export const TopMenuItems = withRouter(memo((props: MenuItemsProps) => {
-  const { tenantId, isExpanded, location: { pathname } } = props
+export const TopMenuItems = memo((props: MenuItemsProps) => {
+  const { location: { pathname } } = useReactRouter()
+  const { tenantId, isExpanded } = props
   return (
     <List>
       {map(topMenuItems, (item) => {
@@ -49,14 +50,15 @@ export const TopMenuItems = withRouter(memo((props: MenuItemsProps) => {
       })}
     </List>
   )
-}))
+})
 
 export const bottomMenuItems = [
   { primary: 'Settings', to: '/settings', icon: <Settings /> },
 ]
 
-export const BottomMenuItems = withRouter(memo((props: MenuItemsProps) => {
-  const { isExpanded, location: { pathname } } = props
+export const BottomMenuItems = memo((props: MenuItemsProps) => {
+  const { location: { pathname } } = useReactRouter()
+  const { isExpanded } = props
 
   return (
     <List>
@@ -72,4 +74,4 @@ export const BottomMenuItems = withRouter(memo((props: MenuItemsProps) => {
       ))}
     </List>
   )
-}))
+})

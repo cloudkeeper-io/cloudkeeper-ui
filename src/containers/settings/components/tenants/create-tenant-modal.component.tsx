@@ -1,8 +1,8 @@
 import React, { useState, useEffect, memo } from 'react'
+import useReactRouter from 'use-react-router'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
 import { Mutation, MutationFunction } from 'react-apollo'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 import get from 'lodash/get'
 
 import Error from '../../../../components/form/error-message.component'
@@ -50,12 +50,13 @@ interface Values {
   name: string
 }
 
-interface StepsProps extends RouteComponentProps {
+interface StepsProps {
   onClose: () => void
   isOpen: boolean
 }
 
-export default memo(withRouter(({ onClose, isOpen, history }: StepsProps) => {
+export default memo(({ onClose, isOpen }: StepsProps) => {
+  const { history } = useReactRouter()
   const [loading, setLoading] = useState(false)
   const [serverError, setServerError] = useState('')
 
@@ -127,4 +128,4 @@ export default memo(withRouter(({ onClose, isOpen, history }: StepsProps) => {
       </Mutation>
     </Modal>
   )
-}))
+})

@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext, useMemo, useEffect, memo } from 'react'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import useReactRouter from 'use-react-router'
 import { useQuery } from 'react-apollo'
 import get from 'lodash/get'
 import find from 'lodash/find'
@@ -11,7 +11,7 @@ import { Tenant } from '../models'
 import { Tenants } from '../graphql/queries/types/Tenants'
 import { usePersistState } from '../hooks'
 
-interface TenantProviderProps extends RouteComponentProps {
+interface TenantProviderProps {
   children: JSX.Element
 }
 
@@ -28,7 +28,8 @@ interface TenantState {
 
 const TenantContext = React.createContext({} as TenantState)
 
-const TenantProvider = withRouter(memo(({ children, location: { pathname } }: TenantProviderProps) => {
+const TenantProvider = memo(({ children }: TenantProviderProps) => {
+  const { location: { pathname } } = useReactRouter()
   const [tenantId, setTenant] = usePersistState('tenant')
   const { user } = useContext(UserContext)
   const { data, loading, error } = useQuery<Tenants>(tenantsQuery, { skip: !user })
@@ -50,6 +51,6 @@ const TenantProvider = withRouter(memo(({ children, location: { pathname } }: Te
       {children}
     </TenantContext.Provider>
   )
-}))
+})
 
 export { TenantContext, TenantProvider }

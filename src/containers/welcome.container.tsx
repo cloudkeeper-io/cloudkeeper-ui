@@ -1,6 +1,5 @@
 import React, { useState, memo } from 'react'
 import styled from 'styled-components/macro'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import Card from '../components/card.component'
 import { AccentText, Title, Text } from '../components/typography.component'
@@ -34,11 +33,11 @@ const AddButton = styled(Button)`
   margin: 15px auto 0 auto;
 `
 
-interface WelcomeContainerProps extends RouteComponentProps {
+interface WelcomeContainerProps {
   className?: string
 }
 
-export default withRouter(memo(({ className }: WelcomeContainerProps) => {
+export default memo(({ className }: WelcomeContainerProps) => {
   const [isCreateModalOpen, setCreateModalOpen] = useState(false)
 
   return (
@@ -62,4 +61,4 @@ export default withRouter(memo(({ className }: WelcomeContainerProps) => {
       />
     </Wrapper>
   )
-}))
+})
