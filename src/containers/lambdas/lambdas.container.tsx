@@ -10,6 +10,8 @@ import Processing from '../../components/processing.component'
 import { lambdasListQuery } from '../../graphql'
 import { Tenant } from '../../models'
 import { TenantContext } from '../../contexts'
+import { LambdasList } from './lambdas-list.component'
+import { Header } from '../../components/typography.component'
 
 const Wrapper = styled.div`
   position: relative;
@@ -55,8 +57,10 @@ export default ({ tenants }: DashboardProps) => {
 
   return (
     <Wrapper>
-      {data && data.lambdasList &&
-      data.lambdasList.map((lambda: any) => <div key={lambda.name}>{JSON.stringify(lambda)}</div>)}
+      <Header>
+        Lambdas
+      </Header>
+      {data && data.lambdasList && <LambdasList lambdas={data.lambdasList} />}
     </Wrapper>
   )
 }
