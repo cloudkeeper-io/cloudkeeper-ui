@@ -117,6 +117,10 @@ const drawer = {
   background: 'linear-gradient(180deg, #0970D4 60px, #1DC9D7 100%)',
 }
 
+const calendar = {
+  circleBackground: `linear-gradient(146.18deg, ${mix(0.3, '#fff', palette.primary.main)} -1.97%, ${palette.primary.main} 109.73%);`,
+}
+
 export default {
   name: 'light',
   favicon: 'light-favicon.png',
@@ -134,4 +138,5 @@ export default {
   login,
   dashboard,
   icon,
+  calendar,
 }

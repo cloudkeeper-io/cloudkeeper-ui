@@ -118,6 +118,9 @@ const drawer = {
   background: 'linear-gradient(180deg, #07203D 60px, #061932 100%)',
 }
 
+const calendar = {
+  circleBackground: `linear-gradient(270deg, ${palette.primary.main} 8.42%, ${palette.secondary.main} 100%);`,
+}
 
 export default {
   name: 'dark',
@@ -136,4 +139,5 @@ export default {
   login,
   dashboard,
   icon,
+  calendar,
 }
