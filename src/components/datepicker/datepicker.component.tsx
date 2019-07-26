@@ -5,29 +5,36 @@ import moment, { Moment } from 'moment'
 import 'react-dates/lib/css/_datepicker.css'
 import { Wrapper } from './datepicker.styles'
 
-export interface DatepickerState {
-    startDate: Moment | null
-    endDate: Moment | null
+export interface DateRange {
+    startDate: Moment | null,
+    endDate: Moment | null,
+}
+
+export interface DatepickerProps {
+    onRangeChanged: (range: DateRange) => void
+    dateRange: DateRange
+    id: string
 }
 
 moment.updateLocale('en', { weekdaysMin: 'U_M_T_W_R_F_S'.split('_') })
 
-export const Datepicker = () => {
-  const [range, setDateRange] = useState<DatepickerState>({ startDate: null, endDate: null })
+export const Datepicker = ({ onRangeChanged, dateRange, id }: DatepickerProps) => {
   const [focusedInput, setFocusedInput] = useState<'startDate'| 'endDate' | null>(null)
 
   return (
     <Wrapper>
       <DateRangePicker
         hideKeyboardShortcutsPanel
-        startDate={range.startDate}
-        startDateId="your_unique_start_date_id"
-        endDate={range.endDate}
-        endDateId="your_unique_end_date_id"
+        startDate={dateRange.startDate}
+        startDateId={`${id}_start_date`}
+        endDate={dateRange.endDate}
+        endDateId={`${id}_end_date`}
         weekDayFormat="dd"
-        onDatesChange={({ startDate, endDate }) => setDateRange({ startDate, endDate })}
+        onDatesChange={onRangeChanged}
+        initialVisibleMonth={() => moment().subtract(1, 'M')}
         focusedInput={focusedInput}
         onFocusChange={newFocusedInput => setFocusedInput(newFocusedInput)}
+        isOutsideRange={date => date.isAfter(moment(), 'day')}
         customArrowIcon={<span>&mdash;</span>}
       />
     </Wrapper>
