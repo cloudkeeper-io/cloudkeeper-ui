@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { mix, transparentize } from 'polished'
 
 import loginBackground from '../images/light-login-background.png'
