@@ -1,13 +1,15 @@
-import React, { memo } from 'react'
+import React, { memo, useContext } from 'react'
 import useReactRouter from 'use-react-router'
 import { List, Tooltip } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { Layout, Settings } from 'react-feather'
 import map from 'lodash/map'
+import isEmpty from 'lodash/isEmpty'
 
 import Icon from '../../icons/icon.component'
 
 import { ListItem, ListItemIcon, ListItemText } from './drawer-layout.styles'
+import { TenantContext } from '../../../contexts'
 
 const isActive = (pathname: string, to: string) => pathname === to
 
@@ -25,11 +27,13 @@ export const topMenuItems = [
 
 export const TopMenuItems = memo((props: MenuItemsProps) => {
   const { location: { pathname } } = useReactRouter()
+  const { tenants } = useContext(TenantContext)
   const { tenantId, isExpanded } = props
+
   return (
     <List>
       {map(topMenuItems, (item) => {
-        if (item.to) {
+        if (item.to && !isEmpty(tenants)) {
           return (
             <Link key={item.primary} to={item.to(tenantId)}>
               <ListItem button active={isActive(pathname, item.to(tenantId))}>

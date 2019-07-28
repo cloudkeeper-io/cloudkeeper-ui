@@ -62,7 +62,7 @@ export default ({ tenants }: DashboardProps) => {
 
   const isProcessing = get(data, 'lambdasData.processing') || get(data, 'dynamoData.processing')
 
-  useInterval(() => refetch(), PROCESSING_REFETCH_DELAY, isProcessing)
+  useInterval(refetch, PROCESSING_REFETCH_DELAY, isProcessing)
 
   useEffect(() => {
     if (isDataLoaded) {
