@@ -4,3 +4,5 @@ export const getTransition = (theme: Theme, units: string[]) => theme.transition
   easing: theme.transitions.easing.sharp,
   duration: theme.transitions.duration.enteringScreen,
 })
+
+export const mobileMediaQuery = 'max-width: 800px'

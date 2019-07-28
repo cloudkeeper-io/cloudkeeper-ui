@@ -37,7 +37,7 @@ const TenantProvider = memo(({ children }: TenantProviderProps) => {
   const currentTenant = useMemo(() => find<Tenant []>(tenants, { id: tenantId! }) as Tenant, [tenantId, tenants])
 
   useEffect(() => {
-    if (/^\/tenants\/[A-z0-9-]+\//.test(pathname)) {
+    if (/^\/tenant\/[A-z0-9-]+/.test(pathname)) {
       const tenantIdPathParam = pathname.split('/')[2]
 
       if (tenantIdPathParam !== tenantId && some(tenants, { id: tenantIdPathParam })) {

@@ -1,8 +1,7 @@
-import React, { memo, useContext, useEffect } from 'react'
+import React, { memo, useContext } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import Loadable from 'react-loadable'
-import isEmpty from 'lodash/isEmpty'
-import first from 'lodash/first'
+import get from 'lodash/get'
 
 import DrawerLayout from '../components/layout/drawer-layout/drawer-layout.component'
 import ToolbarLayout from '../components/layout/toolbar-layout.component'
@@ -13,6 +12,7 @@ const Login = Loadable({ loader: () => import('./login/login.container'), loadin
 const ForgotPassword = Loadable({ loader: () => import('./forgot-password.container'), loading: LoadingPage })
 
 const Dashboard = Loadable({ loader: () => import('./dashboard/dashboard.container'), loading: LoadingPage })
+const DashboardV2 = Loadable({ loader: () => import('./dashboard-v2/dashboard-v2.container'), loading: LoadingPage })
 const Lambdas = Loadable({ loader: () => import('./lambdas/lambdas.container'), loading: LoadingPage })
 const DynamoTables = Loadable({ loader: () => import('./dynamo-tables/dynamo-tables.container'), loading: LoadingPage })
 const Settings = Loadable({ loader: () => import('./settings/settings.container'), loading: LoadingPage })
@@ -39,19 +39,7 @@ const AnonRoutes = memo(() => (
 ))
 
 const AuthorizedRoutes = memo(() => {
-  const { tenants, loading, error, currentTenant, setTenant } = useContext(TenantContext)
-
-  useEffect(() => {
-    if (!isEmpty(tenants)) {
-      if (!currentTenant) {
-        setTenant(first(tenants)!.id)
-      }
-    }
-    if (isEmpty(tenants) && !loading) {
-      setTenant(null!)
-    }
-  },
-  [currentTenant, loading, tenants, setTenant])
+  const { tenants, loading, error, currentTenant } = useContext(TenantContext)
 
   if (loading) {
     return <LoadingPage height="calc(100vh - 80px)" />
@@ -63,25 +51,25 @@ const AuthorizedRoutes = memo(() => {
 
   return (
     <Switch>
-      {isEmpty(tenants) && (
-        <Route exact path="/">
-          <Welcome />
-        </Route>
-      )}
-      <Route exact path="/tenant/:tenantId/dashboard">
-        <Dashboard tenants={tenants} />
+      <Route exact path="/tenant/:tenantId">
+        {get(currentTenant, 'isSetupCompleted') ?
+          <Dashboard tenants={tenants} /> :
+          <Welcome />}
       </Route>
-      <Route exact path="/tenants/:tenantId/lambdas">
+      <Route exact path="/tenant/:tenantId/dashboard-v2">
+        <DashboardV2 />
+      </Route>
+      <Route exact path="/tenant/:tenantId/lambdas">
         <Lambdas tenants={tenants} />
       </Route>
-      <Route exact path="/tenants/:tenantId/dynamo-tables">
+      <Route exact path="/tenant/:tenantId/dynamo-tables">
         <DynamoTables tenants={tenants} />
       </Route>
       <Route exact path="/settings">
         <Settings />
       </Route>
       {currentTenant && (
-        <Redirect from="/" to={`/tenant/${currentTenant.id}/dashboard`} />
+        <Redirect to={`/tenant/${currentTenant.id}`} />
       )}
       <Error title="404" text="Page not found" />
     </Switch>

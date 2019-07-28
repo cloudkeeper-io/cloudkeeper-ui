@@ -11,11 +11,10 @@ import { ChevronLeft } from 'react-feather'
 import { ReactComponent as SvgFullLogo } from '../../../svg/full-logo.svg'
 import { ReactComponent as SvgLogo } from '../../../svg/logo.svg'
 import { Icon } from '../../icons'
-import { getTransition } from '../../../utils'
+import { getTransition, mobileMediaQuery } from '../../../utils'
 
 const drawerWidth = 240
 const smallDrawerWidth = 60
-export const mediaQuery = 'max-width: 800px'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -25,7 +24,7 @@ export const AppBar = styled(MaterialAppBar)<{ open: boolean }>`
   margin-left: ${p => (p.open ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
   transition: ${p => getTransition(p.theme, ['width', 'margin'])};
   background: ${p => p.theme.colors.background};
-  @media (${mediaQuery}) {
+  @media (${mobileMediaQuery}) {
     width: 100%;
     margin-left: 0;
   }
@@ -48,7 +47,7 @@ export const Drawer = styled(({ expanded, ...props }) => <MaterialDrawer {...pro
         background-color: rgba(255, 255, 255, 0.1)
       }
     }
-    @media (${mediaQuery}) {
+    @media (${mobileMediaQuery}) {
       width: ${drawerWidth}px;
     }
   }
@@ -66,13 +65,13 @@ export const FullLogo = styled(({ expanded, ...props }) => <SvgFullLogo {...prop
   margin: 20px 0 0 0;
   cursor: pointer;
   transition: ${p => getTransition(p.theme, ['left'])};
-  @media (${mediaQuery}) {
+  @media (${mobileMediaQuery}) {
     left: 0;
   }
   .logo-text {
     opacity: ${p => (p.expanded ? 1 : 0)};
     transition: ${p => getTransition(p.theme, ['opacity'])};
-    @media (${mediaQuery}) {
+    @media (${mobileMediaQuery}) {
       opacity: 1;
     }
   }
@@ -85,7 +84,7 @@ export const Hr = styled.div<{ expanded: boolean }>`
   margin: 0 40px 20px 40px;
   background: white;
   transition: ${p => getTransition(p.theme, ['width', 'left'])};
-  @media (${mediaQuery}) {
+  @media (${mobileMediaQuery}) {
     left: 0;
     width: calc(100% - 80px);
   }
@@ -111,7 +110,7 @@ export const Content = styled.main<{ expanded: boolean }>`
   min-height: 100vh;
   margin-left: ${p => (p.expanded ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
   transition: ${p => getTransition(p.theme, ['width', 'margin'])};
-  @media (${mediaQuery}) {
+  @media (${mobileMediaQuery}) {
     width: 100%;
     margin-left: 0;
   }
@@ -147,7 +146,7 @@ export const ListItemText = styled(
   .MuiListItemText-primary {
     font-weight: 500;
   }
-  @media (${mediaQuery}) {
+  @media (${mobileMediaQuery}) {
     opacity: 1;
   }
 `

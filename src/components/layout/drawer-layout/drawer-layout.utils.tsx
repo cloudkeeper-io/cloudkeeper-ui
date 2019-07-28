@@ -4,13 +4,12 @@ import { List, Tooltip } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { Layout, Settings } from 'react-feather'
 import map from 'lodash/map'
-import includes from 'lodash/includes'
 
 import Icon from '../../icons/icon.component'
 
 import { ListItem, ListItemIcon, ListItemText } from './drawer-layout.styles'
 
-const isActive = (pathname: string, to: string) => includes(pathname, to)
+const isActive = (pathname: string, to: string) => pathname === to
 
 interface MenuItemsProps {
   tenantId: string
@@ -18,9 +17,10 @@ interface MenuItemsProps {
 }
 
 export const topMenuItems = [
-  { primary: 'Dashboard', to: (id: string) => `/tenant/${id}/dashboard`, icon: <Layout /> },
-  { primary: 'Lambdas', icon: <Icon icon="lambda" /> },
-  { primary: 'DynamoDB', icon: <Icon icon="dynamo" /> },
+  { primary: 'Dashboard', to: (id: string) => `/tenant/${id}`, icon: <Layout /> },
+  { primary: 'Dashboard V2', to: (id: string) => `/tenant/${id}/dashboard-v2`, icon: <Layout /> },
+  { primary: 'Lambdas', to: (tenantId: string) => `/tenant/${tenantId}/lambdas`, icon: <Icon icon="lambda" /> },
+  { primary: 'DynamoDB', to: (tenantId: string) => `/tenant/${tenantId}/dynamo-tables`, icon: <Icon icon="dynamo" /> },
 ]
 
 export const TopMenuItems = memo((props: MenuItemsProps) => {

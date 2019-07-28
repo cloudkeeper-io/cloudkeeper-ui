@@ -28,7 +28,7 @@ export default ({ name, label, ...props }: FieldProps) => (
       <>
         <StyledFormControlLabel
           control={
-            <Checkbox checked={input.value} {...input as CheckboxProps} {...props} />
+            <Checkbox color="primary" checked={input.value} {...input as CheckboxProps} {...props} />
           }
           label={label}
         />
