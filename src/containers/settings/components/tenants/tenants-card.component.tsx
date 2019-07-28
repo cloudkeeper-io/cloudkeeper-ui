@@ -14,7 +14,7 @@ import { Tenant } from '../../../../models'
 import FaIcon from '../../../../components/icons/fa-icon.component'
 import { Header as CommonHeader } from '../../../../components/typography.component'
 import { tenantsQuery, removeTenant } from '../../../../graphql'
-import { TenantContext } from '../../../../contexts'
+import { TenantContext, UserContext } from '../../../../contexts'
 
 const Header = styled(CommonHeader)`
   margin-bottom: 20px;
@@ -57,6 +57,7 @@ const AddButton = styled(Button)`
 
 export default memo(() => {
   const { tenants, loading, error } = useContext(TenantContext)
+  const { user } = useContext(UserContext)
   const [isRemoveModalOpen, setRemoveModalOpen] = useState(false)
   const [isCreateModalOpen, setCreateModalOpen] = useState(false)
   const [tenantToRemove, setTenantToRemove] = useState<Tenant>(null!)
@@ -88,7 +89,9 @@ export default memo(() => {
             {map(tenants, tenant => (
               <Row key={tenant.id}>
                 <TenantLink to={`/tenant/${tenant.id}/dashboard`}>{tenant.name}</TenantLink>
-                <RemoveIcon icon="trash-alt" size="1x" onClick={() => openRemoveModal(tenant)} />
+                {tenant.owner.id === user!.uid && (
+                  <RemoveIcon icon="trash-alt" size="1x" onClick={() => openRemoveModal(tenant)} />
+                )}
               </Row>
             ))}
             <AddButton onClick={() => setCreateModalOpen(true)}>Create Project</AddButton>

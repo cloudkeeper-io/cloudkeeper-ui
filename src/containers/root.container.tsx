@@ -2,6 +2,8 @@ import React, { memo, useContext } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import Loadable from 'react-loadable'
 import isEmpty from 'lodash/isEmpty'
+import first from 'lodash/first'
+import get from 'lodash/get'
 
 import DrawerLayout from '../components/layout/drawer-layout/drawer-layout.component'
 import ToolbarLayout from '../components/layout/toolbar-layout.component'
@@ -57,7 +59,7 @@ const AuthorizedRoutes = memo(() => {
         </Route>
       )}
       <Route exact path="/tenant/:tenantId">
-        <Dashboard tenants={tenants} />
+        <Dashboard />
       </Route>
       <Route exact path="/tenant/:tenantId/dashboard-v2">
         <DashboardV2 />
@@ -71,8 +73,8 @@ const AuthorizedRoutes = memo(() => {
       <Route exact path="/settings">
         <Settings />
       </Route>
-      {currentTenant && (
-        <Redirect from="/" to={`/tenant/${currentTenant.id}`} />
+      {!isEmpty(tenants) && (
+        <Redirect from="/" to={`/tenant/${get(currentTenant, 'id') || first(tenants)!.id}`} />
       )}
       <Error title="404" text="Page not found" />
     </Switch>

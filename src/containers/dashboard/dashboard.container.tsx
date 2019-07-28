@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { useQuery } from 'react-apollo'
 import get from 'lodash/get'
-import find from 'lodash/find'
 
 import Loading from '../../components/spinners/loading.component'
 import SetupTenant from './components/setup-tenant.component'
@@ -10,7 +9,6 @@ import Processing from '../../components/processing.component'
 import HeaderTabs, { TabContent } from '../../components/header-tabs.component'
 import { Title } from '../../components/typography.component'
 import { dashboardQuery } from '../../graphql'
-import { Tenant } from '../../models'
 import { TenantContext } from '../../contexts'
 import { DynamoGraphs } from './dashboard-dynamo.cards'
 import { useInterval } from '../../hooks'
@@ -45,15 +43,10 @@ const CardsWrapper = styled.div`
 const POLL_INTERVAL = 30 * 60 * 1000 // 30 min
 const PROCESSING_REFETCH_DELAY = 10000 // 10 sec
 
-interface DashboardProps {
-  tenants: Tenant[]
-}
-
-export default ({ tenants }: DashboardProps) => {
+export default () => {
   const [tab, setTab] = useState(0)
   const [isDataLoaded, setDataLoaded] = useState(false)
-  const { tenantId } = useContext(TenantContext)
-  const tenant = find<Tenant []>(tenants, { id: tenantId! }) as Tenant
+  const { tenantId, currentTenant } = useContext(TenantContext)
 
   const { data, loading, error, refetch } = useQuery(dashboardQuery, {
     variables: { tenantId },
@@ -84,8 +77,8 @@ export default ({ tenants }: DashboardProps) => {
     throw error
   }
 
-  if (!tenant.isSetupCompleted) {
-    return <SetupTenant tenant={tenant} />
+  if (!currentTenant.isSetupCompleted) {
+    return <SetupTenant tenant={currentTenant} />
   }
 
   if (isProcessing) {

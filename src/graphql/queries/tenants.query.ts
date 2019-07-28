@@ -7,6 +7,9 @@ export const tenantsQuery = gql`
       name
       createdAt
       isSetupCompleted
+      owner {
+        id
+      }
     }
   }
 `
