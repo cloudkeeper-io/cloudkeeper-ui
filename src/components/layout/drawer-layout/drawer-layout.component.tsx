@@ -8,6 +8,7 @@ import ElevationScroll from '../elevation-scroll.component'
 import TenantSwitcher from '../../tenant-switcher.component'
 import ErrorContainer from '../../../containers/error.container'
 import ThemeSwitcher from '../../theme-switcher.component'
+import FullscreenSwitcher from '../../fullscreen-switcher.component'
 import { UserMenu } from '../../user'
 import { AppBarContext, TenantContext } from '../../../contexts'
 import { TopMenuItems, BottomMenuItems } from './drawer-layout.utils'
@@ -22,8 +23,8 @@ import {
   Flex,
   FullLogo,
   Hr,
-  LeftAppbar,
-  LeftAppbarItem,
+  RightAppBar,
+  RightAppBarItem,
   Logo,
 } from './drawer-layout.styles'
 
@@ -56,10 +57,11 @@ export default memo(({ children }: DrawerLayoutProps) => {
             )}
             {!error && <TenantSwitcher />}
             <Flex />
-            <LeftAppbar>
-              <LeftAppbarItem> <ThemeSwitcher /></LeftAppbarItem>
-              <LeftAppbarItem> <UserMenu /></LeftAppbarItem>
-            </LeftAppbar>
+            <RightAppBar>
+              <RightAppBarItem> <FullscreenSwitcher /></RightAppBarItem>
+              <RightAppBarItem> <ThemeSwitcher /></RightAppBarItem>
+              <RightAppBarItem> <UserMenu /></RightAppBarItem>
+            </RightAppBar>
           </Toolbar>
         </AppBar>
       </ElevationScroll>

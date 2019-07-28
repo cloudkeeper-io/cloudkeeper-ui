@@ -115,13 +115,16 @@ export const Content = styled.main<{ expanded: boolean }>`
     margin-left: 0;
   }
 `
-export const LeftAppbar = styled.div`
+export const RightAppBar = styled.div`
   display: flex;
 `
-export const LeftAppbarItem = styled.div`
-  margin: 0 40px;
+export const RightAppBarItem = styled.div`
+  margin-right: 40px;
   :last-child {
     margin: 0;
+  }
+  @media (${mobileMediaQuery}) {
+    margin-right: 20px;
   }
 `
 export const ListItem = styled(({ active, ...props }) => <MaterialListItem {...props} />)<{ active?: boolean }>`

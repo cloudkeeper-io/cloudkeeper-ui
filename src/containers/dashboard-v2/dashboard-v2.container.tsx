@@ -19,6 +19,9 @@ import Loading from '../../components/spinners/loading.component'
 const Wrapper = styled.div`
   padding: 0 20px;
   overflow: hidden;
+  @media (${mobileMediaQuery}) {
+    padding: 0 10px;
+  }
 `
 
 const POLL_INTERVAL = 30 * 60 * 1000 // 30 min
