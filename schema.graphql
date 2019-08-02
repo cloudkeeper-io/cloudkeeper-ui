@@ -226,6 +226,10 @@ type Mutation {
   setupTenant(roleArn: String!, tenantId: String!): IntegrationData
 }
 
+type OwnerData {
+  id: String!
+}
+
 type Query {
   awsRegions: [String]
   costsData(tenantId: String): CostsData
@@ -258,6 +262,7 @@ type Tenant {
   id: String!
   isSetupCompleted: Boolean!
   name: String!
+  owner: OwnerData!
 }
 
 type Totals {

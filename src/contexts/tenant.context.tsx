@@ -21,7 +21,7 @@ interface TenantState {
   tenants: Tenant []
   loading: boolean
   error: any
-  currentTenant?: Tenant
+  currentTenant: Tenant
 
   setTenant: Dispatch<SetStateAction<string | null>>
 }
@@ -33,11 +33,15 @@ const TenantProvider = memo(({ children }: TenantProviderProps) => {
   const [tenantId, setTenant] = usePersistState('tenant')
   const { user } = useContext(UserContext)
   const { data, loading, error } = useQuery<Tenants>(tenantsQuery, { skip: !user })
+
   const tenants = get(data, 'tenants', []) as Tenant []
-  const currentTenant = useMemo(() => find<Tenant []>(tenants, { id: tenantId! }) as Tenant, [tenantId, tenants])
+  const currentTenant = useMemo(
+    () => (find(tenants, { id: tenantId! }) || {}) as Tenant,
+    [tenantId, tenants],
+  )
 
   useEffect(() => {
-    if (/^\/tenants\/[A-z0-9-]+\//.test(pathname)) {
+    if (/^\/tenant\/[A-z0-9-]+/.test(pathname)) {
       const tenantIdPathParam = pathname.split('/')[2]
 
       if (tenantIdPathParam !== tenantId && some(tenants, { id: tenantIdPathParam })) {

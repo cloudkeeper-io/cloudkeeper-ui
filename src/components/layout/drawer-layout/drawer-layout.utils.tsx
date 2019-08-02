@@ -1,16 +1,17 @@
-import React, { memo } from 'react'
+import React, { memo, useContext } from 'react'
 import useReactRouter from 'use-react-router'
 import { List, Tooltip } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { Layout, Settings } from 'react-feather'
 import map from 'lodash/map'
-import includes from 'lodash/includes'
+import isEmpty from 'lodash/isEmpty'
 
 import Icon from '../../icons/icon.component'
 
 import { ListItem, ListItemIcon, ListItemText } from './drawer-layout.styles'
+import { TenantContext } from '../../../contexts'
 
-const isActive = (pathname: string, to: string) => includes(pathname, to)
+const isActive = (pathname: string, to: string) => pathname === to
 
 interface MenuItemsProps {
   tenantId: string
@@ -18,18 +19,21 @@ interface MenuItemsProps {
 }
 
 export const topMenuItems = [
-  { primary: 'Dashboard', to: (id: string) => `/tenant/${id}/dashboard`, icon: <Layout /> },
-  { primary: 'Lambdas', icon: <Icon icon="lambda" /> },
-  { primary: 'DynamoDB', icon: <Icon icon="dynamo" /> },
+  { primary: 'Dashboard', to: (id: string) => `/tenant/${id}`, icon: <Layout /> },
+  { primary: 'Dashboard V2', to: (id: string) => `/tenant/${id}/dashboard-v2`, icon: <Layout /> },
+  { primary: 'Lambdas', to: (tenantId: string) => `/tenant/${tenantId}/lambdas`, icon: <Icon icon="lambda" /> },
+  { primary: 'DynamoDB', to: (tenantId: string) => `/tenant/${tenantId}/dynamo-tables`, icon: <Icon icon="dynamo" /> },
 ]
 
 export const TopMenuItems = memo((props: MenuItemsProps) => {
   const { location: { pathname } } = useReactRouter()
+  const { tenants } = useContext(TenantContext)
   const { tenantId, isExpanded } = props
+
   return (
     <List>
       {map(topMenuItems, (item) => {
-        if (item.to) {
+        if (item.to && !isEmpty(tenants)) {
           return (
             <Link key={item.primary} to={item.to(tenantId)}>
               <ListItem button active={isActive(pathname, item.to(tenantId))}>
