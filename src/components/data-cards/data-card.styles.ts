@@ -8,14 +8,9 @@ export const StyledCard = styled(Card)`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  min-width: 500px;
-  height: 310px;
+  height: 100%;
+  min-height: 310px;
   margin: auto;
-  @media (max-width: 800px) {
-    min-width: auto;
-    min-height: 310px;
-    height: auto;
-  }
 `
 export const Content = styled.div`
   display: flex;

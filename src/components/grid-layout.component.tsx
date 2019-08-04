@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import styled from 'styled-components/macro'
-import ReactGridLayout from 'react-grid-layout'
+import { Responsive as ReactGridLayout } from 'react-grid-layout'
 
 import { mobileMediaQuery } from '../utils'
 
