@@ -1,12 +1,11 @@
 import React, { useRef, useContext } from 'react'
 import styled from 'styled-components/macro'
-import { useMediaQuery } from '@material-ui/core'
 import { useQuery } from 'react-apollo'
 import useComponentSize from '@rehooks/component-size'
-import map from 'lodash/map'
 import get from 'lodash/get'
+import round from 'lodash/round'
 
-import { mobileMediaQuery } from '../../utils'
+import { formatNumber } from '../../utils'
 import Card from '../../components/card.component'
 import ReactGridLayout from '../../components/grid-layout.component'
 import { dashboardQuery } from '../../graphql/queries'
@@ -15,13 +14,12 @@ import { useInterval } from '../../hooks'
 import Processing from '../../components/processing.component'
 import SetupTenant from './components/setup-tenant.component'
 import Loading from '../../components/spinners/loading.component'
+import TopDynamoCard from '../../components/data-cards/top-dynamo-card.component'
 
 const Wrapper = styled.div`
-  padding: 0 20px;
+  width: 100%;
+  min-height: 100px;
   overflow: hidden;
-  @media (${mobileMediaQuery}) {
-    padding: 0 10px;
-  }
 `
 
 const POLL_INTERVAL = 30 * 60 * 1000 // 30 min
@@ -31,28 +29,50 @@ export default () => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const { currentTenant, tenantId } = useContext(TenantContext)
 
+  const { width } = useComponentSize(wrapperRef)
+
   const { data, loading, error, refetch } = useQuery(dashboardQuery, {
     variables: { tenantId },
     pollInterval: POLL_INTERVAL,
   })
-  const isProcessing = get(data, 'lambdasData.processing') || get(data, 'dynamoData.processing')
 
-  const wrapperSize = useComponentSize(wrapperRef)
-  const isMobile = useMediaQuery(`(${mobileMediaQuery})`)
+  const isProcessing = get(data, 'lambdasData.processing') || get(data, 'dynamoData.processing')
 
   useInterval(refetch, PROCESSING_REFETCH_DELAY, isProcessing)
 
-  const layout = [
-    { x: 0, y: 0, w: 4, h: 2, i: '0' },
-    { x: 4, y: 0, w: 4, h: 2, i: '1' },
-    { x: 8, y: 0, w: 4, h: 4, i: '2' },
-    { x: 0, y: 1, w: 4, h: 2, i: '3' },
-    { x: 4, y: 1, w: 4, h: 2, i: '4' },
-    { x: 0, y: 3, w: 12, h: 3, i: '5' },
-  ]
+  const defaultLayouts = {
+    lg: [
+      { x: 0, y: 0, w: 4, h: 2, i: '0' },
+      { x: 4, y: 0, w: 4, h: 2, i: '1' },
+      { x: 8, y: 0, w: 4, h: 4, i: '2' },
+      { x: 0, y: 2, w: 4, h: 2, i: '3' },
+      { x: 4, y: 2, w: 4, h: 2, i: '4' },
+      { x: 0, y: 4, w: 12, h: 2, i: '5' },
+    ],
+    md: [
+      { x: 0, y: 0, w: 5, h: 2, i: '0', minH: 2, minW: 5 },
+      { x: 5, y: 0, w: 5, h: 2, i: '1', minH: 2, minW: 5 },
+      { x: 8, y: 0, w: 5, h: 4, i: '2' },
+      { x: 0, y: 2, w: 5, h: 2, i: '3' },
+      { x: 0, y: 4, w: 5, h: 2, i: '4' },
+      { x: 0, y: 6, w: 12, h: 3, i: '5' },
+    ],
+    sm: [
+      { x: 0, y: 0, w: 1, h: 2, i: '0' },
+      { x: 5, y: 2, w: 1, h: 2, i: '1' },
+      { x: 8, y: 3, w: 1, h: 4, i: '2' },
+      { x: 0, y: 4, w: 1, h: 2, i: '3' },
+      { x: 0, y: 5, w: 1, h: 2, i: '4' },
+      { x: 0, y: 6, w: 1, h: 3, i: '5' },
+    ],
+  }
 
   if (loading) {
-    return <Loading height="calc(100vh - 60px)" />
+    return (
+      <Wrapper ref={wrapperRef}>
+        <Loading height="calc(100vh - 60px)" />
+      </Wrapper>
+    )
   }
 
   if (error) {
@@ -60,27 +80,71 @@ export default () => {
   }
 
   if (!currentTenant!.isSetupCompleted) {
-    return <SetupTenant tenant={currentTenant!} />
+    return (
+      <Wrapper ref={wrapperRef}>
+        <SetupTenant tenant={currentTenant!} />
+      </Wrapper>
+    )
   }
 
-  if (isProcessing) {
-    return <Processing />
+  if (!currentTenant!.isSetupCompleted) {
+    return (
+      <Wrapper ref={wrapperRef}>
+        <Processing />
+      </Wrapper>
+    )
   }
 
   return (
     <Wrapper ref={wrapperRef}>
-      <ReactGridLayout
-        layout={layout}
-        cols={isMobile ? 1 : 12}
-        width={wrapperSize.width - 20}
-        rowHeight={125}
-      >
-        {map(layout, item => (
-          <Card key={item.i}>
-            {item.i}
+      {(width > 0) && (
+        <ReactGridLayout
+          layouts={defaultLayouts}
+          breakpoints={{ lg: 1250, md: 1000, sm: 800 }}
+          cols={{ lg: 12, md: 10, sm: 1 }}
+          width={width}
+          rowHeight={170}
+          isDraggable={false}
+          isResizable={false}
+        >
+          <Card key="0">
+            <TopDynamoCard
+              header="Read Heavy Tables"
+              dynamoHeader="Most Read Table"
+              units={[{ label: 'consumed', value: 'consumedRead' }, { label: 'provisioned', value: 'provisionedRead' }]}
+              data={data.dynamoData.last30Days.mostReadTables}
+              summaryFormatter={x => `${x.consumedRead!.toLocaleString('ru')} read units`}
+              yAxisFormatter={x => formatNumber(x)}
+              tooltipFormatter={x => Number(x).toLocaleString()}
+              timeAxisFormat="LLL d"
+              dynamoInfo={[
+                { unit: 'consumedRead', text: 'total', valueFn: x => x.toLocaleString('ru') },
+                { unit: 'averageConsumedRead', text: 'average', valueFn: x => `${round(x, 2).toLocaleString('en')}/s` },
+              ]}
+            />
           </Card>
-        ))}
-      </ReactGridLayout>
+          <Card key="1">
+            <TopDynamoCard
+              header="Expensive Tables"
+              dynamoHeader="Most Expensive Table"
+              units={[{ label: 'read price', value: 'readPrice' }, { label: 'write price', value: 'writePrice' }]}
+              data={data.dynamoData.last30Days.mostExpensiveTables}
+              summaryFormatter={x => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
+              yAxisFormatter={x => `$ ${formatNumber(x)}`}
+              tooltipFormatter={x => `$ ${Number(x).toLocaleString()}`}
+              timeAxisFormat="LLL d"
+              dynamoInfo={[
+                { unit: 'readPrice', text: 'read price', valueFn: x => `$ ${x.toLocaleString('en')}` },
+                { unit: 'writePrice', text: 'write price', valueFn: x => `$ ${x.toLocaleString('en')}` },
+              ]}
+            />
+          </Card>
+          <Card key="2">2</Card>
+          <Card key="3">3</Card>
+          <Card key="4">4</Card>
+          <Card key="5">5</Card>
+        </ReactGridLayout>
+      )}
     </Wrapper>
   )
 }

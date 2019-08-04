@@ -37,8 +37,8 @@ const controls = {
 }
 
 const card = {
-  background: 'rgba(255,255,255, 0.7)',
-  shadow: colors.shadow,
+  background: 'linear-gradient(180deg, #FFFFFF 51.56%, #F7FCFF 100%), #FFFFFF',
+  shadow: '0 10px 20px rgba(148, 188, 224, 0.16), 0 30px 50px rgba(152, 210, 251, 0.2)',
   borderRadius: '10px',
   borderColor: '#FFFFFF',
 }
