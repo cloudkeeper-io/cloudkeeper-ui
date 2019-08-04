@@ -11793,11 +11793,6 @@ pretty-hrtime@^1.0.3:
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
 
-primereact@^3.1.7:
-  version "3.1.8"
-  resolved "https://registry.yarnpkg.com/primereact/-/primereact-3.1.8.tgz#db43f09397a996f7f1a8a72133b23daf1353637a"
-  integrity sha512-HpQvZo/rv4TdiMGx8XkGOpRtRICmIv8p7LP9+TB9APZub4JZYpF1gyKuBXkJl2L6jpKReu+FMV+cbcHb1YRMbg==
-
 prismjs@^1.8.4, prismjs@~1.17.0:
   version "1.17.1"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.17.1.tgz#e669fcbd4cdd873c35102881c33b14d0d68519be"

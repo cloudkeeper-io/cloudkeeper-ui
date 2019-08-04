@@ -42,7 +42,6 @@
     "luxon": "^1.17.2",
     "moment": "^2.24.0",
     "polished": "^3.4.1",
-    "primereact": "^3.1.7",
     "react": "^16.8.6",
     "react-apollo": "^3.0.0-beta.4",
     "react-copy-to-clipboard": "^5.0.1",
