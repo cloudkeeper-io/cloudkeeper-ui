@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro'
+import 'react-dates/lib/css/_datepicker.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default createGlobalStyle`

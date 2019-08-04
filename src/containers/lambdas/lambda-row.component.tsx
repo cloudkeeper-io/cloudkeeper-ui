@@ -16,7 +16,7 @@ export const LambdaRow = memo(({ lambda }: { lambda: lambdasList_lambdasList }) 
     <StyledTableCell>{lambda.invocations}</StyledTableCell>
     <StyledTableCell>{lambda.errors}</StyledTableCell>
     <StyledTableCell>{round(lambda.errorRate! * 100, 2)}%</StyledTableCell>
-    <StyledTableCell>{msToDuration(lambda.avgExecutionTime!)}</StyledTableCell>
+    <StyledTableCell>{lambda.avgExecutionTime === 0 ? 'N/A' : msToDuration(lambda.avgExecutionTime!)}</StyledTableCell>
     <StyledTableCell>${round(lambda.cost!, 5)}</StyledTableCell>
   </TableRow>
 ))

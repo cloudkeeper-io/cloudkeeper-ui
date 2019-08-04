@@ -3,7 +3,6 @@ import { DateRangePicker } from 'react-dates'
 import 'react-dates/initialize'
 import moment, { Moment } from 'moment'
 
-import 'react-dates/lib/css/_datepicker.css'
 import { CalendarIcon, Wrapper } from './datepicker.styles'
 
 export interface DateRange {

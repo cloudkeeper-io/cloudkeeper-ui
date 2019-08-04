@@ -1,5 +1,5 @@
 import round from 'lodash/round'
-import humanizeDuration from 'humanize-duration'
+import { Duration } from 'luxon'
 
 export const formatNumber = (x: number, maxD = 4): number | string => {
   const v = Math.abs(x)
@@ -35,32 +35,18 @@ export const bytesToSize = (bytes: number) => {
   return i ? `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}` : `${bytes} ${sizes[i]}`
 }
 
-const humanizer = humanizeDuration.humanizer({
-  language: 'shortEn',
-  units: ['m', 's', 'ms'],
-  delimiter: ' ',
-  languages: {
-    shortEn: {
-      y: () => 'y',
-      mo: () => 'mo',
-      w: () => 'w',
-      d: () => 'd',
-      h: () => 'h',
-      m: () => 'min',
-      s: () => 's',
-      ms: () => 'ms',
-    },
-  },
-})
-
 export const msToDuration = (input: number | string) => {
   const ms = Number(input)
 
-  if (ms > 1000) {
-    return humanizer(round(ms, -3))
+  if (ms > 60000) {
+    return Duration.fromMillis(round(ms, -3)).toFormat('m \'min\', s \'sec\'')
   }
 
-  return humanizer(round(ms))
+  if (ms > 1000) {
+    return Duration.fromMillis(round(ms, -3)).toFormat('s \'sec\'')
+  }
+
+  return Duration.fromMillis(round(ms)).toFormat('S \'ms\'')
 }
 
 // eslint-disable-next-line max-len,no-nested-ternary

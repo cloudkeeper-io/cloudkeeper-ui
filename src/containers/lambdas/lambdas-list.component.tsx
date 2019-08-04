@@ -22,7 +22,7 @@ interface OrderState {
 export const LambdasList = ({ lambdas }: LambdasListProps) => {
   const [{ orderProperty, order }, setSorting] = useState<OrderState>({ orderProperty: 'invocations', order: 'desc' })
 
-  const orderedLambdas = orderBy(lambdas, [orderProperty], [order])
+  const orderedLambdas = orderBy(lambdas, orderProperty, order)
 
   const changeOrder = (property: string) => {
     const isDesc = orderProperty === property && order === 'desc'

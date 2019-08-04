@@ -138,6 +138,10 @@ export const Wrapper = styled.div`
       background: ${p => p.theme.card.background};
     }
     
+    .DateRangePicker_picker {
+      background-color: transparent !important;
+    }
+    
     .CalendarMonth {
       background: transparent;
     }

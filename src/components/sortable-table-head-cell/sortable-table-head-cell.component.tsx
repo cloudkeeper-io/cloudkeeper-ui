@@ -17,8 +17,7 @@ export const SortableTableHeadCell = ({ label, orderBy, order, changeOrder, prop
       active={orderBy === propertyName}
       direction={order}
       onClick={() => changeOrder(propertyName)}
-      // @ts-ignore
-      IconComponent={StyledChevronDown}
+      IconComponent={StyledChevronDown as any}
     >
       <TableLabel variant="h6" noWrap>
         {label}
