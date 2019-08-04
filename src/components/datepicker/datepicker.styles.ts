@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import styled, { css } from 'styled-components'
 import { mix, transparentize } from 'polished'
-import {Calendar} from "react-feather";
+import { Calendar } from 'react-feather'
 
 const circle = css`
     ::before {

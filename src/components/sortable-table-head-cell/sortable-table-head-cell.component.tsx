@@ -1,35 +1,24 @@
+/* eslint-disable max-len */
 import React from 'react'
-import TableCell from '@material-ui/core/TableCell'
 import { TableSortLabel } from '@material-ui/core'
-import styled from 'styled-components'
-import Typography from '@material-ui/core/Typography'
+import { HiddenSpan, StyledChevronDown, StyledTableCell, TableLabel } from './sortable-table-head-cell.styles'
 
-const HiddenSpan = styled.span`
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    top: 20px;
-    width: 1px;
-`
+interface SortableTableHeadCellProps {
+    label: string
+    propertyName: string
+    orderBy: string
+    order: 'asc' | 'desc'
+    changeOrder: (properyName: string) => void
+}
 
-export const StyledTableCell = styled(TableCell)`
-  padding: 20px 14px;
-`
-
-const TableLabel = styled(Typography)`
-  color: ${p => p.theme.palette.text.primary};
-`
-
-export const SortableTableHeadCell = ({ label, orderBy, order, changeOrder, propertyName }: any) => (
+export const SortableTableHeadCell = ({ label, orderBy, order, changeOrder, propertyName }: SortableTableHeadCellProps) => (
   <StyledTableCell>
     <TableSortLabel
       active={orderBy === propertyName}
       direction={order}
       onClick={() => changeOrder(propertyName)}
+      // @ts-ignore
+      IconComponent={StyledChevronDown}
     >
       <TableLabel variant="h6" noWrap>
         {label}

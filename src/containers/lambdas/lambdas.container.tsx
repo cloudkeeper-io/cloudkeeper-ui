@@ -4,6 +4,7 @@ import { useQuery } from 'react-apollo'
 import get from 'lodash/get'
 import find from 'lodash/find'
 import moment from 'moment'
+import { Card } from '@material-ui/core'
 
 import Loading from '../../components/spinners/loading.component'
 import SetupTenant from '../dashboard/components/setup-tenant.component'
@@ -22,6 +23,14 @@ const Wrapper = styled.div`
   overflow-x: hidden;
 `
 
+const StyledCard = styled(Card)`
+  border-radius: 10px;
+  padding: 20px 40px;
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: auto;
+`
+
 interface DashboardProps {
     tenants: Tenant[]
 }
@@ -30,8 +39,6 @@ const defaultStartDate = moment().subtract(7, 'days')
 const defaultEndDate = moment()
 
 export default ({ tenants }: DashboardProps) => {
-  const [isDataLoaded, setDataLoaded] = useState(false)
-
   const [{ startDate, endDate }, setDateRange] = useState<DateRange>({
     startDate: defaultStartDate,
     endDate: defaultEndDate,
@@ -50,10 +57,6 @@ export default ({ tenants }: DashboardProps) => {
 
   const isProcessing = get(data, 'lambdasListQuery.processing') || get(data, 'lambdasListQuery.processing')
 
-  if (loading && !isDataLoaded) {
-    return <Loading height="calc(100vh - 60px)" />
-  }
-
   if (error) {
     throw error
   }
@@ -66,10 +69,6 @@ export default ({ tenants }: DashboardProps) => {
     return <Processing />
   }
 
-  if (!isDataLoaded) {
-    setDataLoaded(true)
-  }
-
   return (
     <Wrapper>
       <DataPageHeader
@@ -78,7 +77,10 @@ export default ({ tenants }: DashboardProps) => {
         endDate={endDate}
         onDateRangeChanged={range => setDateRange(range)}
       />
-      {data && data.lambdasList && <LambdasList lambdas={data.lambdasList} />}
+      <StyledCard>
+        {loading && <Loading height="calc(100vh - 300px)" />}
+        {!loading && data && data.lambdasList && <LambdasList lambdas={data.lambdasList} />}
+      </StyledCard>
     </Wrapper>
   )
 }
