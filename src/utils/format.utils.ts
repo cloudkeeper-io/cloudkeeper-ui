@@ -1,5 +1,5 @@
 import round from 'lodash/round'
-import { Duration } from 'luxon'
+import humanizeDuration from 'humanize-duration'
 
 export const formatNumber = (x: number, maxD = 4): number | string => {
   const v = Math.abs(x)
@@ -35,8 +35,33 @@ export const bytesToSize = (bytes: number) => {
   return i ? `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}` : `${bytes} ${sizes[i]}`
 }
 
-export const msToSeconds = (x: string | number) => (x >= 1000 ?
-  `${round(Duration.fromObject({ milliseconds: Number(x) }).as('second'), 2)}s` : `${round(Number(x))}ms`)
+const humanizer = humanizeDuration.humanizer({
+  language: 'shortEn',
+  units: ['m', 's', 'ms'],
+  delimiter: ' ',
+  languages: {
+    shortEn: {
+      y: () => 'y',
+      mo: () => 'mo',
+      w: () => 'w',
+      d: () => 'd',
+      h: () => 'h',
+      m: () => 'min',
+      s: () => 's',
+      ms: () => 'ms',
+    },
+  },
+})
+
+export const msToDuration = (input: number | string) => {
+  const ms = Number(input)
+
+  if (ms > 1000) {
+    return humanizer(round(ms, -3))
+  }
+
+  return humanizer(round(ms))
+}
 
 // eslint-disable-next-line max-len,no-nested-ternary
 export const toOrdinal = (n: number) => n + (n % 10 === 1 && n % 100 !== 11 ? 'st' : n % 10 === 2 && n % 100 !== 12 ? 'nd' : n % 10 === 3 && n % 100 !== 13 ? 'rd' : 'th')

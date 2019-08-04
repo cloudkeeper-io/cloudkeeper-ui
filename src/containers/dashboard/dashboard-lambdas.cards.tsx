@@ -3,7 +3,7 @@ import round from 'lodash/round'
 
 import LambdaSummaryCard from '../../components/data-cards/lambda-summary-card.component'
 import TopLambdasCard from '../../components/data-cards/top-lambdas-card.component'
-import { formatNumber, msToSeconds } from '../../utils'
+import { formatNumber, msToDuration } from '../../utils'
 
 interface GraphsProps {
   count: number
@@ -43,20 +43,20 @@ export const LambdasGraphs = memo(({ count, data, timeAxisFormat }: GraphsProps)
       unit="averageDuration"
       count={count}
       data={data.slowestLambdas}
-      summaryFormatter={x => `${msToSeconds(x.averageDuration!)} average`}
-      yAxisFormatter={x => `${msToSeconds(x)}`}
-      tooltipFormatter={x => `${msToSeconds(x)}`}
+      summaryFormatter={x => `${msToDuration(x.averageDuration!)} average`}
+      yAxisFormatter={x => `${msToDuration(x)}`}
+      tooltipFormatter={x => `${msToDuration(x)}`}
       timeAxisFormat={timeAxisFormat}
       lambdaInfo={[
         {
           unit: 'averageDuration',
           text: 'average',
-          valueFn: x => `${msToSeconds(x)}`,
+          valueFn: x => `${msToDuration(x)}`,
         },
         {
           unit: 'maxDuration',
           text: 'max',
-          valueFn: x => `${msToSeconds(x)}`,
+          valueFn: x => `${msToDuration(x)}`,
         },
       ]}
     />

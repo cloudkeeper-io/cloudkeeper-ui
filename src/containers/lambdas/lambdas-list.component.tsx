@@ -1,55 +1,14 @@
 /* eslint-disable camelcase */
-import React, { useState, memo } from 'react'
-import { round, orderBy } from 'lodash'
-import 'primereact/resources/primereact.min.css'
+import React, { useState } from 'react'
+import { orderBy } from 'lodash'
 import Table from '@material-ui/core/Table'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TableBody from '@material-ui/core/TableBody'
-import humanizeDuration from 'humanize-duration'
 
-import { SortableTableHeadCell, StyledTableCell } from '../../components/sortable-table-head-cell'
+import { SortableTableHeadCell } from '../../components/sortable-table-head-cell'
 import { lambdasList_lambdasList } from '../../graphql/queries/types/lambdasList'
-
-const humanizer = humanizeDuration.humanizer({
-  language: 'shortEn',
-  units: ['m', 's', 'ms'],
-  delimiter: ' ',
-  languages: {
-    shortEn: {
-      y: () => 'y',
-      mo: () => 'mo',
-      w: () => 'w',
-      d: () => 'd',
-      h: () => 'h',
-      m: () => 'min',
-      s: () => 's',
-      ms: () => 'ms',
-    },
-  },
-})
-
-const printDuration = (ms: number) => {
-  if (ms > 1000) {
-    return humanizer(round(ms, -3))
-  }
-
-  return humanizer(round(ms))
-}
-
-const LambdaRow = memo(({ lambda }: { lambda: lambdasList_lambdasList }) => (
-  <TableRow>
-    <StyledTableCell>
-      {lambda.name}
-    </StyledTableCell>
-    <StyledTableCell>{lambda.region}</StyledTableCell>
-    <StyledTableCell>{lambda.invocations}</StyledTableCell>
-    <StyledTableCell>{lambda.errors}</StyledTableCell>
-    <StyledTableCell>{round(lambda.errorRate! * 100, 2)}%</StyledTableCell>
-    <StyledTableCell>{printDuration(lambda.avgExecutionTime!)}</StyledTableCell>
-    <StyledTableCell>${round(lambda.cost!, 5)}</StyledTableCell>
-  </TableRow>
-))
+import { LambdaRow } from './lambda-row.component'
 
 interface LambdasListProps {
     lambdas: lambdasList_lambdasList[]
