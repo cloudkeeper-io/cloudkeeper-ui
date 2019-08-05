@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import styled, { css } from 'styled-components'
 import { mix, transparentize } from 'polished'
+import { Calendar } from 'react-feather'
 
 const circle = css`
     ::before {
@@ -60,10 +61,6 @@ export const Wrapper = styled.div`
     
     .CalendarMonth_caption {
       color: ${p => p.theme.palette.text.primary}
-    }
-    
-    .DateRangePicker_picker {
-      background: transparent;
     }
     
     .CalendarDay {
@@ -141,6 +138,10 @@ export const Wrapper = styled.div`
       background: ${p => p.theme.card.background};
     }
     
+    .DateRangePicker_picker {
+      background-color: transparent !important;
+    }
+    
     .CalendarMonth {
       background: transparent;
     }
@@ -166,4 +167,19 @@ export const Wrapper = styled.div`
     .DayPickerNavigation_svg__horizontal {
       fill: ${p => p.theme.colors.primary}
     }
+    
+    .DateRangePickerInput_calendarIcon {
+      margin: 0 0 0 10px;
+      outline: none;
+      padding: 10px 0;
+      @media (max-width: 900px) {
+        margin: 0;
+        padding: 10px 10px 10px 0;
+      }
+    }
+`
+
+
+export const CalendarIcon = styled(Calendar)`
+  color: ${p => p.theme.colors.primary};
 `

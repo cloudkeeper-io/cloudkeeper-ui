@@ -12,14 +12,15 @@ const Wrapper = styled.div`
 `
 
 const DatepickerDemo = () => {
-  const [dateRange, setDateRange] = useState<DateRange>({ startDate: null, endDate: null })
+  const [{ startDate, endDate }, setDateRange] = useState<DateRange>({ startDate: null, endDate: null })
 
   return (
     <Wrapper>
       <Datepicker
         id="storybook_datepicker"
-        dateRange={dateRange}
-        onRangeChanged={range => setDateRange(range)}
+        startDate={startDate}
+        endDate={endDate}
+        onDateRangeChanged={range => setDateRange(range)}
       />
     </Wrapper>
   )
