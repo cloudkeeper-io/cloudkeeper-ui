@@ -6,12 +6,14 @@ export const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 30px 0;
+  flex-wrap: wrap;
+  margin: 30px 0 15px;
 `
 
 export const DatepickerWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
 `
 
 interface PredefinedDateProps {
@@ -29,4 +31,7 @@ export const PredefinedDate = styled(({ active, ...props }) => <Typography {...p
     color: ${p => p.theme.colors.primary}
   }
   transition: color 400ms linear;
+  @media (max-width: 900px) {
+    display: none;
+  }
 `

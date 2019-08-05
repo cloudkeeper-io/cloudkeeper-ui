@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { DateRangePicker } from 'react-dates'
 import 'react-dates/initialize'
 import moment, { Moment } from 'moment'
+import { useMediaQuery } from '@material-ui/core'
 
 import { CalendarIcon, Wrapper } from './datepicker.styles'
+import { mobileMediaQuery } from '../../utils'
 
 export interface DateRange {
     startDate: Moment | null,
@@ -20,6 +22,8 @@ export interface DatepickerProps {
 moment.updateLocale('en', { weekdaysMin: 'U_M_T_W_R_F_S'.split('_') })
 
 export const Datepicker = ({ onDateRangeChanged, startDate, endDate, id }: DatepickerProps) => {
+  const isMobile = useMediaQuery(`(${mobileMediaQuery})`)
+
   const [focusedInput, setFocusedInput] = useState<'startDate'| 'endDate' | null>(null)
 
   return (
@@ -39,6 +43,7 @@ export const Datepicker = ({ onDateRangeChanged, startDate, endDate, id }: Datep
         isOutsideRange={date => date.isAfter(moment(), 'day')}
         customArrowIcon={<span>&mdash;</span>}
         minimumNights={0}
+        numberOfMonths={isMobile ? 1 : 2}
       />
     </Wrapper>
   )

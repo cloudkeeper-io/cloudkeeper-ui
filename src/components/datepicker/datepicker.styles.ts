@@ -169,7 +169,13 @@ export const Wrapper = styled.div`
     }
     
     .DateRangePickerInput_calendarIcon {
-        margin: 0 0 0 10px;
+      margin: 0 0 0 10px;
+      outline: none;
+      padding: 10px 0;
+      @media (max-width: 900px) {
+        margin: 0;
+        padding: 10px 10px 10px 0;
+      }
     }
 `
 

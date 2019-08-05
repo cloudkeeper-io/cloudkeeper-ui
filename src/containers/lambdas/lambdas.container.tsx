@@ -4,8 +4,8 @@ import { useQuery } from 'react-apollo'
 import get from 'lodash/get'
 import find from 'lodash/find'
 import moment from 'moment'
-import { Card } from '@material-ui/core'
 
+import { Input } from '@material-ui/core'
 import Loading from '../../components/spinners/loading.component'
 import SetupTenant from '../dashboard/components/setup-tenant.component'
 import Processing from '../../components/processing.component'
@@ -15,20 +15,29 @@ import { TenantContext } from '../../contexts'
 import { LambdasList } from './lambdas-list.component'
 import { DataPageHeader } from '../../components/data-page-header/data-page-header.component'
 import { DateRange } from '../../components/datepicker/datepicker.component'
+import Card from '../../components/card.component'
 
 const Wrapper = styled.div`
   position: relative;
-  padding: 60px 28px 20px 28px;
-  margin-top: -60px;
+  padding: 0 28px 20px;
   overflow-x: hidden;
+  height: calc(100vh - 64px);
+  @media (max-width: 800px) {
+    padding: 0 15px 20px;
+  }
 `
 
 const StyledCard = styled(Card)`
-  border-radius: 10px;
   padding: 20px 40px;
-  height: calc(100vh - 200px);
-  overflow-y: auto;
-  overflow-x: auto;
+  height: calc(100vh - 240px);
+  overflow: auto;
+  @media (max-width: 450px) {
+    height: calc(100vh - 300px);
+  }
+`
+
+const SearchWrapper = styled.div`
+  padding: 0 0 30px 0;
 `
 
 interface DashboardProps {
@@ -43,6 +52,8 @@ export default ({ tenants }: DashboardProps) => {
     startDate: defaultStartDate,
     endDate: defaultEndDate,
   })
+
+  const [filterInput, setFilterInput] = useState<string | undefined>(undefined)
 
   const { tenantId } = useContext(TenantContext)
   const tenant = find<Tenant []>(tenants, { id: tenantId! }) as Tenant
@@ -77,9 +88,15 @@ export default ({ tenants }: DashboardProps) => {
         endDate={endDate}
         onDateRangeChanged={range => setDateRange(range)}
       />
+      <SearchWrapper>
+        <Input
+          placeholder="Search"
+          onChange={event => setFilterInput(event.target.value)}
+        />
+      </SearchWrapper>
       <StyledCard>
         {loading && <Loading height="calc(100vh - 300px)" />}
-        {!loading && data && data.lambdasList && <LambdasList lambdas={data.lambdasList} />}
+        {!loading && data && data.lambdasList && <LambdasList lambdas={data.lambdasList} filterInput={filterInput} />}
       </StyledCard>
     </Wrapper>
   )
