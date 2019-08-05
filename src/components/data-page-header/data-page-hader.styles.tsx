@@ -34,4 +34,7 @@ export const PredefinedDate = styled(({ active, ...props }) => <Typography {...p
   @media (max-width: 900px) {
     display: none;
   }
+  &:first-of-type {
+    margin: 0 16px 0 0;
+  }
 `

@@ -31,7 +31,7 @@ const StyledCard = styled(Card)`
   padding: 20px 40px;
   height: calc(100vh - 240px);
   overflow: auto;
-  @media (max-width: 450px) {
+  @media (max-width: 800px) {
     height: calc(100vh - 300px);
   }
 `
