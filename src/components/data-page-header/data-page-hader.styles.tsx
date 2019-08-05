@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Typography } from '@material-ui/core'
+import { getTransition } from '../../utils'
 
 export const HeaderContainer = styled.div`
   display: flex;
@@ -26,11 +27,11 @@ export const PredefinedDate = styled(({ active, ...props }) => <Typography {...p
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  ${p => p.active && `color: ${p.theme.colors.primary}`}
+  color: ${p => p.active && p.theme.colors.primary};
   &:hover {
-    color: ${p => p.theme.colors.primary}
+    color: ${p => p.theme.colors.primary};
   }
-  transition: color 400ms linear;
+  transition: ${p => getTransition(p.theme, ['color'])};
   @media (max-width: 900px) {
     display: none;
   }
