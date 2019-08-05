@@ -2,16 +2,16 @@
 import styled from 'styled-components/macro'
 import { Responsive as ReactGridLayout } from 'react-grid-layout'
 
-import { mobileMediaQuery } from '../utils'
+import { getTransition, mobileMediaQuery } from '../utils'
 
 export default styled(ReactGridLayout)`
   position: relative;
-  transition: height 0.3s ease;
+  transition: ${p => getTransition(p.theme, ['height'])};
   @media(max-width: (${mobileMediaQuery})) {
     padding: 0;
   }
   .react-grid-item {
-    transition: all 0.3s ease;
+    transition: ${p => getTransition(p.theme, ['all'])};
     transition-property: left, top;
   }
   .react-grid-item.cssTransforms {
@@ -31,7 +31,7 @@ export default styled(ReactGridLayout)`
   .react-grid-item.react-grid-placeholder {
     background: ${p => p.theme.palette.primary.main};
     opacity: 0.2;
-    transition-duration: 100ms;
+    transition: ${p => getTransition(p.theme, ['all'])};
     z-index: 2;
     user-select: none;
   }

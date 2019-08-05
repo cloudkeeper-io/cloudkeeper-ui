@@ -236,9 +236,44 @@ export interface DashboardData_dynamoData {
   last30Days: DashboardData_dynamoData_last30Days | null;
 }
 
+export interface DashboardData_costsData_costsPerService_serviceCosts {
+  __typename: "ServiceCostItem";
+  date: string | null;
+  serviceName: string | null;
+  unblendedCost: number | null;
+}
+
+export interface DashboardData_costsData_costsPerService {
+  __typename: "CostsPerServiceDataPoint";
+  date: string | null;
+  total: number | null;
+  serviceCosts: (DashboardData_costsData_costsPerService_serviceCosts | null)[] | null;
+}
+
+export interface DashboardData_costsData_costsPerStack_stackCosts {
+  __typename: "StackCostItem";
+  date: string | null;
+  stackName: string | null;
+  unblendedCost: number | null;
+}
+
+export interface DashboardData_costsData_costsPerStack {
+  __typename: "CostsPerStackDataPoint";
+  date: string | null;
+  total: number | null;
+  stackCosts: (DashboardData_costsData_costsPerStack_stackCosts | null)[] | null;
+}
+
+export interface DashboardData_costsData {
+  __typename: "CostsData";
+  costsPerService: (DashboardData_costsData_costsPerService | null)[] | null;
+  costsPerStack: (DashboardData_costsData_costsPerStack | null)[] | null;
+}
+
 export interface DashboardData {
   lambdasData: DashboardData_lambdasData | null;
   dynamoData: DashboardData_dynamoData | null;
+  costsData: DashboardData_costsData | null;
 }
 
 export interface DashboardDataVariables {
