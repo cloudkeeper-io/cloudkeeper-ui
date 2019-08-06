@@ -15,6 +15,7 @@ import Processing from '../../components/processing.component'
 import SetupTenant from './components/setup-tenant.component'
 import Loading from '../../components/spinners/loading.component'
 import TopDynamoCard from '../../components/data-cards/top-dynamo-card.component'
+import { DashboardData } from '../../graphql/queries/dashboard/types/DashboardData'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -31,7 +32,7 @@ export default () => {
 
   const { width } = useComponentSize(wrapperRef)
 
-  const { data, loading, error, refetch } = useQuery(dashboardQuery, {
+  const { data, loading, error, refetch } = useQuery<DashboardData>(dashboardQuery, {
     variables: { tenantId },
     pollInterval: POLL_INTERVAL,
   })
@@ -112,7 +113,7 @@ export default () => {
               header="Read Heavy Tables"
               dynamoHeader="Most Read Table"
               units={[{ label: 'consumed', value: 'consumedRead' }, { label: 'provisioned', value: 'provisionedRead' }]}
-              data={data.dynamoData.last30Days.mostReadTables}
+              data={data!.dynamoData!.last30Days!.mostReadTables! as any}
               summaryFormatter={x => `${x.consumedRead!.toLocaleString('ru')} read units`}
               yAxisFormatter={x => formatNumber(x)}
               tooltipFormatter={x => Number(x).toLocaleString()}
@@ -128,7 +129,7 @@ export default () => {
               header="Expensive Tables"
               dynamoHeader="Most Expensive Table"
               units={[{ label: 'read price', value: 'readPrice' }, { label: 'write price', value: 'writePrice' }]}
-              data={data.dynamoData.last30Days.mostExpensiveTables}
+              data={data!.dynamoData!.last30Days!.mostExpensiveTables as any}
               summaryFormatter={x => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
               yAxisFormatter={x => `$ ${formatNumber(x)}`}
               tooltipFormatter={x => `$ ${Number(x).toLocaleString()}`}

@@ -17,7 +17,7 @@ export interface Cost_costsPerService {
   __typename: "CostsPerServiceDataPoint";
   date: string | null;
   total: number | null;
-  serviceCosts: (Cost_costsPerService_serviceCosts | null)[] | null;
+  serviceCosts: Cost_costsPerService_serviceCosts[] | null;
 }
 
 export interface Cost_costsPerStack_stackCosts {
@@ -31,11 +31,11 @@ export interface Cost_costsPerStack {
   __typename: "CostsPerStackDataPoint";
   date: string | null;
   total: number | null;
-  stackCosts: (Cost_costsPerStack_stackCosts | null)[] | null;
+  stackCosts: Cost_costsPerStack_stackCosts[];
 }
 
 export interface Cost {
   __typename: "CostsData";
-  costsPerService: (Cost_costsPerService | null)[] | null;
-  costsPerStack: (Cost_costsPerStack | null)[] | null;
+  costsPerService: Cost_costsPerService[] | null;
+  costsPerStack: Cost_costsPerStack[] | null;
 }

@@ -15,14 +15,14 @@ export interface Dynamo_last24Hours_mostReadTables_dataPoints {
 
 export interface Dynamo_last24Hours_mostReadTables {
   __typename: "MostReadTableData";
-  name: string | null;
-  averageConsumedRead: number | null;
-  consumedRead: number | null;
-  provisionedRead: number | null;
-  billingMode: string | null;
-  sizeBytes: number | null;
-  items: number | null;
-  dataPoints: (Dynamo_last24Hours_mostReadTables_dataPoints | null)[] | null;
+  name: string;
+  averageConsumedRead: number;
+  consumedRead: number;
+  provisionedRead: number;
+  billingMode: string;
+  sizeBytes: number;
+  items: number;
+  dataPoints: Dynamo_last24Hours_mostReadTables_dataPoints[] | null;
 }
 
 export interface Dynamo_last24Hours_mostWritesTables_dataPoints {
@@ -41,7 +41,7 @@ export interface Dynamo_last24Hours_mostWritesTables {
   billingMode: string | null;
   sizeBytes: number | null;
   items: number | null;
-  dataPoints: (Dynamo_last24Hours_mostWritesTables_dataPoints | null)[] | null;
+  dataPoints: Dynamo_last24Hours_mostWritesTables_dataPoints[] | null;
 }
 
 export interface Dynamo_last24Hours_mostThrottledTables_dataPoints {
@@ -61,7 +61,7 @@ export interface Dynamo_last24Hours_mostThrottledTables {
   throttledRequests: number | null;
   throttledWrites: number | null;
   throttledReads: number | null;
-  dataPoints: (Dynamo_last24Hours_mostThrottledTables_dataPoints | null)[] | null;
+  dataPoints: Dynamo_last24Hours_mostThrottledTables_dataPoints[] | null;
 }
 
 export interface Dynamo_last24Hours_mostExpensiveTables_dataPoints {
@@ -75,23 +75,23 @@ export interface Dynamo_last24Hours_mostExpensiveTables_dataPoints {
 
 export interface Dynamo_last24Hours_mostExpensiveTables {
   __typename: "MostExpensiveTableData";
-  name: string | null;
-  billingMode: string | null;
-  sizeBytes: number | null;
-  items: number | null;
-  totalPrice: number | null;
-  readPrice: number | null;
-  writePrice: number | null;
-  storagePrice: number | null;
-  dataPoints: (Dynamo_last24Hours_mostExpensiveTables_dataPoints | null)[] | null;
+  name: string;
+  billingMode: string;
+  sizeBytes: number;
+  items: number;
+  totalPrice: number;
+  readPrice: number;
+  writePrice: number;
+  storagePrice: number;
+  dataPoints: Dynamo_last24Hours_mostExpensiveTables_dataPoints[] | null;
 }
 
 export interface Dynamo_last24Hours {
   __typename: "DashboardDynamoDataForPeriod";
-  mostReadTables: (Dynamo_last24Hours_mostReadTables | null)[] | null;
-  mostWritesTables: (Dynamo_last24Hours_mostWritesTables | null)[] | null;
-  mostThrottledTables: (Dynamo_last24Hours_mostThrottledTables | null)[] | null;
-  mostExpensiveTables: (Dynamo_last24Hours_mostExpensiveTables | null)[] | null;
+  mostReadTables: Dynamo_last24Hours_mostReadTables[];
+  mostWritesTables: Dynamo_last24Hours_mostWritesTables[];
+  mostThrottledTables: Dynamo_last24Hours_mostThrottledTables[];
+  mostExpensiveTables: Dynamo_last24Hours_mostExpensiveTables[];
 }
 
 export interface Dynamo_last30Days_mostReadTables_dataPoints {
@@ -103,14 +103,14 @@ export interface Dynamo_last30Days_mostReadTables_dataPoints {
 
 export interface Dynamo_last30Days_mostReadTables {
   __typename: "MostReadTableData";
-  name: string | null;
-  averageConsumedRead: number | null;
-  billingMode: string | null;
-  sizeBytes: number | null;
-  items: number | null;
-  consumedRead: number | null;
-  provisionedRead: number | null;
-  dataPoints: (Dynamo_last30Days_mostReadTables_dataPoints | null)[] | null;
+  name: string;
+  averageConsumedRead: number;
+  billingMode: string;
+  sizeBytes: number;
+  items: number;
+  consumedRead: number;
+  provisionedRead: number;
+  dataPoints: Dynamo_last30Days_mostReadTables_dataPoints[] | null;
 }
 
 export interface Dynamo_last30Days_mostWritesTables_dataPoints {
@@ -129,7 +129,7 @@ export interface Dynamo_last30Days_mostWritesTables {
   items: number | null;
   consumedWrite: number | null;
   provisionedWrite: number | null;
-  dataPoints: (Dynamo_last30Days_mostWritesTables_dataPoints | null)[] | null;
+  dataPoints: Dynamo_last30Days_mostWritesTables_dataPoints[] | null;
 }
 
 export interface Dynamo_last30Days_mostThrottledTables_dataPoints {
@@ -149,7 +149,7 @@ export interface Dynamo_last30Days_mostThrottledTables {
   throttledRequests: number | null;
   throttledWrites: number | null;
   throttledReads: number | null;
-  dataPoints: (Dynamo_last30Days_mostThrottledTables_dataPoints | null)[] | null;
+  dataPoints: Dynamo_last30Days_mostThrottledTables_dataPoints[] | null;
 }
 
 export interface Dynamo_last30Days_mostExpensiveTables_dataPoints {
@@ -163,26 +163,26 @@ export interface Dynamo_last30Days_mostExpensiveTables_dataPoints {
 
 export interface Dynamo_last30Days_mostExpensiveTables {
   __typename: "MostExpensiveTableData";
-  name: string | null;
-  billingMode: string | null;
-  totalPrice: number | null;
-  readPrice: number | null;
-  writePrice: number | null;
-  storagePrice: number | null;
-  dataPoints: (Dynamo_last30Days_mostExpensiveTables_dataPoints | null)[] | null;
+  name: string;
+  billingMode: string;
+  totalPrice: number;
+  readPrice: number;
+  writePrice: number;
+  storagePrice: number;
+  dataPoints: Dynamo_last30Days_mostExpensiveTables_dataPoints[] | null;
 }
 
 export interface Dynamo_last30Days {
   __typename: "DashboardDynamoDataForPeriod";
-  mostReadTables: (Dynamo_last30Days_mostReadTables | null)[] | null;
-  mostWritesTables: (Dynamo_last30Days_mostWritesTables | null)[] | null;
-  mostThrottledTables: (Dynamo_last30Days_mostThrottledTables | null)[] | null;
-  mostExpensiveTables: (Dynamo_last30Days_mostExpensiveTables | null)[] | null;
+  mostReadTables: Dynamo_last30Days_mostReadTables[];
+  mostWritesTables: Dynamo_last30Days_mostWritesTables[];
+  mostThrottledTables: Dynamo_last30Days_mostThrottledTables[];
+  mostExpensiveTables: Dynamo_last30Days_mostExpensiveTables[];
 }
 
 export interface Dynamo {
   __typename: "DashboardDynamoData";
-  processing: boolean | null;
+  processing: boolean;
   last24Hours: Dynamo_last24Hours | null;
   last30Days: Dynamo_last30Days | null;
 }

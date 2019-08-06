@@ -6,33 +6,33 @@ schema {
 }
 
 type CostsData {
-  costsPerService: [CostsPerServiceDataPoint]
-  costsPerStack: [CostsPerStackDataPoint]
+  costsPerService: [CostsPerServiceDataPoint!]
+  costsPerStack: [CostsPerStackDataPoint!]
 }
 
 type CostsPerServiceDataPoint {
   date: String
-  serviceCosts: [ServiceCostItem]
+  serviceCosts: [ServiceCostItem!]
   total: Float
 }
 
 type CostsPerStackDataPoint {
   date: String
-  stackCosts: [StackCostItem]
+  stackCosts: [StackCostItem!]!
   total: Float
 }
 
 type DashboardDynamoData {
   last24Hours: DashboardDynamoDataForPeriod
   last30Days: DashboardDynamoDataForPeriod
-  processing: Boolean
+  processing: Boolean!
 }
 
 type DashboardDynamoDataForPeriod {
-  mostExpensiveTables: [MostExpensiveTableData]
-  mostReadTables: [MostReadTableData]
-  mostThrottledTables: [MostThrottledTableData]
-  mostWritesTables: [MostWritesTableData]
+  mostExpensiveTables: [MostExpensiveTableData!]!
+  mostReadTables: [MostReadTableData!]!
+  mostThrottledTables: [MostThrottledTableData!]!
+  mostWritesTables: [MostWritesTableData!]!
 }
 
 type DashboardEventsData {
@@ -59,8 +59,8 @@ type DynamoTableDetails {
 }
 
 type DynamoTableListItem {
-  avgProvisionedRead: Int
-  avgProvisionedWrite: Int
+  avgProvisionedRead: Float
+  avgProvisionedWrite: Float
   billingMode: String
   consumedRead: Int
   consumedWrite: Int
@@ -73,7 +73,7 @@ type DynamoTableListItem {
 }
 
 type DynamoTableStats {
-  dataPoints: [DynamoTableStatsDataPoint]
+  dataPoints: [DynamoTableStatsDataPoint!]
   totalConsumedRead: Int
   totalConsumedWrite: Int
   totalProvisionedRead: Int
@@ -145,16 +145,16 @@ type LambdasListItem {
 }
 
 type MostExpensiveTableData {
-  billingMode: String
-  dataPoints: [MostExpensiveTableDataPoint]
-  items: Int
-  name: String
-  readPrice: Float
-  region: String
-  sizeBytes: Int
-  storagePrice: Float
-  totalPrice: Float
-  writePrice: Float
+  billingMode: String!
+  dataPoints: [MostExpensiveTableDataPoint!]
+  items: Int!
+  name: String!
+  readPrice: Float!
+  region: String!
+  sizeBytes: Int!
+  storagePrice: Float!
+  totalPrice: Float!
+  writePrice: Float!
 }
 
 type MostExpensiveTableDataPoint {
@@ -166,15 +166,15 @@ type MostExpensiveTableDataPoint {
 }
 
 type MostReadTableData {
-  averageConsumedRead: Float
-  billingMode: String
-  consumedRead: Int
-  dataPoints: [MostReadTableDataPoint]
-  items: Int
-  name: String
-  provisionedRead: Int
-  region: String
-  sizeBytes: Int
+  averageConsumedRead: Float!
+  billingMode: String!
+  consumedRead: Int!
+  dataPoints: [MostReadTableDataPoint!]
+  items: Int!
+  name: String!
+  provisionedRead: Int!
+  region: String!
+  sizeBytes: Int!
 }
 
 type MostReadTableDataPoint {
@@ -185,7 +185,7 @@ type MostReadTableDataPoint {
 
 type MostThrottledTableData {
   billingMode: String
-  dataPoints: [MostThrottledTableDataPoint]
+  dataPoints: [MostThrottledTableDataPoint!]
   items: Int
   name: String
   region: String
@@ -206,7 +206,7 @@ type MostWritesTableData {
   averageConsumedWrite: Float
   billingMode: String
   consumedWrite: Int
-  dataPoints: [MostWritesTableDataPoint]
+  dataPoints: [MostWritesTableDataPoint!]
   items: Int
   name: String
   provisionedWrite: Int
