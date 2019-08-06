@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { orderBy, filter, slice } from 'lodash'
 import styled from 'styled-components'
 import InfiniteScroll from 'react-infinite-scroller'
