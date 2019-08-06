@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { memo } from 'react'
 import { round } from 'lodash'
 import TableRow from '@material-ui/core/TableRow'

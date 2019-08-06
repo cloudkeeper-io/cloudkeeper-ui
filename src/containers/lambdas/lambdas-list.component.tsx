@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { useState } from 'react'
 import { orderBy, filter } from 'lodash'
 import styled from 'styled-components'
