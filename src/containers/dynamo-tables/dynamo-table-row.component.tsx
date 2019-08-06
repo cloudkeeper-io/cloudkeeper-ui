@@ -1,12 +1,11 @@
-/* eslint-disable camelcase */
 import React, { memo } from 'react'
 import TableRow from '@material-ui/core/TableRow'
 
 import { StyledTableCell } from '../../components/sortable-table-head-cell'
-import { dynamoTablesList_dynamoTablesList } from '../../graphql/queries/types/dynamoTablesList'
+import { dynamoTablesList_dynamoTablesList as DynamoTablesListItem } from '../../graphql/queries/types/dynamoTablesList'
 import { bytesToSize } from '../../utils'
 
-export const DynamoTableRow = memo(({ table }: { table: dynamoTablesList_dynamoTablesList }) => (
+export const DynamoTableRow = memo(({ table }: { table: DynamoTablesListItem }) => (
   <TableRow>
     <StyledTableCell>
       {table.name}

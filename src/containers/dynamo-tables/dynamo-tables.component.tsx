@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { useState } from 'react'
 import { orderBy, filter } from 'lodash'
 import styled from 'styled-components'
@@ -9,11 +8,11 @@ import TableBody from '@material-ui/core/TableBody'
 
 import { Typography } from '@material-ui/core'
 import { SortableTableHeadCell } from '../../components/sortable-table-head-cell'
-import { dynamoTablesList_dynamoTablesList } from '../../graphql/queries/types/dynamoTablesList'
+import { dynamoTablesList_dynamoTablesList as DynamoTablesListItem } from '../../graphql/queries/types/dynamoTablesList'
 import { DynamoTableRow } from './dynamo-table-row.component'
 
 interface DynamoTablesListProps {
-    tables: dynamoTablesList_dynamoTablesList[]
+    tables: DynamoTablesListItem[]
     filterInput?: string
 }
 

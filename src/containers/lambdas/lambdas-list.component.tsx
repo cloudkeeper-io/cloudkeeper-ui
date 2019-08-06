@@ -9,11 +9,11 @@ import TableBody from '@material-ui/core/TableBody'
 
 import { Typography } from '@material-ui/core'
 import { SortableTableHeadCell } from '../../components/sortable-table-head-cell'
-import { lambdasList_lambdasList } from '../../graphql/queries/types/lambdasList'
+import { lambdasList_lambdasList as LambdasListItem } from '../../graphql/queries/types/lambdasList'
 import { LambdaRow } from './lambda-row.component'
 
 interface LambdasListProps {
-    lambdas: lambdasList_lambdasList[]
+    lambdas: LambdasListItem[]
     filterInput?: string
 }
 
