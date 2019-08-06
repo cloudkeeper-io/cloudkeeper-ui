@@ -8,11 +8,11 @@ import TableBody from '@material-ui/core/TableBody'
 
 import { Typography } from '@material-ui/core'
 import { SortableTableHeadCell } from '../../components/sortable-table-head-cell'
-import { lambdasList_lambdasList as LambdasListItem } from '../../graphql/queries/types/lambdasList'
-import { LambdaRow } from './lambda-row.component'
+import { dynamoTablesList_dynamoTablesList as DynamoTablesListItem } from '../../graphql/queries/types/dynamoTablesList'
+import { DynamoTableRow } from './dynamo-table-row.component'
 
-interface LambdasListProps {
-    lambdas: LambdasListItem[]
+interface DynamoTablesListProps {
+    tables: DynamoTablesListItem[]
     filterInput?: string
 }
 
@@ -29,13 +29,13 @@ const NothingFoundContainer = styled.div`
   align-items: center;
 `
 
-export const LambdasList = ({ lambdas, filterInput }: LambdasListProps) => {
-  const [{ orderProperty, order }, setSorting] = useState<OrderState>({ orderProperty: 'invocations', order: 'desc' })
+export const DynamoTablesList = ({ tables, filterInput }: DynamoTablesListProps) => {
+  const [{ orderProperty, order }, setSorting] = useState<OrderState>({ orderProperty: 'consumedRead', order: 'desc' })
 
-  const orderedLambdas = orderBy(lambdas, orderProperty, order)
-  const filteredLambdas = filterInput ?
-    filter(orderedLambdas, lambda => lambda.name!.includes(filterInput!))
-    : orderedLambdas
+  const orderedTables = orderBy(tables, orderProperty, order)
+  const filteredTables = filterInput ?
+    filter(orderedTables, table => table.name!.includes(filterInput!))
+    : orderedTables
 
   const changeOrder = (property: string) => {
     const isDesc = orderProperty === property && order === 'desc'
@@ -48,7 +48,7 @@ export const LambdasList = ({ lambdas, filterInput }: LambdasListProps) => {
         <TableHead>
           <TableRow>
             <SortableTableHeadCell
-              label="Lambda Name"
+              label="Table Name"
               propertyName="name"
               orderBy={orderProperty}
               order={order}
@@ -62,54 +62,47 @@ export const LambdasList = ({ lambdas, filterInput }: LambdasListProps) => {
               changeOrder={changeOrder}
             />
             <SortableTableHeadCell
-              label="Invocations"
-              propertyName="invocations"
+              label="Billing Mode"
+              propertyName="billingMode"
               orderBy={orderProperty}
               order={order}
               changeOrder={changeOrder}
             />
             <SortableTableHeadCell
-              label="Errors"
-              propertyName="errors"
+              label="Data Size"
+              propertyName="sizeBytes"
               orderBy={orderProperty}
               order={order}
               changeOrder={changeOrder}
             />
             <SortableTableHeadCell
-              label="Error %"
-              propertyName="errorRate"
+              label="Consumed Reads"
+              propertyName="consumedRead"
               orderBy={orderProperty}
               order={order}
               changeOrder={changeOrder}
             />
             <SortableTableHeadCell
-              label="Avg. Execution Time"
-              propertyName="avgExecutionTime"
-              orderBy={orderProperty}
-              order={order}
-              changeOrder={changeOrder}
-            />
-            <SortableTableHeadCell
-              label="Cost"
-              propertyName="cost"
+              label="Consumed Writes"
+              propertyName="consumedWrite"
               orderBy={orderProperty}
               order={order}
               changeOrder={changeOrder}
             />
           </TableRow>
         </TableHead>
-        {filteredLambdas.length > 0 && (
-          <TableBody>
-            {filteredLambdas.map(lambda => <LambdaRow key={lambda!.name! + lambda!.region} lambda={lambda} />)}
-          </TableBody>
+        {filteredTables.length > 0 && (
+        <TableBody>
+          {filteredTables.map(table => <DynamoTableRow key={table!.name! + table!.region} table={table} />)}
+        </TableBody>
         )}
       </Table>
-      {filteredLambdas.length === 0 && (
-      <NothingFoundContainer>
-        <Typography variant="h5">
-            No Lambdas Found
-        </Typography>
-      </NothingFoundContainer>
+      {filteredTables.length === 0 && (
+        <NothingFoundContainer>
+          <Typography variant="h5">
+            No Tables Found
+          </Typography>
+        </NothingFoundContainer>
       )}
     </>
   )

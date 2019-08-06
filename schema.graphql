@@ -59,11 +59,11 @@ type DynamoTableDetails {
 }
 
 type DynamoTableListItem {
-  avgConsumedRead: Float
-  avgConsumedWrite: Float
-  avgProvisionedRead: Float
-  avgProvisionedWrite: Float
+  avgProvisionedRead: Int
+  avgProvisionedWrite: Int
   billingMode: String
+  consumedRead: Int
+  consumedWrite: Int
   items: Int
   name: String
   region: String

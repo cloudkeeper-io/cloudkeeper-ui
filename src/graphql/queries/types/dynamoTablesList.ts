@@ -13,8 +13,8 @@ export interface dynamoTablesList_dynamoTablesList {
   sizeBytes: number | null;
   region: string | null;
   billingMode: string | null;
-  avgConsumedRead: number | null;
-  avgConsumedWrite: number | null;
+  consumedRead: number | null;
+  consumedWrite: number | null;
   avgProvisionedRead: number | null;
   avgProvisionedWrite: number | null;
   throttledReads: number | null;
