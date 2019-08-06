@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { orderBy, filter } from 'lodash'
+import React, {useEffect, useState} from 'react'
+import { orderBy, filter, slice } from 'lodash'
 import styled from 'styled-components'
+import InfiniteScroll from 'react-infinite-scroller'
 import Table from '@material-ui/core/Table'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
@@ -31,11 +32,18 @@ const NothingFoundContainer = styled.div`
 
 export const LambdasList = ({ lambdas, filterInput }: LambdasListProps) => {
   const [{ orderProperty, order }, setSorting] = useState<OrderState>({ orderProperty: 'invocations', order: 'desc' })
+  const [visibleElements, setVisibleElements] = useState(20)
+
+  useEffect(() => {
+    setVisibleElements(20)
+  }, [lambdas, filterInput, orderProperty, order])
 
   const orderedLambdas = orderBy(lambdas, orderProperty, order)
   const filteredLambdas = filterInput ?
     filter(orderedLambdas, lambda => lambda.name!.includes(filterInput!))
     : orderedLambdas
+
+  const visibleLambdas = slice(filteredLambdas, 0, visibleElements)
 
   const changeOrder = (property: string) => {
     const isDesc = orderProperty === property && order === 'desc'
@@ -43,7 +51,12 @@ export const LambdasList = ({ lambdas, filterInput }: LambdasListProps) => {
   }
 
   return (
-    <>
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={() => setTimeout(() => setVisibleElements(visibleElements + 20))}
+      hasMore={visibleElements < filteredLambdas.length}
+      useWindow={false}
+    >
       <Table>
         <TableHead>
           <TableRow>
@@ -98,19 +111,19 @@ export const LambdasList = ({ lambdas, filterInput }: LambdasListProps) => {
             />
           </TableRow>
         </TableHead>
-        {filteredLambdas.length > 0 && (
+        {visibleLambdas.length > 0 && (
           <TableBody>
-            {filteredLambdas.map(lambda => <LambdaRow key={lambda!.name! + lambda!.region} lambda={lambda} />)}
+            {visibleLambdas.map(lambda => <LambdaRow key={lambda!.name! + lambda!.region} lambda={lambda} />)}
           </TableBody>
         )}
       </Table>
-      {filteredLambdas.length === 0 && (
+      {visibleLambdas.length === 0 && (
       <NothingFoundContainer>
         <Typography variant="h5">
             No Lambdas Found
         </Typography>
       </NothingFoundContainer>
       )}
-    </>
+    </InfiniteScroll>
   )
 }

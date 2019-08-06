@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { orderBy, filter } from 'lodash'
+import React, {useEffect, useState} from 'react'
+import { orderBy, filter, slice } from 'lodash'
 import styled from 'styled-components'
+import InfiniteScroll from 'react-infinite-scroller'
 import Table from '@material-ui/core/Table'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
@@ -31,11 +32,18 @@ const NothingFoundContainer = styled.div`
 
 export const DynamoTablesList = ({ tables, filterInput }: DynamoTablesListProps) => {
   const [{ orderProperty, order }, setSorting] = useState<OrderState>({ orderProperty: 'consumedRead', order: 'desc' })
+  const [visibleElements, setVisibleElements] = useState(20)
+
+  useEffect(() => {
+    setVisibleElements(20)
+  }, [tables, filterInput, orderProperty, order])
 
   const orderedTables = orderBy(tables, orderProperty, order)
   const filteredTables = filterInput ?
     filter(orderedTables, table => table.name!.includes(filterInput!))
     : orderedTables
+
+  const visibleTables = slice(filteredTables, 0, visibleElements)
 
   const changeOrder = (property: string) => {
     const isDesc = orderProperty === property && order === 'desc'
@@ -43,7 +51,12 @@ export const DynamoTablesList = ({ tables, filterInput }: DynamoTablesListProps)
   }
 
   return (
-    <>
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={() => setTimeout(() => setVisibleElements(visibleElements + 20))}
+      hasMore={visibleElements < filteredTables.length}
+      useWindow={false}
+    >
       <Table>
         <TableHead>
           <TableRow>
@@ -91,19 +104,19 @@ export const DynamoTablesList = ({ tables, filterInput }: DynamoTablesListProps)
             />
           </TableRow>
         </TableHead>
-        {filteredTables.length > 0 && (
+        {visibleTables.length > 0 && (
         <TableBody>
-          {filteredTables.map(table => <DynamoTableRow key={table!.name! + table!.region} table={table} />)}
+          {visibleTables.map(table => <DynamoTableRow key={table!.name! + table!.region} table={table} />)}
         </TableBody>
         )}
       </Table>
-      {filteredTables.length === 0 && (
+      {visibleTables.length === 0 && (
         <NothingFoundContainer>
           <Typography variant="h5">
             No Tables Found
           </Typography>
         </NothingFoundContainer>
       )}
-    </>
+    </InfiniteScroll>
   )
 }
