@@ -95,7 +95,9 @@ export default ({ tenants }: DashboardProps) => {
       </SearchWrapper>
       <StyledCard>
         {loading && <Loading height="calc(100vh - 300px)" />}
-        {!loading && data && data.dynamoTablesList && <DynamoTablesList tables={data.dynamoTablesList} filterInput={filterInput} />}
+        {!loading && data && data.dynamoTablesList &&
+          <DynamoTablesList tables={data.dynamoTablesList} filterInput={filterInput} />
+        }
       </StyledCard>
     </Wrapper>
   )
