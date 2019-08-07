@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   width: 100%;
   overflow: hidden;
   padding: 20px;
-  margin: 20px 0;
+  margin: 20px 0 0 0;
 `
 const Header = styled(CommonHeader)`
   margin-bottom: 20px;
@@ -28,17 +28,20 @@ const FormContent = styled.div`
   flex-direction: row;
   align-items: flex-end;
   width: 100%;
-  padding: 15px 0;
+  padding-top: 15px;
   justify-content: space-around;
+   @media(max-width: 800px) {
+    flex-wrap: wrap;
+  }
 `
 const ChangeButton = styled(Button)`
   width: 180px;
   height: 48px;
   font: inherit;
-  margin-top: 30px;
 `
 
 const Input = styled(IconTextField)`
+  margin-bottom: 40px;
   .MuiInput-root {
     height: 48px;
     padding-left: 8px;

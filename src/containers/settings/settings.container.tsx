@@ -6,10 +6,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: calc(100% - 40px);
+  width: 100%;
   min-height: calc(100vh - 100px);
   padding: 0 20px;
   align-items: center;
+  margin-top: 25px;
   @media(max-width: 800px) {
     padding: 0;
   }

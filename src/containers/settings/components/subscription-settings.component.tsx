@@ -13,8 +13,8 @@ const Wrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   overflow: hidden;
-  padding: 20px;
-  margin: 20px 0;
+  padding: 0 0 20px 0;
+  margin: 0 20px;
 `
 const Header = styled(CommonHeader)`
   margin-bottom: 20px;

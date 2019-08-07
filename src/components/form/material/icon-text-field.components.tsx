@@ -5,7 +5,8 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import styled from 'styled-components/macro'
 
 interface IconTextFieldProps extends FieldRenderProps<any, any> {
-    icon: JSX.Element,
+  icon: JSX.Element
+  className?: string
 }
 
 const Wrapper = styled.div`
@@ -16,10 +17,10 @@ const Wrapper = styled.div`
 `
 
 export const IconTextField = (props: IconTextFieldProps) => {
-  const { input: { name, onChange, value, ...restInput }, icon, meta, ...rest } = props
+  const { input: { name, onChange, value, ...restInput }, icon, meta, className, ...rest } = props
   const showError = ((meta.submitError && !meta.dirtySinceLastSubmit) || meta.error) && meta.touched
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Field
         {...rest}
         name={name}
