@@ -43,7 +43,7 @@ export default () => {
 
   return (
     <Wrapper>
-      <Header>Email preferences</Header>
+      <Header>Email Preferences</Header>
       <SwitchWrapper>
         <Switch checked={isSubscribedToEmails} onChange={updateEmailSubscription} />Updates and news
       </SwitchWrapper>

@@ -1,22 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Typography from '@material-ui/core/Typography'
 import { Users, Briefcase } from 'react-feather'
 import UserSettings from './subscription-settings.component'
 import TenantsTable from './tenants/tenants-table.component'
 import SecuritySettings from './security-settings.component'
-
-interface TabContainerProps {
-    children?: React.ReactNode;
-}
-
-const TabContainer = ({ children }: TabContainerProps) => (
-  <Typography component="div" style={{ padding: 8 * 3 }}>
-    {children}
-  </Typography>
-)
 
 const Wrapper = styled.div`
   background: ${p => p.theme.card.background};
@@ -59,8 +48,12 @@ const SettingsTab = styled(Tab)`
   }
 `
 
+const TabContainer = styled.div`
+  padding: 16px;
+`
+
 export default function SettingsTabs() {
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = useState(0)
 
   function handleChange(event: React.ChangeEvent<{}>, newValue: number) {
     setValue(newValue)

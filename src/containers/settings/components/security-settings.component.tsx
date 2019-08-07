@@ -33,14 +33,15 @@ const FormContent = styled.div`
 `
 const ChangeButton = styled(Button)`
   width: 180px;
-  height: 40px;
+  height: 48px;
   font: inherit;
-  margin-top: 10px;
+  margin-top: 30px;
 `
 
 const Input = styled(IconTextField)`
-  padding: 5px;
   .MuiInput-root {
+    height: 48px;
+    padding-left: 8px;
     background: ${p => p.theme.input.background};
   }
   .MuiInputAdornment-root {
@@ -105,7 +106,6 @@ export default () => {
   const providerId = get(first(user!.providerData), 'providerId')
 
   if (providerId === 'password') {
-    // @ts-ignore
     return (
       <Wrapper>
         <Header>Security</Header>

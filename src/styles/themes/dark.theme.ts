@@ -129,8 +129,6 @@ const calendar = {
 
 const table = {
   header: {
-    fontSize: '15px',
-    fontWeight: 'bold',
     color: '#FFFFFF',
   },
   status: {

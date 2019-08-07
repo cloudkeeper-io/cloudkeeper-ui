@@ -1,5 +1,5 @@
 import round from 'lodash/round'
-import { Duration } from 'luxon'
+import { Duration, DateTime } from 'luxon'
 
 export const formatNumber = (x: number, maxD = 4): number | string => {
   const v = Math.abs(x)
@@ -61,10 +61,6 @@ export const safeParse = (parseString: string) => {
 }
 
 export const timestampToDate = (timestamp: string) => {
-  const date = new Date(parseInt(timestamp, 10))
-  return date.toISOString()
-    .split('T')[0]
-    .split('-')
-    .reverse()
-    .join('/')
+  const date = DateTime.fromMillis(parseInt(timestamp, 10))
+  return date.toLocaleString()
 }
