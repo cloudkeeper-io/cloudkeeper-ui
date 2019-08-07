@@ -1,13 +1,18 @@
 import styled from 'styled-components/macro'
-
+import React, { useContext } from 'react'
+import { UserContext } from '../../contexts'
 import defaultAvatar from './images/default-avatar.png'
 
-export const UserAvatar = styled.div`
+const Avatar = styled.div<{ photoUrl: string }>`
   width: 48px;
   height: 48px;
-  border: 4px solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   box-sizing: border-box;
-  background: url("${defaultAvatar}") center center no-repeat;
+  background: url("${p => p.photoUrl}") center center no-repeat;
   background-size: contain;
 `
+
+export const UserAvatar = (props: React.HTMLAttributes<HTMLDivElement>) => {
+  const { user } = useContext(UserContext)
+  return <Avatar photoUrl={user!.photoURL || defaultAvatar} {...props} />
+}
