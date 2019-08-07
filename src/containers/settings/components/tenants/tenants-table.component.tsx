@@ -16,7 +16,7 @@ import Loading from '../../../../components/spinners/loading.component'
 import { Tenant } from '../../../../models'
 import { tenantsQuery, removeTenant } from '../../../../graphql'
 import { TenantContext, UserContext } from '../../../../contexts'
-import TableHeader from './table-header.components'
+import TableHeader from './table-header.component'
 import { timestampToDate } from '../../../../utils/format.utils'
 
 const Overlay = styled.div`
