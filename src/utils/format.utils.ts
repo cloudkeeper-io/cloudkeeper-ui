@@ -62,5 +62,5 @@ export const safeParse = (parseString: string) => {
 
 export const timestampToDate = (timestamp: string) => {
   const date = DateTime.fromMillis(parseInt(timestamp, 10))
-  return date.toLocaleString()
+  return date.toFormat('d LLL yyyy')
 }
