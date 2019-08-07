@@ -8,7 +8,7 @@ export const Title = styled.div`
   font-size: 18px;
   line-height: 24px;
   margin: 5px 0;
-  color: ${p => p.theme.colors.primary};
+  color: ${p => p.theme.palette.text.primary};
 `
 export const Text = styled.div`
   font-size: 14px;
