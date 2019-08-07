@@ -16,6 +16,7 @@ import Loading from '../../../../components/spinners/loading.component'
 import { Tenant } from '../../../../models'
 import { tenantsQuery, removeTenant } from '../../../../graphql'
 import { TenantContext, UserContext } from '../../../../contexts'
+import TableHeader from './table-header.components'
 import { timestampToDate } from '../../../../utils/format.utils'
 
 const Overlay = styled.div`
@@ -33,13 +34,6 @@ const TenantLink = styled(Link)`
   color: ${p => p.theme.colors.text};
 `
 
-const Head = styled(TableHead)`
-  .MuiTableCell-head {
-    font-size: 12px;
-    font-weight: bold;
-    color: ${p => p.theme.table.header.color};
-  }
-`
 const DeleteButton = styled(Button)`
   width: 120px;
   height: 32px;
@@ -93,14 +87,14 @@ export default memo(() => {
       )}
       <AddButton onClick={() => setCreateModalOpen(true)}>Create Project</AddButton>
       <Table>
-        <Head>
+        <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Created</TableCell>
-            <TableCell />
+            <TableHeader label="Name" />
+            <TableHeader label="Status" />
+            <TableHeader label="Created" />
+            <TableHeader />
           </TableRow>
-        </Head>
+        </TableHead>
         <TableBody>
           {map(tenants, tenant => (
             <TableRow key={tenant.id}>
