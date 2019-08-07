@@ -15,7 +15,7 @@ interface DataPageHeaderProps {
 
 export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }: DataPageHeaderProps) => {
   const today = moment()
-  const sevenDaysAgo = moment().subtract(7, 'days')
+  const sixDaysAgo = moment().subtract(6, 'days')
   const startOfMonth = moment().startOf('month')
 
   return (
@@ -31,8 +31,8 @@ export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }
           Today
         </PredefinedDate>
         <PredefinedDate
-          onClick={() => onDateRangeChanged({ startDate: sevenDaysAgo, endDate: today })}
-          active={sevenDaysAgo.isSame(startDate!, 'day') && today.isSame(endDate!, 'day')}
+          onClick={() => onDateRangeChanged({ startDate: sixDaysAgo, endDate: today })}
+          active={sixDaysAgo.isSame(startDate!, 'day') && today.isSame(endDate!, 'day')}
         >
             Last 7 days
         </PredefinedDate>
