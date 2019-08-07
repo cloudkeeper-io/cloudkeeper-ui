@@ -59,3 +59,12 @@ export const safeParse = (parseString: string) => {
     return null
   }
 }
+
+export const timestampToDate = (timestamp: string) => {
+  const date = new Date(parseInt(timestamp, 10))
+  return date.toISOString()
+    .split('T')[0]
+    .split('-')
+    .reverse()
+    .join('/')
+}

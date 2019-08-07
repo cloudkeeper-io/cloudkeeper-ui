@@ -1,9 +1,6 @@
 import React, { memo } from 'react'
 import styled from 'styled-components/macro'
-
-import TenantsCard from './components/tenants/tenants-card.component'
-import UserSettings from './components/subscription-settings.component'
-import SecuritySettings from './components/security-settings.component'
+import SettingsTabs from './components/settings-tabs.component'
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,7 +15,7 @@ const Wrapper = styled.div`
   }
 `
 const Content = styled.div`
-  width: 400px;
+  width: 100%;
   max-width: calc(100vw - 60px);
 `
 
@@ -29,9 +26,7 @@ interface SettingsContainerProps {
 export default memo(({ className }: SettingsContainerProps) => (
   <Wrapper className={className}>
     <Content>
-      <TenantsCard />
-      <SecuritySettings />
-      <UserSettings />
+      <SettingsTabs />
     </Content>
   </Wrapper>
 ))

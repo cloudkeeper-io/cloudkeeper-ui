@@ -1,18 +1,17 @@
 import React, { useCallback, useContext, useState } from 'react'
 import styled from 'styled-components/macro'
-import { Form } from 'react-final-form'
+import { Form, Field } from 'react-final-form'
 import { toast } from 'react-toastify'
 import first from 'lodash/first'
 import get from 'lodash/get'
-
+import { Lock, Edit2, Edit3 } from 'react-feather'
 import ServerError from '../../../components/form/error-message.component'
-import { SmallField } from '../../../components/form/field.component'
-import Card from '../../../components/card.component'
+import { IconTextField } from '../../../components/form/material/icon-text-field.components'
 import Button from '../../../components/button/button.component'
 import { UserContext } from '../../../contexts'
 import { Header as CommonHeader, Title } from '../../../components/typography.component'
 
-const Wrapper = styled(Card)`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -26,11 +25,40 @@ const Header = styled(CommonHeader)`
 `
 const FormContent = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-end;
   width: 100%;
   padding: 15px 0;
   justify-content: space-around;
+`
+const ChangeButton = styled(Button)`
+  width: 180px;
+  height: 40px;
+  font: inherit;
+  margin-top: 10px;
+`
+
+const Input = styled(IconTextField)`
+  padding: 5px;
+  .MuiInput-root {
+    background: ${p => p.theme.input.background};
+  }
+  .MuiInputAdornment-root {
+    margin: 8px;
+    color: ${p => p.theme.input.iconColor};
+  }
+  .MuiInput-formControl {
+    margin-right: 10px;
+    input {
+      padding-left: 5px;
+    }
+    &:before {
+      display: none;
+    }
+    &:after {
+      display: none;
+    }
+  }
 `
 
 interface Values {
@@ -77,28 +105,45 @@ export default () => {
   const providerId = get(first(user!.providerData), 'providerId')
 
   if (providerId === 'password') {
+    // @ts-ignore
     return (
       <Wrapper>
-        <Header>Security Settings</Header>
+        <Header>Security</Header>
         <Title>Change your password</Title>
 
         <Form onSubmit={v => onSubmit(v as Values)} validate={v => validate(v as Values)}>
           {({ handleSubmit, pristine, invalid, form }) => (
             <form onSubmit={event => handleSubmit(event)!.then(form.reset)}>
               <FormContent>
-                <SmallField name="password" placeholder="Password" type="password" autoComplete="password" />
-                <SmallField name="newPassword" placeholder="New Password" autoComplete="password" type="password" />
-                <SmallField
+                <Field
+                  name="password"
+                  placeholder="Current password"
+                  type="password"
+                  autoComplete="password"
+                  component={Input as any}
+                  icon={<Lock size={20} />}
+                />
+                <Field
+                  name="newPassword"
+                  placeholder="New Password"
+                  autoComplete="password"
+                  type="password"
+                  component={Input as any}
+                  icon={<Edit2 size={20} />}
+                />
+                <Field
                   name="repeatPassword"
                   placeholder="Repeat New Password"
                   autoComplete="password"
                   type="password"
+                  component={Input as any}
+                  icon={<Edit3 size={20} />}
                 />
-                <ServerError>{error}</ServerError>
-                <Button type="submit" disabled={pristine || invalid} isLoading={loading}>
-                  Change Password
-                </Button>
               </FormContent>
+              <ChangeButton type="submit" disabled={pristine || invalid} isLoading={loading}>
+                Change password
+              </ChangeButton>
+              <ServerError>{error}</ServerError>
             </form>
           )}
         </Form>

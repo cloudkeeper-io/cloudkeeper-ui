@@ -83,6 +83,12 @@ const buttons = {
 
 const tabs = {
   gradient: 'linear-gradient(90deg, #2FF6F5 0%, #0470FE 100%)',
+  borderRadius: '10px 10px 0px 0px',
+  backgroundColor: '#F0F7FF',
+  selected: {
+    backgroundColor: '#FFFFFF',
+    color: '#0D8EFC',
+  },
 }
 
 const select = {
@@ -122,6 +128,22 @@ const calendar = {
   circleBackground: `linear-gradient(146.18deg, ${mix(0.3, '#fff', palette.primary.main)} -1.97%, ${palette.primary.main} 109.73%);`,
 }
 
+const table = {
+  header: {
+    fontSize: '15px',
+    fontWeight: 'bold',
+    color: '#333333',
+  },
+  status: {
+    completed: {
+      color: '#FFAB70',
+    },
+    notCompleted: {
+      color: '#FF5E99',
+    },
+  },
+}
+
 export default {
   name: 'light',
   favicon: 'light-favicon.png',
@@ -140,4 +162,5 @@ export default {
   dashboard,
   icon,
   calendar,
+  table,
 }

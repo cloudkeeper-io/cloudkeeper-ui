@@ -41,7 +41,7 @@ const card = {
   background: 'linear-gradient(180deg, rgba(0, 1, 0, 0.4) 0%, rgba(18, 24, 50, 0.4) 100%), rgba(21, 76, 108, 0.4)',
   borderColor: colors.borderColor,
   shadow: 'none',
-  borderRadius: '0 40px 0 40px',
+  borderRadius: '10px 40px 10px 40px',
 }
 
 const dataCard = {
@@ -83,6 +83,11 @@ const buttons = {
 
 const tabs = {
   gradient: 'linear-gradient(270deg, #018EFF -18.75%, #48E385 100%)',
+  borderRadius: '10px 40px 10px 40px',
+  selected: {
+    backgroundColor: '#24425C',
+    color: '#8499B9',
+  },
 }
 
 const select = {
@@ -122,6 +127,22 @@ const calendar = {
   circleBackground: `linear-gradient(270deg, ${palette.primary.main} 8.42%, ${palette.secondary.main} 100%);`,
 }
 
+const table = {
+  header: {
+    fontSize: '15px',
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  status: {
+    completed: {
+      color: '#FFF45E',
+    },
+    notCompleted: {
+      color: '#FFF45E',
+    },
+  },
+}
+
 export default {
   name: 'dark',
   favicon: 'dark-favicon.png',
@@ -140,4 +161,5 @@ export default {
   dashboard,
   icon,
   calendar,
+  table,
 }
