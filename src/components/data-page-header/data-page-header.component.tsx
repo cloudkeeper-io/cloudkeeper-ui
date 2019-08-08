@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography } from '@material-ui/core'
 import moment, { Moment } from 'moment'
 
-import { DatepickerWrapper, HeaderContainer, PredefinedDate } from './data-page-hader.styles'
+import { DatepickerWrapper, HeaderContainer, PredefinedDate } from './data-page-header.styles'
 import { DateRangePicker } from '../date-range-picker'
 import { DateRange } from '../datepicker/datepicker.component'
 
