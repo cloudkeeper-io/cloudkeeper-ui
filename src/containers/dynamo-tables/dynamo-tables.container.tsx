@@ -43,7 +43,7 @@ interface DashboardProps {
     tenants: Tenant[]
 }
 
-const defaultStartDate = moment().subtract(7, 'days')
+const defaultStartDate = moment().subtract(6, 'days')
 const defaultEndDate = moment()
 
 export default ({ tenants }: DashboardProps) => {
