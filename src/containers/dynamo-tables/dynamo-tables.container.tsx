@@ -60,8 +60,8 @@ export default ({ tenants }: DashboardProps) => {
   const { data, loading, error } = useQuery(dynamoTablesQuery, {
     variables: {
       tenantId,
-      startDate: startDate && startDate.format('YYYY-MM-DD'),
-      endDate: endDate && endDate.format('YYYY-MM-DD'),
+      startDate: startDate && startDate.startOf('day').toISOString(),
+      endDate: endDate && endDate.endOf('day').toISOString(),
     },
   })
 
