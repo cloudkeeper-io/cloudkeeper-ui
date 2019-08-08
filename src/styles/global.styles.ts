@@ -25,6 +25,16 @@ export default createGlobalStyle`
     text-decoration: none;
     color: inherit;
   }
+
+  input {
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover, 
+    &:-webkit-autofill:focus, 
+    &:-webkit-autofill:active  {
+      transition-property: background-color, color;
+      transition-delay: 99999999999s;
+    }
+  }
   
   // toast
   .Toastify__toast--default {

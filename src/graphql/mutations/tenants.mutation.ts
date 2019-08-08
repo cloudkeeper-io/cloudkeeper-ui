@@ -6,6 +6,9 @@ export const createTenantMutation = gql`
       id
       name
       createdAt
+      owner {
+        id
+      }
       isSetupCompleted
     }
   }

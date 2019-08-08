@@ -42,6 +42,7 @@ export const Datepicker = ({ onDateRangeChanged, startDate, endDate, id }: Datep
         onFocusChange={newFocusedInput => setFocusedInput(newFocusedInput)}
         isOutsideRange={date => date.isAfter(moment(), 'day')}
         customArrowIcon={<span>&mdash;</span>}
+        displayFormat="D MMM YYYY"
         minimumNights={0}
         numberOfMonths={isMobile ? 1 : 2}
       />

@@ -8,9 +8,7 @@ export default styled.button<{ isLoading?: boolean, background?: string, color?:
   cursor: pointer;
   width: 170px;
   height: 48px;
-  position: relative;
-  top: 2px;
-  left: 2px;
+
   background: ${p => (p.disabled ? p.theme.buttons.primary.disabled : p.background || p.theme.buttons.primary.background)};
   box-sizing: border-box;
   border-radius: ${p => p.theme.buttons.borderRadius};

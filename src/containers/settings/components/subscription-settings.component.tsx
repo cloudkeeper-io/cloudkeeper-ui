@@ -5,17 +5,16 @@ import isEmpty from 'lodash/isEmpty'
 import { UserSettingsContext, Settings } from '../../../contexts'
 import Switch from '../../../components/controls/switch.component'
 import Loading from '../../../components/spinners/loading.component'
-import Card from '../../../components/card.component'
 import { Header as CommonHeader } from '../../../components/typography.component'
 
-const Wrapper = styled(Card)`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
   overflow: hidden;
-  padding: 20px;
-  margin: 20px 0;
+  padding: 0 0 20px 0;
+  margin: 0 20px;
 `
 const Header = styled(CommonHeader)`
   margin-bottom: 20px;
@@ -23,7 +22,7 @@ const Header = styled(CommonHeader)`
 const SwitchWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 `
 
 export default () => {
@@ -44,9 +43,9 @@ export default () => {
 
   return (
     <Wrapper>
-      <Header>Subscription Settings</Header>
+      <Header>Email Preferences</Header>
       <SwitchWrapper>
-        I want to receive marketing emails<Switch checked={isSubscribedToEmails} onChange={updateEmailSubscription} />
+        <Switch checked={isSubscribedToEmails} onChange={updateEmailSubscription} />Updates and news
       </SwitchWrapper>
     </Wrapper>
   )

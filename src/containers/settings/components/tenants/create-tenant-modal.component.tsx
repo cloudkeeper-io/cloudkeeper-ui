@@ -73,7 +73,7 @@ export default memo(({ onClose, isOpen }: StepsProps) => {
       const response = await mutation({ variables: parameters })
       const tenantId = get(response, 'data.createTenant.id')
       trackEvent('Created Project')
-      history.push(`/tenant/${tenantId}/dashboard`)
+      history.push(`/tenant/${tenantId}`)
     } catch (err) {
       setLoading(false)
       setServerError('Server Error. Try Again Later')
@@ -100,7 +100,7 @@ export default memo(({ onClose, isOpen }: StepsProps) => {
           const { tenants } = cache.readQuery({ query: tenantsQuery }) as any
           cache.writeQuery({
             query: tenantsQuery,
-            data: { tenants: tenants.concat([createTenant]) },
+            data: { tenants: [...tenants, createTenant] },
           })
         }}
       >
