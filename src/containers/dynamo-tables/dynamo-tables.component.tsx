@@ -102,6 +102,13 @@ export const DynamoTablesList = ({ tables, filterInput }: DynamoTablesListProps)
               order={order}
               changeOrder={changeOrder}
             />
+            <SortableTableHeadCell
+              label="Cost"
+              propertyName="cost"
+              orderBy={orderProperty}
+              order={order}
+              changeOrder={changeOrder}
+            />
           </TableRow>
         </TableHead>
         {visibleTables.length > 0 && (

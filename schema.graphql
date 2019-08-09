@@ -6,33 +6,33 @@ schema {
 }
 
 type CostsData {
-  costsPerService: [CostsPerServiceDataPoint!]
-  costsPerStack: [CostsPerStackDataPoint!]
+  costsPerService: [CostsPerServiceDataPoint]
+  costsPerStack: [CostsPerStackDataPoint]
 }
 
 type CostsPerServiceDataPoint {
   date: String
-  serviceCosts: [ServiceCostItem!]
+  serviceCosts: [ServiceCostItem]
   total: Float
 }
 
 type CostsPerStackDataPoint {
   date: String
-  stackCosts: [StackCostItem!]!
+  stackCosts: [StackCostItem]
   total: Float
 }
 
 type DashboardDynamoData {
   last24Hours: DashboardDynamoDataForPeriod
   last30Days: DashboardDynamoDataForPeriod
-  processing: Boolean!
+  processing: Boolean
 }
 
 type DashboardDynamoDataForPeriod {
-  mostExpensiveTables: [MostExpensiveTableData!]!
-  mostReadTables: [MostReadTableData!]!
-  mostThrottledTables: [MostThrottledTableData!]!
-  mostWritesTables: [MostWritesTableData!]!
+  mostExpensiveTables: [MostExpensiveTableData!]
+  mostReadTables: [MostReadTableData]
+  mostThrottledTables: [MostThrottledTableData!]
+  mostWritesTables: [MostWritesTableData]
 }
 
 type DashboardEventsData {
@@ -64,6 +64,7 @@ type DynamoTableListItem {
   billingMode: String
   consumedRead: Int
   consumedWrite: Int
+  cost: Float
   items: Int
   name: String
   region: String
@@ -145,16 +146,16 @@ type LambdasListItem {
 }
 
 type MostExpensiveTableData {
-  billingMode: String!
+  billingMode: String
   dataPoints: [MostExpensiveTableDataPoint!]
-  items: Int!
-  name: String!
-  readPrice: Float!
-  region: String!
-  sizeBytes: Int!
-  storagePrice: Float!
-  totalPrice: Float!
-  writePrice: Float!
+  items: Int
+  name: String
+  readPrice: Float
+  region: String
+  sizeBytes: Int
+  storagePrice: Float
+  totalPrice: Float
+  writePrice: Float
 }
 
 type MostExpensiveTableDataPoint {
@@ -166,15 +167,15 @@ type MostExpensiveTableDataPoint {
 }
 
 type MostReadTableData {
-  averageConsumedRead: Float!
-  billingMode: String!
-  consumedRead: Int!
+  averageConsumedRead: Float
+  billingMode: String
+  consumedRead: Int
   dataPoints: [MostReadTableDataPoint!]
-  items: Int!
-  name: String!
-  provisionedRead: Int!
-  region: String!
-  sizeBytes: Int!
+  items: Int
+  name: String
+  provisionedRead: Int
+  region: String
+  sizeBytes: Int
 }
 
 type MostReadTableDataPoint {
