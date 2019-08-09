@@ -14,6 +14,7 @@ export const dynamoTablesQuery = gql`
       avgProvisionedWrite
       throttledReads
       throttledWrites
+      cost
     }
   }
 `

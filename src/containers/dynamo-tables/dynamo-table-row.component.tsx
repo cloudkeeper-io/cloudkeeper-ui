@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import { round, get } from 'lodash'
 import TableRow from '@material-ui/core/TableRow'
 
 import { StyledTableCell } from '../../components/sortable-table-head-cell'
@@ -15,5 +16,6 @@ export const DynamoTableRow = memo(({ table }: { table: DynamoTablesListItem }) 
     <StyledTableCell>{bytesToSize(table.sizeBytes!)}</StyledTableCell>
     <StyledTableCell>{table.consumedRead}</StyledTableCell>
     <StyledTableCell>{table.consumedWrite}</StyledTableCell>
+    <StyledTableCell>${round(get(table, 'cost', 0)!, 2)}</StyledTableCell>
   </TableRow>
 ))

@@ -64,6 +64,7 @@ type DynamoTableListItem {
   billingMode: String
   consumedRead: Int
   consumedWrite: Int
+  cost: Float
   items: Int
   name: String
   region: String

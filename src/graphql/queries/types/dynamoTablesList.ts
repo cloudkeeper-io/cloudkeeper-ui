@@ -19,6 +19,7 @@ export interface dynamoTablesList_dynamoTablesList {
   avgProvisionedWrite: number | null;
   throttledReads: number | null;
   throttledWrites: number | null;
+  cost: number | null;
 }
 
 export interface dynamoTablesList {
