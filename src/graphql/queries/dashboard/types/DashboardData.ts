@@ -64,13 +64,13 @@ export interface DashboardData_dynamoData_last24Hours_mostReadTables_dataPoints 
 
 export interface DashboardData_dynamoData_last24Hours_mostReadTables {
   __typename: "MostReadTableData";
-  name: string | null;
-  averageConsumedRead: number | null;
-  consumedRead: number | null;
-  provisionedRead: number | null;
-  billingMode: string | null;
-  sizeBytes: number | null;
-  items: number | null;
+  name: string;
+  averageConsumedRead: number;
+  consumedRead: number;
+  provisionedRead: number;
+  billingMode: string;
+  sizeBytes: number;
+  items: number;
   dataPoints: DashboardData_dynamoData_last24Hours_mostReadTables_dataPoints[] | null;
 }
 
@@ -124,23 +124,23 @@ export interface DashboardData_dynamoData_last24Hours_mostExpensiveTables_dataPo
 
 export interface DashboardData_dynamoData_last24Hours_mostExpensiveTables {
   __typename: "MostExpensiveTableData";
-  name: string | null;
-  billingMode: string | null;
-  sizeBytes: number | null;
-  items: number | null;
-  totalPrice: number | null;
-  readPrice: number | null;
-  writePrice: number | null;
-  storagePrice: number | null;
+  name: string;
+  billingMode: string;
+  sizeBytes: number;
+  items: number;
+  totalPrice: number;
+  readPrice: number;
+  writePrice: number;
+  storagePrice: number;
   dataPoints: DashboardData_dynamoData_last24Hours_mostExpensiveTables_dataPoints[] | null;
 }
 
 export interface DashboardData_dynamoData_last24Hours {
   __typename: "DashboardDynamoDataForPeriod";
-  mostReadTables: (DashboardData_dynamoData_last24Hours_mostReadTables | null)[] | null;
-  mostWritesTables: (DashboardData_dynamoData_last24Hours_mostWritesTables | null)[] | null;
-  mostThrottledTables: DashboardData_dynamoData_last24Hours_mostThrottledTables[] | null;
-  mostExpensiveTables: DashboardData_dynamoData_last24Hours_mostExpensiveTables[] | null;
+  mostReadTables: DashboardData_dynamoData_last24Hours_mostReadTables[];
+  mostWritesTables: DashboardData_dynamoData_last24Hours_mostWritesTables[];
+  mostThrottledTables: DashboardData_dynamoData_last24Hours_mostThrottledTables[];
+  mostExpensiveTables: DashboardData_dynamoData_last24Hours_mostExpensiveTables[];
 }
 
 export interface DashboardData_dynamoData_last30Days_mostReadTables_dataPoints {
@@ -152,13 +152,13 @@ export interface DashboardData_dynamoData_last30Days_mostReadTables_dataPoints {
 
 export interface DashboardData_dynamoData_last30Days_mostReadTables {
   __typename: "MostReadTableData";
-  name: string | null;
-  averageConsumedRead: number | null;
-  billingMode: string | null;
-  sizeBytes: number | null;
-  items: number | null;
-  consumedRead: number | null;
-  provisionedRead: number | null;
+  name: string;
+  averageConsumedRead: number;
+  billingMode: string;
+  sizeBytes: number;
+  items: number;
+  consumedRead: number;
+  provisionedRead: number;
   dataPoints: DashboardData_dynamoData_last30Days_mostReadTables_dataPoints[] | null;
 }
 
@@ -212,26 +212,26 @@ export interface DashboardData_dynamoData_last30Days_mostExpensiveTables_dataPoi
 
 export interface DashboardData_dynamoData_last30Days_mostExpensiveTables {
   __typename: "MostExpensiveTableData";
-  name: string | null;
-  billingMode: string | null;
-  totalPrice: number | null;
-  readPrice: number | null;
-  writePrice: number | null;
-  storagePrice: number | null;
+  name: string;
+  billingMode: string;
+  totalPrice: number;
+  readPrice: number;
+  writePrice: number;
+  storagePrice: number;
   dataPoints: DashboardData_dynamoData_last30Days_mostExpensiveTables_dataPoints[] | null;
 }
 
 export interface DashboardData_dynamoData_last30Days {
   __typename: "DashboardDynamoDataForPeriod";
-  mostReadTables: (DashboardData_dynamoData_last30Days_mostReadTables | null)[] | null;
-  mostWritesTables: (DashboardData_dynamoData_last30Days_mostWritesTables | null)[] | null;
-  mostThrottledTables: DashboardData_dynamoData_last30Days_mostThrottledTables[] | null;
-  mostExpensiveTables: DashboardData_dynamoData_last30Days_mostExpensiveTables[] | null;
+  mostReadTables: DashboardData_dynamoData_last30Days_mostReadTables[];
+  mostWritesTables: DashboardData_dynamoData_last30Days_mostWritesTables[];
+  mostThrottledTables: DashboardData_dynamoData_last30Days_mostThrottledTables[];
+  mostExpensiveTables: DashboardData_dynamoData_last30Days_mostExpensiveTables[];
 }
 
 export interface DashboardData_dynamoData {
   __typename: "DashboardDynamoData";
-  processing: boolean | null;
+  processing: boolean;
   last24Hours: DashboardData_dynamoData_last24Hours | null;
   last30Days: DashboardData_dynamoData_last30Days | null;
 }
@@ -247,7 +247,7 @@ export interface DashboardData_costsData_costsPerService {
   __typename: "CostsPerServiceDataPoint";
   date: string | null;
   total: number | null;
-  serviceCosts: (DashboardData_costsData_costsPerService_serviceCosts | null)[] | null;
+  serviceCosts: DashboardData_costsData_costsPerService_serviceCosts[] | null;
 }
 
 export interface DashboardData_costsData_costsPerStack_stackCosts {
@@ -261,13 +261,13 @@ export interface DashboardData_costsData_costsPerStack {
   __typename: "CostsPerStackDataPoint";
   date: string | null;
   total: number | null;
-  stackCosts: (DashboardData_costsData_costsPerStack_stackCosts | null)[] | null;
+  stackCosts: DashboardData_costsData_costsPerStack_stackCosts[];
 }
 
 export interface DashboardData_costsData {
   __typename: "CostsData";
-  costsPerService: (DashboardData_costsData_costsPerService | null)[] | null;
-  costsPerStack: (DashboardData_costsData_costsPerStack | null)[] | null;
+  costsPerService: DashboardData_costsData_costsPerService[] | null;
+  costsPerStack: DashboardData_costsData_costsPerStack[] | null;
 }
 
 export interface DashboardData {
