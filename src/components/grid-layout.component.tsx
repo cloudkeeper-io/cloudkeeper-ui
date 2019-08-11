@@ -6,13 +6,15 @@ import { getTransition, mobileMediaQuery } from '../utils'
 
 export default styled(ReactGridLayout)`
   position: relative;
+  margin-top: -15px;
   transition: ${p => getTransition(p.theme, ['height'])};
   @media(max-width: (${mobileMediaQuery})) {
     padding: 0;
   }
   .react-grid-item {
-    transition: ${p => getTransition(p.theme, ['all'])};
-    transition-property: left, top;
+    // transition: ${p => getTransition(p.theme, ['all'])};
+    // transition-property: left, top;
+    transition: none;
   }
   .react-grid-item.cssTransforms {
     transition-property: transform;

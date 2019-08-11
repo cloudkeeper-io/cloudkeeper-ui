@@ -53,6 +53,18 @@ export default () => (
           <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
+
+      <filter id="strokeShadow" x="-180%" y="-1000%" width="500%" height="2000%">
+        <feOffset result="offOut" in="SourceGraphic" dx="0" dy="10" />
+        <feGaussianBlur result="blurOut" in="offOut" stdDeviation="3" />
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="0.25" />
+        </feComponentTransfer>
+        <feMerge>
+          <feMergeNode />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
     </defs>
   </svg>
 )
