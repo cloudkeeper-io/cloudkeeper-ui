@@ -2,17 +2,22 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
 import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from 'recharts'
+import { Typography } from '@material-ui/core'
 import { lighten } from 'polished'
 import map from 'lodash/map'
-import times from 'lodash/times'
+import reduce from 'lodash/reduce'
 import forEach from 'lodash/forEach'
-import { Typography } from '@material-ui/core'
+import orderBy from 'lodash/orderBy'
+import times from 'lodash/times'
+import take from 'lodash/take'
 
+import { ReactComponent as ScaleSvg } from './images/scale.svg'
+import { formatNumber } from '../../utils'
 
 const Title = styled(Typography)`
   margin: 10px 0 0 20px;
 `
-const ChartWrapper = styled.div`
+const Content = styled.div`
   display: flex;
   margin: 30px;
   justify-content: space-between;
@@ -32,47 +37,82 @@ const Legend = styled.div`
     min-width: auto;
   }
 `
+const Scale = styled(ScaleSvg)`
+  margin-top: 15px;
+`
+const LeftSide = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+`
+const ChartWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+`
+const InnerGraphContent = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 500;
+  color: #8499B9;
+`
 const LegendItem = styled.div`
   display: flex;
-  margin: 10px 0;
+  width: calc(100% - 60px);
+  padding: 15px 0;
+  border-bottom: 1px solid #EDF0F2;
+  :first-child {
+    border-top: 1px solid #EDF0F2;
+  }
 `
 const LegendCell = styled.div<{ color: string }>`
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   background-color: ${p => p.color};
   border-radius: 50%;
 `
 const LegendText = styled.div`
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 14px;
+  line-height: 18px;
   margin-left: 10px;
 `
 
-const split = ['Train fraction', 'Dev fraction', 'Test fraction']
+const StyledSector = Sector as any
 
 interface CostsPerStackProps {
   data: any[],
 }
-
-const DATA = [123, 123, 123]
 
 const renderActiveShape = (props: any) => {
   const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props
 
   return (
     <g className="active-sector-shape">
-      <Sector
+      <StyledSector
         cx={cx}
         cy={cy}
         startAngle={startAngle}
         endAngle={endAngle}
-        innerRadius={innerRadius - 3}
-        outerRadius={outerRadius + 3}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
         cornerRadius={10}
-        stroke="white"
+        stroke="#f4f4f4"
         strokeWidth={3}
         fill={fill}
         filter="url(#strokeShadow)"
+        forceCornerRadius
       />
     </g>
   )
@@ -84,67 +124,87 @@ export const CostsPerStack = ({ data }: CostsPerStackProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const { palette } = useContext(ThemeContext)
   const COLORS = useMemo(() => times(5, index => lighten(index * 0.1, palette.primary.dark)), [palette])
-  // console.log(data)
 
   useEffect(() => {
     setTimeout(() => {
-      const { current } = wrapperRef
-      const pieRef = current!.querySelector('.recharts-pie')
-      const fakeNode = pieRef!.querySelectorAll('.fake-node')
+      try {
+        const { current } = wrapperRef
+        const pieRef = current!.querySelector('.recharts-pie')
+        const fakeNode = pieRef!.querySelectorAll('.fake-node')
 
-      forEach(fakeNode, node => pieRef!.removeChild(node))
+        forEach(fakeNode, node => pieRef!.removeChild(node))
 
-      const activePieSector = pieRef!.querySelector('.active-sector-shape')!.parentNode
-      const clonedNode = activePieSector!.cloneNode(true) as any
-      clonedNode.classList.add('fake-node')
-      pieRef!.appendChild(clonedNode)
+        const activePieSector = pieRef!.querySelector('.active-sector-shape')!.parentNode
+        const clonedNode = activePieSector!.cloneNode(true) as any
+        clonedNode.classList.add('fake-node')
+        pieRef!.appendChild(clonedNode)
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(e)
+      }
     })
   })
+
+  const dataKeys = reduce(data, (acc, x) => {
+    forEach(x.stackCosts, (service) => {
+      acc[service.stackName] = (acc[service.stackName] || 0) + service.unblendedCost
+    })
+    return acc
+  }, {} as any)
+
+  const orderedDataKeys = take(orderBy(map(dataKeys, (cost, name) => ({ cost, name })), 'cost', 'desc'), 5)
+
 
   return (
     <div ref={wrapperRef}>
       <Title variant="h5">Costs Per Stack</Title>
-      <ChartWrapper>
-        <ResponsiveContainer height={200}>
-          <PieChart margin={{ top: 20, right: 20, left: 0, bottom: 20 }}>
-            <Pie
-              data={map(DATA, x => ({ value: x }))}
-              activeIndex={activeIndex}
-              activeShape={renderActiveShape}
-              dataKey="value"
-              cx="50%"
-              cy="50%"
-              innerRadius={70}
-              outerRadius={90}
-              animationBegin={0}
-              animationDuration={1250}
-              startAngle={450}
-              endAngle={90}
-              stroke="transparent"
-              paddingAngle={-12}
-              cornerRadius={10}
-              onMouseEnter={(d, index) => setActiveIndex(index)}
-            >
-              {data.map((x, index) => (
-                <Cell key={index} fill={COLORS[index]} />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
+      <Content>
+        <LeftSide>
+          <ChartWrapper>
+            <ResponsiveContainer height={200}>
+              <PieChart margin={{ top: 20, right: 0, left: 0, bottom: 20 }}>
+                <Pie
+                  data={orderedDataKeys}
+                  activeIndex={activeIndex}
+                  activeShape={renderActiveShape}
+                  dataKey="cost"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={70}
+                  outerRadius={90}
+                  animationBegin={0}
+                  animationDuration={1250}
+                  startAngle={450}
+                  endAngle={90}
+                  stroke="transparent"
+                  paddingAngle={-12}
+                  minAngle={30}
+                  cornerRadius={10}
+                  onMouseEnter={(d, index) => setActiveIndex(index)}
+                >
+                  {data.map((x, index) => (
+                    <Cell key={index} fill={COLORS[index]} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+            <InnerGraphContent>
+              {formatNumber(orderedDataKeys[activeIndex].cost, 3)}$
+            </InnerGraphContent>
+          </ChartWrapper>
+          <Scale />
+        </LeftSide>
         <Legend>
-          {data.map((user, index) => (
+          {map(orderedDataKeys, (stack, index) => (
             <LegendItem key={index}>
               <LegendCell color={COLORS[index]} />
               <LegendText>
-                {split[index]}
+                {stack.name || `Unnamed stack ${index + 1}`}
               </LegendText>
             </LegendItem>
           ))}
         </Legend>
-        <svg viewBox="0 0 16 16">
-          <use xlinkHref="#activeShapeTest" />
-        </svg>
-      </ChartWrapper>
+      </Content>
     </div>
   )
 }

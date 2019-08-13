@@ -1,11 +1,9 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useContext, memo, useMemo } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
 import { lighten } from 'polished'
-import {
-  BarChart, XAxis, ResponsiveContainer, YAxis, Bar, Tooltip, CartesianGrid,
-} from 'recharts'
+import { BarChart, XAxis, ResponsiveContainer, YAxis, Bar, Tooltip, CartesianGrid } from 'recharts'
 import { Typography } from '@material-ui/core'
+import { DateTime } from 'luxon'
 import map from 'lodash/map'
 import reduce from 'lodash/reduce'
 import forEach from 'lodash/forEach'
@@ -14,7 +12,7 @@ import orderBy from 'lodash/orderBy'
 import isEmpty from 'lodash/isEmpty'
 import compact from 'lodash/compact'
 import times from 'lodash/times'
-import { DateTime } from 'luxon'
+import take from 'lodash/take'
 
 const ChartWrapper = styled.div`
   display: block;
@@ -35,14 +33,14 @@ const LegendItem = styled.div`
   margin: 10px;
 `
 const LegendCell = styled.div<{ color: string }>`
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   background-color: ${p => p.color};
   border-radius: 50%;
 `
 const LegendText = styled.div`
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 14px;
+  line-height: 18px;
   margin-left: 10px;
 `
 const StyledTooltip = Tooltip as any
@@ -76,7 +74,7 @@ export const CostsPerService = memo(({ data }: CostsPerServiceProps) => {
     return acc
   }, {} as any)
 
-  const orderedDataKeys = orderBy(map(dataKeys, (cost, name) => ({ cost, name })), 'cost', 'desc')
+  const orderedDataKeys = take(orderBy(map(dataKeys, (cost, name) => ({ cost, name })), 'cost', 'desc'), 5)
 
   return (
     <ChartWrapper>
