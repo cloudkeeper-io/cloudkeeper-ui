@@ -1,8 +1,9 @@
 /* eslint-disable max-len */
 import { mix, transparentize } from 'polished'
+import { css } from 'styled-components'
 
 import loginBackground from '../images/dark-login-background.png'
-// import darkBackground from '../images/stars-background.jpg'
+import darkBackground from '../images/stars-blue.jpg'
 
 const PRIMARY = '#00E092' // mix(0.5, '#48E385', '#018EFF'); //
 
@@ -15,7 +16,7 @@ const colors = {
   primary: PRIMARY,
   background: '#040C2A',
   transparentBackground: 'rgb(14, 11, 32, 0.4)',
-  mainBackground: 'linear-gradient(180deg, #040C2A 60px, #112531 100%)', // `url("${darkBackground}") center center / cover;`,
+  mainBackground: `black url("${darkBackground}") top center / cover;`,
   borderColor: '#4FFAC5',
   text: '#FFFFFF',
   icon: PRIMARY,
@@ -38,10 +39,28 @@ const controls = {
 }
 
 const card = {
-  background: 'linear-gradient(180deg, rgba(0, 1, 0, 0.4) 0%, rgba(18, 24, 50, 0.4) 100%), rgba(21, 76, 108, 0.4)',
+  background: 'linear-gradient(180deg, rgba(71, 203, 203, 0.1) 0%, rgba(18, 24, 50, 0.1) 100%), rgba(102, 157, 189, 0.12);',
+  backdropFilter: 'blur(15px)',
   borderColor: colors.borderColor,
   shadow: 'none',
   borderRadius: '10px 40px 10px 40px',
+  additionalStyles: css`
+      z-index: 0;
+      @supports not ((backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))) {
+        &::before {
+          content: ' ';
+          top: 0;
+          left: 0;
+          z-index: -1;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background-color: #203d56 !important;
+          opacity: 0.9;
+          border-radius: 10px;
+        }
+      }
+`,
 }
 
 const dataCard = {

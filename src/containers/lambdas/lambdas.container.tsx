@@ -4,6 +4,7 @@ import { useQuery } from 'react-apollo'
 import get from 'lodash/get'
 import find from 'lodash/find'
 import moment from 'moment'
+import { useSpring, animated } from 'react-spring'
 
 import { Input } from '@material-ui/core'
 import Loading from '../../components/spinners/loading.component'
@@ -27,14 +28,14 @@ const Wrapper = styled.div`
   }
 `
 
-const StyledCard = styled(Card)`
+const StyledCard = animated(styled(Card)`
   padding: 20px 40px;
   height: calc(100vh - 240px);
   overflow: auto;
   @media (max-width: 800px) {
     height: calc(100vh - 300px);
   }
-`
+`)
 
 const SearchWrapper = styled.div`
   padding: 0 0 30px 0;
@@ -80,6 +81,11 @@ export default ({ tenants }: DashboardProps) => {
     return <Processing />
   }
 
+  const springProps = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+  })
+
   return (
     <Wrapper>
       <DataPageHeader
@@ -94,9 +100,10 @@ export default ({ tenants }: DashboardProps) => {
           onChange={event => setFilterInput(event.target.value)}
         />
       </SearchWrapper>
-      <StyledCard>
+      <StyledCard style={springProps}>
         {loading && <Loading height="calc(100vh - 300px)" />}
-        {!loading && data && data.lambdasList && <LambdasList lambdas={data.lambdasList} filterInput={filterInput} />}
+        {!loading && data && data.lambdasList &&
+        <LambdasList lambdas={data.lambdasList} filterInput={filterInput} />}
       </StyledCard>
     </Wrapper>
   )

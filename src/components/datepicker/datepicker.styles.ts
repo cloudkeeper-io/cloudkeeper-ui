@@ -136,6 +136,8 @@ export const Wrapper = styled.div`
     
     .DayPicker {
       background: ${p => p.theme.card.background};
+      backdrop-filter: ${p => p.theme.card.backdropFilter};
+      ${p => p.theme.card.additionalStyles};
     }
     
     .DateRangePicker_picker {

@@ -5,8 +5,11 @@ import 'react-toastify/dist/ReactToastify.css'
 export default createGlobalStyle`
   html, body, #root {
     min-height: 100vh;
-    background: ${(p: any) => p.theme.colors.mainBackground || p.theme.colors.background} no-repeat 100%  100% ;
     color: ${p => p.theme.colors.text};
+  }
+  
+  #root {
+      background: ${(p: any) => p.theme.colors.mainBackground || p.theme.colors.background} no-repeat 100%  100%;
   }
   
   body {

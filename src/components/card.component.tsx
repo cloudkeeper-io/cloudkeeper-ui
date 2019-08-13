@@ -7,4 +7,6 @@ export default styled(Card)<{ background?: string }>`
   background: ${p => p.theme.card.background};
   border-radius: ${p => p.theme.card.borderRadius};
   box-shadow:  ${p => p.theme.card.shadow};
+  backdrop-filter: ${p => p.theme.card.backdropFilter};
+  ${p => p.theme.card.additionalStyles};
 `

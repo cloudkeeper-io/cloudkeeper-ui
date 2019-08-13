@@ -16,6 +16,7 @@ import { DateRange } from '../../components/datepicker/datepicker.component'
 import { DataPageHeader } from '../../components/data-page-header/data-page-header.component'
 import { DynamoTablesList } from './dynamo-tables.component'
 import Card from '../../components/card.component'
+import { useSpring, animated } from 'react-spring'
 
 const Wrapper = styled.div`
   position: relative;
@@ -27,14 +28,14 @@ const Wrapper = styled.div`
   }
 `
 
-const StyledCard = styled(Card)`
+const StyledCard = animated(styled(Card)`
   padding: 20px 40px;
   height: calc(100vh - 240px);
   overflow: auto;
   @media (max-width: 800px) {
     height: calc(100vh - 300px);
   }
-`
+`)
 
 const SearchWrapper = styled.div`
   padding: 0 0 30px 0;
@@ -79,6 +80,11 @@ export default ({ tenants }: DashboardProps) => {
     return <Processing />
   }
 
+  const springProps = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+  })
+
   return (
     <Wrapper>
       <DataPageHeader
@@ -93,7 +99,7 @@ export default ({ tenants }: DashboardProps) => {
           onChange={event => setFilterInput(event.target.value)}
         />
       </SearchWrapper>
-      <StyledCard>
+      <StyledCard style={springProps}>
         {loading && <Loading height="calc(100vh - 300px)" />}
         {!loading && data && data.dynamoTablesList &&
           <DynamoTablesList tables={data.dynamoTablesList} filterInput={filterInput} />
