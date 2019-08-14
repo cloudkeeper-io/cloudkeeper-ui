@@ -6,11 +6,17 @@
 // GraphQL mutation operation: CreateTenant
 // ====================================================
 
+export interface CreateTenant_createTenant_owner {
+  __typename: "OwnerData";
+  id: string;
+}
+
 export interface CreateTenant_createTenant {
   __typename: "Tenant";
   id: string;
   name: string;
   createdAt: string;
+  owner: CreateTenant_createTenant_owner;
   isSetupCompleted: boolean;
 }
 

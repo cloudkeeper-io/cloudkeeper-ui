@@ -21,6 +21,7 @@ import { DataPageHeader } from '../../components/data-page-header/data-page-head
 import { DateRange } from '../../components/datepicker/datepicker.component'
 import { CostsPerService } from '../../components/data-cards/costs-per-service.component'
 import { CostsPerStack } from '../../components/data-cards/costs-per-stack.component'
+import { EventsCard } from '../../components/data-cards/events-card.component'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -170,7 +171,7 @@ export default () => {
             />
           </Card>
           <Card key="2">
-            2
+            <EventsCard events={data!.events!.events!} />
           </Card>
           <Card key="3">
             <CostsPerService data={data!.costsData!.costsPerService!} />

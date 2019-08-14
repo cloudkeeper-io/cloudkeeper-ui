@@ -1,14 +1,12 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
 import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from 'recharts'
 import { Typography } from '@material-ui/core'
-import { lighten } from 'polished'
 import map from 'lodash/map'
 import reduce from 'lodash/reduce'
 import forEach from 'lodash/forEach'
 import orderBy from 'lodash/orderBy'
-import times from 'lodash/times'
 import take from 'lodash/take'
 
 import { ReactComponent as ScaleSvg } from './images/scale.svg'
@@ -122,8 +120,8 @@ const renderActiveShape = (props: any) => {
 export const CostsPerStack = ({ data }: CostsPerStackProps) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const { palette } = useContext(ThemeContext)
-  const COLORS = useMemo(() => times(5, index => lighten(index * 0.1, palette.primary.dark)), [palette])
+  const { colors } = useContext(ThemeContext)
+  const COLORS = colors.seriesColors
 
   useEffect(() => {
     setTimeout(() => {

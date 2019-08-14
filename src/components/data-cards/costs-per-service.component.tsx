@@ -1,6 +1,5 @@
-import React, { useContext, memo, useMemo } from 'react'
+import React, { useContext, memo } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
-import { lighten } from 'polished'
 import { BarChart, XAxis, ResponsiveContainer, YAxis, Bar, Tooltip, CartesianGrid } from 'recharts'
 import { Typography } from '@material-ui/core'
 import { DateTime } from 'luxon'
@@ -11,7 +10,6 @@ import fromPairs from 'lodash/fromPairs'
 import orderBy from 'lodash/orderBy'
 import isEmpty from 'lodash/isEmpty'
 import compact from 'lodash/compact'
-import times from 'lodash/times'
 import take from 'lodash/take'
 
 const ChartWrapper = styled.div`
@@ -50,8 +48,8 @@ interface CostsPerServiceProps {
 }
 
 export const CostsPerService = memo(({ data }: CostsPerServiceProps) => {
-  const { colors, palette } = useContext(ThemeContext)
-  const COLORS = useMemo(() => times(5, index => lighten(index * 0.1, palette.primary.dark)), [palette])
+  const { colors } = useContext(ThemeContext)
+  const COLORS = colors.seriesColors
 
   const formattedData = compact(map(data, (x) => {
     const pairs = map(x.serviceCosts, service => [service.serviceName, service.unblendedCost])
