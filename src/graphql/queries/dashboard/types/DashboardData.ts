@@ -270,10 +270,27 @@ export interface DashboardData_costsData {
   costsPerStack: DashboardData_costsData_costsPerStack[] | null;
 }
 
+export interface DashboardData_events_events {
+  __typename: "Event";
+  dateTime: string | null;
+  dimension: string | null;
+  expectedValue: number | null;
+  message: string | null;
+  serviceName: string | null;
+  value: number | null;
+}
+
+export interface DashboardData_events {
+  __typename: "DashboardEventsData";
+  events: (DashboardData_events_events | null)[] | null;
+  processing: boolean | null;
+}
+
 export interface DashboardData {
   lambdasData: DashboardData_lambdasData | null;
   dynamoData: DashboardData_dynamoData | null;
   costsData: DashboardData_costsData | null;
+  events: DashboardData_events | null;
 }
 
 export interface DashboardDataVariables {

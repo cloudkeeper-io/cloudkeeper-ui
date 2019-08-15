@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { cost, lambdas, dynamo } from '.'
+import { cost, lambdas, dynamo, events } from '.'
 
 export const dashboardQuery = gql`
   query DashboardData ($tenantId: String){
@@ -12,8 +12,12 @@ export const dashboardQuery = gql`
     costsData(tenantId: $tenantId) {
       ...Cost
     }
+    events(tenantId: $tenantId) {
+      ...Events
+    }
   }
   ${lambdas}
   ${dynamo}
   ${cost}
+  ${events}
 `
