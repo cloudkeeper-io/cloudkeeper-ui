@@ -12,8 +12,6 @@ export default styled(ReactGridLayout)`
     padding: 0;
   }
   .react-grid-item {
-    // transition: ${p => getTransition(p.theme, ['all'])};
-    // transition-property: left, top;
     transition: none;
   }
   .react-grid-item.cssTransforms {
