@@ -9,6 +9,7 @@ import Button from '../../../components/button/button.component'
 import ServerError from '../../../components/form/error-message.component'
 import { FormContent, StyledForm } from '../login.styles'
 import { UserContext } from '../../../contexts'
+import { trackEvent } from '../../../utils/amplitude'
 
 const ForgotPassword = styled(Link)`
   text-decoration: underline;
@@ -39,6 +40,7 @@ export default memo(() => {
 
     try {
       await signIn(values.email, values.password)
+      trackEvent('User Logged In')
     } catch (error) {
       setServerError(error.message || 'Server error')
       setLoading(false)
