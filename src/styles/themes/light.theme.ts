@@ -22,7 +22,7 @@ const colors = {
   disabled: '#ababab',
   spinner: 'url(#light-spinner-gradient)',
   shadow: 'rgba(190, 180, 185, 0.2)',
-  seriesColors: ['#0589E5', '#0EACFE', '#61D3FE', '#2FF6F5', '#A5CDD0'],
+  seriesColors: ['#0D8EFC', '#395d9a', '#3896C6', '#72CCD4', '#93A1DC'],
 
   active: '#FFAA6E',
   activeSecondary: '#FF5F99',

@@ -65,6 +65,7 @@ const InnerGraphContent = styled.div`
   font-size: 32px;
   font-weight: 500;
   color: #8499B9;
+  pointer-events: none;
 `
 const LegendItem = styled.div`
   display: flex;
@@ -197,7 +198,7 @@ export const CostsPerStack = ({ data }: CostsPerStackProps) => {
             <LegendItem key={index}>
               <LegendCell color={COLORS[index]} />
               <LegendText>
-                {stack.name || `Unnamed stack ${index + 1}`}
+                {stack.name || 'Resources without a stack'}
               </LegendText>
             </LegendItem>
           ))}
