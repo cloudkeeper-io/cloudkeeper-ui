@@ -8,6 +8,7 @@ export const events = gql`
       message
       serviceName
       value
+      expectedValue
     }
     processing
   }
