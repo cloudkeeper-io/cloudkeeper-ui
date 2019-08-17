@@ -55,7 +55,7 @@ export default memo(({ children }: DrawerLayoutProps) => {
                 <Logo />
               </IconButton>
             )}
-            {!error && <TenantSwitcher />}
+            {(!error && pathname !== '/settings') && <TenantSwitcher />}
             <Flex />
             <RightAppBar>
               <RightAppBarItem> <FullscreenSwitcher /></RightAppBarItem>

@@ -50,6 +50,7 @@ const SettingsTab = styled(Tab)`
 
 const TabContainer = styled.div`
   padding: 16px;
+  overflow-x: hidden;
 `
 
 export default function SettingsTabs() {

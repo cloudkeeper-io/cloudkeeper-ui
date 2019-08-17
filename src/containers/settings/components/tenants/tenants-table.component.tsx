@@ -17,7 +17,7 @@ import { Tenant } from '../../../../models'
 import { tenantsQuery, removeTenant } from '../../../../graphql'
 import { TenantContext, UserContext } from '../../../../contexts'
 import TableHeader from './table-header.component'
-import { timestampToDate } from '../../../../utils/format.utils'
+import { timestampToDate } from '../../../../utils'
 
 const Overlay = styled.div`
   position: absolute;
@@ -97,7 +97,7 @@ export default memo(() => {
         </TableHead>
         <TableBody>
           {map(tenants, tenant => (
-            <TableRow key={tenant.id}>
+            <TableRow key={tenant.id} style={{ height: 65 }}>
               <TableCell component="th" scope="row">
                 <TenantLink to={`/tenant/${tenant.id}`}>{tenant.name}</TenantLink>
               </TableCell>
@@ -125,6 +125,7 @@ export default memo(() => {
         tenant={tenantToRemove!}
       />
       <CreateTenantModal
+        key={String(isCreateModalOpen)}
         onClose={() => setCreateModalOpen(false)}
         isOpen={isCreateModalOpen}
       />

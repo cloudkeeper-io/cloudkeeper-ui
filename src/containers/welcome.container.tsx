@@ -6,7 +6,6 @@ import { AccentText, Title, Text } from '../components/typography.component'
 import CreateTenantModal from './settings/components/tenants/create-tenant-modal.component'
 import Button from '../components/button/button.component'
 
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -56,6 +55,7 @@ export default memo(({ className }: WelcomeContainerProps) => {
         <AddButton onClick={() => setCreateModalOpen(true)}>Create Project</AddButton>
       </Content>
       <CreateTenantModal
+        key={String(isCreateModalOpen)}
         onClose={() => setCreateModalOpen(false)}
         isOpen={isCreateModalOpen}
       />

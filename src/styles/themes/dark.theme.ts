@@ -9,6 +9,10 @@ const PRIMARY = '#00E092' // mix(0.5, '#48E385', '#018EFF'); //
 const palette = {
   primary: { main: PRIMARY },
   secondary: { main: '#018EFF' },
+  background: {
+    default: '#102d40',
+    paper: '#0E1F30',
+  },
 }
 
 const colors = {
