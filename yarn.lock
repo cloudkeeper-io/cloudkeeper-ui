@@ -6018,6 +6018,14 @@ env-ci@3.2.2:
     execa "^1.0.0"
     java-properties "^1.0.0"
 
+enzyme-shallow-equal@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/enzyme-shallow-equal/-/enzyme-shallow-equal-1.0.0.tgz#d8e4603495e6ea279038eef05a4bf4887b55dc69"
+  integrity sha512-VUf+q5o1EIv2ZaloNQQtWCJM9gpeux6vudGVH6vLmfPXFLRuxl5+Aq3U260wof9nn0b0i+P5OEUXm1vnxkRpXQ==
+  dependencies:
+    has "^1.0.3"
+    object-is "^1.0.1"
+
 errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/errno/-/errno-0.1.7.tgz#4684d71779ad39af177e3f007996f7c67c852618"
@@ -11836,7 +11844,7 @@ raf-schd@^4.0.0:
   resolved "https://registry.yarnpkg.com/raf-schd/-/raf-schd-4.0.2.tgz#bd44c708188f2e84c810bf55fcea9231bcaed8a0"
   integrity sha512-VhlMZmGy6A6hrkJWHLNTGl5gtgMUm+xfGza6wbwnE914yeQ5Ybm18vgM734RZhMgfw4tacUrWseGZlpUrrakEQ==
 
-raf@3.4.1, raf@^3.4.0:
+raf@3.4.1, raf@^3.4.0, raf@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
   integrity sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==
@@ -11905,14 +11913,6 @@ react-addons-create-fragment@^15.6.2:
     loose-envify "^1.3.1"
     object-assign "^4.1.0"
 
-react-addons-shallow-compare@^15.6.2:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/react-addons-shallow-compare/-/react-addons-shallow-compare-15.6.2.tgz#198a00b91fc37623db64a28fd17b596ba362702f"
-  integrity sha1-GYoAuR/DdiPbZKKP0XtZa6NicC8=
-  dependencies:
-    fbjs "^0.8.4"
-    object-assign "^4.1.0"
-
 react-apollo@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-3.0.0.tgz#2a0bccd32e11ce86b140d5d0284356972b7e8e11"
@@ -11963,24 +11963,26 @@ react-copy-to-clipboard@^5.0.1:
     copy-to-clipboard "^3"
     prop-types "^15.5.8"
 
-react-dates@18.3.1:
-  version "18.3.1"
-  resolved "https://registry.yarnpkg.com/react-dates/-/react-dates-18.3.1.tgz#5fdcdb0997bff27efeb9ff50dc53ca1f63e37eac"
-  integrity sha512-sJdEt1KCHgHED8vRqxkzggF9XyFv58A9+xA0oSATKemBXroe/KVN6svp3TcKZ2VWMbdPmeM5Bd3xRWTkrGk9Dg==
+react-dates@^20.3.0:
+  version "20.3.0"
+  resolved "https://registry.yarnpkg.com/react-dates/-/react-dates-20.3.0.tgz#47c1549fa1566e7708d683faf9446a5ebc615a15"
+  integrity sha512-ZTTIOxD+VE5Ptzq8rjlHe3FH5adAhNVn0Wr08aekmkUvBY+1FpUcxU1jOb65jXH0ZmSyaL0ikjBHPL32KxXNtA==
   dependencies:
+    "@babel/runtime" "^7.4.5"
     airbnb-prop-types "^2.10.0"
     consolidated-events "^1.1.1 || ^2.0.0"
+    enzyme-shallow-equal "^1.0.0"
     is-touch-device "^1.0.1"
     lodash "^4.1.1"
     object.assign "^4.1.0"
     object.values "^1.0.4"
     prop-types "^15.6.1"
-    react-addons-shallow-compare "^15.6.2"
+    raf "^3.4.1"
     react-moment-proptypes "^1.6.0"
     react-outside-click-handler "^1.2.0"
     react-portal "^4.1.5"
     react-with-direction "^1.3.0"
-    react-with-styles "^3.2.0"
+    react-with-styles "^3.2.3"
     react-with-styles-interface-css "^4.0.2"
 
 react-dev-utils@^9.0.0, react-dev-utils@^9.0.2:
@@ -12458,7 +12460,7 @@ react-with-styles-interface-css@^4.0.2:
     array.prototype.flat "^1.2.1"
     global-cache "^1.2.1"
 
-react-with-styles@^3.2.0:
+react-with-styles@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/react-with-styles/-/react-with-styles-3.2.3.tgz#b058584065bb36c0d80ccc911725492692db8a61"
   integrity sha512-MTI1UOvMHABRLj5M4WpODfwnveHaip6X7QUMI2x6zovinJiBXxzhA9AJP7MZNaKqg1JRFtHPXZdroUC8KcXwlQ==
