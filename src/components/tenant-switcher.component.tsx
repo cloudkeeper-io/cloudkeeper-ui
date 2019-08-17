@@ -5,11 +5,12 @@ import { Typography, Menu, MenuItem, Button, Divider } from '@material-ui/core'
 import { ChevronDown } from 'react-feather'
 import get from 'lodash/get'
 import map from 'lodash/map'
+import take from 'lodash/take'
 
 import { TenantContext } from '../contexts'
+import CreateTenantModal from '../containers/settings/components/tenants/create-tenant-modal.component'
 
 const MenuButton = styled(Button)`
-  //color: ${p => p.theme.palette.common.white};
   text-transform: none;
 `
 const StyledMenuItem = styled(MenuItem)`
@@ -25,6 +26,7 @@ interface ProjectSwitcherProps {
 }
 
 export default memo(({ className }: ProjectSwitcherProps) => {
+  const [isCreateModalOpen, setCreateModalOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const { loading, tenants, currentTenant } = useContext(TenantContext)
 
@@ -47,6 +49,14 @@ export default memo(({ className }: ProjectSwitcherProps) => {
         onClose={handleClose}
         keepMounted
       >
+        <MenuItem
+          onClick={() => {
+            handleClose()
+            setCreateModalOpen(true)
+          }}
+        >
+          Create New Project
+        </MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="/settings">
           See All Projects
         </MenuItem>
@@ -54,12 +64,17 @@ export default memo(({ className }: ProjectSwitcherProps) => {
         <StyledMenuItem disabled>
           <Typography variant="caption">Recent</Typography>
         </StyledMenuItem>
-        {map(tenants, tenant => (
+        {map(take(tenants, 4), tenant => (
           <StyledMenuItem component={Link} to={`/tenant/${tenant.id}`} key={tenant.id!} onClick={handleClose}>
             {tenant.name}
           </StyledMenuItem>
         ))}
       </Menu>
+      <CreateTenantModal
+        key={String(isCreateModalOpen)}
+        onClose={() => setCreateModalOpen(false)}
+        isOpen={isCreateModalOpen}
+      />
     </div>
   )
 })

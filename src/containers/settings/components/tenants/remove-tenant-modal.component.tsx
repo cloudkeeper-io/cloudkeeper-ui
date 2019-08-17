@@ -1,36 +1,21 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { Dialog, DialogContent, DialogActions, Button } from '@material-ui/core'
 import get from 'lodash/get'
 
-import Modal from '../../../../components/modal.component'
-import Button from '../../../../components/button/button.component'
 import { Text, Title } from '../../../../components/typography.component'
 import { Tenant } from '../../../../models'
 
-
-const CancelButton = styled(Button)`
-  max-width: calc(45% - 10px);
-`
 const RemoveButton = styled(Button)`
-  max-width: calc(45% - 10px);
-  margin-left: 10px;
-`
-const ButtonsWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
+  background: ${p => p.theme.palette.error.main};
+  :hover {
+    background: ${p => p.theme.palette.error.dark};
+  }
 `
 const Name = styled.span`
   padding: 0 5px;
   font-weight: bold;
 `
-const ModalStyles = {
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-  },
-}
-
 
 interface ModalProps {
   tenant: Tenant
@@ -40,16 +25,18 @@ interface ModalProps {
 }
 
 export default ({ isOpen, onRemove, onClose, tenant }: ModalProps) => (
-  <Modal isOpen={isOpen} onRequestClose={onClose} style={ModalStyles}>
-    <Title>Remove Tenant</Title>
-    <Text>Your tenant <Name>{get(tenant, 'name')}</Name> will be removed. Are you sure about that?</Text>
-    <ButtonsWrapper>
-      <CancelButton background="#797070" color="#FFF" onClick={onClose}>
+  <Dialog open={isOpen} onClose={onClose}>
+    <DialogContent>
+      <Title>Remove Tenant</Title>
+      <Text>Your tenant <Name>{get(tenant, 'name')}</Name> will be removed. Are you sure about that?</Text>
+    </DialogContent>
+    <DialogActions>
+      <Button color="default" onClick={onClose}>
         Cancel
-      </CancelButton>
-      <RemoveButton background="#de4141" color="#FFF" onClick={() => onRemove(tenant)}>
+      </Button>
+      <RemoveButton color="primary" variant="contained" onClick={() => onRemove(tenant)}>
         Remove
       </RemoveButton>
-    </ButtonsWrapper>
-  </Modal>
+    </DialogActions>
+  </Dialog>
 )

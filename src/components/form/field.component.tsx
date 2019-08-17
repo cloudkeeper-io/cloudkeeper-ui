@@ -13,7 +13,7 @@ const ErrorMessage = styled(Error)`
   font-size: 12px;
   line-height: 12px;
   margin: 0 0 0 5px;
-  color: #ff1744;
+  color: ${p => p.theme.palette.error.main}
 `
 
 interface FieldProps {

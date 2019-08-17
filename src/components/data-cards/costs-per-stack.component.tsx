@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
 import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from 'recharts'
 import { Typography } from '@material-ui/core'
+import { ChevronLeft } from 'react-feather'
 import map from 'lodash/map'
 import reduce from 'lodash/reduce'
 import forEach from 'lodash/forEach'
@@ -17,7 +18,6 @@ const Title = styled(Typography)`
 `
 const Content = styled.div`
   display: flex;
-  margin: 30px;
   justify-content: space-between;
   width: 100%;
   height: auto;
@@ -29,7 +29,7 @@ const Legend = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-width: 300px;
+  min-width: 250px;
   padding: 0 15px;
   @media(max-width: 800px) {
     min-width: auto;
@@ -40,9 +40,10 @@ const Scale = styled(ScaleSvg)`
 `
 const LeftSide = styled.div`
   display: flex;
-  flex-direction: column;
   flex: 1;
+  flex-direction: column;
   align-items: center;
+  margin: 20px;
 `
 const ChartWrapper = styled.div`
   position: relative;
@@ -69,16 +70,20 @@ const InnerGraphContent = styled.div`
 `
 const LegendItem = styled.div`
   display: flex;
-  width: calc(100% - 60px);
+  align-items: center;
+  width: 100%;
   padding: 15px 0;
+  cursor: pointer;
   border-bottom: 1px solid #EDF0F2;
   :first-child {
     border-top: 1px solid #EDF0F2;
   }
 `
 const LegendCell = styled.div<{ color: string }>`
-  width: 12px;
-  height: 12px;
+  min-width: 12px;
+  min-height: 12px;
+  max-width: 12px;
+  max-height: 12px;
   background-color: ${p => p.color};
   border-radius: 50%;
 `
@@ -86,6 +91,14 @@ const LegendText = styled.div`
   font-size: 14px;
   line-height: 18px;
   margin-left: 10px;
+`
+const ActiveIndicator = styled.div`
+  display: flex;
+  flex: 1;
+  height: 16px;
+  justify-content: flex-end;
+  align-items: center;
+  color: ${p => p.theme.palette.primary.main};
 `
 
 const StyledSector = Sector as any
@@ -195,11 +208,16 @@ export const CostsPerStack = ({ data }: CostsPerStackProps) => {
         </LeftSide>
         <Legend>
           {map(orderedDataKeys, (stack, index) => (
-            <LegendItem key={index}>
+            <LegendItem key={index} onMouseEnter={() => setActiveIndex(index)}>
               <LegendCell color={COLORS[index]} />
               <LegendText>
                 {stack.name || 'Resources without a stack'}
               </LegendText>
+              {activeIndex === index && (
+                <ActiveIndicator>
+                  <ChevronLeft />
+                </ActiveIndicator>
+              )}
             </LegendItem>
           ))}
         </Legend>

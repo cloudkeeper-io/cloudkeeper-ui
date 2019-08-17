@@ -43,7 +43,7 @@
     "react": "16.8.6",
     "react-apollo": "^3.0.0",
     "react-copy-to-clipboard": "^5.0.1",
-    "react-dates": "18.3.1",
+    "react-dates": "^20.3.0",
     "react-dom": "16.8.6",
     "react-feather": "^2.0.3",
     "react-final-form": "^6.3.0",
@@ -51,7 +51,6 @@
     "react-helmet": "^5.2.1",
     "react-infinite-scroller": "^1.2.4",
     "react-loadable": "^5.5.0",
-    "react-modal": "^3.9.1",
     "react-router-dom": "^5.0.1",
     "react-select": "^3.0.4",
     "react-spring": "^8.0.27",
@@ -116,5 +115,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "babelMacros": {
+    "styledComponents": {
+      "pure": true
+    }
   }
 }

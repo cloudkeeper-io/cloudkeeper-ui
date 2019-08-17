@@ -20,7 +20,6 @@ interface MenuItemsProps {
 
 export const topMenuItems = [
   { primary: 'Dashboard', to: (id: string) => `/tenant/${id}`, icon: <Layout /> },
-  { primary: 'Dashboard V2', to: (id: string) => `/tenant/${id}/dashboard-v2`, icon: <Layout /> },
   { primary: 'Lambdas', to: (tenantId: string) => `/tenant/${tenantId}/lambdas`, icon: <Icon icon="lambda" /> },
   { primary: 'DynamoDB', to: (tenantId: string) => `/tenant/${tenantId}/dynamo-tables`, icon: <Icon icon="dynamo" /> },
 ]

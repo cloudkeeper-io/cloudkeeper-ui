@@ -1,49 +1,28 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { useEffect } from 'react'
 import useReactRouter from 'use-react-router'
 import styled from 'styled-components/macro'
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core'
 import { Form } from 'react-final-form'
-import { Mutation, MutationFunction } from 'react-apollo'
+import { useMutation } from 'react-apollo'
 import get from 'lodash/get'
 
-import Error from '../../../../components/form/error-message.component'
 import { tenantsQuery, createTenantMutation } from '../../../../graphql'
-import { CreateTenant, CreateTenantVariables } from '../../../../graphql/mutations/types/CreateTenant'
+import { CreateTenant } from '../../../../graphql/mutations/types/CreateTenant'
 import { trackEvent } from '../../../../utils/amplitude'
 import { SmallField } from '../../../../components/form/field.component'
-import Modal from '../../../../components/modal.component'
-import Button from '../../../../components/button/button.component'
-import { Title } from '../../../../components/typography.component'
+import { LoadingButton } from '../../../../components/button/loading-button.component'
 
-const ModalStyles = {
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-  },
-}
-const StyledForm = styled.form`
-  margin-top: 20px;
-`
-const ServerError = styled(Error)`
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translateY(calc(-100% - 5px));
+const ServerError = styled.div`
+  color: ${p => p.theme.palette.error.main};
+  font-size: 12px;
+  margin-left: 5px;
 `
 const Text = styled.div`
   margin-bottom: 10px;
 `
-const ButtonWrapper = styled.div`
-  display: flex;
-  margin-top: 35px;
-  justify-content: flex-end;
-`
-const CancelButton = styled(Button)`
-  max-width: calc(45% - 10px);
-`
-const CreateButton = styled(Button)`
-  max-width: calc(45% - 10px);
-  margin-left: 10px;
+const Input = styled(SmallField)`
+  width: 275px;
+  height: auto;
 `
 
 interface Values {
@@ -55,28 +34,35 @@ interface StepsProps {
   isOpen: boolean
 }
 
-export default memo(({ onClose, isOpen }: StepsProps) => {
+export default ({ onClose, isOpen }: StepsProps) => {
   const { history } = useReactRouter()
-  const [loading, setLoading] = useState(false)
-  const [serverError, setServerError] = useState('')
+  const [createTenantFn, { loading, error }] = useMutation<CreateTenant>(createTenantMutation, {
+    update: (cache: any, { data }: any) => {
+      const { createTenant } = data!
+      const { tenants } = cache.readQuery({ query: tenantsQuery }) as any
+      cache.writeQuery({
+        query: tenantsQuery,
+        data: { tenants: [...tenants, createTenant] },
+      })
+    },
+  })
 
   useEffect(() => trackEvent('Opened Create Project'), [])
 
-  const onSubmit = async (v: Values, mutation: MutationFunction<CreateTenant, CreateTenantVariables>) => {
-    setLoading(true)
-    setServerError('')
+  const onSubmit = async (v: Values) => {
     try {
       const parameters = {
         name: v.name,
       }
 
-      const response = await mutation({ variables: parameters })
+      const response = await createTenantFn({ variables: parameters })
       const tenantId = get(response, 'data.createTenant.id')
       trackEvent('Created Project')
+      onClose()
       history.push(`/tenant/${tenantId}`)
     } catch (err) {
-      setLoading(false)
-      setServerError('Server Error. Try Again Later')
+      // eslint-disable-next-line no-console
+      console.log(err)
     }
   }
 
@@ -91,41 +77,37 @@ export default memo(({ onClose, isOpen }: StepsProps) => {
   }
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose} style={ModalStyles}>
-      <Title>Create Project</Title>
-      <Mutation
-        mutation={createTenantMutation}
-        update={(cache: any, { data }: any) => {
-          const { createTenant } = data!
-          const { tenants } = cache.readQuery({ query: tenantsQuery }) as any
-          cache.writeQuery({
-            query: tenantsQuery,
-            data: { tenants: [...tenants, createTenant] },
-          })
-        }}
-      >
-        {(mutation: any) => (
-          <Form onSubmit={v => onSubmit(v as Values, mutation)} validate={v => validate(v as Values)}>
-            {({ handleSubmit, pristine, invalid }) => (
-              <StyledForm onSubmit={handleSubmit}>
-                <Text>
-                  Enter the name of the project:
-                </Text>
-                <SmallField name="name" placeholder="Your Project Name" />
-                <ButtonWrapper>
-                  <ServerError>{serverError}</ServerError>
-                  <CancelButton background="#797070" color="#FFF" onClick={onClose} type="button">
-                    Cancel
-                  </CancelButton>
-                  <CreateButton isLoading={loading} disabled={pristine || invalid}>
-                    Create
-                  </CreateButton>
-                </ButtonWrapper>
-              </StyledForm>
-            )}
-          </Form>
+    <Dialog open={isOpen} onClose={onClose}>
+      <DialogTitle>Create Project</DialogTitle>
+      <Form onSubmit={v => onSubmit(v as Values)} validate={v => validate(v as Values)}>
+        {({ handleSubmit, pristine, invalid }) => (
+          <form onSubmit={handleSubmit}>
+            <DialogContent>
+              <Text>
+                Enter the name of the project:
+              </Text>
+              <Input name="name" placeholder="Your Project Name" />
+              <ServerError>
+                {error && (get(error, 'graphQLErrors[0].message') || 'Server error')}
+              </ServerError>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={onClose} type="button">
+                Cancel
+              </Button>
+              <LoadingButton
+                color="primary"
+                variant="contained"
+                disabled={pristine || invalid}
+                loading={loading}
+                type="submit"
+              >
+                Create
+              </LoadingButton>
+            </DialogActions>
+          </form>
         )}
-      </Mutation>
-    </Modal>
+      </Form>
+    </Dialog>
   )
-})
+}
