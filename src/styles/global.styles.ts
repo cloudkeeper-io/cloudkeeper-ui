@@ -6,19 +6,19 @@ export default createGlobalStyle`
   html, body, #root {
     min-height: 100vh;
     background: ${(p: any) => p.theme.colors.mainBackground || p.theme.colors.background} no-repeat 100%  100% ;
-    color: ${p => p.theme.colors.text};
+    color: ${(p) => p.theme.colors.text};
   }
   
   body {
     margin: 0;
     padding: 0;
     * {
-      font-family: ${p => p.theme.font}, sans-serif;
+      font-family: ${(p) => p.theme.font}, sans-serif;
     }
   }
   
   div {
-    color: ${p => p.theme.colors.text};
+    color: ${(p) => p.theme.colors.text};
   }
   
   a {
@@ -38,18 +38,18 @@ export default createGlobalStyle`
   
   // toast
   .Toastify__toast--default {
-    background: ${p => p.theme.colors.background} no-repeat 100%  100% !important;
-    color: ${p => p.theme.colors.text} !important;
+    background: ${(p) => p.theme.colors.background} no-repeat 100%  100% !important;
+    color: ${(p) => p.theme.colors.text} !important;
     text-align: center;
-    box-shadow: 0 0 4px ${p => p.theme.colors.shadow} !important;
+    box-shadow: 0 0 4px ${(p) => p.theme.colors.shadow} !important;
   }
   
   .Toastify__close-button {
-    color: ${p => p.theme.colors.primary} !important;
+    color: ${(p) => p.theme.colors.primary} !important;
   }
   
   .Toastify__progress-bar  {
-    background: ${p => p.theme.colors.primary} no-repeat 100%  100% !important;
+    background: ${(p) => p.theme.colors.primary} no-repeat 100%  100% !important;
   }
   
     // modal
@@ -66,9 +66,9 @@ export default createGlobalStyle`
     max-height: 80vh;
     display: flex;
     flex-direction: column;
-    border: 2px solid ${p => p.theme.card.borderColor} !important;
-    background: ${p => p.theme.colors.background} !important;
-    border-radius: ${p => p.theme.card.borderRadius} !important;
+    border: 2px solid ${(p) => p.theme.card.borderColor} !important;
+    background: ${(p) => p.theme.colors.background} !important;
+    border-radius: ${(p) => p.theme.card.borderRadius} !important;
   }
 
   .ReactModal__Content--after-open {

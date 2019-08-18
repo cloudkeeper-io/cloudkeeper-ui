@@ -6,7 +6,7 @@ import styled from 'styled-components'
 const StyledButton = styled(Button)`
   min-width: 90px;
   svg {
-    color: ${p => p.theme.palette.common.white};
+    color: ${(p) => p.theme.palette.common.white};
   }
 `
 

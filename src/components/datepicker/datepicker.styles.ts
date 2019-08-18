@@ -12,7 +12,7 @@ const circle = css`
         width: 100%;
         height: 100%;
         border-radius: 22px;
-        background: ${p => `linear-gradient(146.18deg, ${mix(0.7, p.theme.palette.background.paper, p.theme.palette.primary.main)} -1.97%, ${p.theme.palette.primary.main} 109.73%);`};
+        background: ${(p) => `linear-gradient(146.18deg, ${mix(0.7, p.theme.palette.background.paper, p.theme.palette.primary.main)} -1.97%, ${p.theme.palette.primary.main} 109.73%);`};
         z-index: -1;
     }
 `
@@ -21,8 +21,8 @@ export const Wrapper = styled.div`
     .DateInput_input {
         font-size: 14px;
         background-color: transparent;
-        font-family: ${p => p.theme.font}, sans-serif !important;
-        color: ${p => p.theme.colors.primary} !important;
+        font-family: ${(p) => p.theme.font}, sans-serif !important;
+        color: ${(p) => p.theme.colors.primary} !important;
         font-weight: 500;
     }
     
@@ -38,7 +38,7 @@ export const Wrapper = styled.div`
     }
     
     .DateInput_input__focused {
-      border-bottom: 2px solid ${p => p.theme.colors.primary};
+      border-bottom: 2px solid ${(p) => p.theme.colors.primary};
     }
     
     .CalendarDay {
@@ -50,25 +50,25 @@ export const Wrapper = styled.div`
     }
     
     .DayPicker_weekHeader_li {
-        color: ${p => p.theme.colors.primary};
+        color: ${(p) => p.theme.colors.primary};
         font-weight: 500;
     }
     
     .DayPicker__withBorder {
       border-radius: 10px;
-      box-shadow: 0px 10px 20px ${p => transparentize(0.16, mix(0.9, p.theme.colors.background, p.theme.palette.primary.main))}, 0px 30px 50px ${p => transparentize(0.1, mix(0.9, p.theme.colors.background, p.theme.palette.primary.main))};
+      box-shadow: 0px 10px 20px ${(p) => transparentize(0.16, mix(0.9, p.theme.colors.background, p.theme.palette.primary.main))}, 0px 30px 50px ${(p) => transparentize(0.1, mix(0.9, p.theme.colors.background, p.theme.palette.primary.main))};
     }
     
     .CalendarMonth_caption {
-      color: ${p => p.theme.palette.text.primary}
+      color: ${(p) => p.theme.palette.text.primary}
     }
     
     .CalendarDay {
-      color: ${p => p.theme.palette.text.primary}
+      color: ${(p) => p.theme.palette.text.primary}
     }
     
     .CalendarDay__blocked_out_of_range {
-      color: ${p => p.theme.palette.text.disabled}
+      color: ${(p) => p.theme.palette.text.disabled}
     }
     
     .CalendarDay__default:hover {
@@ -80,31 +80,31 @@ export const Wrapper = styled.div`
     }
     
     .CalendarDay__selected {
-      background: ${p => transparentize(0.7, p.theme.colors.primary)} !important;
+      background: ${(p) => transparentize(0.7, p.theme.colors.primary)} !important;
       color: #fff;
     }
     
     .CalendarDay__selected:hover {
       position: relative; 
-      background: ${p => transparentize(0.7, p.theme.colors.primary)} !important;
+      background: ${(p) => transparentize(0.7, p.theme.colors.primary)} !important;
       color: #fff;
       ${circle}
     }
     
     .CalendarDay__selected_span {
-      background: ${p => transparentize(0.7, p.theme.colors.primary)} !important;
+      background: ${(p) => transparentize(0.7, p.theme.colors.primary)} !important;
       color: #fff;
     }
     
         
     .CalendarDay__hovered_span {
-      background: ${p => transparentize(0.7, p.theme.colors.primary)} !important;
+      background: ${(p) => transparentize(0.7, p.theme.colors.primary)} !important;
       color: #fff;
     }
     
     .CalendarDay__hovered_span:hover {
       position: relative; 
-      background: ${p => transparentize(0.7, p.theme.colors.primary)} !important;
+      background: ${(p) => transparentize(0.7, p.theme.colors.primary)} !important;
       border-bottom-right-radius: 22px;
       border-top-right-radius: 22px;
       color: #fff;
@@ -130,12 +130,12 @@ export const Wrapper = styled.div`
     }
 
     .CalendarDay__default:hover {
-      background: ${p => transparentize(0.7, p.theme.colors.primary)};
+      background: ${(p) => transparentize(0.7, p.theme.colors.primary)};
       color: #fff;
     }
     
     .DayPicker {
-      background: ${p => p.theme.card.background};
+      background: ${(p) => p.theme.card.background};
     }
     
     .DateRangePicker_picker {
@@ -153,7 +153,7 @@ export const Wrapper = styled.div`
     .CalendarDay__blocked_out_of_range, 
     .CalendarDay__blocked_out_of_range:active, 
     .CalendarDay__blocked_out_of_range:hover {
-      color: ${p => p.theme.palette.text.disabled} !important;
+      color: ${(p) => p.theme.palette.text.disabled} !important;
       background: unset !important;
     }
     
@@ -165,7 +165,7 @@ export const Wrapper = styled.div`
     }
     
     .DayPickerNavigation_svg__horizontal {
-      fill: ${p => p.theme.colors.primary}
+      fill: ${(p) => p.theme.colors.primary}
     }
     
     .DateRangePickerInput_calendarIcon {
@@ -181,5 +181,5 @@ export const Wrapper = styled.div`
 
 
 export const CalendarIcon = styled(Calendar)`
-  color: ${p => p.theme.colors.primary};
+  color: ${(p) => p.theme.colors.primary};
 `

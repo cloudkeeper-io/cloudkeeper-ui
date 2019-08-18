@@ -15,7 +15,7 @@ export const UserMenu = memo(() => {
   const { signOut } = useContext(UserContext)
 
   const handleClose = useCallback(() => setAnchorEl(null), [setAnchorEl])
-  const handleOpen = useCallback(event => setAnchorEl(event.currentTarget), [setAnchorEl])
+  const handleOpen = useCallback((event) => setAnchorEl(event.currentTarget), [setAnchorEl])
 
   return (
     <Wrapper>

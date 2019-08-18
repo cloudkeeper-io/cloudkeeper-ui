@@ -24,12 +24,12 @@ export const getApolloClient = (getIdToken: () => Promise<string>) => {
     persistor
       .purge()
       // eslint-disable-next-line no-console
-      .catch(err => console.log(`Cache purge error: ${err}`))
+      .catch((err) => console.log(`Cache purge error: ${err}`))
   } else {
     persistor
       .restore()
       // eslint-disable-next-line no-console
-      .catch(err => console.log(`Cache restore error: ${err}`))
+      .catch((err) => console.log(`Cache restore error: ${err}`))
   }
 
   const httpLink = createHttpLink({ uri: getEnvConfig().apolloUri })

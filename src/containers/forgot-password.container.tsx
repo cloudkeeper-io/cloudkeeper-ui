@@ -64,7 +64,7 @@ export default () => {
         <Header>
           Reset your password
         </Header>
-        <Form onSubmit={v => onReset(v as Values)} validate={v => validate(v as Values)}>
+        <Form onSubmit={(v) => onReset(v as Values)} validate={(v) => validate(v as Values)}>
           {({ handleSubmit, pristine, invalid }) => (
             <form onSubmit={handleSubmit}>
               <FormContent>

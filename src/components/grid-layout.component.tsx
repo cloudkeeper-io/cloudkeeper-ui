@@ -7,7 +7,7 @@ import { getTransition, mobileMediaQuery } from '../utils'
 export default styled(ReactGridLayout)`
   position: relative;
   margin-top: -15px;
-  transition: ${p => getTransition(p.theme, ['height'])};
+  transition: ${(p) => getTransition(p.theme, ['height'])};
   @media(max-width: (${mobileMediaQuery})) {
     padding: 0;
   }
@@ -29,9 +29,9 @@ export default styled(ReactGridLayout)`
   }
   
   .react-grid-item.react-grid-placeholder {
-    background: ${p => p.theme.palette.primary.main};
+    background: ${(p) => p.theme.palette.primary.main};
     opacity: 0.2;
-    transition: ${p => getTransition(p.theme, ['all'])};
+    transition: ${(p) => getTransition(p.theme, ['all'])};
     z-index: 2;
     user-select: none;
   }

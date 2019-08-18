@@ -64,7 +64,7 @@ export default memo(({ history }: RegisterProps) => {
   }
 
   return (
-    <Form onSubmit={v => onSignUp(v as Values)} validate={v => validate(v as Values)}>
+    <Form onSubmit={(v) => onSignUp(v as Values)} validate={(v) => validate(v as Values)}>
       {({ handleSubmit, pristine, invalid }) => (
         <StyledForm onSubmit={handleSubmit}>
           <FormContent>

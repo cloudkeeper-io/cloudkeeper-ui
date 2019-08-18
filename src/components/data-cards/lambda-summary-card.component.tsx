@@ -77,8 +77,8 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
   const { dataCard: colors } = theme
   const [tab, setTab] = useSwitchTab(count, tabs.length)
   const unit = tabs[tab]
-  const dataPoints = map(data.dataPoints, x => ({ ...x, value: x[unit] }))
-  const isStraightLine = every(dataPoints, point => point.value === first(dataPoints)!.value)
+  const dataPoints = map(data.dataPoints, (x) => ({ ...x, value: x[unit] }))
+  const isStraightLine = every(dataPoints, (point) => point.value === first(dataPoints)!.value)
 
   return (
     <StyledCard className={className}>
@@ -86,7 +86,7 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
         <Value>
           {formatters[tab](data[unit])}
         </Value>
-        <StepIndicator index={tab} steps={tabs.length} onClick={i => setTab(i)} />
+        <StepIndicator index={tab} steps={tabs.length} onClick={(i) => setTab(i)} />
         <Description>
           {descriptions[tab]}
         </Description>
@@ -98,7 +98,7 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
             stroke={colors.axis}
             tick={{ fontSize: 12 }}
             tickLine={false}
-            tickFormatter={x => DateTime.fromISO(x).toFormat(timeAxisFormat)}
+            tickFormatter={(x) => DateTime.fromISO(x).toFormat(timeAxisFormat)}
           />
           <YAxis
             stroke={colors.axis}

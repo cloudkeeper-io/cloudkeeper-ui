@@ -27,11 +27,11 @@ export const PredefinedDate = styled(({ active, ...props }) => <Typography {...p
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: ${p => p.active && p.theme.colors.primary};
+  color: ${(p) => p.active && p.theme.colors.primary};
   &:hover {
-    color: ${p => p.theme.colors.primary};
+    color: ${(p) => p.theme.colors.primary};
   }
-  transition: ${p => getTransition(p.theme, ['color'])};
+  transition: ${(p) => getTransition(p.theme, ['color'])};
   @media (max-width: 900px) {
     display: none;
   }

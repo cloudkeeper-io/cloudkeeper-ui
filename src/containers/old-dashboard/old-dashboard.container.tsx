@@ -26,7 +26,7 @@ const Hr = styled.div`
   position: relative;
   width: 100%;
   height: 4px;
-  background: ${p => p.theme.dashboard.hr};
+  background: ${(p) => p.theme.dashboard.hr};
   margin-bottom: 30px;
 `
 const CardsWrapper = styled.div`
@@ -93,7 +93,7 @@ export default () => {
   return (
     <Wrapper>
       <StyledTitle>
-        <HeaderTabs tabs={['Last 24h', 'Last 30 days']} selectedIndex={tab} onChange={i => setTab(i)} />
+        <HeaderTabs tabs={['Last 24h', 'Last 30 days']} selectedIndex={tab} onChange={(i) => setTab(i)} />
       </StyledTitle>
       <Hr />
       {tab === 0 && (

@@ -45,11 +45,11 @@ const Input = styled(IconTextField)`
   .MuiInput-root {
     height: 48px;
     padding-left: 8px;
-    background: ${p => p.theme.input.background};
+    background: ${(p) => p.theme.input.background};
   }
   .MuiInputAdornment-root {
     margin: 8px;
-    color: ${p => p.theme.input.iconColor};
+    color: ${(p) => p.theme.input.iconColor};
   }
   .MuiInput-formControl {
     margin-right: 10px;
@@ -114,9 +114,9 @@ export default () => {
         <Header>Security</Header>
         <Title>Change your password</Title>
 
-        <Form onSubmit={v => onSubmit(v as Values)} validate={v => validate(v as Values)}>
+        <Form onSubmit={(v) => onSubmit(v as Values)} validate={(v) => validate(v as Values)}>
           {({ handleSubmit, pristine, invalid, form }) => (
-            <form onSubmit={event => handleSubmit(event)!.then(form.reset)}>
+            <form onSubmit={(event) => handleSubmit(event)!.then(form.reset)}>
               <FormContent>
                 <Field
                   name="password"

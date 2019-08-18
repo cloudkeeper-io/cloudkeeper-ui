@@ -22,8 +22,8 @@ const TabList = styled.div`
 `
 const TabButton = styled(Header)<{ active?: boolean }>`
   position: relative;
-  color: ${p => (p.active ? p.theme.colors.primary : p.theme.colors.text)};
-  opacity: ${p => (p.active ? 1 : 0.7)};
+  color: ${(p) => (p.active ? p.theme.colors.primary : p.theme.colors.text)};
+  opacity: ${(p) => (p.active ? 1 : 0.7)};
   margin: 10px;
   cursor: pointer;
   transition: opacity, font-size 0.6s;
@@ -38,12 +38,12 @@ const TabIndicator = styled.div<{ indicatorWidth: number, indicatorX: number }>`
   position: absolute;
   left: 0;
   bottom: 0;
-  width: ${p => p.indicatorWidth}px;
+  width: ${(p) => p.indicatorWidth}px;
   height: 100%;
-  background: ${p => p.theme.tabs.gradient};
+  background: ${(p) => p.theme.tabs.gradient};
   transition: width 0.6s ease, transform 0.6s ease;
   opacity: 0.1;
-  transform: translateX(${p => p.indicatorX}px);
+  transform: translateX(${(p) => p.indicatorX}px);
 `
 
 interface TabsProps {
@@ -65,7 +65,7 @@ const Tabs = ({ tabs, selectedIndex, onChange, className }: TabsProps) => {
       const activeTab = allTabs[selectedIndex!]
       if (activeTab) {
         const newWidth = activeTab.getBoundingClientRect().width + 20
-        const newX = sum(allTabs.slice(0, selectedIndex).map(x => x.getBoundingClientRect().width + 20))
+        const newX = sum(allTabs.slice(0, selectedIndex).map((x) => x.getBoundingClientRect().width + 20))
         return [newWidth, newX]
       }
     }

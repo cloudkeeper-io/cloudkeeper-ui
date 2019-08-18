@@ -9,35 +9,35 @@ export const SelectWrapper = styled.div`
   .react-select__control, .react-select__control--is-focused {
     background: transparent;
     border-radius: 0;
-    border: 1px solid ${p => p.theme.select.borderColor} !important;;
-    box-shadow: 0 0 4px ${p => p.theme.select.shadow} !important;
+    border: 1px solid ${(p) => p.theme.select.borderColor} !important;;
+    box-shadow: 0 0 4px ${(p) => p.theme.select.shadow} !important;
   }
   .react-select__single-value, .react-select__input, .react-select__menu-notice {
-    color: ${p => p.theme.select.color} !important;
+    color: ${(p) => p.theme.select.color} !important;
   }
   .react-select__menu-list {
-    background: ${p => p.theme.select.listBackground};
-    border: 1px solid ${p => p.theme.select.borderColor};
+    background: ${(p) => p.theme.select.listBackground};
+    border: 1px solid ${(p) => p.theme.select.borderColor};
   }
   .react-select__option {
     &:active {
-      background: ${p => p.theme.select.selectedListBackground};
+      background: ${(p) => p.theme.select.selectedListBackground};
     }
   }
   .react-select__option--is-focused {
-    background: ${p => p.theme.select.focusedListBackground};
+    background: ${(p) => p.theme.select.focusedListBackground};
   }
   .react-select__option--is-selected {
-    background: ${p => p.theme.select.selectedListBackground};
+    background: ${(p) => p.theme.select.selectedListBackground};
   }
   .react-select__placeholder {
-    color: ${p => p.theme.input.placeholder};
+    color: ${(p) => p.theme.input.placeholder};
   }
   .react-select__indicator-separator {
-    background: ${p => p.theme.colors.primary};
+    background: ${(p) => p.theme.colors.primary};
   }
   .react-select__indicator svg path{
-    fill: ${p => p.theme.colors.primary} !important;
+    fill: ${(p) => p.theme.colors.primary} !important;
   }
 `
 

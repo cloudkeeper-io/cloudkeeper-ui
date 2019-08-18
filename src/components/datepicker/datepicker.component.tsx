@@ -36,11 +36,11 @@ export const Datepicker = ({ onDateRangeChanged, startDate, endDate, id }: Datep
         endDateId={`${id}_end_date`}
         weekDayFormat="dd"
         customInputIcon={<CalendarIcon />}
-        onDatesChange={range => onDateRangeChanged(range)}
+        onDatesChange={(range) => onDateRangeChanged(range)}
         initialVisibleMonth={() => moment().subtract(1, 'M')}
         focusedInput={focusedInput}
-        onFocusChange={newFocusedInput => setFocusedInput(newFocusedInput)}
-        isOutsideRange={date => date.isAfter(moment(), 'day')}
+        onFocusChange={(newFocusedInput) => setFocusedInput(newFocusedInput)}
+        isOutsideRange={(date) => date.isAfter(moment(), 'day')}
         customArrowIcon={<span>&mdash;</span>}
         displayFormat="D MMM YYYY"
         minimumNights={0}

@@ -59,7 +59,7 @@ export const Title = styled.div`
   margin-top: 30px;
   text-align: center;
   padding: 0 20px;
-  color: ${p => p.theme.login.headerColor};
+  color: ${(p) => p.theme.login.headerColor};
 `
 export const MainCard = styled(Card)`
   display: flex;
@@ -96,9 +96,9 @@ export const SwitchWrapper = styled.div<{ isLogin: boolean }>`
   position: absolute;
   width: 810px;
   height: 100%;
-  background: url("${p => p.theme.login.background}") center center;
+  background: url("${(p) => p.theme.login.background}") center center;
   background-size: cover;
-  clip-path: ${p => (p.isLogin ?
+  clip-path: ${(p) => (p.isLogin ?
     'polygon(0 0, 330px 0, 330px 100%, 0 100%)' :
     'polygon(490px 0, 100% 0, 100% 100%, 490px 100%)')};
   transition: clip-path ${transitionTime};
@@ -115,7 +115,7 @@ export const SwitchContent = styled.div<{ isLogin: boolean }>`
   justify-content: center;
   width: 330px;
   height: 100%;
-  left: ${p => (p.isLogin ? 0 : '490px')};
+  left: ${(p) => (p.isLogin ? 0 : '490px')};
   transition: left ${transitionTime};
   z-index: 30;
 `
@@ -123,9 +123,9 @@ export const LeftContent = styled.div<{ isLogin: boolean }>`
   position: absolute;
   width: 480px;
   height: 100%;
-  left: ${p => (p.isLogin ? '330px' : '0')};
-  opacity: ${p => (p.isLogin ? '0' : '1')};
-  z-index: ${p => (p.isLogin ? '-1' : '10')};
+  left: ${(p) => (p.isLogin ? '330px' : '0')};
+  opacity: ${(p) => (p.isLogin ? '0' : '1')};
+  z-index: ${(p) => (p.isLogin ? '-1' : '10')};
   overflow: hidden;
   transition: left ${transitionTime}, z-index ${transitionTime}, opacity ${shortTime};
   @media (max-width: 900px) {
@@ -138,9 +138,9 @@ export const LeftContent = styled.div<{ isLogin: boolean }>`
 export const RightContent = styled.div<{ isLogin: boolean }>`
   position: absolute;
   width: 480px;
-  left: ${p => (p.isLogin ? '330px' : '0')};
-  opacity: ${p => (p.isLogin ? '1' : '0')};
-  z-index: ${p => (p.isLogin ? '10' : '-1')};
+  left: ${(p) => (p.isLogin ? '330px' : '0')};
+  opacity: ${(p) => (p.isLogin ? '1' : '0')};
+  z-index: ${(p) => (p.isLogin ? '10' : '-1')};
   transition: left ${transitionTime}, z-index ${transitionTime}, opacity ${shortTime};
   @media (max-width: 900px) {
     top: 50px;

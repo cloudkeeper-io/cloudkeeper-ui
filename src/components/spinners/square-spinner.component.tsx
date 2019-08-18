@@ -37,16 +37,16 @@ const getDelay = (cubeIndex: number) => {
 }
 
 const Wrapper = styled.div<{ size: number }>`
-  width: ${p => `${p.size}px`};
-  height: ${p => `${p.size}px`};
+  width: ${(p) => `${p.size}px`};
+  height: ${(p) => `${p.size}px`};
 `
 const Cube = styled.div<{ index: number, color: string }>`
   width: 33%;
   height: 33%;
-  background: ${p => p.color || p.theme.colors.primary};
+  background: ${(p) => p.color || p.theme.colors.primary};
   float: left;
   animation: ${gridScale} 1.3s infinite ease-in-out; 
-  animation-delay: ${p => getDelay(p.index)};
+  animation-delay: ${(p) => getDelay(p.index)};
 `
 
 interface SquareSpinnerProps {
@@ -58,6 +58,6 @@ interface SquareSpinnerProps {
 
 export default ({ size = 50, color = '', className }: SquareSpinnerProps) => (
   <Wrapper className={className} size={size}>
-    {times(9, index => <Cube key={index} index={index} color={color} />)}
+    {times(9, (index) => <Cube key={index} index={index} color={color} />)}
   </Wrapper>
 )

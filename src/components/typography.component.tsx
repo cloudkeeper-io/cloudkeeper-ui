@@ -8,13 +8,13 @@ export const Title = styled.div`
   font-size: 18px;
   line-height: 24px;
   margin: 5px 0;
-  color: ${p => p.theme.palette.text.primary};
+  color: ${(p) => p.theme.palette.text.primary};
 `
 export const Text = styled.div`
   font-size: 14px;
   line-height: 21px;
-  color: ${p => p.theme.colors.text};
+  color: ${(p) => p.theme.colors.text};
 `
 export const AccentText = styled.span`
-  color: ${p => p.theme.colors.primary};
+  color: ${(p) => p.theme.colors.primary};
 `

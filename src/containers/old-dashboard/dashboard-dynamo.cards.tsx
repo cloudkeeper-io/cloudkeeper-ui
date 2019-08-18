@@ -16,13 +16,13 @@ export const DynamoGraphs = memo(({ data, timeAxisFormat }: GraphsProps) => (
       dynamoHeader="Most Read Table"
       units={[{ label: 'consumed', value: 'consumedRead' }, { label: 'provisioned', value: 'provisionedRead' }]}
       data={data.mostReadTables}
-      summaryFormatter={x => `${x.consumedRead!.toLocaleString('ru')} read units`}
-      yAxisFormatter={x => formatNumber(x)}
-      tooltipFormatter={x => Number(x).toLocaleString()}
+      summaryFormatter={(x) => `${x.consumedRead!.toLocaleString('ru')} read units`}
+      yAxisFormatter={(x) => formatNumber(x)}
+      tooltipFormatter={(x) => Number(x).toLocaleString()}
       timeAxisFormat={timeAxisFormat}
       dynamoInfo={[
-        { unit: 'consumedRead', text: 'total', valueFn: x => x.toLocaleString('ru') },
-        { unit: 'averageConsumedRead', text: 'average', valueFn: x => `${round(x, 2).toLocaleString('en')}/s` },
+        { unit: 'consumedRead', text: 'total', valueFn: (x) => x.toLocaleString('ru') },
+        { unit: 'averageConsumedRead', text: 'average', valueFn: (x) => `${round(x, 2).toLocaleString('en')}/s` },
       ]}
     />
     <TopDynamoCard
@@ -30,13 +30,13 @@ export const DynamoGraphs = memo(({ data, timeAxisFormat }: GraphsProps) => (
       dynamoHeader="Most Written Table"
       units={[{ label: 'consumed', value: 'consumedWrite' }, { label: 'provisioned', value: 'provisionedWrite' }]}
       data={data.mostWritesTables}
-      summaryFormatter={x => `${x.consumedWrite!.toLocaleString('ru')} write units`}
-      yAxisFormatter={x => formatNumber(x)}
-      tooltipFormatter={x => Number(x).toLocaleString()}
+      summaryFormatter={(x) => `${x.consumedWrite!.toLocaleString('ru')} write units`}
+      yAxisFormatter={(x) => formatNumber(x)}
+      tooltipFormatter={(x) => Number(x).toLocaleString()}
       timeAxisFormat={timeAxisFormat}
       dynamoInfo={[
-        { unit: 'consumedWrite', text: 'total', valueFn: x => x.toLocaleString('ru') },
-        { unit: 'averageConsumedWrite', text: 'average', valueFn: x => `${round(x, 2).toLocaleString('en')}/s` },
+        { unit: 'consumedWrite', text: 'total', valueFn: (x) => x.toLocaleString('ru') },
+        { unit: 'averageConsumedWrite', text: 'average', valueFn: (x) => `${round(x, 2).toLocaleString('en')}/s` },
       ]}
     />
     <TopDynamoCard
@@ -47,13 +47,13 @@ export const DynamoGraphs = memo(({ data, timeAxisFormat }: GraphsProps) => (
         { label: 'throttled writes', value: 'throttledWrites' },
       ]}
       data={data.mostThrottledTables}
-      summaryFormatter={x => `${x.throttledRequests!.toLocaleString('ru')} throttled requests`}
-      yAxisFormatter={x => formatNumber(x)}
-      tooltipFormatter={x => Number(x).toLocaleString()}
+      summaryFormatter={(x) => `${x.throttledRequests!.toLocaleString('ru')} throttled requests`}
+      yAxisFormatter={(x) => formatNumber(x)}
+      tooltipFormatter={(x) => Number(x).toLocaleString()}
       timeAxisFormat={timeAxisFormat}
       dynamoInfo={[
-        { unit: 'throttledReads', text: 'throttled reads', valueFn: x => x.toLocaleString('ru') },
-        { unit: 'throttledWrites', text: 'throttled writes', valueFn: x => x.toLocaleString('ru') },
+        { unit: 'throttledReads', text: 'throttled reads', valueFn: (x) => x.toLocaleString('ru') },
+        { unit: 'throttledWrites', text: 'throttled writes', valueFn: (x) => x.toLocaleString('ru') },
       ]}
     />
     <TopDynamoCard
@@ -61,13 +61,13 @@ export const DynamoGraphs = memo(({ data, timeAxisFormat }: GraphsProps) => (
       dynamoHeader="Most Expensive Table"
       units={[{ label: 'read price', value: 'readPrice' }, { label: 'write price', value: 'writePrice' }]}
       data={data.mostExpensiveTables}
-      summaryFormatter={x => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
-      yAxisFormatter={x => `$ ${formatNumber(x)}`}
-      tooltipFormatter={x => `$ ${Number(x).toLocaleString()}`}
+      summaryFormatter={(x) => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
+      yAxisFormatter={(x) => `$ ${formatNumber(x)}`}
+      tooltipFormatter={(x) => `$ ${Number(x).toLocaleString()}`}
       timeAxisFormat={timeAxisFormat}
       dynamoInfo={[
-        { unit: 'readPrice', text: 'read price', valueFn: x => `$ ${x.toLocaleString('en')}` },
-        { unit: 'writePrice', text: 'write price', valueFn: x => `$ ${x.toLocaleString('en')}` },
+        { unit: 'readPrice', text: 'read price', valueFn: (x) => `$ ${x.toLocaleString('en')}` },
+        { unit: 'writePrice', text: 'write price', valueFn: (x) => `$ ${x.toLocaleString('en')}` },
       ]}
     />
   </>

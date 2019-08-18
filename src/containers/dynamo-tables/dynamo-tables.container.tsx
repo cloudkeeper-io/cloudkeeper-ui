@@ -85,19 +85,18 @@ export default ({ tenants }: DashboardProps) => {
         title="DynamoDB Tables"
         startDate={startDate}
         endDate={endDate}
-        onDateRangeChanged={range => setDateRange(range)}
+        onDateRangeChanged={(range) => setDateRange(range)}
       />
       <SearchWrapper>
         <Input
           placeholder="Search"
-          onChange={event => setFilterInput(event.target.value)}
+          onChange={(event) => setFilterInput(event.target.value)}
         />
       </SearchWrapper>
       <StyledCard>
         {loading && <Loading height="calc(100vh - 300px)" />}
         {!loading && data && data.dynamoTablesList &&
-          <DynamoTablesList tables={data.dynamoTablesList} filterInput={filterInput} />
-        }
+          <DynamoTablesList tables={data.dynamoTablesList} filterInput={filterInput} />}
       </StyledCard>
     </Wrapper>
   )

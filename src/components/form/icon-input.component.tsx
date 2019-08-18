@@ -18,7 +18,7 @@ const StyledIcon = styled(Icon)`
   left: 15px;
   transform: translate(0, -50%);
   fill: none !important;
-  stroke: ${p => p.theme.input.iconColor};
+  stroke: ${(p) => p.theme.input.iconColor};
 `
 
 interface IconInputProps extends React.InputHTMLAttributes<HTMLInputElement> {

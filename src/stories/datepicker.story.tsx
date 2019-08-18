@@ -20,7 +20,7 @@ const DatepickerDemo = () => {
         id="storybook_datepicker"
         startDate={startDate}
         endDate={endDate}
-        onDateRangeChanged={range => setDateRange(range)}
+        onDateRangeChanged={(range) => setDateRange(range)}
       />
     </Wrapper>
   )
