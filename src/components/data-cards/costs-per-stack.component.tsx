@@ -165,7 +165,6 @@ export const CostsPerStack = memo(({ data }: CostsPerStackProps) => {
 
   const orderedDataKeys = take(orderBy(map(dataKeys, (cost, name) => ({ cost, name })), 'cost', 'desc'), 5)
 
-
   return (
     <div ref={wrapperRef}>
       <Title variant="h5">Costs Per Stack</Title>
@@ -193,8 +192,8 @@ export const CostsPerStack = memo(({ data }: CostsPerStackProps) => {
                   cornerRadius={10}
                   onMouseEnter={(d, index) => setActiveIndex(index)}
                 >
-                  {data.map((x, index) => (
-                    <Cell key={index} fill={COLORS[index]} />
+                  {map(orderedDataKeys, (x, index) => (
+                    <Cell key={x.name} fill={COLORS[index]} />
                   ))}
                 </Pie>
               </PieChart>

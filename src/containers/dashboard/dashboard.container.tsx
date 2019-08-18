@@ -119,8 +119,6 @@ export default () => {
     )
   }
 
-  console.log(123123)
-
   return (
     <Wrapper ref={wrapperRef}>
       <HeaderWrapper>
