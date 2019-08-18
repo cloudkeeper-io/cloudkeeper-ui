@@ -103,7 +103,7 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
         }
       })
     } else {
-      setTawkUserDetails(undefined, undefined, undefined)
+      setTawkUserDetails()
     }
   }, [generateUserHash, user])
 
