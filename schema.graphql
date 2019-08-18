@@ -224,6 +224,7 @@ type MostWritesTableDataPoint {
 type Mutation {
   createTenant(name: String!): Tenant
   deleteTenant(id: String!): Tenant
+  generateTawkUserHash: String
   setupTenant(roleArn: String!, tenantId: String!): IntegrationData
 }
 

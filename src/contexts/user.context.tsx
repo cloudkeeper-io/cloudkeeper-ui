@@ -1,6 +1,7 @@
 import React, { useState, memo, useEffect, useMemo, useCallback } from 'react'
 import * as firebase from 'firebase/app'
-import { ApolloProvider } from 'react-apollo'
+import get from 'lodash/get'
+import { ApolloProvider, useMutation } from 'react-apollo'
 import { History } from 'history'
 import ApolloClient from 'apollo-client'
 import noop from 'lodash/noop'
@@ -9,6 +10,8 @@ import 'firebase/firestore'
 
 import { getFirebaseConfig, getApolloClient } from '../configs'
 import { setUserId } from '../utils/amplitude'
+import { generateTawkUserHash } from '../graphql/mutations'
+import { setTawkUserDetails } from '../utils/tawk.util'
 
 firebase.initializeApp(getFirebaseConfig())
 
@@ -84,6 +87,25 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
   }), [])
 
   const client = useMemo(() => getApolloClient(async () => (user ? user!.getIdToken() : '')), [user])
+
+  const [generateUserHash] = useMutation(generateTawkUserHash, { client })
+
+  useEffect(() => {
+    if (user) {
+      generateUserHash().then((response) => {
+        const hash = get(response, 'data.generateTawkUserHash')
+
+        if (hash) {
+          const email = user.email || get(user, 'providerData.0.email')
+          setTawkUserDetails(email, hash, {
+            userId: user.uid,
+          })
+        }
+      })
+    } else {
+      setTawkUserDetails(undefined, undefined, undefined)
+    }
+  }, [generateUserHash, user])
 
   const updatePassword = useCallback(async (password: string, newPassword: string) => {
     if (user && user.providerId === 'firebase') {
