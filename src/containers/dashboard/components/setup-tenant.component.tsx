@@ -131,7 +131,7 @@ export default (({ tenant }: SetupTenantProps) => {
       <Content>
         <Mutation mutation={setupTenantMutation} update={update}>
           {(mutation: any) => (
-            <Form onSubmit={v => onSubmit(v as Values, mutation)} validate={v => validate(v as Values)}>
+            <Form onSubmit={(v) => onSubmit(v as Values, mutation)} validate={(v) => validate(v as Values)}>
               {({ handleSubmit, pristine, invalid }) => (
                 <form onSubmit={handleSubmit}>
                   <Title>Now install cloudkeeper to your AWS account</Title>

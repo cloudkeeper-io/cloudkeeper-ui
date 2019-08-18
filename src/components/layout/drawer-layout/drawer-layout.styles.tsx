@@ -20,10 +20,10 @@ export const Wrapper = styled.div`
   display: flex;
 `
 export const AppBar = styled(MaterialAppBar)<{ open: boolean }>`
-  width: ${p => (p.open ? `calc(100% - ${drawerWidth}px)` : `calc(100% - ${smallDrawerWidth}px)`)};
-  margin-left: ${p => (p.open ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
-  transition: ${p => getTransition(p.theme, ['width', 'margin'])};
-  background: ${p => p.theme.colors.background};
+  width: ${(p) => (p.open ? `calc(100% - ${drawerWidth}px)` : `calc(100% - ${smallDrawerWidth}px)`)};
+  margin-left: ${(p) => (p.open ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
+  transition: ${(p) => getTransition(p.theme, ['width', 'margin'])};
+  background: ${(p) => p.theme.colors.background};
   @media (${mobileMediaQuery}) {
     width: 100%;
     margin-left: 0;
@@ -31,13 +31,13 @@ export const AppBar = styled(MaterialAppBar)<{ open: boolean }>`
 `
 export const Drawer = styled(({ expanded, ...props }) => <MaterialDrawer {...props} />)<{ expanded: boolean }>`
   .MuiPaper-root {
-    width: ${p => (p.expanded ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
-    background: ${p => p.theme.drawer.background};
+    width: ${(p) => (p.expanded ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
+    background: ${(p) => p.theme.drawer.background};
     color: white;
     overflow-x: hidden;
     flex-shrink: 0;
     white-space: nowrap;
-    transition: ${p => getTransition(p.theme, ['width'])};
+    transition: ${(p) => getTransition(p.theme, ['width'])};
     border: none;
     .MuiSvgIcon-root, .MuiTypography-root {
       color: white;
@@ -58,19 +58,19 @@ export const Logo = styled(SvgLogo)`
 `
 export const FullLogo = styled(({ expanded, ...props }) => <SvgFullLogo {...props} />)<{ expanded: boolean }>`
   position: relative;
-  left: ${p => (p.expanded ? '0' : '-30px')};
+  left: ${(p) => (p.expanded ? '0' : '-30px')};
   width: ${drawerWidth}px;
   height: 50px;
   padding: 0 40px;
   margin: 20px 0 0 0;
   cursor: pointer;
-  transition: ${p => getTransition(p.theme, ['left'])};
+  transition: ${(p) => getTransition(p.theme, ['left'])};
   @media (${mobileMediaQuery}) {
     left: 0;
   }
   .logo-text {
-    opacity: ${p => (p.expanded ? 1 : 0)};
-    transition: ${p => getTransition(p.theme, ['opacity'])};
+    opacity: ${(p) => (p.expanded ? 1 : 0)};
+    transition: ${(p) => getTransition(p.theme, ['opacity'])};
     @media (${mobileMediaQuery}) {
       opacity: 1;
     }
@@ -78,12 +78,12 @@ export const FullLogo = styled(({ expanded, ...props }) => <SvgFullLogo {...prop
 `
 export const Hr = styled.div<{ expanded: boolean }>`
   position: relative;
-  left: ${p => (p.expanded ? '0' : '-30px')};
-  width: ${p => (p.expanded ? 'calc(100% - 80px)' : 'calc(100% - 20px)')};
+  left: ${(p) => (p.expanded ? '0' : '-30px')};
+  width: ${(p) => (p.expanded ? 'calc(100% - 80px)' : 'calc(100% - 20px)')};
   height: 2px;
   margin: 0 40px 20px 40px;
   background: white;
-  transition: ${p => getTransition(p.theme, ['width', 'left'])};
+  transition: ${(p) => getTransition(p.theme, ['width', 'left'])};
   @media (${mobileMediaQuery}) {
     left: 0;
     width: calc(100% - 80px);
@@ -98,18 +98,18 @@ export const ArrowWrapper = styled(Toolbar)`
   padding: 0 6px;
 `
 export const ArrowIcon = styled(({ expanded, ...props }) => <ChevronLeft {...props} />)<{ expanded: boolean }>`
-  transform: rotate(${p => (p.expanded ? 0 : '540deg')});
-  transition: ${p => getTransition(p.theme, ['all'])} !important;
-  color: ${p => p.theme.palette.common.white}
+  transform: rotate(${(p) => (p.expanded ? 0 : '540deg')});
+  transition: ${(p) => getTransition(p.theme, ['all'])} !important;
+  color: ${(p) => p.theme.palette.common.white}
 `
 export const Content = styled.main<{ expanded: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: ${p => (p.expanded ? `calc(100% - ${drawerWidth}px)` : `calc(100% - ${smallDrawerWidth}px)`)};
+  width: ${(p) => (p.expanded ? `calc(100% - ${drawerWidth}px)` : `calc(100% - ${smallDrawerWidth}px)`)};
   min-height: 100vh;
-  margin-left: ${p => (p.expanded ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
-  transition: ${p => getTransition(p.theme, ['width', 'margin'])};
+  margin-left: ${(p) => (p.expanded ? `${drawerWidth}px` : `${smallDrawerWidth}px`)};
+  transition: ${(p) => getTransition(p.theme, ['width', 'margin'])};
   @media (${mobileMediaQuery}) {
     width: 100%;
     margin-left: 0;
@@ -129,14 +129,14 @@ export const RightAppBarItem = styled.div`
 `
 export const ListItem = styled(({ active, ...props }) => <MaterialListItem {...props} />)<{ active?: boolean }>`
   min-height: 55px;
-  background: ${p => (p.active ? 'rgba(240, 247, 255, 0.3)' : '')};
-  border-left: ${p => (p.active ? `4px solid ${p.theme.colors.activeText}` : '4px solid transparent')};
-  color: ${p => (p.active ? p.theme.colors.activeText : '')};
+  background: ${(p) => (p.active ? 'rgba(240, 247, 255, 0.3)' : '')};
+  border-left: ${(p) => (p.active ? `4px solid ${p.theme.colors.activeText}` : '4px solid transparent')};
+  color: ${(p) => (p.active ? p.theme.colors.activeText : '')};
   .MuiTypography-root, .MuiListItemText-root {
-    color: ${p => (p.active ? p.theme.colors.activeText : '')} !important;
-    transition: ${p => getTransition(p.theme, ['opacity', 'color'])};
+    color: ${(p) => (p.active ? p.theme.colors.activeText : '')} !important;
+    transition: ${(p) => getTransition(p.theme, ['opacity', 'color'])};
   }
-  transition: ${p => getTransition(p.theme, ['border-left', 'color'])};
+  transition: ${(p) => getTransition(p.theme, ['border-left', 'color'])};
 `
 
 interface StyledListItemTextProps extends ListItemTextProps {isExpanded: boolean}
@@ -144,8 +144,8 @@ interface StyledListItemTextProps extends ListItemTextProps {isExpanded: boolean
 export const ListItemText = styled(
   ({ isExpanded, ...props }) => <MaterialListItemText {...props} />,
 )<StyledListItemTextProps>`
-  opacity: ${p => (p.isExpanded ? 1 : 0)};
-  transition: ${p => getTransition(p.theme, ['opacity'])};
+  opacity: ${(p) => (p.isExpanded ? 1 : 0)};
+  transition: ${(p) => getTransition(p.theme, ['opacity'])};
   .MuiListItemText-primary {
     font-weight: 500;
   }

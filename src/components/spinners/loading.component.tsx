@@ -4,7 +4,7 @@ import { CircularProgress } from '@material-ui/core'
 
 const SpinnerWrapper = styled.div<{ height?: string }>`
   width: 100%;
-  height: ${p => p.height || '100vh'};
+  height: ${(p) => p.height || '100vh'};
   display: flex;
   justify-content: center;
   align-items: center;

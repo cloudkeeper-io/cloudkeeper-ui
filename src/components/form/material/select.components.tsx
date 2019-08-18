@@ -20,7 +20,7 @@ const StyledFormControl = styled(FormControl)`
   margin: 20px 0 10px 0;
   
   fieldset {
-   border-style: ${p => (p.disabled ? 'dashed' : '')}
+   border-style: ${(p) => (p.disabled ? 'dashed' : '')}
   }
   legend {
     width: 0 !important;

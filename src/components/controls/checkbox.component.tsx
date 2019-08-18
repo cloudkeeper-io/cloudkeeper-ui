@@ -9,7 +9,7 @@ const ControlIndicator = styled.div`
   left: 0;
   min-height: 15px;
   min-width: 15px;
-  border: 1px solid ${p => p.theme.controls.color};
+  border: 1px solid ${(p) => p.theme.controls.color};
   border-radius: 2px;
   transform: translateY(-50%);
   transition: all 0.3s;
@@ -22,7 +22,7 @@ const ControlIndicator = styled.div`
     top: 2px;
     width: 3px;
     height: 7px;
-    border: solid ${p => p.theme.controls.secondaryActiveColor};
+    border: solid ${(p) => p.theme.controls.secondaryActiveColor};
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
   }

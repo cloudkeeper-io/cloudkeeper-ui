@@ -31,7 +31,7 @@ const Overlay = styled.div`
 
 const TenantLink = styled(Link)`
   text-decoration: underline;
-  color: ${p => p.theme.colors.text};
+  color: ${(p) => p.theme.colors.text};
 `
 
 const DeleteButton = styled(Button)`
@@ -44,7 +44,7 @@ const AddButton = styled(Button)`
 `
 
 const Status = styled.span<{ active: boolean }>`
-    ${p => (p.active ? p.theme.table.status.completed : p.theme.table.status.notCompleted)};
+    ${(p) => (p.active ? p.theme.table.status.completed : p.theme.table.status.notCompleted)};
 `
 
 export default memo(() => {
@@ -96,7 +96,7 @@ export default memo(() => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {map(tenants, tenant => (
+          {map(tenants, (tenant) => (
             <TableRow key={tenant.id} style={{ height: 65 }}>
               <TableCell component="th" scope="row">
                 <TenantLink to={`/tenant/${tenant.id}`}>{tenant.name}</TenantLink>

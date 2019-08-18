@@ -5,8 +5,8 @@ import { lighten } from 'polished'
 const Label = styled.label<{ disabled: boolean }>`
   display: flex;
   align-items: center;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-  color: ${props => (props.disabled ? 'grey' : 'black')};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  color: ${(props) => (props.disabled ? 'grey' : 'black')};
 `
 
 const ControlIndicator = styled.div<{ disabled: boolean }>`
@@ -42,7 +42,7 @@ const ControlIndicator = styled.div<{ disabled: boolean }>`
     left: 0;
     width: 20px;
     height: 20px;
-    background-color: ${p => (p.disabled ? 'grey' : '#FAFAFA')};
+    background-color: ${(p) => (p.disabled ? 'grey' : '#FAFAFA')};
     border-radius: 50%;
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
   }
@@ -52,14 +52,14 @@ const Input = styled.input`
   display: none;
 
   &:checked + ${ControlIndicator}:after {
-    background-color: ${p => p.theme.colors.primary};
+    background-color: ${(p) => p.theme.colors.primary};
     -ms-transform: translate(80%, -50%);
     -webkit-transform: translate(80%, -50%);
     transform: translate(80%, -50%);
   }
 
   &:checked + ${ControlIndicator}:before {
-    background-color: ${p => lighten(0.35, p.theme.colors.primary)};
+    background-color: ${(p) => lighten(0.35, p.theme.colors.primary)};
   }
 `
 const Wrapper = styled.div``

@@ -9,29 +9,29 @@ export default styled.button<{ isLoading?: boolean, background?: string, color?:
   width: 170px;
   height: 48px;
 
-  background: ${p => (p.disabled ? p.theme.buttons.primary.disabled : p.background || p.theme.buttons.primary.background)};
+  background: ${(p) => (p.disabled ? p.theme.buttons.primary.disabled : p.background || p.theme.buttons.primary.background)};
   box-sizing: border-box;
-  border-radius: ${p => p.theme.buttons.borderRadius};
+  border-radius: ${(p) => p.theme.buttons.borderRadius};
   border: none;
-  color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.color || p.theme.buttons.primary.color)};
+  color: ${(p) => (p.disabled ? p.theme.buttons.primary.disabledText : p.color || p.theme.buttons.primary.color)};
   font-weight: 500;
   font-size: 16px;
-  clip-path: ${p => p.theme.buttons.clipPath};
+  clip-path: ${(p) => p.theme.buttons.clipPath};
   transition: 0.5s background;
-  box-shadow: ${p => (p.disabled ? '' : p.theme.buttons.primary.boxShadow)};
+  box-shadow: ${(p) => (p.disabled ? '' : p.theme.buttons.primary.boxShadow)};
   ${FaIcon} {
-    color: ${p => (p.disabled ? p.theme.buttons.primary.disabledText : p.color || p.theme.buttons.primary.color)};
+    color: ${(p) => (p.disabled ? p.theme.buttons.primary.disabledText : p.color || p.theme.buttons.primary.color)};
   }
   &:focus {
    outline: none;
   }
   &:hover {
-   background:  ${p => (p.disabled ? p.theme.buttons.primary.disabled : opacify(1, p.background || p.theme.buttons.primary.background))};
+   background:  ${(p) => (p.disabled ? p.theme.buttons.primary.disabled : opacify(1, p.background || p.theme.buttons.primary.background))};
   }
   &::-moz-focus-inner {
     border: 0;
   }
-   ${props => (props.isLoading ? css`
+   ${(props) => (props.isLoading ? css`
     position: relative;
     color: transparent;
     transition: none;

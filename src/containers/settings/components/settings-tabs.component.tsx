@@ -8,9 +8,9 @@ import TenantsTable from './tenants/tenants-table.component'
 import SecuritySettings from './security-settings.component'
 
 const Wrapper = styled.div`
-  background: ${p => p.theme.card.background};
-  border-radius: ${p => p.theme.card.borderRadius};
-  box-shadow:  ${p => p.theme.card.shadow};
+  background: ${(p) => p.theme.card.background};
+  border-radius: ${(p) => p.theme.card.borderRadius};
+  box-shadow:  ${(p) => p.theme.card.shadow};
   overflow-x: auto;
 `
 const TabsHeader = styled(Tabs)`
@@ -18,12 +18,12 @@ const TabsHeader = styled(Tabs)`
   flex-direction: row;
   align-items: stretch;
   width: 100%;
-  background-color: ${p => p.theme.tabs.backgroundColor};
-  border-radius: ${p => p.theme.tabs.borderRadius};
+  background-color: ${(p) => p.theme.tabs.backgroundColor};
+  border-radius: ${(p) => p.theme.tabs.borderRadius};
 
   .Mui-selected {
-    background-color: ${p => p.theme.tabs.selected.backgroundColor};
-    color: ${p => p.theme.tabs.selected.color};
+    background-color: ${(p) => p.theme.tabs.selected.backgroundColor};
+    color: ${(p) => p.theme.tabs.selected.color};
     font-weight: bold;
   }
   .MuiTabs-indicator {
@@ -42,7 +42,7 @@ const TabsHeader = styled(Tabs)`
 `
 const SettingsTab = styled(Tab)`
   flex: 1;
-  border-radius: ${p => p.theme.tabs.borderRadius};
+  border-radius: ${(p) => p.theme.tabs.borderRadius};
   .MuiTab-root {
     max-width: none;
   }

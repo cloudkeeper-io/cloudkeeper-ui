@@ -86,12 +86,12 @@ export default ({ tenants }: DashboardProps) => {
         title="Lambdas"
         startDate={startDate}
         endDate={endDate}
-        onDateRangeChanged={range => setDateRange(range)}
+        onDateRangeChanged={(range) => setDateRange(range)}
       />
       <SearchWrapper>
         <Input
           placeholder="Search"
-          onChange={event => setFilterInput(event.target.value)}
+          onChange={(event) => setFilterInput(event.target.value)}
         />
       </SearchWrapper>
       <StyledCard>

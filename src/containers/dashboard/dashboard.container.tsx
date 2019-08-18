@@ -22,6 +22,7 @@ import { DateRange } from '../../components/datepicker/datepicker.component'
 import { CostsPerService } from '../../components/data-cards/costs-per-service.component'
 import { CostsPerStack } from '../../components/data-cards/costs-per-stack.component'
 import { EventsCard } from '../../components/data-cards/events-card.component'
+import { TrendsCard } from '../../components/data-cards/trends-card.component'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -118,6 +119,8 @@ export default () => {
     )
   }
 
+  console.log(123123)
+
   return (
     <Wrapper ref={wrapperRef}>
       <HeaderWrapper>
@@ -125,7 +128,7 @@ export default () => {
           title="Dashboard"
           startDate={startDate}
           endDate={endDate}
-          onDateRangeChanged={range => setDateRange(range)}
+          onDateRangeChanged={(range) => setDateRange(range)}
         />
       </HeaderWrapper>
       {(width > 0) && (
@@ -144,13 +147,17 @@ export default () => {
               dynamoHeader="Most Read Table"
               units={[{ label: 'consumed', value: 'consumedRead' }, { label: 'provisioned', value: 'provisionedRead' }]}
               data={data!.dynamoData!.last30Days!.mostReadTables! as any}
-              summaryFormatter={x => `${x.consumedRead!.toLocaleString('ru')} read units`}
-              yAxisFormatter={x => formatNumber(x)}
-              tooltipFormatter={x => Number(x).toLocaleString()}
+              summaryFormatter={(x) => `${x.consumedRead!.toLocaleString('ru')} read units`}
+              yAxisFormatter={(x) => formatNumber(x)}
+              tooltipFormatter={(x) => Number(x).toLocaleString()}
               timeAxisFormat="LLL d"
               dynamoInfo={[
-                { unit: 'consumedRead', text: 'total', valueFn: x => x.toLocaleString('ru') },
-                { unit: 'averageConsumedRead', text: 'average', valueFn: x => `${round(x, 2).toLocaleString('en')}/s` },
+                { unit: 'consumedRead', text: 'total', valueFn: (x) => x.toLocaleString('ru') },
+                {
+                  unit: 'averageConsumedRead',
+                  text: 'average',
+                  valueFn: (x) => `${round(x, 2).toLocaleString('en')}/s`,
+                },
               ]}
             />
           </Card>
@@ -160,13 +167,13 @@ export default () => {
               dynamoHeader="Most Expensive Table"
               units={[{ label: 'read price', value: 'readPrice' }, { label: 'write price', value: 'writePrice' }]}
               data={data!.dynamoData!.last30Days!.mostExpensiveTables as any}
-              summaryFormatter={x => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
-              yAxisFormatter={x => `$ ${formatNumber(x)}`}
-              tooltipFormatter={x => `$ ${Number(x).toLocaleString()}`}
+              summaryFormatter={(x) => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
+              yAxisFormatter={(x) => `$ ${formatNumber(x)}`}
+              tooltipFormatter={(x) => `$ ${Number(x).toLocaleString()}`}
               timeAxisFormat="LLL d"
               dynamoInfo={[
-                { unit: 'readPrice', text: 'read price', valueFn: x => `$ ${x.toLocaleString('en')}` },
-                { unit: 'writePrice', text: 'write price', valueFn: x => `$ ${x.toLocaleString('en')}` },
+                { unit: 'readPrice', text: 'read price', valueFn: (x) => `$ ${x.toLocaleString('en')}` },
+                { unit: 'writePrice', text: 'write price', valueFn: (x) => `$ ${x.toLocaleString('en')}` },
               ]}
             />
           </Card>
@@ -179,7 +186,9 @@ export default () => {
           <Card key="4">
             <CostsPerStack data={data!.costsData!.costsPerStack!} />
           </Card>
-          <Card key="5">5</Card>
+          <Card key="5">
+            <TrendsCard />
+          </Card>
         </ReactGridLayout>
       )}
     </Wrapper>

@@ -33,7 +33,7 @@ const LegendItem = styled.div`
 const LegendCell = styled.div<{ color: string }>`
   width: 12px;
   height: 12px;
-  background-color: ${p => p.color};
+  background-color: ${(p) => p.color};
   border-radius: 50%;
 `
 const LegendText = styled.div`
@@ -52,7 +52,7 @@ export const CostsPerService = memo(({ data }: CostsPerServiceProps) => {
   const COLORS = colors.seriesColors
 
   const formattedData = compact(map(data, (x) => {
-    const pairs = map(x.serviceCosts, service => [service.serviceName, service.unblendedCost])
+    const pairs = map(x.serviceCosts, (service) => [service.serviceName, service.unblendedCost])
 
     if (isEmpty(pairs)) {
       return null
@@ -83,7 +83,7 @@ export const CostsPerService = memo(({ data }: CostsPerServiceProps) => {
           margin={{ top: 15, right: 30, left: 0, bottom: 0 }}
         >
           <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
-          <XAxis dataKey="date" stroke={colors.axis} tickFormatter={x => DateTime.fromISO(x).toFormat('LLL d')} />
+          <XAxis dataKey="date" stroke={colors.axis} tickFormatter={(x) => DateTime.fromISO(x).toFormat('LLL d')} />
           <YAxis stroke={colors.axis} dataKey="total" />
           <StyledTooltip
             cursor={{ opacity: 0.1 }}

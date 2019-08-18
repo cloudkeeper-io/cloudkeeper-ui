@@ -6,7 +6,7 @@ const Wrapper = styled.div<{ minHeight?: string }>`
   flex-direction: column;
   height: 100%;
   width: calc(100% - 40px);
-  min-height: ${p => p.minHeight || 'calc(100vh - 100px)'};
+  min-height: ${(p) => p.minHeight || 'calc(100vh - 100px)'};
   padding: 0 20px;
   align-items: center;
   justify-content: center;

@@ -9,14 +9,14 @@ export const getLabel = (ControlIndicator: any, Input: any) => styled.label<Labe
   display: block;
   position: relative;
   padding-left: 30px;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   &:hover {
     ${ControlIndicator} {
-      background: ${p => opacify(0.15, p.theme.controls.color)};
+      background: ${(p) => opacify(0.15, p.theme.controls.color)};
     }
     ${Input}:not([disabled]):checked {
       ~ ${ControlIndicator} {
-        background: ${p => darken(0.2, p.theme.controls.activeColor)};
+        background: ${(p) => darken(0.2, p.theme.controls.activeColor)};
       }
     }
   }
@@ -28,12 +28,12 @@ export const getInput = (ControlIndicator: any) => styled.input`
   opacity: 0;
   &:focus {
     ~ ${ControlIndicator} {
-      background: ${p => p.theme.controls.color};
+      background: ${(p) => p.theme.controls.color};
    }
   }
   &:checked {
    ~ ${ControlIndicator} {
-      background: ${p => p.theme.controls.activeColor};
+      background: ${(p) => p.theme.controls.activeColor};
       &:after {
         display: block;
       }
@@ -41,7 +41,7 @@ export const getInput = (ControlIndicator: any) => styled.input`
   }
   &:checked:focus {
    ~ ${ControlIndicator} {
-      background: ${p => p.theme.controls.activeColor};
+      background: ${(p) => p.theme.controls.activeColor};
    }
   }
   &:disabled {

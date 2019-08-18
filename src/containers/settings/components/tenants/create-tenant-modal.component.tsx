@@ -13,7 +13,7 @@ import { SmallField } from '../../../../components/form/field.component'
 import { LoadingButton } from '../../../../components/button/loading-button.component'
 
 const ServerError = styled.div`
-  color: ${p => p.theme.palette.error.main};
+  color: ${(p) => p.theme.palette.error.main};
   font-size: 12px;
   margin-left: 5px;
 `
@@ -79,7 +79,7 @@ export default ({ onClose, isOpen }: StepsProps) => {
   return (
     <Dialog open={isOpen} onClose={onClose}>
       <DialogTitle>Create Project</DialogTitle>
-      <Form onSubmit={v => onSubmit(v as Values)} validate={v => validate(v as Values)}>
+      <Form onSubmit={(v) => onSubmit(v as Values)} validate={(v) => validate(v as Values)}>
         {({ handleSubmit, pristine, invalid }) => (
           <form onSubmit={handleSubmit}>
             <DialogContent>

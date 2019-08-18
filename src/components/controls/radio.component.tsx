@@ -11,8 +11,8 @@ const ControlIndicator = styled.div`
   min-width: 15px;
   border-radius: 50%;
   transition: all 0.3s;
-  box-shadow: 0 0 2px ${p => p.theme.controls.shadow};
-  border: 1px solid ${p => p.theme.controls.color};
+  box-shadow: 0 0 2px ${(p) => p.theme.controls.shadow};
+  border: 1px solid ${(p) => p.theme.controls.color};
   &:after {
     content: '';
     box-sizing: initial;
@@ -23,7 +23,7 @@ const ControlIndicator = styled.div`
     height: 5px;
     width: 5px;
     border-radius: 50%;
-    background: ${p => p.theme.controls.secondaryActiveColor};
+    background: ${(p) => p.theme.controls.secondaryActiveColor};
   }
 `
 

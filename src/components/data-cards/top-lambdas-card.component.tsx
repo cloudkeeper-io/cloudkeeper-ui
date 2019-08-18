@@ -97,11 +97,11 @@ const DataCard = (props: MostInvokedCardProps) => {
             <div>
               {tab === 0 ? `Top ${data.length} ${header}` : `${tab === 1 ? '' : toOrdinal(tab)} ${lambdaHeader}`}
             </div>
-            <TabIndicator index={tab} steps={TABS_AMOUNT} onClick={i => setTab(i)} />
+            <TabIndicator index={tab} steps={TABS_AMOUNT} onClick={(i) => setTab(i)} />
           </Header>
           {tab === 0 && (
             <>
-              {map(data, x => (
+              {map(data, (x) => (
                 <Text key={x.lambdaName}>
                   <div>{x.lambdaName}</div>
                   <div>{summaryFormatter(x)}</div>
@@ -120,7 +120,7 @@ const DataCard = (props: MostInvokedCardProps) => {
                       stroke={tab ? colors.axis : colors.secondaryAxis}
                       tick={{ fontSize: 12 }}
                       tickLine={false}
-                      tickFormatter={x => DateTime.fromISO(x).toFormat(timeAxisFormat)}
+                      tickFormatter={(x) => DateTime.fromISO(x).toFormat(timeAxisFormat)}
                     />
                     <YAxis
                       stroke={tab ? colors.axis : colors.secondaryAxis}
@@ -152,7 +152,7 @@ const DataCard = (props: MostInvokedCardProps) => {
               </GraphContainer>
               <LambdaInfo>
                 <LambdaInfoColumn>
-                  {map(lambdaInfo, x => !isNil(lambda[x.unit]) && (
+                  {map(lambdaInfo, (x) => !isNil(lambda[x.unit]) && (
                     <InfoText key={x.unit}>
                       {x.text}:
                       <Value>{x.valueFn(lambda[x.unit])}</Value>

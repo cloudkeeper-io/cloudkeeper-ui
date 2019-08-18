@@ -16,7 +16,7 @@ const Indicator = () => {
   const [tab, setTab] = useState(0)
   return (
     <Wrapper>
-      <StepIndicator index={tab} steps={number('Tabs', 5)} onClick={i => setTab(i)} />
+      <StepIndicator index={tab} steps={number('Tabs', 5)} onClick={(i) => setTab(i)} />
       <div>tab {tab} selected</div>
     </Wrapper>
   )
@@ -29,11 +29,10 @@ const HeaderTab = () => {
       <HeaderTabs
         tabs={[text('Tab 1 header', 'Last 24h'), text('Tab 2 header', 'Last 30 days')]}
         selectedIndex={tab}
-        onChange={i => setTab(i)}
+        onChange={(i) => setTab(i)}
       />
       {tab ? (<TabContent key={tab}>{text('Tab 1 content', 'Tab 1 content')}</TabContent>) :
-        (<TabContent key={tab}>{text('Tab 2 content', 'Tab 2 content')}</TabContent>)
-      }
+        (<TabContent key={tab}>{text('Tab 2 content', 'Tab 2 content')}</TabContent>)}
     </Wrapper>
   )
 }

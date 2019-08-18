@@ -8,7 +8,7 @@ const Avatar = styled.div<{ photoUrl: string }>`
   height: 48px;
   border-radius: 50%;
   box-sizing: border-box;
-  background: url("${p => p.photoUrl}") center center no-repeat;
+  background: url("${(p) => p.photoUrl}") center center no-repeat;
   background-size: contain;
 `
 

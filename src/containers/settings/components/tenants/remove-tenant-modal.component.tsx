@@ -7,9 +7,9 @@ import { Text, Title } from '../../../../components/typography.component'
 import { Tenant } from '../../../../models'
 
 const RemoveButton = styled(Button)`
-  background: ${p => p.theme.palette.error.main};
+  background: ${(p) => p.theme.palette.error.main};
   :hover {
-    background: ${p => p.theme.palette.error.dark};
+    background: ${(p) => p.theme.palette.error.dark};
   }
 `
 const Name = styled.span`

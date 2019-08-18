@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import TableCell, { TableCellProps } from '@material-ui/core/TableCell'
 
 const TableLabel = styled(Typography)`
-  color: ${p => p.theme.palette.text.primary};
+  color: ${(p) => p.theme.palette.text.primary};
 `
 interface TableHeaderProps extends TableCellProps {
   label?: string

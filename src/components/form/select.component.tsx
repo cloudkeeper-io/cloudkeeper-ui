@@ -28,8 +28,8 @@ interface SelectInputProps extends Props{
 const SelectInput = ({ name, options, className, placeholder }: SelectInputProps) => (
   <Field
     name={name}
-    parse={option => option && option.value}
-    format={value => find(options, o => o.value === value)}
+    parse={(option) => option && option.value}
+    format={(value) => find(options, (o) => o.value === value)}
   >
     {({ input, meta }) => (
       <Select className={className} {...input} placeholder={placeholder}>

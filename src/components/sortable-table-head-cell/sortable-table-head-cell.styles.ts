@@ -4,7 +4,7 @@ import TableCell from '@material-ui/core/TableCell'
 import Typography from '@material-ui/core/Typography'
 
 export const StyledChevronDown = styled(ChevronDown)`
-  color: ${p => p.theme.colors.primary} !important;
+  color: ${(p) => p.theme.colors.primary} !important;
 `
 
 export const StyledTableCell = styled(TableCell)`
@@ -12,5 +12,5 @@ export const StyledTableCell = styled(TableCell)`
 `
 
 export const TableLabel = styled(Typography)`
-  color: ${p => p.theme.palette.text.primary};
+  color: ${(p) => p.theme.palette.text.primary};
 `

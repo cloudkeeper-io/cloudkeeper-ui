@@ -40,7 +40,7 @@ export const LambdasList = ({ lambdas, filterInput }: LambdasListProps) => {
 
   const orderedLambdas = orderBy(lambdas, orderProperty, order)
   const filteredLambdas = filterInput ?
-    filter(orderedLambdas, lambda => lambda.name!.includes(filterInput!))
+    filter(orderedLambdas, (lambda) => lambda.name!.includes(filterInput!))
     : orderedLambdas
 
   const visibleLambdas = slice(filteredLambdas, 0, visibleElements)
@@ -113,7 +113,7 @@ export const LambdasList = ({ lambdas, filterInput }: LambdasListProps) => {
         </TableHead>
         {visibleLambdas.length > 0 && (
           <TableBody>
-            {visibleLambdas.map(lambda => <LambdaRow key={lambda!.name! + lambda!.region} lambda={lambda} />)}
+            {visibleLambdas.map((lambda) => <LambdaRow key={lambda!.name! + lambda!.region} lambda={lambda} />)}
           </TableBody>
         )}
       </Table>

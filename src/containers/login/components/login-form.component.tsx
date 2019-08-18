@@ -13,7 +13,7 @@ import { trackEvent } from '../../../utils/amplitude'
 
 const ForgotPassword = styled(Link)`
   text-decoration: underline;
-  color: ${p => p.theme.colors.primary};
+  color: ${(p) => p.theme.colors.primary};
   margin-bottom: 3px;
   margin-right: 3px;
   width: 100%;
@@ -62,7 +62,7 @@ export default memo(() => {
   }
 
   return (
-    <Form onSubmit={v => onLogin(v as Values)} validate={v => validate(v as Values)}>
+    <Form onSubmit={(v) => onLogin(v as Values)} validate={(v) => validate(v as Values)}>
       {({ handleSubmit, pristine, invalid }) => (
         <StyledForm onSubmit={handleSubmit}>
           <FormContent>

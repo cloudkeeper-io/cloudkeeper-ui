@@ -31,7 +31,7 @@ export default memo(({ className }: ProjectSwitcherProps) => {
   const { loading, tenants, currentTenant } = useContext(TenantContext)
 
   const handleClose = useCallback(() => setAnchorEl(null), [setAnchorEl])
-  const handleOpen = useCallback(event => setAnchorEl(event.currentTarget), [setAnchorEl])
+  const handleOpen = useCallback((event) => setAnchorEl(event.currentTarget), [setAnchorEl])
 
   if (loading) {
     return null
@@ -64,7 +64,7 @@ export default memo(({ className }: ProjectSwitcherProps) => {
         <StyledMenuItem disabled>
           <Typography variant="caption">Recent</Typography>
         </StyledMenuItem>
-        {map(take(tenants, 4), tenant => (
+        {map(take(tenants, 4), (tenant) => (
           <StyledMenuItem component={Link} to={`/tenant/${tenant.id}`} key={tenant.id!} onClick={handleClose}>
             {tenant.name}
           </StyledMenuItem>

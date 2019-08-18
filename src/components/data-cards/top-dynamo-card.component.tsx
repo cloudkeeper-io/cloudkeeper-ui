@@ -35,8 +35,8 @@ const LegendCircle = styled.div<{ color: string }>`
   width: 10px;
   height: 10px;
   margin-right: 15px;
-  background: ${p => p.color};
-  box-shadow: 0 0 4px ${p => transparentize(0.5, p.color)};
+  background: ${(p) => p.color};
+  box-shadow: 0 0 4px ${(p) => transparentize(0.5, p.color)};
   border-radius: 50%;
 `
 const DynamoInfo = styled.div`
@@ -113,7 +113,7 @@ const DataCard = (props: TopDynamoCardProps) => {
   }
 
   const dataPoints = dynamo ? dynamo.dataPoints : []
-  const isStraightLines = checkDataPoints(dataPoints, map(units, x => x.value))
+  const isStraightLines = checkDataPoints(dataPoints, map(units, (x) => x.value))
 
   return (
     <StyledCard className={className}>
@@ -123,11 +123,11 @@ const DataCard = (props: TopDynamoCardProps) => {
             <div>
               {tab === 0 ? `Top ${data.length} ${header}` : `${tab === 1 ? '' : toOrdinal(tab)} ${dynamoHeader}`}
             </div>
-            <TabIndicator index={tab} steps={TABS_AMOUNT} onClick={i => setTab(i)} />
+            <TabIndicator index={tab} steps={TABS_AMOUNT} onClick={(i) => setTab(i)} />
           </Header>
           {tab === 0 && (
             <>
-              {map(data, x => (
+              {map(data, (x) => (
                 <Text key={x.name}>
                   <div>{x.name}</div>
                   <div>{summaryFormatter(x)}</div>
@@ -148,7 +148,7 @@ const DataCard = (props: TopDynamoCardProps) => {
                       stroke={colors.axis}
                       tick={{ fontSize: 12 }}
                       tickLine={false}
-                      tickFormatter={x => DateTime.fromISO(x).toFormat(timeAxisFormat)}
+                      tickFormatter={(x) => DateTime.fromISO(x).toFormat(timeAxisFormat)}
                     />
                     <YAxis
                       stroke={colors.axis}
@@ -196,7 +196,7 @@ const DataCard = (props: TopDynamoCardProps) => {
                   </LegendItem>
                 ))}
                 <DynamoInfoColumn>
-                  {map(dynamoInfo, x => !isNil(dynamo[x.unit]) && (
+                  {map(dynamoInfo, (x) => !isNil(dynamo[x.unit]) && (
                     <InfoText key={x.unit}>
                       {x.text}:
                       <Value>{x.valueFn(dynamo[x.unit])}</Value>

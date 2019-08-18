@@ -14,7 +14,7 @@ const Title = styled(Typography)`
 `
 
 interface TrendsCardProps {
-  trends: any[],
+  trends?: any[],
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars

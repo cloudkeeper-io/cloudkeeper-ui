@@ -40,7 +40,7 @@ export const DynamoTablesList = ({ tables, filterInput }: DynamoTablesListProps)
 
   const orderedTables = orderBy(tables, orderProperty, order)
   const filteredTables = filterInput ?
-    filter(orderedTables, table => table.name!.includes(filterInput!))
+    filter(orderedTables, (table) => table.name!.includes(filterInput!))
     : orderedTables
 
   const visibleTables = slice(filteredTables, 0, visibleElements)
@@ -113,7 +113,7 @@ export const DynamoTablesList = ({ tables, filterInput }: DynamoTablesListProps)
         </TableHead>
         {visibleTables.length > 0 && (
         <TableBody>
-          {visibleTables.map(table => <DynamoTableRow key={table!.name! + table!.region} table={table} />)}
+          {visibleTables.map((table) => <DynamoTableRow key={table!.name! + table!.region} table={table} />)}
         </TableBody>
         )}
       </Table>

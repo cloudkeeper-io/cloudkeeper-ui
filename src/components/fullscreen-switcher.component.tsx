@@ -11,7 +11,7 @@ interface ThemeSwitcherProps {
 export default ({ className }: ThemeSwitcherProps) => {
   const [isFullscreen, setFullscreen] = useState(false)
 
-  const toggleFullscreen = useCallback(() => setFullscreen(current => !current), [setFullscreen])
+  const toggleFullscreen = useCallback(() => setFullscreen((current) => !current), [setFullscreen])
 
   useEffect(() => {
     if (screenfull) {

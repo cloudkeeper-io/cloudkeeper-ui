@@ -1,5 +1,4 @@
-/* eslint-disable react/no-array-index-key */
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { memo, useContext, useEffect, useRef, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
 import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from 'recharts'
 import { Typography } from '@material-ui/core'
@@ -84,7 +83,7 @@ const LegendCell = styled.div<{ color: string }>`
   min-height: 12px;
   max-width: 12px;
   max-height: 12px;
-  background-color: ${p => p.color};
+  background-color: ${(p) => p.color};
   border-radius: 50%;
 `
 const LegendText = styled.div`
@@ -98,7 +97,7 @@ const ActiveIndicator = styled.div`
   height: 16px;
   justify-content: flex-end;
   align-items: center;
-  color: ${p => p.theme.palette.primary.main};
+  color: ${(p) => p.theme.palette.primary.main};
 `
 
 const StyledSector = Sector as any
@@ -131,7 +130,7 @@ const renderActiveShape = (props: any) => {
 }
 
 
-export const CostsPerStack = ({ data }: CostsPerStackProps) => {
+export const CostsPerStack = memo(({ data }: CostsPerStackProps) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const { colors } = useContext(ThemeContext)
@@ -144,7 +143,7 @@ export const CostsPerStack = ({ data }: CostsPerStackProps) => {
         const pieRef = current!.querySelector('.recharts-pie')
         const fakeNode = pieRef!.querySelectorAll('.fake-node')
 
-        forEach(fakeNode, node => pieRef!.removeChild(node))
+        forEach(fakeNode, (node) => pieRef!.removeChild(node))
 
         const activePieSector = pieRef!.querySelector('.active-sector-shape')!.parentNode
         const clonedNode = activePieSector!.cloneNode(true) as any
@@ -224,4 +223,4 @@ export const CostsPerStack = ({ data }: CostsPerStackProps) => {
       </Content>
     </div>
   )
-}
+})

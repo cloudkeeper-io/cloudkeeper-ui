@@ -65,7 +65,7 @@ export const BottomMenuItems = memo((props: MenuItemsProps) => {
 
   return (
     <List>
-      {map(bottomMenuItems, item => (
+      {map(bottomMenuItems, (item) => (
         <Link key={item.primary} to={item.to}>
           <ListItem button active={isActive(pathname, item.to)}>
             <Tooltip title={item.primary} placement="right" disableHoverListener={isExpanded}>

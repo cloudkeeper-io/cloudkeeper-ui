@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   display: flex;
 `
 const StyledToolbar = styled(Toolbar)`
-  background: ${p => p.theme.colors.background};
+  background: ${(p) => p.theme.colors.background};
 `
 const Flex = styled.div`
   flex: 1;

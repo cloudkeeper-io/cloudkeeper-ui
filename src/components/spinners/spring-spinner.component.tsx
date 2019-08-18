@@ -4,8 +4,8 @@ import { animated, useSpring } from 'react-spring'
 import { useInterval } from '../../hooks'
 
 const Wrapper = styled.div<{ size: number }>`
-  width: ${p => `${p.size}px`};
-  height: ${p => `${p.size}px`};
+  width: ${(p) => `${p.size}px`};
+  height: ${(p) => `${p.size}px`};
 `
 
 const Svg = styled.svg`
@@ -15,7 +15,7 @@ const Svg = styled.svg`
 `
 const Circle = styled(animated.circle)`
   stroke-linecap: round;
-  stroke: ${props => props.color || props.theme.colors.spinner};
+  stroke: ${(props) => props.color || props.theme.colors.spinner};
 `
 
 interface SpringSpinnerProps {
