@@ -2,7 +2,7 @@ import React, { memo, useContext } from 'react'
 import useReactRouter from 'use-react-router'
 import { List, Tooltip } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import { Layout, Settings } from 'react-feather'
+import { Layout, Settings, MessageSquare } from 'react-feather'
 import map from 'lodash/map'
 import isEmpty from 'lodash/isEmpty'
 
@@ -55,7 +55,10 @@ export const TopMenuItems = memo((props: MenuItemsProps) => {
   )
 })
 
+const anyWindow = window as any
+
 export const bottomMenuItems = [
+  { primary: 'Support Chat', onClick: () => anyWindow.Tawk_API.toggle(), icon: <MessageSquare /> },
   { primary: 'Settings', to: '/settings', icon: <Settings /> },
 ]
 
@@ -65,16 +68,29 @@ export const BottomMenuItems = memo((props: MenuItemsProps) => {
 
   return (
     <List>
-      {map(bottomMenuItems, (item) => (
-        <Link key={item.primary} to={item.to}>
-          <ListItem button active={isActive(pathname, item.to)}>
+      {map(bottomMenuItems, (item) => {
+        if (item.to) {
+          return (
+            <Link key={item.primary} to={item.to}>
+              <ListItem button active={isActive(pathname, item.to)}>
+                <Tooltip title={item.primary} placement="right" disableHoverListener={isExpanded}>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                </Tooltip>
+                <ListItemText primary={item.primary} isExpanded={isExpanded} />
+              </ListItem>
+            </Link>
+          )
+        }
+
+        return (
+          <ListItem key={item.primary} button onClick={item.onClick}>
             <Tooltip title={item.primary} placement="right" disableHoverListener={isExpanded}>
               <ListItemIcon>{item.icon}</ListItemIcon>
             </Tooltip>
             <ListItemText primary={item.primary} isExpanded={isExpanded} />
           </ListItem>
-        </Link>
-      ))}
+        )
+      })}
     </List>
   )
 })
