@@ -23,6 +23,7 @@ import {
   SwitchTitle,
   SwitchText,
 } from './login.styles'
+import { TawkFab } from '../../components/tawk-fab/tawk-fab.component';
 
 export default memo(() => {
   const { history, location: { pathname } } = useReactRouter()
@@ -72,6 +73,7 @@ export default memo(() => {
             <Text>or use your email account:</Text>
             <LoginForm />
           </RightContent>
+          <TawkFab />
         </MainCard>
       </Content>
     </Wrapper>
