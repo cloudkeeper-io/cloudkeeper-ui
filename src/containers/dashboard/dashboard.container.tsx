@@ -182,7 +182,7 @@ export default () => {
             <CostsPerService data={data!.costsData!.costsPerService!} />
           </Card>
           <Card key="4">
-            <CostsPerStack data={data!.costsData!.costsPerStack!} />
+            <CostsPerStack key={tenantId!} data={data!.costsData!.costsPerStack!} />
           </Card>
           <Card key="5">
             <TrendsCard />

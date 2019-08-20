@@ -136,24 +136,26 @@ export const CostsPerStack = memo(({ data }: CostsPerStackProps) => {
   const { colors } = useContext(ThemeContext)
   const COLORS = colors.seriesColors
 
+  const moveActiveToFront = () => {
+    try {
+      const { current } = wrapperRef
+      const pieRef = current!.querySelector('.recharts-pie')
+      const fakeNodes = pieRef!.querySelectorAll('.fake-node')
+
+      forEach(fakeNodes, (node) => pieRef!.removeChild(node))
+
+      const activePieSector = pieRef!.querySelector('.active-sector-shape')!.parentNode
+      const clonedNode = activePieSector!.cloneNode(true) as any
+      clonedNode.classList.add('fake-node')
+      pieRef!.appendChild(clonedNode)
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e)
+    }
+  }
+
   useEffect(() => {
-    setTimeout(() => {
-      try {
-        const { current } = wrapperRef
-        const pieRef = current!.querySelector('.recharts-pie')
-        const fakeNode = pieRef!.querySelectorAll('.fake-node')
-
-        forEach(fakeNode, (node) => pieRef!.removeChild(node))
-
-        const activePieSector = pieRef!.querySelector('.active-sector-shape')!.parentNode
-        const clonedNode = activePieSector!.cloneNode(true) as any
-        clonedNode.classList.add('fake-node')
-        pieRef!.appendChild(clonedNode)
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e)
-      }
-    })
+    setTimeout(moveActiveToFront)
   })
 
   const dataKeys = reduce(data, (acc, x) => {
@@ -191,6 +193,7 @@ export const CostsPerStack = memo(({ data }: CostsPerStackProps) => {
                   minAngle={30}
                   cornerRadius={10}
                   onMouseEnter={(d, index) => setActiveIndex(index)}
+                  onAnimationEnd={moveActiveToFront}
                 >
                   {map(orderedDataKeys, (x, index) => (
                     <Cell key={x.name} fill={COLORS[index]} />
@@ -206,7 +209,7 @@ export const CostsPerStack = memo(({ data }: CostsPerStackProps) => {
         </LeftSide>
         <Legend>
           {map(orderedDataKeys, (stack, index) => (
-            <LegendItem key={index} onMouseEnter={() => setActiveIndex(index)}>
+            <LegendItem key={index} onClick={() => setActiveIndex(index)}>
               <LegendCell color={COLORS[index]} />
               <LegendText>
                 {stack.name || 'Resources without a stack'}

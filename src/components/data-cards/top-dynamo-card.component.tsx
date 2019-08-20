@@ -10,6 +10,7 @@ import first from 'lodash/first'
 import last from 'lodash/last'
 import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
+import get from 'lodash/get'
 
 import { useSwitchTab } from '../../hooks'
 import { Text as CommonText } from '../typography.component'
@@ -138,7 +139,7 @@ const DataCard = (props: TopDynamoCardProps) => {
           {tab > 0 && (
             <>
               <Text>
-                {data[tab - 1].name}
+                {get(data[tab - 1], 'name')}
               </Text>
               <GraphContainer>
                 <ResponsiveContainer>
