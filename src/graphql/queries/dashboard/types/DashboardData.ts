@@ -274,10 +274,10 @@ export interface DashboardData_events_events {
   __typename: "Event";
   dateTime: string | null;
   dimension: string | null;
-  expectedValue: number | null;
   message: string | null;
   serviceName: string | null;
   value: number | null;
+  expectedValue: number | null;
 }
 
 export interface DashboardData_events {
