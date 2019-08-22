@@ -22,7 +22,9 @@ const signUp = async (email: string, password: string, subscribedToEmails: boole
   const { user } = userCredential
   await Promise.all([
     user!.sendEmailVerification(),
-    db.collection('users').doc(user!.uid).set({ isSubscribedToEmails: subscribedToEmails, email: user!.email }),
+    db.collection('users')
+      .doc(user!.uid)
+      .set({ isSubscribedToEmails: Boolean(subscribedToEmails), email: user!.email }),
   ])
   return userCredential
 }
@@ -44,16 +46,6 @@ const signOutAndResetApollo = async (client: ApolloClient<any>) => {
 
 // Reset Password
 const resetPassword = (email: string) => firebase.auth().sendPasswordResetEmail(email)
-
-// Google SingIn
-const googleSignIn = () => {
-  const provider = new firebase.auth.GoogleAuthProvider()
-  provider.addScope('https://www.googleapis.com/auth/userinfo.email')
-  return firebase.auth().signInWithPopup(provider)
-}
-
-// Github SingIn
-const githubSignIn = () => firebase.auth().signInWithPopup(new firebase.auth.GithubAuthProvider())
 
 interface UserProviderProps {
   children: JSX.Element
@@ -77,6 +69,22 @@ export const UserContext = React.createContext({} as UserState)
 export const UserProvider = memo(({ children, history }: UserProviderProps) => {
   const [user, setUser] = useState<firebase.User>()
   const [isUserLoaded, setUserLoaded] = useState(false)
+
+  // Google SingIn
+  const googleSignIn = useCallback(async () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    provider.addScope('https://www.googleapis.com/auth/userinfo.email')
+    const result = await firebase.auth().signInWithPopup(provider)
+    history.push('/')
+    return result
+  }, [history])
+
+  // Github SingIn
+  const githubSignIn = useCallback(async () => {
+    const result = await firebase.auth().signInWithPopup(new firebase.auth.GithubAuthProvider())
+    history.push('/')
+    return result
+  }, [history])
 
   useEffect(() => firebase.auth().onAuthStateChanged((newUser) => {
     setUserLoaded(true)
