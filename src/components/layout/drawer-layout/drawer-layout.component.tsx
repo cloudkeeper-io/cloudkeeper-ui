@@ -5,7 +5,7 @@ import useReactRouter from 'use-react-router'
 import get from 'lodash/get'
 
 import ElevationScroll from '../elevation-scroll.component'
-import TenantSwitcher from '../../tenant-switcher.component'
+import TenantSwitcher from '../../tenant/tenant-switcher.component'
 import ErrorContainer from '../../../containers/error.container'
 import ThemeSwitcher from '../../theme-switcher.component'
 import FullscreenSwitcher from '../../fullscreen-switcher.component'

@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react'
+import React, { memo, useContext, useEffect } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import Loadable from 'react-loadable'
 import isEmpty from 'lodash/isEmpty'
@@ -10,16 +10,19 @@ import ToolbarLayout from '../components/layout/toolbar-layout.component'
 import LoadingPage from '../components/spinners/loading-page.component'
 import { UserContext, TenantContext } from '../contexts'
 
-const Login = Loadable({ loader: () => import('./login/login.container'), loading: LoadingPage })
-const ForgotPassword = Loadable({ loader: () => import('./forgot-password.container'), loading: LoadingPage })
+const getLoadableContainer = (loader: any) => Loadable({
+  loader,
+  loading: LoadingPage,
+})
 
-const Dashboard = Loadable({ loader: () => import('./dashboard/dashboard.container'), loading: LoadingPage })
-const Lambdas = Loadable({ loader: () => import('./lambdas/lambdas.container'), loading: LoadingPage })
-const DynamoTables = Loadable({ loader: () => import('./dynamo-tables/dynamo-tables.container'), loading: LoadingPage })
-const Settings = Loadable({ loader: () => import('./settings/settings.container'), loading: LoadingPage })
-const Welcome = Loadable({ loader: () => import('./welcome.container'), loading: LoadingPage })
-
-const Error = Loadable({ loader: () => import('./error.container'), loading: LoadingPage })
+const Login = getLoadableContainer(() => import('./login/login.container')) as any
+const ForgotPassword = getLoadableContainer(() => import('./forgot-password.container')) as any
+const Dashboard = getLoadableContainer(() => import('./dashboard/dashboard.container')) as any
+const Lambdas = getLoadableContainer(() => import('./lambdas/lambdas.container')) as any
+const DynamoTables = getLoadableContainer(() => import('./dynamo-tables/dynamo-tables.container')) as any
+const Settings = getLoadableContainer(() => import('./settings/settings.container')) as any
+const Welcome = getLoadableContainer(() => import('./welcome.container')) as any
+const Error = getLoadableContainer(() => import('./error.container')) as any
 
 
 const AnonRoutes = memo(() => (
@@ -42,8 +45,14 @@ const AnonRoutes = memo(() => (
 const AuthorizedRoutes = memo(() => {
   const { tenants, loading, error, currentTenant } = useContext(TenantContext)
 
+  useEffect(() => {
+    setTimeout(() => {
+      [Dashboard, Lambdas, DynamoTables, Settings, Welcome].forEach((route) => route.preload())
+    }, 300)
+  }, [])
+
   if (loading) {
-    return <LoadingPage height="calc(100vh - 80px)" />
+    return <LoadingPage height="calc(100vh - 64px)" />
   }
 
   if (error) {

@@ -26,7 +26,7 @@ import { TrendsCard } from '../../components/data-cards/trends-card.component'
 
 const Wrapper = styled.div`
   width: 100%;
-  min-height: 100px;
+  min-height: calc(100vh - 64px);
   overflow: hidden;
   
 `
@@ -94,7 +94,7 @@ export default () => {
   if (loading) {
     return (
       <Wrapper ref={wrapperRef}>
-        <Loading height="calc(100vh - 60px)" />
+        <Loading height="calc(100vh - 64px)" />
       </Wrapper>
     )
   }

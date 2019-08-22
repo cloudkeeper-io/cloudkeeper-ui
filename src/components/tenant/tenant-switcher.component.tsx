@@ -7,8 +7,8 @@ import get from 'lodash/get'
 import map from 'lodash/map'
 import take from 'lodash/take'
 
-import { TenantContext } from '../contexts'
-import CreateTenantModal from '../containers/settings/components/tenants/create-tenant-modal.component'
+import { TenantContext } from '../../contexts'
+import CreateTenantModal from '../../containers/settings/components/tenants/create-tenant-modal.component'
 
 const MenuButton = styled(Button)`
   text-transform: none;
