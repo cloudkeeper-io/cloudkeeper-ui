@@ -12,7 +12,7 @@ const ChatFab = styled(Fab)`
   height: 60px;
   width: 60px;
   z-index: 100;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 10px 0px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0 2px 10px 0;
   &:hover {
     background-color: #0d8efc;
   }

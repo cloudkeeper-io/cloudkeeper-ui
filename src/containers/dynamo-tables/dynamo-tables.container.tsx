@@ -7,7 +7,7 @@ import { Input } from '@material-ui/core'
 import moment from 'moment'
 
 import Loading from '../../components/spinners/loading.component'
-import SetupTenant from '../old-dashboard/components/setup-tenant.component'
+import SetupTenant from '../../components/tenant/setup-tenant.component'
 import Processing from '../../components/processing.component'
 import { dynamoTablesQuery } from '../../graphql'
 import { Tenant } from '../../models'

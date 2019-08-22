@@ -10,5 +10,5 @@ interface LoadingProps {
 export default memo((props: LoadingProps) => {
   useEffect(() => window.scrollTo(0, 0), [])
 
-  return <Loading height="calc(100vh - 60px)" {...props} />
+  return <Loading height="calc(100vh - 64px)" {...props} />
 })
