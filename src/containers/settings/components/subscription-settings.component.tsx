@@ -1,9 +1,9 @@
 import React, { useCallback, useContext } from 'react'
 import styled from 'styled-components/macro'
+import { Switch } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 
 import { UserSettingsContext, Settings } from '../../../contexts'
-import Switch from '../../../components/controls/switch.component'
 import Loading from '../../../components/spinners/loading.component'
 import { Header as CommonHeader } from '../../../components/typography.component'
 
@@ -45,7 +45,12 @@ export default () => {
     <Wrapper>
       <Header>Email Preferences</Header>
       <SwitchWrapper>
-        <Switch checked={isSubscribedToEmails} onChange={updateEmailSubscription} />Updates and news
+        <Switch
+          color="primary"
+          checked={isSubscribedToEmails}
+          onChange={updateEmailSubscription}
+        />
+        Updates and news
       </SwitchWrapper>
     </Wrapper>
   )
