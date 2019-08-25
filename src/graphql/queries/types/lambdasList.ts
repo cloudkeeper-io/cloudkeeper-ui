@@ -23,7 +23,7 @@ export interface lambdasList_lambdasList {
 }
 
 export interface lambdasList {
-  lambdasList: (lambdasList_lambdasList | null)[] | null;
+  lambdasList: lambdasList_lambdasList[];
 }
 
 export interface lambdasListVariables {

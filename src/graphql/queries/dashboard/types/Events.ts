@@ -6,18 +6,12 @@
 // GraphQL fragment: Events
 // ====================================================
 
-export interface Events_events {
+export interface Events {
   __typename: "Event";
-  dateTime: string | null;
+  dateTime: string;
   dimension: string | null;
-  message: string | null;
-  serviceName: string | null;
+  message: string;
+  serviceName: string;
   value: number | null;
   expectedValue: number | null;
-}
-
-export interface Events {
-  __typename: "DashboardEventsData";
-  events: (Events_events | null)[] | null;
-  processing: boolean | null;
 }

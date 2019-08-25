@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export const dynamo = gql`
-  fragment Dynamo on DashboardDynamoData {
+  fragment MostExpensiveData on DashboardDynamoData {
     processing
     last24Hours {
       mostReadTables {

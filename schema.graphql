@@ -12,7 +12,7 @@ type CostsData {
 
 type CostsPerServiceDataPoint {
   date: String
-  serviceCosts: [ServiceCostItem!]
+  serviceCosts: [ServiceCostItem!]!
   total: Float
 }
 
@@ -33,21 +33,6 @@ type DashboardDynamoDataForPeriod {
   mostReadTables: [MostReadTableData!]!
   mostThrottledTables: [MostThrottledTableData!]!
   mostWritesTables: [MostWritesTableData!]!
-}
-
-type DashboardEventsData {
-  events: [Event]
-  processing: Boolean
-}
-
-type DashboardLambdaDataForPeriod {
-  totals: Totals
-}
-
-type DashboardLambdasData {
-  last24Hours: DashboardLambdaDataForPeriod
-  last30Days: DashboardLambdaDataForPeriod
-  processing: Boolean
 }
 
 type DynamoTableDetails {
@@ -94,11 +79,11 @@ type DynamoTableStatsDataPoint {
 }
 
 type Event {
-  dateTime: String
+  dateTime: String!
   dimension: String
   expectedValue: Float
-  message: String
-  serviceName: String
+  message: String!
+  serviceName: String!
   value: Float
 }
 
@@ -130,6 +115,13 @@ type LambdaStatsDataPoint {
   invocations: Int
 }
 
+type LambdaTotals {
+  cost: Float!
+  dataPoints: [TotalsDataPoint!]!
+  errors: Int!
+  invocations: Int!
+}
+
 type LambdasListItem {
   avgExecutionTime: Float
   codeSize: Int
@@ -143,6 +135,26 @@ type LambdasListItem {
   size: Int
   tenantId: String
   timeout: Int
+}
+
+type MostExpensiveDynamoTable {
+  billingMode: String!
+  cost: Float!
+  items: Int!
+  name: String!
+  region: String!
+  sizeBytes: Int!
+}
+
+type MostExpensiveLambdasListItem {
+  codeSize: Int!
+  cost: Float!
+  name: String!
+  region: String!
+  runtime: String!
+  size: Int!
+  tenantId: String!
+  timeout: Int!
 }
 
 type MostExpensiveTableData {
@@ -234,16 +246,18 @@ type OwnerData {
 
 type Query {
   awsRegions: [String]
-  costsData(tenantId: String): CostsData
+  costsData(endDate: String, startDate: String, tenantId: String): CostsData!
   dynamoData(tenantId: String): DashboardDynamoData
   dynamoTable(name: String, region: String, tenantId: String): DynamoTableDetails
   dynamoTableStats(endDate: String, name: String, region: String, startDate: String, tenantId: String): DynamoTableStats
   dynamoTablesList(endDate: String, startDate: String, tenantId: String): [DynamoTableListItem]
-  events(tenantId: String): DashboardEventsData
+  events(endDate: String, startDate: String, tenantId: String): [Event!]!
   lambda(name: String, region: String, tenantId: String): LambdaConfiguration
   lambdaStats(endDate: String, name: String, region: String, startDate: String, tenantId: String): LambdaStats
-  lambdasData(tenantId: String): DashboardLambdasData
-  lambdasList(endDate: String, startDate: String, tenantId: String): [LambdasListItem]
+  lambdaTotals(endDate: String, startDate: String, tenantId: String): LambdaTotals!
+  lambdasList(endDate: String, startDate: String, tenantId: String): [LambdasListItem!]!
+  mostExpensiveDynamoTables(endDate: String, startDate: String, tenantId: String): [MostExpensiveDynamoTable!]!
+  mostExpensiveLambdas(endDate: String, startDate: String, tenantId: String): [MostExpensiveLambdasListItem!]!
   tenants: [Tenant!]
 }
 
@@ -267,18 +281,11 @@ type Tenant {
   owner: OwnerData!
 }
 
-type Totals {
-  cost: Float
-  dataPoints: [TotalsDataPoint]
-  errors: Int
-  invocations: Int
-}
-
 type TotalsDataPoint {
-  cost: Float
-  dateTime: String
-  errors: Int
-  invocations: Int
+  cost: Float!
+  dateTime: String!
+  errors: Int!
+  invocations: Int!
 }
 
 enum CacheControlScope {
