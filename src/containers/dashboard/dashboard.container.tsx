@@ -23,6 +23,7 @@ import { CostsPerService } from '../../components/data-cards/costs-per-service.c
 import { CostsPerStack } from '../../components/data-cards/costs-per-stack.component'
 import { EventsCard } from '../../components/data-cards/events-card.component'
 import { TrendsCard } from '../../components/data-cards/trends-card.component'
+import LambdaSummaryCard from '../../components/data-cards/lambda-summary-card.component'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -82,7 +83,7 @@ export default () => {
   const { width } = useComponentSize(wrapperRef)
 
   const { data, loading, error, refetch } = useQuery<DashboardData>(dashboardQuery, {
-    variables: { tenantId },
+    variables: { tenantId, startDate, endDate },
     pollInterval: POLL_INTERVAL,
   })
 
@@ -140,31 +141,14 @@ export default () => {
           isResizable={false}
         >
           <Card key="0">
-            <TopDynamoCard
-              header="Read Heavy Tables"
-              dynamoHeader="Most Read Table"
-              units={[{ label: 'consumed', value: 'consumedRead' }, { label: 'provisioned', value: 'provisionedRead' }]}
-              data={data!.dynamoData!.last30Days!.mostReadTables! as any}
-              summaryFormatter={(x) => `${x.consumedRead!.toLocaleString('ru')} read units`}
-              yAxisFormatter={(x) => formatNumber(x)}
-              tooltipFormatter={(x) => Number(x).toLocaleString()}
-              timeAxisFormat="LLL d"
-              dynamoInfo={[
-                { unit: 'consumedRead', text: 'total', valueFn: (x) => x.toLocaleString('ru') },
-                {
-                  unit: 'averageConsumedRead',
-                  text: 'average',
-                  valueFn: (x) => `${round(x, 2).toLocaleString('en')}/s`,
-                },
-              ]}
-            />
+            <LambdaSummaryCard count={2} data={data!.lambdaTotals!} timeAxisFormat="LLL d" />
           </Card>
           <Card key="1">
             <TopDynamoCard
               header="Expensive Tables"
               dynamoHeader="Most Expensive Table"
               units={[{ label: 'read price', value: 'readPrice' }, { label: 'write price', value: 'writePrice' }]}
-              data={data!.dynamoData!.last30Days!.mostExpensiveTables as any}
+              data={data!.mostExpensiveDynamoTables as any}
               summaryFormatter={(x) => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
               yAxisFormatter={(x) => `$ ${formatNumber(x)}`}
               tooltipFormatter={(x) => `$ ${Number(x).toLocaleString()}`}
@@ -176,7 +160,7 @@ export default () => {
             />
           </Card>
           <Card key="2">
-            <EventsCard events={data!.events!.events!} />
+            <EventsCard events={data!.events!} />
           </Card>
           <Card key="3">
             <CostsPerService data={data!.costsData!.costsPerService!} />
