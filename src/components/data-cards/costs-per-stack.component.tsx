@@ -3,6 +3,7 @@ import styled, { ThemeContext } from 'styled-components/macro'
 import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from 'recharts'
 import { Typography } from '@material-ui/core'
 import { ChevronLeft } from 'react-feather'
+import moment, { Moment } from 'moment'
 import map from 'lodash/map'
 import reduce from 'lodash/reduce'
 import forEach from 'lodash/forEach'
@@ -10,6 +11,7 @@ import orderBy from 'lodash/orderBy'
 import take from 'lodash/take'
 
 import { ReactComponent as ScaleSvg } from './images/scale.svg'
+import scaleMask from './images/scale-mask.svg'
 import { formatNumber } from '../../utils'
 
 const Title = styled(Typography)`
@@ -48,6 +50,9 @@ const ChartWrapper = styled.div`
   position: relative;
   width: 100%;
   min-height: 200px;
+  .recharts-pie-sector {
+    cursor: pointer;
+  }
 `
 const InnerGraphContent = styled.div`
   position: absolute;
@@ -99,11 +104,37 @@ const ActiveIndicator = styled.div`
   align-items: center;
   color: ${(p) => p.theme.palette.primary.main};
 `
+const ScaleWrapper = styled.div`
+  mask-image: url(${scaleMask});
+  mask-size: contain;
+`
+const ScaleDates = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+const ScaleDate = styled.div`
+  color: #9A9DAD;
+  font-size: 11px;
+`
 
 const StyledSector = Sector as any
 
 interface CostsPerStackProps {
   data: any[],
+  endDate: Moment
+  startDate: Moment
+}
+
+const getScaleDates = (startDate: Moment, endDate: Moment) => {
+  const difference = endDate.valueOf() - startDate.valueOf()
+  const midDate = moment((startDate.valueOf() + endDate.valueOf()) / 2)
+
+  if (difference > 1000 * 60 * 60 * 24 * 2) { // 2days
+    return map([startDate, midDate, endDate], (x) => x.format('MMM D'))
+  }
+
+  return map([startDate, midDate, endDate], (x) => x.format('MMM D H:mm'))
 }
 
 const renderActiveShape = (props: any) => {
@@ -129,12 +160,13 @@ const renderActiveShape = (props: any) => {
   )
 }
 
-
-export const CostsPerStack = memo(({ data }: CostsPerStackProps) => {
+export const CostsPerStack = memo(({ data, startDate, endDate }: CostsPerStackProps) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const { colors } = useContext(ThemeContext)
   const COLORS = colors.seriesColors
+
+  const dates = getScaleDates(startDate, endDate)
 
   const moveActiveToFront = () => {
     try {
@@ -192,7 +224,7 @@ export const CostsPerStack = memo(({ data }: CostsPerStackProps) => {
                   paddingAngle={-12}
                   minAngle={30}
                   cornerRadius={10}
-                  onMouseEnter={(d, index) => setActiveIndex(index)}
+                  onClick={(d, index) => setActiveIndex(index)}
                   onAnimationEnd={moveActiveToFront}
                 >
                   {map(orderedDataKeys, (x, index) => (
@@ -205,7 +237,12 @@ export const CostsPerStack = memo(({ data }: CostsPerStackProps) => {
               {formatNumber(orderedDataKeys[activeIndex].cost, 3)}$
             </InnerGraphContent>
           </ChartWrapper>
-          <Scale />
+          <ScaleWrapper>
+            <Scale />
+            <ScaleDates>
+              {map(dates, (date) => <ScaleDate key={date}>{date}</ScaleDate>)}
+            </ScaleDates>
+          </ScaleWrapper>
         </LeftSide>
         <Legend>
           {map(orderedDataKeys, (stack, index) => (
