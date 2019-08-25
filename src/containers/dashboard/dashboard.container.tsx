@@ -3,7 +3,6 @@ import styled from 'styled-components/macro'
 import { useQuery } from 'react-apollo'
 import useComponentSize from '@rehooks/component-size'
 import get from 'lodash/get'
-import round from 'lodash/round'
 import moment from 'moment'
 
 import { formatNumber } from '../../utils'
