@@ -77,7 +77,7 @@ export default () => {
   })
 
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const { currentTenant, tenantId } = useContext(TenantContext)
+  const { currentTenant, tenantId, refetch: refetchTenants } = useContext(TenantContext)
 
   const { width } = useComponentSize(wrapperRef)
 
@@ -86,10 +86,10 @@ export default () => {
     pollInterval: POLL_INTERVAL,
   })
 
-  const isProcessing = get(data, 'lambdasData.processing') || get(data, 'dynamoData.processing')
+  const isProcessing = !get(currentTenant, 'initialProcessing.done', false)
 
-  useInterval(refetch, PROCESSING_REFETCH_DELAY, isProcessing)
-
+  useInterval(refetchTenants, PROCESSING_REFETCH_DELAY, isProcessing)
+  useInterval(refetch, POLL_INTERVAL, !isProcessing)
 
   if (loading) {
     return (
@@ -111,7 +111,7 @@ export default () => {
     )
   }
 
-  if (!currentTenant!.isSetupCompleted) {
+  if (isProcessing) {
     return (
       <Wrapper ref={wrapperRef}>
         <Processing />

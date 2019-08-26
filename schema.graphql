@@ -87,6 +87,10 @@ type Event {
   value: Float
 }
 
+type InitialProcessingData {
+  done: Boolean!
+}
+
 type IntegrationData {
   functions: Int
   status: String
@@ -276,6 +280,7 @@ type StackCostItem {
 type Tenant {
   createdAt: String!
   id: String!
+  initialProcessing: InitialProcessingData!
   isSetupCompleted: Boolean!
   name: String!
   owner: OwnerData!

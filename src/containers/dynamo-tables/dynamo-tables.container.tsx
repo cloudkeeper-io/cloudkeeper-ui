@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react'
 import styled from 'styled-components/macro'
 import { useQuery } from 'react-apollo'
 import get from 'lodash/get'
-import find from 'lodash/find'
 import { Input } from '@material-ui/core'
 import moment from 'moment'
 
@@ -16,6 +15,7 @@ import { DateRange } from '../../components/datepicker/datepicker.component'
 import { DataPageHeader } from '../../components/data-page-header/data-page-header.component'
 import { DynamoTablesList } from './dynamo-tables.component'
 import Card from '../../components/card.component'
+import { useInterval } from '../../hooks'
 
 const Wrapper = styled.div`
   position: relative;
@@ -46,7 +46,7 @@ interface DashboardProps {
 const defaultStartDate = moment().subtract(6, 'days')
 const defaultEndDate = moment()
 
-export default ({ tenants }: DashboardProps) => {
+export default () => {
   const [{ startDate, endDate }, setDateRange] = useState<DateRange>({
     startDate: defaultStartDate,
     endDate: defaultEndDate,
@@ -54,25 +54,26 @@ export default ({ tenants }: DashboardProps) => {
 
   const [filterInput, setFilterInput] = useState<string | undefined>(undefined)
 
-  const { tenantId } = useContext(TenantContext)
-  const tenant = find<Tenant []>(tenants, { id: tenantId! }) as Tenant
+  const { currentTenant, refetch } = useContext(TenantContext)
 
   const { data, loading, error } = useQuery(dynamoTablesQuery, {
     variables: {
-      tenantId,
+      tenantId: currentTenant.id,
       startDate: startDate && startDate.startOf('day').toISOString(),
       endDate: endDate && endDate.endOf('day').toISOString(),
     },
   })
 
-  const isProcessing = get(data, 'dynamoTablesQuery.processing') || get(data, 'dynamoTablesQuery.processing')
+  const isProcessing = !get(currentTenant, 'initialProcessing.done', false)
+
+  useInterval(refetch, 10000, isProcessing)
 
   if (error) {
     throw error
   }
 
-  if (!tenant.isSetupCompleted) {
-    return <SetupTenant tenant={tenant} />
+  if (!currentTenant.isSetupCompleted) {
+    return <SetupTenant tenant={currentTenant} />
   }
 
   if (isProcessing) {

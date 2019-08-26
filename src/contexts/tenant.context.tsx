@@ -24,6 +24,7 @@ interface TenantState {
   currentTenant: Tenant
 
   setTenant: Dispatch<SetStateAction<string | null>>
+  refetch: () => void
 }
 
 const TenantContext = React.createContext({} as TenantState)
@@ -32,7 +33,7 @@ const TenantProvider = memo(({ children }: TenantProviderProps) => {
   const { location: { pathname } } = useReactRouter()
   const [tenantId, setTenant] = usePersistState('tenant')
   const { user } = useContext(UserContext)
-  const { data, loading, error } = useQuery<Tenants>(tenantsQuery, { skip: !user })
+  const { data, loading, error, refetch } = useQuery<Tenants>(tenantsQuery, { skip: !user })
 
   const tenants = get(data, 'tenants', []) as Tenant []
   const currentTenant = useMemo(
@@ -51,7 +52,7 @@ const TenantProvider = memo(({ children }: TenantProviderProps) => {
   }, [pathname, setTenant, tenantId, tenants])
 
   return (
-    <TenantContext.Provider value={{ currentTenant, loading, error, tenants, tenantId, setTenant }}>
+    <TenantContext.Provider value={{ currentTenant, loading, error, tenants, tenantId, setTenant, refetch }}>
       {children}
     </TenantContext.Provider>
   )
