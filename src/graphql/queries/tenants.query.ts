@@ -10,6 +10,9 @@ export const tenantsQuery = gql`
       owner {
         id
       }
+      initialProcessing {
+        done
+      }
     }
   }
 `
