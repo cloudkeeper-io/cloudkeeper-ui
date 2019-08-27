@@ -40,7 +40,7 @@ const HeaderWrapper = styled.div`
 const POLL_INTERVAL = 30 * 60 * 1000 // 30 min
 const PROCESSING_REFETCH_DELAY = 10000 // 10 sec
 
-const defaultStartDate = moment().subtract(6, 'days')
+const defaultStartDate = moment().subtract(6, 'days').startOf('day')
 const defaultEndDate = moment()
 
 const defaultLayouts = {
@@ -82,7 +82,11 @@ export default () => {
   const { width } = useComponentSize(wrapperRef)
 
   const { data, loading, error, refetch } = useQuery<DashboardData>(dashboardQuery, {
-    variables: { tenantId, startDate, endDate },
+    variables: {
+      tenantId,
+      startDate: startDate!.toISOString(true),
+      endDate: endDate!.toISOString(true),
+    },
     pollInterval: POLL_INTERVAL,
   })
 
@@ -90,14 +94,6 @@ export default () => {
 
   useInterval(refetchTenants, PROCESSING_REFETCH_DELAY, isProcessing)
   useInterval(refetch, POLL_INTERVAL, !isProcessing)
-
-  if (loading) {
-    return (
-      <Wrapper ref={wrapperRef}>
-        <Loading height="calc(100vh - 64px)" />
-      </Wrapper>
-    )
-  }
 
   if (error) {
     throw error
@@ -126,10 +122,11 @@ export default () => {
           title="Dashboard"
           startDate={startDate}
           endDate={endDate}
-          onDateRangeChanged={(range) => setDateRange(range)}
+          onDateRangeChanged={setDateRange}
         />
       </HeaderWrapper>
-      {(width > 0) && (
+      {loading && <Loading height="calc(100vh - 64px)" />}
+      {!loading && (width > 0) && (
         <ReactGridLayout
           layouts={defaultLayouts}
           breakpoints={{ lg: 1250, md: 1000, sm: 800 }}
