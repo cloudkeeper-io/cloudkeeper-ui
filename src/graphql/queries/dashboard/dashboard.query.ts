@@ -1,23 +1,29 @@
 import gql from 'graphql-tag'
-import { cost, lambdas, dynamo, events } from '.'
+import { cost, LambdaTotals, events } from '.'
 
 export const dashboardQuery = gql`
-  query DashboardData ($tenantId: String){
-    lambdasData(tenantId: $tenantId) {
-      ...Lambdas
+  query DashboardData ($tenantId: String, $startDate: String, $endDate: String){
+    lambdaTotals(tenantId: $tenantId, startDate: $startDate, endDate: $endDate) {
+      ...LambdaTotals
     }
-    dynamoData(tenantId: $tenantId) {
-      ...Dynamo
+    mostExpensiveDynamoTables(tenantId: $tenantId, startDate: $startDate, endDate: $endDate) {
+      name
+      region
+      cost
     }
-    costsData(tenantId: $tenantId) {
+    mostExpensiveLambdas(tenantId: $tenantId, startDate: $startDate, endDate: $endDate) {
+      name
+      region
+      cost
+    }
+    costsData(tenantId: $tenantId, startDate: $startDate, endDate: $endDate) {
       ...Cost
     }
-    events(tenantId: $tenantId) {
+    events(tenantId: $tenantId, startDate: $startDate, endDate: $endDate) {
       ...Events
     }
   }
-  ${lambdas}
-  ${dynamo}
+  ${LambdaTotals}
   ${cost}
   ${events}
 `

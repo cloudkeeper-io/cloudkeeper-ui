@@ -11,6 +11,11 @@ export interface Tenants_tenants_owner {
   id: string;
 }
 
+export interface Tenants_tenants_initialProcessing {
+  __typename: "InitialProcessingData";
+  done: boolean;
+}
+
 export interface Tenants_tenants {
   __typename: "Tenant";
   id: string;
@@ -18,6 +23,7 @@ export interface Tenants_tenants {
   createdAt: string;
   isSetupCompleted: boolean;
   owner: Tenants_tenants_owner;
+  initialProcessing: Tenants_tenants_initialProcessing;
 }
 
 export interface Tenants {
