@@ -26,8 +26,8 @@ export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }
   const endOfToday = moment(today).endOf('day')
 
   const isTodaySelected = startOfToday.isSame(normalizedStartDate) && endOfToday.isSame(normalizedEndDate)
-  const isLast7DaysSelected = sevenDaysAgo.isSame(normalizedStartDate) && endOfToday.isSame(endDate!)
-  const isThisMonthSelected = startOfMonth.isSame(startDate!) && endOfToday.isSame(endDate!)
+  const isLast7DaysSelected = sevenDaysAgo.isSame(normalizedStartDate) && endOfToday.isSame(normalizedEndDate!)
+  const isThisMonthSelected = startOfMonth.isSame(normalizedStartDate!) && endOfToday.isSame(normalizedEndDate!)
 
   return (
     <HeaderContainer>
@@ -36,19 +36,19 @@ export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }
       </Typography>
       <DatepickerWrapper>
         <PredefinedDate
-          onClick={() => onDateRangeChanged({ startDate: today, endDate: today })}
+          onClick={() => onDateRangeChanged({ startDate: startOfToday, endDate: endOfToday })}
           active={isTodaySelected}
         >
           Today
         </PredefinedDate>
         <PredefinedDate
-          onClick={() => onDateRangeChanged({ startDate: sevenDaysAgo, endDate: today })}
+          onClick={() => onDateRangeChanged({ startDate: sevenDaysAgo, endDate: endOfToday })}
           active={isLast7DaysSelected}
         >
             Last 7 days
         </PredefinedDate>
         <PredefinedDate
-          onClick={() => onDateRangeChanged({ startDate: startOfMonth, endDate: today })}
+          onClick={() => onDateRangeChanged({ startDate: startOfMonth, endDate: endOfToday })}
           active={isThisMonthSelected}
         >
             This Month

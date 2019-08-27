@@ -40,7 +40,7 @@ const HeaderWrapper = styled.div`
 const POLL_INTERVAL = 30 * 60 * 1000 // 30 min
 const PROCESSING_REFETCH_DELAY = 10000 // 10 sec
 
-const defaultStartDate = moment().subtract(6, 'days')
+const defaultStartDate = moment().subtract(6, 'days').startOf('day')
 const defaultEndDate = moment()
 
 const defaultLayouts = {
@@ -82,7 +82,11 @@ export default () => {
   const { width } = useComponentSize(wrapperRef)
 
   const { data, loading, error, refetch } = useQuery<DashboardData>(dashboardQuery, {
-    variables: { tenantId },
+    variables: {
+      tenantId,
+      startDate: startDate!.startOf('day').toISOString(true),
+      endDate: endDate!.endOf('day').toISOString(true),
+    },
     pollInterval: POLL_INTERVAL,
   })
 
