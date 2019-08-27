@@ -82,7 +82,7 @@ export default () => {
         title="Lambdas"
         startDate={startDate}
         endDate={endDate}
-        onDateRangeChanged={(range) => setDateRange(range)}
+        onDateRangeChanged={setDateRange}
       />
       <SearchWrapper>
         <Input

@@ -86,7 +86,7 @@ export default () => {
         title="DynamoDB Tables"
         startDate={startDate}
         endDate={endDate}
-        onDateRangeChanged={(range) => setDateRange(range)}
+        onDateRangeChanged={setDateRange}
       />
       <SearchWrapper>
         <Input
