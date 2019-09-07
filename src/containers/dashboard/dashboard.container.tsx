@@ -2,8 +2,8 @@ import React, { useRef, useContext, useState } from 'react'
 import styled from 'styled-components/macro'
 import { useQuery } from 'react-apollo'
 import useComponentSize from '@rehooks/component-size'
-import get from 'lodash/get'
 import moment from 'moment'
+import get from 'lodash/get'
 
 import { formatNumber } from '../../utils'
 import Card from '../../components/card.component'
@@ -170,7 +170,9 @@ export default () => {
             />
           </Card>
           <Card key="5">
-            <TrendsCard />
+            <TrendsCard
+              trends={{ costsData: data!.costsData!.costsPerService!, lambdasData: data!.lambdaTotals! }}
+            />
           </Card>
         </ReactGridLayout>
       )}
