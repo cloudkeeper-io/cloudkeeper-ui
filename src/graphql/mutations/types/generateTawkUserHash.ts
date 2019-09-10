@@ -3,15 +3,9 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: Events
+// GraphQL mutation operation: generateTawkUserHash
 // ====================================================
 
-export interface Events {
-  __typename: "Event";
-  dateTime: string;
-  dimension: string | null;
-  message: string;
-  serviceName: string;
-  value: number | null;
-  expectedValue: number | null;
+export interface generateTawkUserHash {
+  generateTawkUserHash: string | null;
 }

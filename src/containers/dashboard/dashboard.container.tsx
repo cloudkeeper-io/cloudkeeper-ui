@@ -3,7 +3,6 @@ import styled from 'styled-components/macro'
 import { useQuery } from 'react-apollo'
 import useComponentSize from '@rehooks/component-size'
 import get from 'lodash/get'
-import round from 'lodash/round'
 import moment from 'moment'
 
 import { formatNumber } from '../../utils'
@@ -23,6 +22,7 @@ import { CostsPerService } from '../../components/data-cards/costs-per-service.c
 import { CostsPerStack } from '../../components/data-cards/costs-per-stack.component'
 import { EventsCard } from '../../components/data-cards/events-card.component'
 import { TrendsCard } from '../../components/data-cards/trends-card.component'
+import LambdaSummaryCard from '../../components/data-cards/lambda-summary-card.component'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -77,7 +77,7 @@ export default () => {
   })
 
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const { currentTenant, tenantId } = useContext(TenantContext)
+  const { currentTenant, tenantId, refetch: refetchTenants } = useContext(TenantContext)
 
   const { width } = useComponentSize(wrapperRef)
 
@@ -90,18 +90,10 @@ export default () => {
     pollInterval: POLL_INTERVAL,
   })
 
-  const isProcessing = get(data, 'lambdasData.processing') || get(data, 'dynamoData.processing')
+  const isProcessing = !get(currentTenant, 'initialProcessing.done', false)
 
-  useInterval(refetch, PROCESSING_REFETCH_DELAY, isProcessing)
-
-
-  if (loading) {
-    return (
-      <Wrapper ref={wrapperRef}>
-        <Loading height="calc(100vh - 64px)" />
-      </Wrapper>
-    )
-  }
+  useInterval(refetchTenants, PROCESSING_REFETCH_DELAY, isProcessing)
+  useInterval(refetch, POLL_INTERVAL, !isProcessing)
 
   if (error) {
     throw error
@@ -115,7 +107,7 @@ export default () => {
     )
   }
 
-  if (!currentTenant!.isSetupCompleted) {
+  if (isProcessing) {
     return (
       <Wrapper ref={wrapperRef}>
         <Processing />
@@ -130,10 +122,11 @@ export default () => {
           title="Dashboard"
           startDate={startDate}
           endDate={endDate}
-          onDateRangeChanged={(range) => setDateRange(range)}
+          onDateRangeChanged={setDateRange}
         />
       </HeaderWrapper>
-      {(width > 0) && (
+      {loading && <Loading height="calc(100vh - 64px)" />}
+      {!loading && (width > 0) && (
         <ReactGridLayout
           layouts={defaultLayouts}
           breakpoints={{ lg: 1250, md: 1000, sm: 800 }}
@@ -144,31 +137,14 @@ export default () => {
           isResizable={false}
         >
           <Card key="0">
-            <TopDynamoCard
-              header="Read Heavy Tables"
-              dynamoHeader="Most Read Table"
-              units={[{ label: 'consumed', value: 'consumedRead' }, { label: 'provisioned', value: 'provisionedRead' }]}
-              data={data!.dynamoData!.last30Days!.mostReadTables! as any}
-              summaryFormatter={(x) => `${x.consumedRead!.toLocaleString('ru')} read units`}
-              yAxisFormatter={(x) => formatNumber(x)}
-              tooltipFormatter={(x) => Number(x).toLocaleString()}
-              timeAxisFormat="LLL d"
-              dynamoInfo={[
-                { unit: 'consumedRead', text: 'total', valueFn: (x) => x.toLocaleString('ru') },
-                {
-                  unit: 'averageConsumedRead',
-                  text: 'average',
-                  valueFn: (x) => `${round(x, 2).toLocaleString('en')}/s`,
-                },
-              ]}
-            />
+            <LambdaSummaryCard count={2} data={data!.lambdaTotals!} timeAxisFormat="LLL d" />
           </Card>
           <Card key="1">
             <TopDynamoCard
               header="Expensive Tables"
               dynamoHeader="Most Expensive Table"
               units={[{ label: 'read price', value: 'readPrice' }, { label: 'write price', value: 'writePrice' }]}
-              data={data!.dynamoData!.last30Days!.mostExpensiveTables as any}
+              data={data!.mostExpensiveDynamoTables as any}
               summaryFormatter={(x) => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
               yAxisFormatter={(x) => `$ ${formatNumber(x)}`}
               tooltipFormatter={(x) => `$ ${Number(x).toLocaleString()}`}
@@ -180,13 +156,18 @@ export default () => {
             />
           </Card>
           <Card key="2">
-            <EventsCard events={data!.events!.events!} />
+            <EventsCard events={data!.events!} />
           </Card>
           <Card key="3">
             <CostsPerService data={data!.costsData!.costsPerService!} />
           </Card>
           <Card key="4">
-            <CostsPerStack key={tenantId!} data={data!.costsData!.costsPerStack!} />
+            <CostsPerStack
+              key={tenantId!}
+              startDate={startDate!}
+              endDate={endDate!}
+              data={data!.costsData!.costsPerStack!}
+            />
           </Card>
           <Card key="5">
             <TrendsCard />

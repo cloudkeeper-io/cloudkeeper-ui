@@ -15,7 +15,7 @@ export const getApolloClient = (getIdToken: () => Promise<string>) => {
   const persistor = new CachePersistor({
     cache,
     storage: window.localStorage as any,
-    maxSize: 5 * 1024 * 1024,
+    maxSize: 4.5 * 1024 * 1024,
   })
 
   const lastPurge = localStorage.getItem(PERSIST_LAST_PURGE_KEY)

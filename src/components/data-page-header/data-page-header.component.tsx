@@ -57,7 +57,15 @@ export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }
           id={title}
           startDate={startDate}
           endDate={endDate}
-          onDateRangeChanged={onDateRangeChanged}
+          onDateRangeChanged={({ startDate: newStartDate, endDate: newEndDate }) => {
+            onDateRangeChanged({
+              startDate: newStartDate!.startOf('day'),
+              endDate: newEndDate &&
+                (newEndDate!.isSame(today, 'day')
+                  ? moment().startOf('hour')
+                  : newEndDate!.endOf('day')),
+            })
+          }}
         />
       </DatepickerWrapper>
     </HeaderContainer>
