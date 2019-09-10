@@ -4,6 +4,8 @@ import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from 'recharts'
 import { Typography } from '@material-ui/core'
 import { ChevronLeft } from 'react-feather'
 import moment, { Moment } from 'moment'
+import get from 'lodash/get'
+import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 import reduce from 'lodash/reduce'
 import forEach from 'lodash/forEach'
@@ -14,6 +16,11 @@ import { ReactComponent as ScaleSvg } from './images/scale.svg'
 import scaleMask from './images/scale-mask.svg'
 import { formatNumber } from '../../utils'
 
+const Wrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`
 const Title = styled(Typography)`
   margin: 10px 0 0 20px;
 `
@@ -117,6 +124,13 @@ const ScaleDate = styled.div`
   color: #9A9DAD;
   font-size: 11px;
 `
+const Placeholder = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+`
 
 const StyledSector = Sector as any
 
@@ -171,7 +185,13 @@ export const CostsPerStack = memo(({ data, startDate, endDate }: CostsPerStackPr
   const moveActiveToFront = () => {
     try {
       const { current } = wrapperRef
+
       const pieRef = current!.querySelector('.recharts-pie')
+
+      if (!pieRef) {
+        return
+      }
+
       const fakeNodes = pieRef!.querySelectorAll('.fake-node')
 
       forEach(fakeNodes, (node) => pieRef!.removeChild(node))
@@ -198,10 +218,19 @@ export const CostsPerStack = memo(({ data, startDate, endDate }: CostsPerStackPr
   }, {} as any)
 
   const orderedDataKeys = take(orderBy(map(dataKeys, (cost, name) => ({ cost, name })), 'cost', 'desc'), 5)
+  const isEmptyData = isEmpty(data) || (data.length === 1 && isEmpty(get(data, '0.stackCosts')))
 
   return (
-    <div ref={wrapperRef}>
+    <Wrapper ref={wrapperRef}>
       <Title variant="h5">Costs Per Stack</Title>
+      {isEmptyData && (
+        <Placeholder>
+          <Typography variant="h6">
+            No Data Available
+          </Typography>
+        </Placeholder>
+      )}
+      {!isEmptyData && (
       <Content>
         <LeftSide>
           <ChartWrapper>
@@ -252,14 +281,15 @@ export const CostsPerStack = memo(({ data, startDate, endDate }: CostsPerStackPr
                 {stack.name || 'Resources without a stack'}
               </LegendText>
               {activeIndex === index && (
-                <ActiveIndicator>
-                  <ChevronLeft />
-                </ActiveIndicator>
+              <ActiveIndicator>
+                <ChevronLeft />
+              </ActiveIndicator>
               )}
             </LegendItem>
           ))}
         </Legend>
       </Content>
-    </div>
+      )}
+    </Wrapper>
   )
 })

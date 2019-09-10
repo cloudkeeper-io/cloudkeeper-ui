@@ -64,8 +64,7 @@ interface Data {
   consumedWrite?: number
   provisionedWrite?: number
   averageConsumedWrite?: number
-  readPrice?: number
-  writePrice?: number
+  cost?: number
   throttledRequests?: number
   throttledReads?: number
   throttledWrites?: number
