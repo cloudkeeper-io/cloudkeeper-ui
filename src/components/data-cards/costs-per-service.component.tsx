@@ -82,7 +82,8 @@ export const CostsPerService = memo(({ data }: CostsPerServiceProps) => {
   }, {} as any)
 
   const orderedDataKeys = take(orderBy(map(dataKeys, (cost, name) => ({ cost, name })), 'cost', 'desc'), 5)
-  const isEmptyData = get(data, 'length', 0) === 0 || (data.length === 1 && data[0].serviceCosts.length === 0)
+
+  const isEmptyData = isEmpty(data) || (data.length === 1 && isEmpty(get(data, '0.serviceCosts')))
 
   return (
     <ChartWrapper>

@@ -5,6 +5,7 @@ import { Typography } from '@material-ui/core'
 import { ChevronLeft } from 'react-feather'
 import moment, { Moment } from 'moment'
 import get from 'lodash/get'
+import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
 import reduce from 'lodash/reduce'
 import forEach from 'lodash/forEach'
@@ -217,7 +218,7 @@ export const CostsPerStack = memo(({ data, startDate, endDate }: CostsPerStackPr
   }, {} as any)
 
   const orderedDataKeys = take(orderBy(map(dataKeys, (cost, name) => ({ cost, name })), 'cost', 'desc'), 5)
-  const isEmptyData = get(data, 'length', 0) === 0 || (data.length === 1 && data[0].stackCosts.length === 0)
+  const isEmptyData = isEmpty(data) || (data.length === 1 && isEmpty(get(data, '0.stackCosts')))
 
   return (
     <Wrapper ref={wrapperRef}>
