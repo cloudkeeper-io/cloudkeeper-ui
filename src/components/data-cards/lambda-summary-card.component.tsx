@@ -15,7 +15,7 @@ import { StyledCard } from './data-card.styles'
 const Header = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: calc(100% - 50px);
+  width: 100%;
   justify-content: space-between;
   align-items: flex-start;
   margin: 20px 0 10px 0;
