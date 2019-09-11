@@ -5,7 +5,7 @@ import useComponentSize from '@rehooks/component-size'
 import get from 'lodash/get'
 import moment from 'moment'
 
-import { formatNumber } from '../../utils'
+import { getTimeAxisFormat } from '../../utils'
 import Card from '../../components/card.component'
 import ReactGridLayout from '../../components/grid-layout.component'
 import { dashboardQuery } from '../../graphql/queries'
@@ -14,10 +14,8 @@ import { useInterval } from '../../hooks'
 import Processing from '../../components/processing.component'
 import SetupTenant from './components/setup-tenant.component'
 import Loading from '../../components/spinners/loading.component'
-import TopDynamoCard from '../../components/data-cards/top-dynamo-card.component'
 import { DashboardData } from '../../graphql/queries/dashboard/types/DashboardData'
-import { DataPageHeader } from '../../components/data-page-header/data-page-header.component'
-import { DateRange } from '../../components/datepicker/datepicker.component'
+import { DataPageHeader, DefinedDateRange } from '../../components/data-page-header/data-page-header.component'
 import { CostsPerService } from '../../components/data-cards/costs-per-service.component'
 import { CostsPerStack } from '../../components/data-cards/costs-per-stack.component'
 import { EventsCard } from '../../components/data-cards/events-card.component'
@@ -71,7 +69,7 @@ const defaultLayouts = {
 }
 
 export default () => {
-  const [{ startDate, endDate }, setDateRange] = useState<DateRange>({
+  const [{ startDate, endDate }, setDateRange] = useState<DefinedDateRange>({
     startDate: defaultStartDate,
     endDate: defaultEndDate,
   })
@@ -84,8 +82,8 @@ export default () => {
   const { data, loading, error, refetch } = useQuery<DashboardData>(dashboardQuery, {
     variables: {
       tenantId,
-      startDate: startDate!.startOf('day').toISOString(true),
-      endDate: endDate!.endOf('day').toISOString(true),
+      startDate: startDate.startOf('day').toISOString(true),
+      endDate: endDate.endOf('day').toISOString(true),
     },
     pollInterval: POLL_INTERVAL,
   })
@@ -137,18 +135,13 @@ export default () => {
           isResizable={false}
         >
           <Card key="0">
-            <LambdaSummaryCard count={2} data={data!.lambdaTotals!} timeAxisFormat="LLL d" />
+            <LambdaSummaryCard
+              count={2}
+              data={data!.lambdaTotals!}
+              timeAxisFormat={getTimeAxisFormat(startDate, endDate)}
+            />
           </Card>
           <Card key="1">
-            <TopDynamoCard
-              header="Expensive Tables"
-              dynamoHeader="Most Expensive Table"
-              data={data!.mostExpensiveDynamoTables as any}
-              summaryFormatter={(x) => `$ ${(x!.cost!).toLocaleString('en')}`}
-              yAxisFormatter={(x) => `$ ${formatNumber(x)}`}
-              tooltipFormatter={(x) => `$ ${Number(x).toLocaleString()}`}
-              timeAxisFormat="LLL d"
-            />
           </Card>
           <Card key="2">
             <EventsCard events={data!.events!} />
