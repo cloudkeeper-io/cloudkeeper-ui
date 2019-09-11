@@ -84,8 +84,8 @@ export default () => {
   const { data, loading, error, refetch } = useQuery<DashboardData>(dashboardQuery, {
     variables: {
       tenantId,
-      startDate: startDate!.toISOString(true),
-      endDate: endDate!.toISOString(true),
+      startDate: startDate!.startOf('day').toISOString(true),
+      endDate: endDate!.endOf('day').toISOString(true),
     },
     pollInterval: POLL_INTERVAL,
   })
@@ -143,16 +143,11 @@ export default () => {
             <TopDynamoCard
               header="Expensive Tables"
               dynamoHeader="Most Expensive Table"
-              units={[{ label: 'read price', value: 'readPrice' }, { label: 'write price', value: 'writePrice' }]}
               data={data!.mostExpensiveDynamoTables as any}
-              summaryFormatter={(x) => `$ ${(x.readPrice! + x.writePrice!).toLocaleString('en')}`}
+              summaryFormatter={(x) => `$ ${(x!.cost!).toLocaleString('en')}`}
               yAxisFormatter={(x) => `$ ${formatNumber(x)}`}
               tooltipFormatter={(x) => `$ ${Number(x).toLocaleString()}`}
               timeAxisFormat="LLL d"
-              dynamoInfo={[
-                { unit: 'readPrice', text: 'read price', valueFn: (x) => `$ ${x.toLocaleString('en')}` },
-                { unit: 'writePrice', text: 'write price', valueFn: (x) => `$ ${x.toLocaleString('en')}` },
-              ]}
             />
           </Card>
           <Card key="2">
