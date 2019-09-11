@@ -20,7 +20,9 @@ interface DataPageHeaderProps {
 export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }: DataPageHeaderProps) => {
   const today = moment()
 
-  const [{ innerStartDate, innerEndDate }, setInnerRange] = useState({ innerStartDate: startDate, innerEndDate: endDate })
+  const [{ innerStartDate, innerEndDate }, setInnerRange] = useState({
+    innerStartDate: startDate, innerEndDate: endDate,
+  })
 
   useEffect(() => {
     setInnerRange({ innerStartDate: startDate, innerEndDate: endDate })

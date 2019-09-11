@@ -141,8 +141,7 @@ export default () => {
               timeAxisFormat={getTimeAxisFormat(startDate, endDate)}
             />
           </Card>
-          <Card key="1">
-          </Card>
+          <Card key="1" />
           <Card key="2">
             <EventsCard events={data!.events!} />
           </Card>
