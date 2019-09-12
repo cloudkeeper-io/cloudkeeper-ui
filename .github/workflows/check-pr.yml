@@ -17,4 +17,4 @@ jobs:
     - name: tsc
       run: yarn tsc
     - name: tests
-      run: CI=true yarn test
+      run: CI=true yarn test --passWithNoTests
