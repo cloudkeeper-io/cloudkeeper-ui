@@ -21,6 +21,7 @@ import { CostsPerStack } from '../../components/data-cards/costs-per-stack.compo
 import { EventsCard } from '../../components/data-cards/events-card.component'
 import { TrendsCard } from '../../components/data-cards/trends-card.component'
 import LambdaSummaryCard from '../../components/data-cards/lambda-summary-card.component'
+import { MostExpensiveCard } from '../../components/data-cards/most-expensive-card.component'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -141,7 +142,12 @@ export default () => {
               timeAxisFormat={getTimeAxisFormat(startDate, endDate)}
             />
           </Card>
-          <Card key="1" />
+          <Card key="1">
+            <MostExpensiveCard
+              lambdaData={data!.mostExpensiveLambdas!}
+              dynamoData={data!.mostExpensiveDynamoTables}
+            />
+          </Card>
           <Card key="2">
             <EventsCard events={data!.events!} />
           </Card>
