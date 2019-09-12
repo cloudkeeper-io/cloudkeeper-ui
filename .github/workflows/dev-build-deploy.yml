@@ -20,7 +20,7 @@ jobs:
       - name: tsc
         run: yarn tsc
       - name: tests
-        run: yarn test -- --no-watchman --all
+        run: CI=true yarn test
       - name: build project
         run: yarn build
       - name: build storybook
