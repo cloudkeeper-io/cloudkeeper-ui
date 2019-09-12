@@ -1,0 +1,19 @@
+name: check-pr
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ayankovsky/node-serverless-aws
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: install dependencies
+      run: yarn
+    - name: lint
+      run: yarn lint
+    - name: tsc
+      run: yarn tsc
+    - name: tests
+      run: yarn test -w 1 --ci --testResultsProcessor="jest-junit" --passWithNoTests
