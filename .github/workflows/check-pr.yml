@@ -3,10 +3,10 @@ name: check-pr
 on: [pull_request]
 
 jobs:
-  build:
+  check-pr:
 
-    runs-on: ayankovsky/node-serverless-aws
-    
+    runs-on: ayankovsky/node-serverless-aws-latest
+
     steps:
     - uses: actions/checkout@v1
     - name: install dependencies
