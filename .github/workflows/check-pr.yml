@@ -17,4 +17,4 @@ jobs:
     - name: tsc
       run: yarn tsc
     - name: tests
-      run: yarn test -w 1 --ci --testResultsProcessor="jest-junit" --passWithNoTests
+      run: yarn test

@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
+      - uses: actions/aws/cli@master
       - name: install dependencies
         run: yarn
       - name: lint
@@ -19,7 +20,7 @@ jobs:
       - name: tsc
         run: yarn tsc
       - name: tests
-        run: yarn test -w 1 --ci --testResultsProcessor="jest-junit" --passWithNoTests
+        run: yarn test
       - name: build project
         run: yarn build
       - name: build storybook
