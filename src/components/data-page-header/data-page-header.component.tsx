@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Typography } from '@material-ui/core'
 import moment, { Moment } from 'moment'
 
 import { DatepickerWrapper, HeaderContainer, PredefinedDate } from './data-page-header.styles'
 import { DateRangePicker } from '../date-range-picker'
-import { DateRange } from '../datepicker/datepicker.component'
+
+export interface DefinedDateRange {
+  startDate: Moment,
+  endDate: Moment,
+}
 
 interface DataPageHeaderProps {
     title: string,
-    onDateRangeChanged: (range: DateRange) => void,
+    onDateRangeChanged: (range: DefinedDateRange) => void,
     startDate: Moment | null,
     endDate: Moment | null,
 }
@@ -16,11 +20,19 @@ interface DataPageHeaderProps {
 export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }: DataPageHeaderProps) => {
   const today = moment()
 
+  const [{ innerStartDate, innerEndDate }, setInnerRange] = useState({
+    innerStartDate: startDate, innerEndDate: endDate,
+  })
+
+  useEffect(() => {
+    setInnerRange({ innerStartDate: startDate, innerEndDate: endDate })
+  }, [startDate, endDate])
+
   const sevenDaysAgo = moment().subtract(6, 'days').startOf('day')
   const startOfMonth = moment().startOf('month').startOf('day')
 
-  const normalizedStartDate = moment(startDate!).startOf('day')
-  const normalizedEndDate = moment(endDate!).endOf('day')
+  const normalizedStartDate = moment(innerStartDate!).startOf('day')
+  const normalizedEndDate = moment(innerEndDate!).endOf('day')
 
   const startOfToday = moment(today).startOf('day')
   const endOfToday = moment(today).endOf('day')
@@ -55,16 +67,19 @@ export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }
         </PredefinedDate>
         <DateRangePicker
           id={title}
-          startDate={startDate}
-          endDate={endDate}
+          startDate={innerStartDate}
+          endDate={innerEndDate}
           onDateRangeChanged={({ startDate: newStartDate, endDate: newEndDate }) => {
-            onDateRangeChanged({
-              startDate: newStartDate!.startOf('day'),
-              endDate: newEndDate &&
-                (newEndDate!.isSame(today, 'day')
-                  ? moment().startOf('hour')
-                  : newEndDate!.endOf('day')),
-            })
+            setInnerRange({ innerStartDate: newStartDate, innerEndDate: newEndDate })
+
+            if (newStartDate && newEndDate) {
+              onDateRangeChanged({
+                startDate: newStartDate!.startOf('day'),
+                endDate: newEndDate!.isSame(today, 'day') ?
+                  moment().startOf('hour')
+                  : newEndDate!.endOf('day'),
+              })
+            }
           }}
         />
       </DatepickerWrapper>
