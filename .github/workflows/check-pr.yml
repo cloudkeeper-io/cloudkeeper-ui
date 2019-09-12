@@ -5,10 +5,11 @@ on: [pull_request]
 jobs:
   check-pr:
 
-    runs-on: ayankovsky/node-serverless-aws-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
     - name: install dependencies
       run: yarn
     - name: lint
