@@ -6,6 +6,7 @@ import map from 'lodash/map'
 import isEmpty from 'lodash/isEmpty'
 import { DollarSign } from 'react-feather'
 import { Icon } from '../icons'
+import FaIcon from '../icons/fa-icon.component'
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,7 +49,7 @@ const getIconByServiceName = (serviceName: string) => {
     case 'DynamoDB':
       return <Icon icon="dynamo" />
     default:
-      return <DollarSign />
+      return <FaIcon icon="wallet" />
   }
 }
 
