@@ -4,7 +4,6 @@ import { Typography } from '@material-ui/core'
 import moment from 'moment'
 import map from 'lodash/map'
 import isEmpty from 'lodash/isEmpty'
-import { DollarSign } from 'react-feather'
 import { Icon } from '../icons'
 import FaIcon from '../icons/fa-icon.component'
 
