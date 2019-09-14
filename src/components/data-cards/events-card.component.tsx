@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core'
 import moment from 'moment'
 import map from 'lodash/map'
 import isEmpty from 'lodash/isEmpty'
-
+import { DollarSign } from 'react-feather'
 import { Icon } from '../icons'
 
 const Wrapper = styled.div`
@@ -44,11 +44,11 @@ const Placeholder = styled.div`
 const getIconByServiceName = (serviceName: string) => {
   switch (serviceName) {
     case 'AWS Lambda':
-      return 'lambda'
-    case 'AWS Dynamo':
-      return 'dynamo'
+      return <Icon icon="lambda" />
+    case 'DynamoDB':
+      return <Icon icon="dynamo" />
     default:
-      return 'lambda'
+      return <DollarSign />
   }
 }
 
@@ -68,7 +68,7 @@ export const EventsCard = memo(({ events }: EventsCardProps) => (
     )}
     {map(events, (event, index) => (
       <Event key={index}>
-        <Icon icon={getIconByServiceName(event.serviceName)} />
+        {getIconByServiceName(event.serviceName)}
         <Message>{event.message}</Message>
         <Time>{moment(event.dateTime).from()}</Time>
       </Event>
