@@ -19,9 +19,10 @@ import { DataPageHeader, DefinedDateRange } from '../../components/data-page-hea
 import { CostsPerService } from '../../components/data-cards/costs-per-service.component'
 import { CostsPerStack } from '../../components/data-cards/costs-per-stack.component'
 import { EventsCard } from '../../components/data-cards/events-card.component'
-import { TrendsCard } from '../../components/data-cards/trends-card.component'
+import { TrendsCard } from '../../components/data-cards/trends-card/trends-card.component'
 import LambdaSummaryCard from '../../components/data-cards/lambda-summary-card.component'
 import { MostExpensiveCard } from '../../components/data-cards/most-expensive-card.component'
+import { getTop2ExpensiveServiceData } from '../../components/data-cards/trends-card/trends-card.utils'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -49,7 +50,7 @@ const defaultLayouts = {
     { x: 8, y: 0, w: 4, h: 4, i: '2' },
     { x: 0, y: 2, w: 4, h: 2, i: '3' },
     { x: 4, y: 2, w: 4, h: 2, i: '4' },
-    { x: 0, y: 4, w: 12, h: 1, i: '5' },
+    { x: 0, y: 4, w: 12, h: 2, i: '5' },
   ],
   md: [
     { x: 0, y: 0, w: 5, h: 2, i: '0', minH: 2, minW: 5 },
@@ -134,6 +135,7 @@ export default () => {
           cols={{ lg: 12, md: 10, sm: 1 }}
           width={width}
           rowHeight={170}
+          margin={[16, 16]}
           isDraggable={false}
           isResizable={false}
         >
@@ -166,7 +168,13 @@ export default () => {
           </Card>
           <Card key="5">
             <TrendsCard
-              trends={{ costsData: data!.costsData!.costsPerService!, lambdasData: data!.lambdaTotals! }}
+              trends={{
+                costsData: data!.costsData!.costsPerService!,
+                mostExpensiveCost: getTop2ExpensiveServiceData(data!.costsData!.costsPerService!),
+                lambdasData: data!.lambdaTotals!.dataPoints,
+              }}
+              startDate={startDate}
+              endDate={endDate}
               timeAxisFormat={timeAxisFormat}
             />
           </Card>

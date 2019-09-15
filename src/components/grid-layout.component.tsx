@@ -7,6 +7,7 @@ import { getTransition, mobileMediaQuery } from '../utils'
 export default styled(ReactGridLayout)`
   position: relative;
   margin-top: -15px;
+  margin-bottom: 5px;
   transition: ${(p) => getTransition(p.theme, ['height'])};
   @media(max-width: (${mobileMediaQuery})) {
     padding: 0;

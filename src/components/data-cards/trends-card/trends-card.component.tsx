@@ -1,8 +1,8 @@
-import React, { memo, useContext } from 'react'
+import React, { memo, useContext, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
 import { Typography } from '@material-ui/core'
-import { linearRegression, linearRegressionLine } from 'simple-statistics'
 import { DateTime } from 'luxon'
+import { Moment } from 'moment'
 import {
   Area,
   AreaChart,
@@ -15,14 +15,17 @@ import {
 import map from 'lodash/map'
 import first from 'lodash/first'
 import round from 'lodash/round'
+import every from 'lodash/every'
 
-import { getIconByServiceName } from '../../utils'
+import { getIconByServiceName } from '../../../utils'
+import { getGraphData, getTrendText, TRENDS } from './trends-card.utils'
 
 const Wrapper = styled.div`
   display: block;
   width: 100%;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-bottom: 20px;
 `
 const ChartWrapper = styled.div`
@@ -33,9 +36,16 @@ const ChartWrapper = styled.div`
 `
 const Trends = styled.div`
   min-width: 250px;
+  max-width: 450px;
 `
-const Trend = styled.div`
+const Trend = styled.div<{ active: boolean }>`
   padding: 5px 20px;
+  color: ${(p) => (p.active ? p.theme.palette.secondary.main : p.theme.colors.text)};
+  svg {
+    color: ${(p) => (p.active ? p.theme.palette.secondary.main : p.theme.colors.text)};
+    transition: none;
+  }
+  cursor: pointer;
 `
 const TrendText = styled.span`
   margin-left: 10px;
@@ -53,53 +63,42 @@ const StyledTooltip = Tooltip as any
 
 interface TrendsCardProps {
   trends: {
-    costsData: any,
-    lambdasData: any,
+    costsData: any
+    lambdasData: any
+    mostExpensiveCost: any
+    [x: string]: any
   },
+  startDate: Moment
+  endDate: Moment
   timeAxisFormat: string,
 }
 
-// global costs
-// invocations
-// errors
-// Top 2 todays most expensive services trends
-export const TrendsCard = memo(({ trends, timeAxisFormat }: TrendsCardProps) => {
+export const TrendsCard = memo(({ trends, startDate, endDate, timeAxisFormat }: TrendsCardProps) => {
+  const [active, setActive] = useState(0)
   const { dataCard: colors } = useContext(ThemeContext)
-  const { costsData } = trends
+  const activeTrend = TRENDS[active]
 
-  const formattedCostData = map(costsData, (x) => ({ date: DateTime.fromISO(x.date).valueOf(), total: x.total }))
-  const regressionData = map(formattedCostData, (x) => [x.date, x.total])
-  const regression = linearRegression(regressionData)
-  const lineFn = linearRegressionLine(regression)
+  const graphData = getGraphData(trends[activeTrend.trendsField], active)
 
-  const dataWithTrends = map(formattedCostData, (x, index) => (
-    { ...x, trendData: lineFn(first(regressionData[index])) }))
+  const isStraightLine = every(graphData, (point) => point.value === first(graphData)!.value)
+  const isStraightTrendLine = every(graphData, (point) => point.trendData === first(graphData)!.trendData)
 
   return (
     <Wrapper>
-      <Title variant="h5">Trends</Title>
       <Content>
         <Trends>
-          <Trend>
-            {getIconByServiceName('cost')}
-            <TrendText>Lambda executions is up 30% in the last 7 days</TrendText>
-          </Trend>
-          <Trend>{getIconByServiceName('cost')} test</Trend>
-          <Trend>{getIconByServiceName('cost')} test</Trend>
+          <Title variant="h5">Trends</Title>
+          {map(TRENDS, (trend, index) => (
+            <Trend key={trend.title} active={index === active} onClick={() => setActive(index)}>
+              {getIconByServiceName(trend.icon)}
+              <TrendText>{getTrendText(trends[TRENDS[index].trendsField], index, startDate, endDate)}</TrendText>
+            </Trend>
+          ))}
         </Trends>
         <ChartWrapper>
+          <Title variant="h5">{TRENDS[active].title}</Title>
           <ResponsiveContainer>
-            <AreaChart data={dataWithTrends} margin={{ right: 30 }}>
-              <defs>
-                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-                </linearGradient>
-              </defs>
+            <AreaChart data={graphData} margin={{ right: 30 }}>
               <XAxis
                 dataKey="date"
                 stroke={colors.axis}
@@ -125,21 +124,21 @@ export const TrendsCard = memo(({ trends, timeAxisFormat }: TrendsCardProps) => 
                 labelFormatter={(value: number) => DateTime.fromMillis(value).toFormat(timeAxisFormat)}
               />
               <Area
-                dataKey="total"
-                stroke={colors.areaColor}
+                dataKey="value"
+                stroke={isStraightLine ? colors.areaColor : colors.svgAreaColor}
                 fill="transparent"
                 strokeWidth={3}
               />
               <Area
-                dataKey="total"
-                stroke={colors.areaColor}
-                fill={colors.areaColor}
+                dataKey="value"
+                stroke={isStraightLine ? colors.areaColor : colors.svgAreaColor}
+                fill={isStraightLine ? colors.areaColor : colors.svgAreaColor}
                 mask="url(#fadeMask)"
                 strokeWidth={3}
               />
               <Area
                 dataKey="trendData"
-                stroke={colors.areaTrend}
+                stroke={isStraightTrendLine ? colors.areaTrend : colors.svgAreaTrend}
                 fill="transparent"
                 strokeWidth={3}
                 connectNulls

@@ -4,6 +4,7 @@ import moment, { Moment } from 'moment'
 
 import { DatepickerWrapper, HeaderContainer, PredefinedDate } from './data-page-header.styles'
 import { DateRangePicker } from '../date-range-picker'
+import { analyzeTimeRange } from '../../utils'
 
 export interface DefinedDateRange {
   startDate: Moment,
@@ -11,10 +12,10 @@ export interface DefinedDateRange {
 }
 
 interface DataPageHeaderProps {
-    title: string,
-    onDateRangeChanged: (range: DefinedDateRange) => void,
-    startDate: Moment | null,
-    endDate: Moment | null,
+  title: string,
+  onDateRangeChanged: (range: DefinedDateRange) => void,
+  startDate: Moment | null,
+  endDate: Moment | null,
 }
 
 export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }: DataPageHeaderProps) => {
@@ -31,15 +32,10 @@ export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }
   const sevenDaysAgo = moment().subtract(6, 'days').startOf('day')
   const startOfMonth = moment().startOf('month').startOf('day')
 
-  const normalizedStartDate = moment(innerStartDate!).startOf('day')
-  const normalizedEndDate = moment(innerEndDate!).endOf('day')
-
   const startOfToday = moment(today).startOf('day')
   const endOfToday = moment(today).endOf('day')
 
-  const isTodaySelected = startOfToday.isSame(normalizedStartDate) && endOfToday.isSame(normalizedEndDate)
-  const isLast7DaysSelected = sevenDaysAgo.isSame(normalizedStartDate) && endOfToday.isSame(normalizedEndDate!)
-  const isThisMonthSelected = startOfMonth.isSame(normalizedStartDate!) && endOfToday.isSame(normalizedEndDate!)
+  const { isTodaySelected, isLast7DaysSelected, isThisMonthSelected } = analyzeTimeRange(innerStartDate!, innerEndDate!)
 
   return (
     <HeaderContainer>
@@ -57,13 +53,13 @@ export const DataPageHeader = ({ title, startDate, endDate, onDateRangeChanged }
           onClick={() => onDateRangeChanged({ startDate: sevenDaysAgo, endDate: endOfToday })}
           active={isLast7DaysSelected}
         >
-            Last 7 days
+          Last 7 days
         </PredefinedDate>
         <PredefinedDate
           onClick={() => onDateRangeChanged({ startDate: startOfMonth, endDate: endOfToday })}
           active={isThisMonthSelected}
         >
-            This Month
+          This Month
         </PredefinedDate>
         <DateRangePicker
           id={title}
