@@ -112,7 +112,6 @@ export const TrendsCard = memo(({ trends, startDate, endDate, timeAxisFormat }: 
                 tickLine={false}
                 type="number"
                 padding={{ top: 20, bottom: 15 }}
-                // tickFormatter={tickFormatters[tab]}
               />
               <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
               <StyledTooltip
