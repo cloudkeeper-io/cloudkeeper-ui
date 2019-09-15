@@ -13,6 +13,8 @@ import compact from 'lodash/compact'
 import take from 'lodash/take'
 import get from 'lodash/get'
 
+import { formatNumber } from '../../utils'
+
 const ChartWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,11 +56,11 @@ const StyledTooltip = Tooltip as any
 
 interface CostsPerServiceProps {
   data: any[],
+  timeAxisFormat: string,
 }
 
-export const CostsPerService = memo(({ data }: CostsPerServiceProps) => {
-  const { colors } = useContext(ThemeContext)
-  const COLORS = colors.seriesColors
+export const CostsPerService = memo(({ data, timeAxisFormat }: CostsPerServiceProps) => {
+  const { dataCard: colors, colors: { seriesColors: COLORS } } = useContext(ThemeContext)
 
   const formattedData = compact(map(data, (x) => {
     const pairs = map(x.serviceCosts, (service) => [service.serviceName, service.unblendedCost])
@@ -103,13 +105,28 @@ export const CostsPerService = memo(({ data }: CostsPerServiceProps) => {
               margin={{ top: 15, right: 30, left: 0, bottom: 0 }}
             >
               <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
-              <XAxis dataKey="date" stroke={colors.axis} tickFormatter={(x) => DateTime.fromISO(x).toFormat('LLL d')} />
-              <YAxis stroke={colors.axis} dataKey="total" />
+              <XAxis
+                dataKey="date"
+                stroke={colors.axis}
+                tick={{ fontSize: 12 }}
+                tickLine={false}
+                tickFormatter={(x) => DateTime.fromISO(x).toFormat(timeAxisFormat)}
+              />
+              <YAxis
+                dataKey="total"
+                stroke={colors.axis}
+                tick={{ fontSize: 12 }}
+                tickLine={false}
+                tickFormatter={(value: number) => `${formatNumber(value)} $`}
+                type="number"
+              />
               <StyledTooltip
                 cursor={{ opacity: 0.1 }}
                 wrapperStyle={{ opacity: 0.9 }}
-                contentStyle={{ background: colors.mainBackground }}
+                contentStyle={{ background: colors.tooltipBackground }}
                 labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
+                formatter={(x: number) => `${formatNumber(x)} $`}
+                labelFormatter={(x: string) => DateTime.fromISO(x).toFormat(timeAxisFormat)}
                 itemStyle={{ fontSize: 12, lineHeight: '12px' }}
               />
               {map(orderedDataKeys, (key, index) => (

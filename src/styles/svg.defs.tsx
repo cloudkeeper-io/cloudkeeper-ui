@@ -65,6 +65,25 @@ export default () => (
           <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
+
+      <linearGradient id="lightAreaChart" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stopColor="#2FF6F5" />
+        <stop offset="100%" stopColor="#0470FE" />
+      </linearGradient>
+
+      <linearGradient id="darkAreaChart" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stopColor="#48E385" />
+        <stop offset="100%" stopColor="#018EFF" />
+      </linearGradient>
+
+      <linearGradient id="fadeGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="white" stopOpacity={0.8} />
+        <stop offset="115%" stopColor="white" stopOpacity={0} />
+      </linearGradient>
+
+      <mask id="fadeMask" maskContentUnits="objectBoundingBox">
+        <rect width="1" height="1" fill="url(#fadeGradient)" />
+      </mask>
     </defs>
   </svg>
 )

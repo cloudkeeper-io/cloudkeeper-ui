@@ -49,7 +49,7 @@ const defaultLayouts = {
     { x: 8, y: 0, w: 4, h: 4, i: '2' },
     { x: 0, y: 2, w: 4, h: 2, i: '3' },
     { x: 4, y: 2, w: 4, h: 2, i: '4' },
-    { x: 0, y: 4, w: 12, h: 2, i: '5' },
+    { x: 0, y: 4, w: 12, h: 1, i: '5' },
   ],
   md: [
     { x: 0, y: 0, w: 5, h: 2, i: '0', minH: 2, minW: 5 },
@@ -57,7 +57,7 @@ const defaultLayouts = {
     { x: 8, y: 0, w: 5, h: 4, i: '2' },
     { x: 0, y: 2, w: 5, h: 2, i: '3' },
     { x: 0, y: 4, w: 5, h: 2, i: '4' },
-    { x: 0, y: 6, w: 12, h: 3, i: '5' },
+    { x: 0, y: 6, w: 12, h: 2, i: '5' },
   ],
   sm: [
     { x: 0, y: 0, w: 1, h: 2, i: '0' },
@@ -65,7 +65,7 @@ const defaultLayouts = {
     { x: 8, y: 3, w: 1, h: 4, i: '2' },
     { x: 0, y: 4, w: 1, h: 2, i: '3' },
     { x: 0, y: 5, w: 1, h: 2, i: '4' },
-    { x: 0, y: 6, w: 1, h: 3, i: '5' },
+    { x: 0, y: 6, w: 1, h: 2, i: '5' },
   ],
 }
 
@@ -114,6 +114,8 @@ export default () => {
     )
   }
 
+  const timeAxisFormat = getTimeAxisFormat(startDate, endDate)
+
   return (
     <Wrapper ref={wrapperRef}>
       <HeaderWrapper>
@@ -139,7 +141,7 @@ export default () => {
             <LambdaSummaryCard
               count={2}
               data={data!.lambdaTotals!}
-              timeAxisFormat={getTimeAxisFormat(startDate, endDate)}
+              timeAxisFormat={timeAxisFormat}
             />
           </Card>
           <Card key="1">
@@ -152,7 +154,7 @@ export default () => {
             <EventsCard events={data!.events!} />
           </Card>
           <Card key="3">
-            <CostsPerService data={data!.costsData!.costsPerService!} />
+            <CostsPerService timeAxisFormat={timeAxisFormat} data={data!.costsData!.costsPerService!} />
           </Card>
           <Card key="4">
             <CostsPerStack
@@ -165,6 +167,7 @@ export default () => {
           <Card key="5">
             <TrendsCard
               trends={{ costsData: data!.costsData!.costsPerService!, lambdasData: data!.lambdaTotals! }}
+              timeAxisFormat={timeAxisFormat}
             />
           </Card>
         </ReactGridLayout>
