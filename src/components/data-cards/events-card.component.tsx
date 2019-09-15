@@ -4,8 +4,8 @@ import { Typography } from '@material-ui/core'
 import moment from 'moment'
 import map from 'lodash/map'
 import isEmpty from 'lodash/isEmpty'
-import { Icon } from '../icons'
-import FaIcon from '../icons/fa-icon.component'
+
+import { getIconByServiceName } from '../../utils'
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,17 +40,6 @@ const Placeholder = styled.div`
   width: 100%;
   flex: 1;
 `
-
-const getIconByServiceName = (serviceName: string) => {
-  switch (serviceName) {
-    case 'AWS Lambda':
-      return <Icon icon="lambda" />
-    case 'DynamoDB':
-      return <Icon icon="dynamo" />
-    default:
-      return <FaIcon icon="wallet" />
-  }
-}
 
 interface EventsCardProps {
   events: any[],

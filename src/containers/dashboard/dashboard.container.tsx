@@ -2,8 +2,8 @@ import React, { useRef, useContext, useState } from 'react'
 import styled from 'styled-components/macro'
 import { useQuery } from 'react-apollo'
 import useComponentSize from '@rehooks/component-size'
-import get from 'lodash/get'
 import moment from 'moment'
+import get from 'lodash/get'
 
 import { getTimeAxisFormat } from '../../utils'
 import Card from '../../components/card.component'
@@ -19,9 +19,10 @@ import { DataPageHeader, DefinedDateRange } from '../../components/data-page-hea
 import { CostsPerService } from '../../components/data-cards/costs-per-service.component'
 import { CostsPerStack } from '../../components/data-cards/costs-per-stack.component'
 import { EventsCard } from '../../components/data-cards/events-card.component'
-import { TrendsCard } from '../../components/data-cards/trends-card.component'
+import { TrendsCard } from '../../components/data-cards/trends-card/trends-card.component'
 import LambdaSummaryCard from '../../components/data-cards/lambda-summary-card.component'
 import { MostExpensiveCard } from '../../components/data-cards/most-expensive-card.component'
+import { getTop2ExpensiveServiceData } from '../../components/data-cards/trends-card/trends-card.utils'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -57,7 +58,7 @@ const defaultLayouts = {
     { x: 8, y: 0, w: 5, h: 4, i: '2' },
     { x: 0, y: 2, w: 5, h: 2, i: '3' },
     { x: 0, y: 4, w: 5, h: 2, i: '4' },
-    { x: 0, y: 6, w: 12, h: 3, i: '5' },
+    { x: 0, y: 6, w: 12, h: 2, i: '5' },
   ],
   sm: [
     { x: 0, y: 0, w: 1, h: 2, i: '0' },
@@ -65,7 +66,7 @@ const defaultLayouts = {
     { x: 8, y: 3, w: 1, h: 4, i: '2' },
     { x: 0, y: 4, w: 1, h: 2, i: '3' },
     { x: 0, y: 5, w: 1, h: 2, i: '4' },
-    { x: 0, y: 6, w: 1, h: 3, i: '5' },
+    { x: 0, y: 6, w: 1, h: 2, i: '5' },
   ],
 }
 
@@ -114,6 +115,8 @@ export default () => {
     )
   }
 
+  const timeAxisFormat = getTimeAxisFormat(startDate, endDate)
+
   return (
     <Wrapper ref={wrapperRef}>
       <HeaderWrapper>
@@ -132,6 +135,7 @@ export default () => {
           cols={{ lg: 12, md: 10, sm: 1 }}
           width={width}
           rowHeight={170}
+          margin={[16, 16]}
           isDraggable={false}
           isResizable={false}
         >
@@ -139,7 +143,7 @@ export default () => {
             <LambdaSummaryCard
               count={2}
               data={data!.lambdaTotals!}
-              timeAxisFormat={getTimeAxisFormat(startDate, endDate)}
+              timeAxisFormat={timeAxisFormat}
             />
           </Card>
           <Card key="1">
@@ -152,7 +156,7 @@ export default () => {
             <EventsCard events={data!.events!} />
           </Card>
           <Card key="3">
-            <CostsPerService data={data!.costsData!.costsPerService!} />
+            <CostsPerService timeAxisFormat={timeAxisFormat} data={data!.costsData!.costsPerService!} />
           </Card>
           <Card key="4">
             <CostsPerStack
@@ -163,7 +167,16 @@ export default () => {
             />
           </Card>
           <Card key="5">
-            <TrendsCard />
+            <TrendsCard
+              trends={{
+                costsData: data!.costsData!.costsPerService!,
+                mostExpensiveCost: getTop2ExpensiveServiceData(data!.costsData!.costsPerService!),
+                lambdasData: data!.lambdaTotals!.dataPoints,
+              }}
+              startDate={startDate}
+              endDate={endDate}
+              timeAxisFormat={timeAxisFormat}
+            />
           </Card>
         </ReactGridLayout>
       )}

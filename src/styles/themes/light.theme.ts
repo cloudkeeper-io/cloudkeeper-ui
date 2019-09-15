@@ -57,6 +57,10 @@ const dataCard = {
   tooltipBackground: '#FFFFFF',
   secondaryTooltipBackground: '#0E0B20',
   cartesianGrid: '#EDF0F2',
+  areaColor: mix(0.5, '#2FF6F5', '#0470FE'),
+  areaTrend: mix(0.5, colors.active, colors.activeSecondary),
+  svgAreaColor: 'url(#lightAreaChart)',
+  svgAreaTrend: 'url(#lightLine)',
 }
 
 const input = {
