@@ -61,9 +61,9 @@ export const MostExpensiveCard = (props: TopDynamoCardProps) => {
           isEmpty(tabs) && (
             <>
               <Header>
-                <div>
-                  {'Top Expensive Lambdas'}
-                </div>
+                <Typography variant="h5">
+                  Top Expensive Lambdas
+                </Typography>
               </Header>
               <Placeholder>
                 <Typography variant="h6">
@@ -76,9 +76,9 @@ export const MostExpensiveCard = (props: TopDynamoCardProps) => {
         {!isEmpty(tabs) && (
         <Tab>
           <Header>
-            <div>
+            <Typography variant="h5">
               {`Top ${currentTab.data.length} Expensive ${currentTab.name}`}
-            </div>
+            </Typography>
             {tabs.length > 1 && <TabIndicator index={tab} steps={tabs.length} onClick={(i) => setTab(i)} />}
           </Header>
           <>

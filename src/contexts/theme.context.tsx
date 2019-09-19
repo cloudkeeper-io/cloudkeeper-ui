@@ -32,7 +32,22 @@ const ThemeProvider = memo(({ children }: ThemeProviderProps) => {
 
   const theme = useMemo(() => createMuiTheme({
     palette: { type, ...customTheme.palette },
-    typography: { fontFamily: ['Quicksand', 'Roboto', '"Helvetica Neue"'].join(',') },
+    typography: {
+      fontFamily: ['Quicksand', 'Roboto', '"Helvetica Neue"'].join(','),
+      h4: {
+        fontWeight: 'bold',
+        fontSize: '32px',
+        textTransform: 'uppercase',
+      },
+      h5: {
+        fontWeight: 'bold',
+        fontSize: '24px',
+      },
+      h6: {
+        fontWeight: 'bold',
+        fontSize: '20px',
+      },
+    },
   }), [type, customTheme.palette])
 
   const toggleTheme = useCallback(() => {

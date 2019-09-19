@@ -18,11 +18,9 @@ import { formatNumber } from '../../utils'
 
 const Wrapper = styled.div`
   height: 100%;
+  padding: 30px 40px;
   display: flex;
   flex-direction: column;
-`
-const Title = styled(Typography)`
-  margin: 10px 0 0 20px;
 `
 const Content = styled.div`
   display: flex;
@@ -51,7 +49,7 @@ const LeftSide = styled.div`
   flex: 1;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
+  margin: 20px 20px 0 0;
 `
 const ChartWrapper = styled.div`
   position: relative;
@@ -222,7 +220,7 @@ export const CostsPerStack = memo(({ data, startDate, endDate }: CostsPerStackPr
 
   return (
     <Wrapper ref={wrapperRef}>
-      <Title variant="h5">Costs Per Stack</Title>
+      <Typography variant="h5">Costs Per Stack</Typography>
       {isEmptyData && (
         <Placeholder>
           <Typography variant="h6">

@@ -20,9 +20,10 @@ const ChartWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  padding: 30px 30px 30px 10px;
 `
 const Title = styled(Typography)`
-  margin: 10px 0 0 20px;
+  margin: 0 0 20px 30px;
 `
 const Legend = styled.div`
   display: flex;

@@ -14,19 +14,18 @@ export const StyledCard = styled(Card)`
 `
 export const Content = styled.div`
   display: flex;
-  width: calc(100% - 40px);
-  height: calc(100% - 10px);
+  width: calc(100% - 60px);
+  height: calc(100% - 60px);
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 10px 20px 0 30px;
+  padding: 30px;
   box-sizing: initial;
 `
 export const Header = styled(CommonHeader)`
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `
 export const TabIndicator = styled(StepIndicator)`
   display: flex;

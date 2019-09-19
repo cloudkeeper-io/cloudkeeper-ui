@@ -13,14 +13,14 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  padding-bottom: 20px;
+  padding: 30px;
 `
 const Title = styled(Typography)`
-  margin: 10px 0 15px 20px;
+  margin: 0 0 15px 0;
 `
 const Event = styled.div`
   display: flex;
-  padding: 5px 20px;
+  padding: 5px 0;
   justify-content: space-between;
   align-items: center;
 `

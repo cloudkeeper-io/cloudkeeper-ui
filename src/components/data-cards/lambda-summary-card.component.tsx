@@ -10,30 +10,38 @@ import first from 'lodash/first'
 import { formatNumber } from '../../utils'
 import { useSwitchTab } from '../../hooks'
 import StepIndicator from '../steps-indicator.component'
-import { StyledCard } from './data-card.styles'
+import { StyledCard, Content } from './data-card.styles'
 
 const Header = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  width: calc(100% - 75px);
   justify-content: space-between;
   align-items: flex-start;
-  margin: 20px 0 10px 0;
-  padding: 0 20px 0 30px;
+  margin: 0 0 10px 0;
+  padding: 0 20px 0 55px;
 `
 const Value = styled.div`
   position: relative;
   min-height: 58px;
   min-width: 1px;
-  font-size: 48px;
+  font-weight: 500;
+  font-size: 42px;
 `
 const Description = styled.div`
   position: relative;
   width: 100%;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 14px;
   min-height: 11px;
   min-width: 1px;
 `
+const StyledContent = styled(Content)`
+  padding: 30px 20px 0 0;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+`
+
 const StyledTooltip = Tooltip as any
 
 interface DataPoints {
@@ -82,51 +90,53 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
 
   return (
     <StyledCard className={className}>
-      <Header>
-        <Value>
-          {formatters[tab](data[unit])}
-        </Value>
-        <StepIndicator index={tab} steps={tabs.length} onClick={(i) => setTab(i)} />
-        <Description>
-          {descriptions[tab]}
-        </Description>
-      </Header>
-      <ResponsiveContainer>
-        <LineChart data={dataPoints} margin={{ top: 15, right: 30, left: -5, bottom: 30 }}>
-          <XAxis
-            dataKey="dateTime"
-            stroke={colors.axis}
-            tick={{ fontSize: 12 }}
-            tickLine={false}
-            tickFormatter={(x) => DateTime.fromISO(x).toFormat(timeAxisFormat)}
-          />
-          <YAxis
-            stroke={colors.axis}
-            tick={{ fontSize: 12 }}
-            tickLine={false}
-            type="number"
-            padding={{ top: 20, bottom: 15 }}
-            tickFormatter={tickFormatters[tab]}
-          />
-          <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
-          <Line
-            filter={isStraightLine ? '' : colors.lineFilter}
-            type="monotone"
-            dataKey="value"
-            stroke={isStraightLine ? colors.lines : colors.svgLines}
-            dot={false}
-            strokeWidth={3}
-          />
-          <StyledTooltip
-            wrapperStyle={{ opacity: 0.9 }}
-            contentStyle={{ background: colors.tooltipBackground }}
-            labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
-            itemStyle={{ fontSize: 12, lineHeight: '12px' }}
-            formatter={formatters[tab]}
-            labelFormatter={(value: string) => DateTime.fromISO(value).toFormat('d LLL HH:mm')}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <StyledContent>
+        <Header>
+          <Value>
+            {formatters[tab](data[unit])}
+          </Value>
+          <StepIndicator index={tab} steps={tabs.length} onClick={(i) => setTab(i)} />
+          <Description>
+            {descriptions[tab]}
+          </Description>
+        </Header>
+        <ResponsiveContainer>
+          <LineChart data={dataPoints} margin={{ top: 15, right: 30, left: -5, bottom: 30 }}>
+            <XAxis
+              dataKey="dateTime"
+              stroke={colors.axis}
+              tick={{ fontSize: 12 }}
+              tickLine={false}
+              tickFormatter={(x) => DateTime.fromISO(x).toFormat(timeAxisFormat)}
+            />
+            <YAxis
+              stroke={colors.axis}
+              tick={{ fontSize: 12 }}
+              tickLine={false}
+              type="number"
+              padding={{ top: 20, bottom: 15 }}
+              tickFormatter={tickFormatters[tab]}
+            />
+            <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
+            <Line
+              filter={isStraightLine ? '' : colors.lineFilter}
+              type="monotone"
+              dataKey="value"
+              stroke={isStraightLine ? colors.lines : colors.svgLines}
+              dot={false}
+              strokeWidth={3}
+            />
+            <StyledTooltip
+              wrapperStyle={{ opacity: 0.9 }}
+              contentStyle={{ background: colors.tooltipBackground }}
+              labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
+              itemStyle={{ fontSize: 12, lineHeight: '12px' }}
+              formatter={formatters[tab]}
+              labelFormatter={(value: string) => DateTime.fromISO(value).toFormat('d LLL HH:mm')}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </StyledContent>
     </StyledCard>
   )
 }
