@@ -6,13 +6,13 @@ import map from 'lodash/map'
 import first from 'lodash/first'
 import last from 'lodash/last'
 import round from 'lodash/round'
-import take from 'lodash/take'
 import orderBy from 'lodash/orderBy'
 import reduce from 'lodash/reduce'
 import forEach from 'lodash/forEach'
-import includes from 'lodash/includes'
 import filter from 'lodash/filter'
 import sumBy from 'lodash/sumBy'
+import get from 'lodash/get'
+
 import { analyzeTimeRange } from '../../../utils'
 
 export const TRENDS = [
@@ -41,10 +41,18 @@ export const TRENDS = [
     dateField: 'dateTime',
   },
   {
-    title: 'Most Expensive Services',
+    title: '1st Most Expensive Service',
+    titleField: 'name',
     icon: 'cost',
-    text: 'Top 2 most expensive services cost is',
-    trendsField: 'mostExpensiveCost',
+    trendsField: 'mostExpensiveService',
+    valueField: 'total',
+    dateField: 'date',
+  },
+  {
+    title: '2st Most Expensive Service',
+    titleField: 'name',
+    icon: 'cost',
+    trendsField: 'secondExpensiveService',
     valueField: 'total',
     dateField: 'date',
   },
@@ -82,21 +90,26 @@ export const getTrendText = (data: any, activeIndex: number, startDate: Moment, 
   const graphData = getGraphData(data, activeIndex)
   const lastPoint = last(graphData)!
   const date = getDateIntervalText(startDate, endDate)
+  const trend = TRENDS[activeIndex]
+
+  const baseText = trend.titleField ?
+    `${get(first(data), `[${trend.titleField}]`)} is` :
+    trend.text
 
   if (lastPoint.value === lastPoint.trendData) {
-    return `${TRENDS[activeIndex].text} stable ${date}`
+    return `${baseText} stable ${date}`
   }
 
   if (lastPoint.value > lastPoint.trendData) {
     const percent = round(((lastPoint.value - lastPoint.trendData) / lastPoint.value) * 100, 2)
-    return `${TRENDS[activeIndex].text} up ${percent}% ${date}`
+    return `${baseText} up ${percent}% ${date}`
   }
 
   const percent = round(((lastPoint.trendData - lastPoint.value) / lastPoint.trendData) * 100, 2)
-  return `${TRENDS[activeIndex].text} down ${percent}% ${date}`
+  return `${baseText} down ${percent}% ${date}`
 }
 
-export const getTop2ExpensiveServiceData = (data: any[]) => {
+export const getMostExpensiveServiceData = (data: any[], index = 0) => {
   const dataKeys = reduce(data, (acc, x) => {
     forEach(x.serviceCosts, (service) => {
       acc[service.serviceName] = (acc[service.serviceName] || 0) + service.unblendedCost
@@ -105,10 +118,10 @@ export const getTop2ExpensiveServiceData = (data: any[]) => {
   }, {} as any)
 
   const orderedServices = orderBy(map(dataKeys, (cost, name) => ({ cost, name })), 'cost', 'desc')
-  const top2ServiceNames = map(take(orderedServices, 2), (x) => x.name)
+  const service = orderedServices[index]
 
   return map(data, (x) => {
-    const filteredServices = filter(x.serviceCosts, (service) => includes(top2ServiceNames, service.serviceName))
-    return { ...x, total: sumBy(filteredServices, 'unblendedCost') }
+    const filteredServices = filter(x.serviceCosts, (s) => service.name === s.serviceName)
+    return { date: x.date, total: sumBy(filteredServices, 'unblendedCost'), name: service.name }
   })
 }

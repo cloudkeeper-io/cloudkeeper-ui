@@ -38,20 +38,28 @@ const Trends = styled.div`
   min-width: 250px;
   max-width: 450px;
 `
+const TrendText = styled.div`
+  margin-left: 15px;
+`
 const Trend = styled.div<{ active: boolean }>`
+  display: flex;
+  align-items: center;
   padding: 5px 20px;
-  color: ${(p) => (p.active ? p.theme.palette.secondary.main : p.theme.colors.text)};
+  ${TrendText} {
+    color: ${(p) => (p.active ? p.theme.palette.secondary.main : p.theme.colors.text)};
+  }
   svg {
     color: ${(p) => (p.active ? p.theme.palette.secondary.main : p.theme.colors.text)};
     transition: none;
   }
   cursor: pointer;
 `
-const TrendText = styled.span`
-  margin-left: 10px;
-`
+
 const Title = styled(Typography)`
   margin: 10px 0 15px 20px;
+`
+const GraphTitle = styled(Typography)`
+  margin: 10px 0 15px 60px;
 `
 const Content = styled.div`
   display: flex;
@@ -65,7 +73,6 @@ interface TrendsCardProps {
   trends: {
     costsData: any
     lambdasData: any
-    mostExpensiveCost: any
     [x: string]: any
   },
   startDate: Moment
@@ -96,7 +103,7 @@ export const TrendsCard = memo(({ trends, startDate, endDate, timeAxisFormat }: 
           ))}
         </Trends>
         <ChartWrapper>
-          <Title variant="h5">{TRENDS[active].title}</Title>
+          <GraphTitle variant="h5">{TRENDS[active].title}</GraphTitle>
           <ResponsiveContainer>
             <AreaChart data={graphData} margin={{ right: 30 }}>
               <XAxis

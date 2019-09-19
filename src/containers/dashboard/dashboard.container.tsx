@@ -22,7 +22,7 @@ import { EventsCard } from '../../components/data-cards/events-card.component'
 import { TrendsCard } from '../../components/data-cards/trends-card/trends-card.component'
 import LambdaSummaryCard from '../../components/data-cards/lambda-summary-card.component'
 import { MostExpensiveCard } from '../../components/data-cards/most-expensive-card.component'
-import { getTop2ExpensiveServiceData } from '../../components/data-cards/trends-card/trends-card.utils'
+import { getMostExpensiveServiceData } from '../../components/data-cards/trends-card/trends-card.utils'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -170,7 +170,8 @@ export default () => {
             <TrendsCard
               trends={{
                 costsData: data!.costsData!.costsPerService!,
-                mostExpensiveCost: getTop2ExpensiveServiceData(data!.costsData!.costsPerService!),
+                mostExpensiveService: getMostExpensiveServiceData(data!.costsData!.costsPerService!, 0),
+                secondExpensiveService: getMostExpensiveServiceData(data!.costsData!.costsPerService!, 1),
                 lambdasData: data!.lambdaTotals!.dataPoints,
               }}
               startDate={startDate}
