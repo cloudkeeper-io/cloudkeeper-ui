@@ -29,12 +29,12 @@ const Legend = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding: 0 20px;
+  padding: 0 0 0 20px;
 `
 const LegendItem = styled.div`
   display: flex;
   margin: 10px;
-  max-width: 30%;
+  max-width: calc(33% - 20px);
   align-items: center;
 `
 const LegendCell = styled.div<{ color: string }>`
