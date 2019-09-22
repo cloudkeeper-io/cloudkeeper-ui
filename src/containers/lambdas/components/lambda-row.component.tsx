@@ -2,9 +2,9 @@ import React, { memo } from 'react'
 import { round } from 'lodash'
 import TableRow from '@material-ui/core/TableRow'
 
-import { lambdasList_lambdasList as LambdasListItem } from '../../graphql/queries/types/lambdasList'
-import { StyledTableCell } from '../../components/sortable-table-head-cell'
-import { msToDuration } from '../../utils'
+import { lambdasList_lambdasList as LambdasListItem } from '../../../graphql/queries/types/lambdasList'
+import { StyledTableCell } from '../../../components/sortable-table-head-cell'
+import { msToDuration } from '../../../utils'
 
 export const LambdaRow = memo(({ lambda }: { lambda: LambdasListItem }) => (
   <TableRow>

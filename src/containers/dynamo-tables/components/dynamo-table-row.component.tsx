@@ -2,9 +2,11 @@ import React, { memo } from 'react'
 import { round, get } from 'lodash'
 import TableRow from '@material-ui/core/TableRow'
 
-import { StyledTableCell } from '../../components/sortable-table-head-cell'
-import { dynamoTablesList_dynamoTablesList as DynamoTablesListItem } from '../../graphql/queries/types/dynamoTablesList'
-import { bytesToSize } from '../../utils'
+import { StyledTableCell } from '../../../components/sortable-table-head-cell'
+import {
+  dynamoTablesList_dynamoTablesList as DynamoTablesListItem,
+} from '../../../graphql/queries/types/dynamoTablesList'
+import { bytesToSize } from '../../../utils'
 
 export const DynamoTableRow = memo(({ table }: { table: DynamoTablesListItem }) => (
   <TableRow>

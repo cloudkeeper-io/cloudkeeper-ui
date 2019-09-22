@@ -19,7 +19,7 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   margin: 0 0 10px 0;
-  padding: 0 20px 0 55px;
+  padding: 0 0 0 30px;
 `
 const Value = styled.div`
   position: relative;
@@ -37,8 +37,8 @@ const Description = styled.div`
   min-width: 1px;
 `
 const StyledContent = styled(Content)`
-  padding: 30px 20px 0 0;
-  width: calc(100% - 20px);
+  padding: 25px 0 0 0;
+  width: 100%;
   height: calc(100% - 20px);
 `
 
@@ -101,7 +101,7 @@ const DataCard = ({ data, count, theme, timeAxisFormat, className }: TotalInvoca
           </Description>
         </Header>
         <ResponsiveContainer>
-          <LineChart data={dataPoints} margin={{ top: 15, right: 30, left: -5, bottom: 30 }}>
+          <LineChart data={dataPoints} margin={{ top: 15, right: 45, left: -5, bottom: 30 }}>
             <XAxis
               dataKey="dateTime"
               stroke={colors.axis}

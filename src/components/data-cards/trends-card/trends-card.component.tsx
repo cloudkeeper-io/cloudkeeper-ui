@@ -18,7 +18,7 @@ import round from 'lodash/round'
 import every from 'lodash/every'
 
 import { getIconByServiceName } from '../../../utils'
-import { getGraphData, getTrendText, TRENDS } from './trends-card.utils'
+import { getGraphData, getTrendText, getTrendTitle, TRENDS } from './trends-card.utils'
 
 const Wrapper = styled.div`
   display: block;
@@ -26,17 +26,19 @@ const Wrapper = styled.div`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-bottom: 20px;
 `
 const ChartWrapper = styled.div`
   flex: 1;
   height: 100%;
   min-width: 320px;
+  max-height: 40vh;
   overflow: visible;
+  padding: 25px 0;
 `
 const Trends = styled.div`
   min-width: 250px;
   max-width: 450px;
+  padding: 25px 20px;
 `
 const TrendText = styled.div`
   margin-left: 15px;
@@ -56,10 +58,10 @@ const Trend = styled.div<{ active: boolean }>`
 `
 
 const Title = styled(Typography)`
-  margin: 10px 0 15px 20px;
+  margin: 0 0 15px 20px;
 `
 const GraphTitle = styled(Typography)`
-  margin: 10px 0 15px 60px;
+  margin: 0px 0 15px 60px;
 `
 const Content = styled.div`
   display: flex;
@@ -96,14 +98,16 @@ export const TrendsCard = memo(({ trends, startDate, endDate, timeAxisFormat }: 
         <Trends>
           <Title variant="h5">Trends</Title>
           {map(TRENDS, (trend, index) => (
-            <Trend key={trend.title} active={index === active} onClick={() => setActive(index)}>
+            <Trend key={index} active={index === active} onClick={() => setActive(index)}>
               {getIconByServiceName(trend.icon)}
               <TrendText>{getTrendText(trends[TRENDS[index].trendsField], index, startDate, endDate)}</TrendText>
             </Trend>
           ))}
         </Trends>
         <ChartWrapper>
-          <GraphTitle variant="h5">{TRENDS[active].title}</GraphTitle>
+          <GraphTitle variant="h5">
+            {getTrendTitle(trends[activeTrend.trendsField], active)}
+          </GraphTitle>
           <ResponsiveContainer>
             <AreaChart data={graphData} margin={{ right: 30 }}>
               <XAxis

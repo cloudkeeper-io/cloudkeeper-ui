@@ -11,9 +11,16 @@ import reduce from 'lodash/reduce'
 import forEach from 'lodash/forEach'
 import filter from 'lodash/filter'
 import sumBy from 'lodash/sumBy'
+import isFunction from 'lodash/isFunction'
 import get from 'lodash/get'
 
 import { analyzeTimeRange } from '../../../utils'
+
+interface Fields {
+  title?: string
+  date: string
+  value: string
+}
 
 export const TRENDS = [
   {
@@ -41,7 +48,8 @@ export const TRENDS = [
     dateField: 'dateTime',
   },
   {
-    title: '1st Most Expensive Service',
+    title: ({ title }: Fields) => `${title} Cost`,
+    text: ({ title }: Fields) => `${title} cost is`,
     titleField: 'name',
     icon: 'cost',
     trendsField: 'mostExpensiveService',
@@ -49,7 +57,8 @@ export const TRENDS = [
     dateField: 'date',
   },
   {
-    title: '2st Most Expensive Service',
+    title: ({ title }: Fields) => `${title} Cost`,
+    text: ({ title }: Fields) => `${title} cost is`,
     titleField: 'name',
     icon: 'cost',
     trendsField: 'secondExpensiveService',
@@ -86,15 +95,32 @@ export const getGraphData = (data: any, activeIndex: number) => {
   return map(formattedCostData, (x, index) => ({ ...x, trendData: lineFn(first(regressionData[index])) }))
 }
 
+export const getTrendTitle = (data: any, activeIndex: number) => {
+  const trend = TRENDS[activeIndex]
+
+  if (isFunction(trend.title)) {
+    return trend.title({
+      title: get(first(data), `[${trend.titleField}]`),
+      value: get(first(data), `[${trend.valueField}]`),
+      date: get(first(data), `[${trend.dateField}]`),
+    })
+  }
+
+  return trend.title
+}
+
 export const getTrendText = (data: any, activeIndex: number, startDate: Moment, endDate: Moment) => {
   const graphData = getGraphData(data, activeIndex)
   const lastPoint = last(graphData)!
   const date = getDateIntervalText(startDate, endDate)
   const trend = TRENDS[activeIndex]
 
-  const baseText = trend.titleField ?
-    `${get(first(data), `[${trend.titleField}]`)} is` :
-    trend.text
+  const baseText = isFunction(trend.text) ?
+    trend.text({
+      title: get(first(data), `[${trend.titleField}]`),
+      value: get(first(data), `[${trend.valueField}]`),
+      date: get(first(data), `[${trend.dateField}]`),
+    }) : trend.text
 
   if (lastPoint.value === lastPoint.trendData) {
     return `${baseText} stable ${date}`

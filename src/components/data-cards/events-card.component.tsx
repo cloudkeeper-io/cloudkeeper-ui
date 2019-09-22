@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  padding: 30px;
+  padding: 25px 30px;
 `
 const Title = styled(Typography)`
   margin: 0 0 15px 0;

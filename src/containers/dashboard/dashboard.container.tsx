@@ -1,9 +1,10 @@
-import React, { useRef, useContext, useState } from 'react'
+import React, { useRef, useContext, useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { useQuery } from 'react-apollo'
-import useComponentSize from '@rehooks/component-size'
+import { useMeasure } from 'react-use'
 import moment from 'moment'
 import get from 'lodash/get'
+import debounce from 'lodash/debounce'
 
 import { getTimeAxisFormat } from '../../utils'
 import Card from '../../components/card.component'
@@ -66,7 +67,7 @@ const defaultLayouts = {
     { x: 8, y: 3, w: 1, h: 4, i: '2' },
     { x: 0, y: 4, w: 1, h: 2, i: '3' },
     { x: 0, y: 5, w: 1, h: 2, i: '4' },
-    { x: 0, y: 6, w: 1, h: 2, i: '5' },
+    { x: 0, y: 6, w: 1, h: 4, i: '5' },
   ],
 }
 
@@ -76,10 +77,14 @@ export default () => {
     endDate: defaultEndDate,
   })
 
-  const wrapperRef = useRef<HTMLDivElement>(null)
   const { currentTenant, tenantId, refetch: refetchTenants } = useContext(TenantContext)
 
-  const { width } = useComponentSize(wrapperRef)
+  const [wrapperRef, { width }] = useMeasure()
+  const [debouncedWidth, setDebouncedWidth] = useState(width)
+  const debounceFn = useRef(debounce((newValue: number) => setDebouncedWidth(newValue), 100))
+
+
+  useEffect(() => debounceFn.current(width), [width])
 
   const { data, loading, error, refetch } = useQuery<DashboardData>(dashboardQuery, {
     variables: {
@@ -127,13 +132,13 @@ export default () => {
           onDateRangeChanged={setDateRange}
         />
       </HeaderWrapper>
-      {loading && <Loading height="calc(100vh - 64px)" />}
-      {!loading && (width > 0) && (
+      {(loading || debouncedWidth <= 0) && <Loading height="calc(100vh - 64px)" />}
+      {!loading && (debouncedWidth > 0) && (
         <ReactGridLayout
           layouts={defaultLayouts}
           breakpoints={{ lg: 1250, md: 1000, sm: 800 }}
           cols={{ lg: 12, md: 10, sm: 1 }}
-          width={width}
+          width={debouncedWidth}
           rowHeight={170}
           margin={[16, 16]}
           isDraggable={false}

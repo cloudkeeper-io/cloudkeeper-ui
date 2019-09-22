@@ -19,7 +19,7 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 30px;
+  padding: 25px 30px;
   box-sizing: initial;
 `
 export const Header = styled(CommonHeader)`
