@@ -3,6 +3,7 @@ import styled, { ThemeContext } from 'styled-components/macro'
 import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from 'recharts'
 import { Typography } from '@material-ui/core'
 import { ChevronLeft } from 'react-feather'
+import { useMeasure } from 'react-use'
 import moment, { Moment } from 'moment'
 import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
@@ -18,14 +19,14 @@ import { formatNumber } from '../../utils'
 
 const Wrapper = styled.div`
   height: 100%;
-  padding: 30px 40px;
+  padding: 25px 30px;
   display: flex;
   flex-direction: column;
 `
 const Content = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  max-width: 100%;
   height: auto;
   svg {
     overflow: visible;
@@ -35,10 +36,10 @@ const Legend = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-width: 250px;
+  flex: 0 1 220px;
   padding: 0 15px;
   @media(max-width: 800px) {
-    min-width: auto;
+    flex: 0 1 auto;
   }
 `
 const Scale = styled(ScaleSvg)`
@@ -46,7 +47,8 @@ const Scale = styled(ScaleSvg)`
 `
 const LeftSide = styled.div`
   display: flex;
-  flex: 1;
+  flex: 1 1 auto;
+  max-width: 45%;
   flex-direction: column;
   align-items: center;
   margin: 20px 20px 0 0;
@@ -81,7 +83,7 @@ const LegendItem = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 15px 0;
+  padding: 13px 0;
   cursor: pointer;
   border-bottom: 1px solid #EDF0F2;
   :first-child {
@@ -100,6 +102,12 @@ const LegendText = styled.div`
   font-size: 14px;
   line-height: 18px;
   margin-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  max-height: 36px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `
 const ActiveIndicator = styled.div`
   display: flex;
@@ -176,6 +184,7 @@ export const CostsPerStack = memo(({ data, startDate, endDate }: CostsPerStackPr
   const [activeIndex, setActiveIndex] = useState(0)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const { colors } = useContext(ThemeContext)
+  const [sizeRef, { width }] = useMeasure()
   const COLORS = colors.seriesColors
 
   const dates = getScaleDates(startDate, endDate)
@@ -208,6 +217,10 @@ export const CostsPerStack = memo(({ data, startDate, endDate }: CostsPerStackPr
     setTimeout(moveActiveToFront)
   })
 
+  useEffect(() => {
+    setTimeout(moveActiveToFront)
+  }, [width])
+
   const dataKeys = reduce(data, (acc, x) => {
     forEach(x.stackCosts, (service) => {
       acc[service.stackName] = (acc[service.stackName] || 0) + service.unblendedCost
@@ -229,64 +242,64 @@ export const CostsPerStack = memo(({ data, startDate, endDate }: CostsPerStackPr
         </Placeholder>
       )}
       {!isEmptyData && (
-      <Content>
-        <LeftSide>
-          <ChartWrapper>
-            <ResponsiveContainer height={200}>
-              <PieChart margin={{ top: 20, right: 0, left: 0, bottom: 20 }}>
-                <Pie
-                  data={orderedDataKeys}
-                  activeIndex={activeIndex}
-                  activeShape={renderActiveShape}
-                  dataKey="cost"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={70}
-                  outerRadius={90}
-                  animationBegin={0}
-                  animationDuration={1250}
-                  startAngle={450}
-                  endAngle={90}
-                  stroke="transparent"
-                  paddingAngle={-12}
-                  minAngle={30}
-                  cornerRadius={10}
-                  onClick={(d, index) => setActiveIndex(index)}
-                  onAnimationEnd={moveActiveToFront}
-                >
-                  {map(orderedDataKeys, (x, index) => (
-                    <Cell key={x.name} fill={COLORS[index]} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-            <InnerGraphContent>
-              {formatNumber(orderedDataKeys[activeIndex].cost, 3)}$
-            </InnerGraphContent>
-          </ChartWrapper>
-          <ScaleWrapper>
-            <Scale />
-            <ScaleDates>
-              {map(dates, (date) => <ScaleDate key={date}>{date}</ScaleDate>)}
-            </ScaleDates>
-          </ScaleWrapper>
-        </LeftSide>
-        <Legend>
-          {map(orderedDataKeys, (stack, index) => (
-            <LegendItem key={index} onClick={() => setActiveIndex(index)}>
-              <LegendCell color={COLORS[index]} />
-              <LegendText>
-                {stack.name || 'Resources without a stack'}
-              </LegendText>
-              {activeIndex === index && (
-              <ActiveIndicator>
-                <ChevronLeft />
-              </ActiveIndicator>
-              )}
-            </LegendItem>
-          ))}
-        </Legend>
-      </Content>
+        <Content ref={sizeRef}>
+          <LeftSide>
+            <ChartWrapper>
+              <ResponsiveContainer height={200}>
+                <PieChart margin={{ top: 20, right: 0, left: 0, bottom: 20 }}>
+                  <Pie
+                    data={orderedDataKeys}
+                    activeIndex={activeIndex}
+                    activeShape={renderActiveShape}
+                    dataKey="cost"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={70}
+                    outerRadius={90}
+                    animationBegin={0}
+                    animationDuration={1250}
+                    startAngle={450}
+                    endAngle={90}
+                    stroke="transparent"
+                    paddingAngle={-12}
+                    minAngle={30}
+                    cornerRadius={10}
+                    onClick={(d, index) => setActiveIndex(index)}
+                    onAnimationEnd={moveActiveToFront}
+                  >
+                    {map(orderedDataKeys, (x, index) => (
+                      <Cell key={x.name} fill={COLORS[index]} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+              <InnerGraphContent>
+                {formatNumber(orderedDataKeys[activeIndex].cost, 3)}$
+              </InnerGraphContent>
+            </ChartWrapper>
+            <ScaleWrapper>
+              <Scale />
+              <ScaleDates>
+                {map(dates, (date) => <ScaleDate key={date}>{date}</ScaleDate>)}
+              </ScaleDates>
+            </ScaleWrapper>
+          </LeftSide>
+          <Legend>
+            {map(orderedDataKeys, (stack, index) => (
+              <LegendItem key={index} onClick={() => setActiveIndex(index)}>
+                <LegendCell color={COLORS[index]} />
+                <LegendText>
+                  {stack.name || 'Resources without a stack'}
+                </LegendText>
+                {activeIndex === index && (
+                  <ActiveIndicator>
+                    <ChevronLeft />
+                  </ActiveIndicator>
+                )}
+              </LegendItem>
+            ))}
+          </Legend>
+        </Content>
       )}
     </Wrapper>
   )

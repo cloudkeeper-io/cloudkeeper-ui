@@ -13,7 +13,7 @@ import { Tenant } from '../../models'
 import { TenantContext } from '../../contexts'
 import { DateRange } from '../../components/datepicker/datepicker.component'
 import { DataPageHeader } from '../../components/data-page-header/data-page-header.component'
-import { DynamoTablesList } from './dynamo-tables.component'
+import { DynamoTablesList } from './components'
 import Card from '../../components/card.component'
 import { useInterval } from '../../hooks'
 

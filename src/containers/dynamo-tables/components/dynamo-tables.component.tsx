@@ -8,18 +8,20 @@ import TableRow from '@material-ui/core/TableRow'
 import TableBody from '@material-ui/core/TableBody'
 
 import { Typography } from '@material-ui/core'
-import { SortableTableHeadCell } from '../../components/sortable-table-head-cell'
-import { dynamoTablesList_dynamoTablesList as DynamoTablesListItem } from '../../graphql/queries/types/dynamoTablesList'
+import { SortableTableHeadCell } from '../../../components/sortable-table-head-cell'
+import {
+  dynamoTablesList_dynamoTablesList as DynamoTablesListItem,
+} from '../../../graphql/queries/types/dynamoTablesList'
 import { DynamoTableRow } from './dynamo-table-row.component'
 
 interface DynamoTablesListProps {
-    tables: DynamoTablesListItem[]
-    filterInput?: string
+  tables: DynamoTablesListItem[]
+  filterInput?: string
 }
 
 interface OrderState {
-    order: 'asc' | 'desc'
-    orderProperty: string
+  order: 'asc' | 'desc'
+  orderProperty: string
 }
 
 const NothingFoundContainer = styled.div`
@@ -112,9 +114,9 @@ export const DynamoTablesList = ({ tables, filterInput }: DynamoTablesListProps)
           </TableRow>
         </TableHead>
         {visibleTables.length > 0 && (
-        <TableBody>
-          {visibleTables.map((table) => <DynamoTableRow key={table!.name! + table!.region} table={table} />)}
-        </TableBody>
+          <TableBody>
+            {visibleTables.map((table) => <DynamoTableRow key={table!.name! + table!.region} table={table} />)}
+          </TableBody>
         )}
       </Table>
       {visibleTables.length === 0 && (

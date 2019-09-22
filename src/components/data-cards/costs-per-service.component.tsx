@@ -1,7 +1,7 @@
 import React, { useContext, memo } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
 import { BarChart, XAxis, ResponsiveContainer, YAxis, Bar, Tooltip, CartesianGrid } from 'recharts'
-import { Typography } from '@material-ui/core'
+import { Typography, Tooltip as MaterialTooltip } from '@material-ui/core'
 import { DateTime } from 'luxon'
 import map from 'lodash/map'
 import reduce from 'lodash/reduce'
@@ -20,7 +20,7 @@ const ChartWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 30px 30px 30px 10px;
+  padding: 25px 30px 25px 10px;
 `
 const Title = styled(Typography)`
   margin: 0 0 20px 30px;
@@ -29,14 +29,17 @@ const Legend = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding: 0 20px;
+  padding: 0 0 0 20px;
 `
 const LegendItem = styled.div`
   display: flex;
   margin: 10px;
+  max-width: calc(33% - 20px);
+  align-items: center;
 `
 const LegendCell = styled.div<{ color: string }>`
-  width: 12px;
+  min-width: 12px;
+  min-height: 12px;
   height: 12px;
   background-color: ${(p) => p.color};
   border-radius: 50%;
@@ -45,6 +48,9 @@ const LegendText = styled.div`
   font-size: 14px;
   line-height: 18px;
   margin-left: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `
 const Placeholder = styled.div`
   display: flex;
@@ -100,10 +106,10 @@ export const CostsPerService = memo(({ data, timeAxisFormat }: CostsPerServicePr
       )}
       {!isEmptyData && (
         <>
-          <ResponsiveContainer height={230}>
+          <ResponsiveContainer height={190}>
             <BarChart
               data={formattedData}
-              margin={{ top: 15, right: 30, left: 0, bottom: 0 }}
+              margin={{ top: 0, right: 10, left: 5, bottom: 0 }}
             >
               <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
               <XAxis
@@ -146,9 +152,11 @@ export const CostsPerService = memo(({ data, timeAxisFormat }: CostsPerServicePr
             {map(orderedDataKeys, (key, index) => (
               <LegendItem key={index}>
                 <LegendCell color={COLORS[index]} />
-                <LegendText>
-                  {key.name}
-                </LegendText>
+                <MaterialTooltip title={key.name} placement="top">
+                  <LegendText>
+                    {key.name}
+                  </LegendText>
+                </MaterialTooltip>
               </LegendItem>
             ))}
           </Legend>

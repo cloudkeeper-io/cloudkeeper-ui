@@ -1,31 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import { IconButton } from '@material-ui/core'
-import screenfull from 'screenfull'
+import { useFullscreen, useToggle } from 'react-use'
 import { Minimize, Maximize } from 'react-feather'
-import noop from 'lodash/noop'
 
 interface ThemeSwitcherProps {
   className?: string
 }
 
 export default ({ className }: ThemeSwitcherProps) => {
-  const [isFullscreen, setFullscreen] = useState(false)
-
-  const toggleFullscreen = useCallback(() => setFullscreen((current) => !current), [setFullscreen])
-
-  useEffect(() => {
-    if (screenfull) {
-      screenfull.on('change', toggleFullscreen)
-    }
-    return () => {
-      if (screenfull) {
-        screenfull.off('change', toggleFullscreen)
-      }
-    }
-  }, [toggleFullscreen])
+  const [show, toggle] = useToggle(false)
+  const isFullscreen = useFullscreen({ current: document.body as any }, show, { onClose: () => toggle(false) })
 
   return (
-    <IconButton onClick={() => (screenfull ? screenfull.toggle() : noop())} className={className}>
+    <IconButton onClick={toggle} className={className}>
       {isFullscreen ? <Minimize /> : <Maximize />}
     </IconButton>
   )

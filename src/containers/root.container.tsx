@@ -18,7 +18,7 @@ const getLoadableContainer = (loader: any) => Loadable({
 const Login = getLoadableContainer(() => import('./login/login.container')) as any
 const ForgotPassword = getLoadableContainer(() => import('./forgot-password.container')) as any
 const Dashboard = getLoadableContainer(() => import('./dashboard/dashboard.container')) as any
-const Lambdas = getLoadableContainer(() => import('./lambdas/lambdas.container')) as any
+const Lambdas = getLoadableContainer(() => import('./lambdas/components/lambdas.container')) as any
 const DynamoTables = getLoadableContainer(() => import('./dynamo-tables/dynamo-tables.container')) as any
 const Settings = getLoadableContainer(() => import('./settings/settings.container')) as any
 const Welcome = getLoadableContainer(() => import('./welcome.container')) as any
