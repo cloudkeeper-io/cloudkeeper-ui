@@ -24,9 +24,9 @@ interface Fields {
 
 export const TRENDS = [
   {
-    title: 'Global Costs',
+    title: 'Total Costs',
     icon: 'cost',
-    text: 'Global costs is',
+    text: 'Total costs is',
     trendsField: 'costsData',
     valueField: 'total',
     dateField: 'date',
@@ -112,6 +112,7 @@ export const getTrendTitle = (data: any, activeIndex: number) => {
 export const getTrendText = (data: any, activeIndex: number, startDate: Moment, endDate: Moment) => {
   const graphData = getGraphData(data, activeIndex)
   const lastPoint = last(graphData)!
+  const firstPoint = first(graphData)!
   const date = getDateIntervalText(startDate, endDate)
   const trend = TRENDS[activeIndex]
 
@@ -122,16 +123,16 @@ export const getTrendText = (data: any, activeIndex: number, startDate: Moment, 
       date: get(first(data), `[${trend.dateField}]`),
     }) : trend.text
 
-  if (lastPoint.value === lastPoint.trendData) {
+  if (lastPoint.trendData === firstPoint.trendData) {
     return `${baseText} stable ${date}`
   }
 
-  if (lastPoint.value > lastPoint.trendData) {
-    const percent = round(((lastPoint.value - lastPoint.trendData) / lastPoint.value) * 100, 2)
+  if (lastPoint.trendData > firstPoint.trendData) {
+    const percent = round(((lastPoint.trendData - firstPoint.trendData) / lastPoint.trendData) * 100, 2)
     return `${baseText} up ${percent}% ${date}`
   }
 
-  const percent = round(((lastPoint.trendData - lastPoint.value) / lastPoint.trendData) * 100, 2)
+  const percent = round(((firstPoint.trendData - lastPoint.trendData) / firstPoint.trendData) * 100, 2)
   return `${baseText} down ${percent}% ${date}`
 }
 
@@ -145,6 +146,10 @@ export const getMostExpensiveServiceData = (data: any[], index = 0) => {
 
   const orderedServices = orderBy(map(dataKeys, (cost, name) => ({ cost, name })), 'cost', 'desc')
   const service = orderedServices[index]
+
+  if (!service) {
+    return []
+  }
 
   return map(data, (x) => {
     const filteredServices = filter(x.serviceCosts, (s) => service.name === s.serviceName)

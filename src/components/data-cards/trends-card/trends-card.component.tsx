@@ -16,6 +16,7 @@ import map from 'lodash/map'
 import first from 'lodash/first'
 import round from 'lodash/round'
 import every from 'lodash/every'
+import isEmpty from 'lodash/isEmpty'
 
 import { getIconByServiceName } from '../../../utils'
 import { getGraphData, getTrendText, getTrendTitle, TRENDS } from './trends-card.utils'
@@ -97,7 +98,7 @@ export const TrendsCard = memo(({ trends, startDate, endDate, timeAxisFormat }: 
       <Content>
         <Trends>
           <Title variant="h5">Trends</Title>
-          {map(TRENDS, (trend, index) => (
+          {map(TRENDS, (trend, index) => !isEmpty(trends[TRENDS[index].trendsField]) && (
             <Trend key={index} active={index === active} onClick={() => setActive(index)}>
               {getIconByServiceName(trend.icon)}
               <TrendText>{getTrendText(trends[TRENDS[index].trendsField], index, startDate, endDate)}</TrendText>
