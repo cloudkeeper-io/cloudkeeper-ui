@@ -16,7 +16,7 @@ export const setTawkUserDetails = (email?: string, hash?: string, customAttribut
           ...customAttributes,
         })
       } catch (e) {
-        // ignored
+        console.log(e)
       }
     }
   }
