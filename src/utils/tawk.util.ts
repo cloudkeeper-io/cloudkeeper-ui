@@ -9,11 +9,15 @@ export const setTawkUserDetails = (email?: string, hash?: string, customAttribut
         setTawkUserDetails(email, hash, customAttributes)
       }, 300)
     } else {
-      tawkApi.setAttributes({
-        email,
-        hash,
-        ...customAttributes,
-      })
+      try {
+        tawkApi.setAttributes({
+          email,
+          hash,
+          ...customAttributes,
+        })
+      } catch (e) {
+        // ignored
+      }
     }
   }
 }
