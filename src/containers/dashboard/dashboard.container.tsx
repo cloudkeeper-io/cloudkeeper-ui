@@ -83,6 +83,7 @@ export default () => {
   const [debouncedWidth, setDebouncedWidth] = useState(width)
   const debounceFn = useRef(debounce((newValue: number) => setDebouncedWidth(newValue), 100))
 
+  const isProcessing = !get(currentTenant, 'initialProcessing.done', false)
 
   useEffect(() => debounceFn.current(width), [width])
 
@@ -92,10 +93,8 @@ export default () => {
       startDate: startDate.startOf('day').toISOString(true),
       endDate: endDate.endOf('day').toISOString(true),
     },
-    pollInterval: POLL_INTERVAL,
   })
 
-  const isProcessing = !get(currentTenant, 'initialProcessing.done', false)
 
   useInterval(refetchTenants, PROCESSING_REFETCH_DELAY, isProcessing)
   useInterval(refetch, POLL_INTERVAL, !isProcessing)

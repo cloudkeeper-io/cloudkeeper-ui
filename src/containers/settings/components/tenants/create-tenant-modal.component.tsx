@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, {useContext, useEffect} from 'react'
 import useReactRouter from 'use-react-router'
 import styled from 'styled-components/macro'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core'
@@ -11,6 +11,7 @@ import { CreateTenant } from '../../../../graphql/mutations/types/CreateTenant'
 import { trackEvent } from '../../../../utils/amplitude'
 import { SmallField } from '../../../../components/form/field.component'
 import { LoadingButton } from '../../../../components/button/loading-button.component'
+import {TenantContext} from "../../../../contexts";
 
 const ServerError = styled.div`
   color: ${(p) => p.theme.palette.error.main};
@@ -47,6 +48,8 @@ export default ({ onClose, isOpen }: StepsProps) => {
     },
   })
 
+  const { refetch } = useContext(TenantContext)
+
   useEffect(() => trackEvent('Opened Create Project'), [])
 
   const onSubmit = async (v: Values) => {
@@ -57,6 +60,7 @@ export default ({ onClose, isOpen }: StepsProps) => {
 
       const response = await createTenantFn({ variables: parameters })
       const tenantId = get(response, 'data.createTenant.id')
+      await refetch()
       trackEvent('Created Project')
       onClose()
       history.push(`/tenant/${tenantId}`)
