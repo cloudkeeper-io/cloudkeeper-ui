@@ -17,6 +17,7 @@ import first from 'lodash/first'
 import round from 'lodash/round'
 import every from 'lodash/every'
 import isEmpty from 'lodash/isEmpty'
+import uniqBy from 'lodash/uniqBy'
 
 import { getIconByServiceName } from '../../../utils'
 import { getGraphData, getTrendText, getTrendTitle, TRENDS } from './trends-card.utils'
@@ -62,7 +63,7 @@ const Title = styled(Typography)`
   margin: 0 0 15px 20px;
 `
 const GraphTitle = styled(Typography)`
-  margin: 0px 0 15px 60px;
+  margin: 0 0 15px 60px;
 `
 const Content = styled.div`
   display: flex;
@@ -70,7 +71,36 @@ const Content = styled.div`
   width: calc(100% - 20px);
   flex-wrap: wrap;
 `
-const StyledTooltip = Tooltip as any
+const TooltipWrapper = styled.div`
+  max-width: 240px;
+  background: ${(p) => p.theme.dataCard.tooltipBackground};
+  border: 1px solid ${(p) => p.theme.palette.text.disabled};
+  padding: 5px 10px;
+`
+const TooltipRow = styled.div`
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 5px 0;
+`
+
+const TooltipContent = (props: any) => {
+  const { active, label, payload, timeAxisFormat } = props
+
+  if (active) {
+    return (
+      <TooltipWrapper>
+        <TooltipRow>{DateTime.fromMillis(label).toFormat(timeAxisFormat)}</TooltipRow>
+        {map(uniqBy(payload, 'dataKey'), (x: any) => (
+          <TooltipRow key={x.dataKey}>
+            {x.dataKey}: {round(x.value, 3)}
+          </TooltipRow>
+        ))}
+      </TooltipWrapper>
+    )
+  }
+
+  return null
+}
 
 interface TrendsCardProps {
   trends: {
@@ -126,13 +156,13 @@ export const TrendsCard = memo(({ trends, startDate, endDate, timeAxisFormat }: 
                 padding={{ top: 20, bottom: 15 }}
               />
               <CartesianGrid stroke={colors.cartesianGrid} strokeWidth={0.5} />
-              <StyledTooltip
+              <Tooltip
                 wrapperStyle={{ opacity: 0.9 }}
-                contentStyle={{ background: colors.tooltipBackground }}
                 labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
                 itemStyle={{ fontSize: 12, lineHeight: '12px' }}
-                formatter={(val: number) => round(val, 3)}
-                labelFormatter={(value: number) => DateTime.fromMillis(value).toFormat(timeAxisFormat)}
+                // formatter={(val: number) => round(val, 3)}
+                content={<TooltipContent timeAxisFormat={timeAxisFormat} />}
+                // labelFormatter={(value: number) => DateTime.fromMillis(value).toFormat(timeAxisFormat)}
               />
               <Area
                 dataKey="value"
