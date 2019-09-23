@@ -16,6 +16,7 @@ export const setTawkUserDetails = (email?: string, hash?: string, customAttribut
           ...customAttributes,
         })
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.log(e)
       }
     }
