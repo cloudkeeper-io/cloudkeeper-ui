@@ -1,25 +1,30 @@
-import React, { memo, useEffect, useRef } from 'react'
+import React, { memo, useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components/macro'
 import times from 'lodash/times'
+import { useWindowSize } from 'react-use'
+import { ThemeContext } from '../../../contexts'
 
 const Canvas = styled.canvas`
   position: fixed;
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(#00111e 30%, #033d5e);
+  max-height: 100%;
+  background: linear-gradient(#00111e 30%, #050610);
   overflow: hidden;
 `
 
 export const Stars = memo(() => {
+  const { themeType } = useContext(ThemeContext)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { width, height } = useWindowSize()
 
   useEffect(() => {
     const { current } = canvasRef
     if (canvasRef.current) {
       const ctx = current!.getContext('2d')
-      const xMax = window.screen.availWidth
-      const yMax = window.screen.availHeight
+      const xMax = window.innerWidth
+      const yMax = window.innerHeight
       current!.width = xMax
       current!.height = yMax
 
@@ -40,7 +45,11 @@ export const Stars = memo(() => {
         ctx!.fillRect(randomX, randomY, randomSize, randomSize)
       })
     }
-  }, [canvasRef.current])
+  }, [canvasRef.current, width, height])
+
+  if (themeType === 'light') {
+    return null
+  }
 
   return (
     <Canvas ref={canvasRef} />

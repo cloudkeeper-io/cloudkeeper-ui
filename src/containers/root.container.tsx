@@ -6,7 +6,6 @@ import first from 'lodash/first'
 import get from 'lodash/get'
 
 import DrawerLayout from '../components/layout/drawer-layout/drawer-layout.component'
-import ToolbarLayout from '../components/layout/toolbar-layout.component'
 import LoadingPage from '../components/spinners/loading-page.component'
 import { UserContext, TenantContext } from '../contexts'
 
@@ -26,20 +25,18 @@ const Error = getLoadableContainer(() => import('./error.container')) as any
 
 
 const AnonRoutes = memo(() => (
-  <ToolbarLayout>
-    <Switch>
-      <Route exact path="/">
-        <Login />
-      </Route>
-      <Route exact path="/sign-up">
-        <Login />
-      </Route>
-      <Route exact path="/forgot-password">
-        <ForgotPassword />
-      </Route>
-      <Error title="404" text="Page not found" />
-    </Switch>
-  </ToolbarLayout>
+  <Switch>
+    <Route exact path="/">
+      <Login />
+    </Route>
+    <Route exact path="/sign-up">
+      <Login />
+    </Route>
+    <Route exact path="/forgot-password">
+      <ForgotPassword />
+    </Route>
+    <Error title="404" text="Page not found" />
+  </Switch>
 ))
 
 const AuthorizedRoutes = memo(() => {
