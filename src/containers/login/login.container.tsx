@@ -22,8 +22,10 @@ import {
   RightContent,
   SwitchTitle,
   SwitchText,
+  ThemeSwitcher,
 } from './login.styles'
 import { TawkFab } from '../../components/tawk-fab.component'
+import { Stars } from './components/stars.component'
 
 export default memo(() => {
   const { history, location: { pathname } } = useReactRouter()
@@ -32,6 +34,8 @@ export default memo(() => {
 
   return (
     <Wrapper>
+      <Stars />
+      <ThemeSwitcher />
       <Content>
         <MainCard>
           <Tabs

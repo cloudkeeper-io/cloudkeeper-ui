@@ -4,6 +4,7 @@ import MaterialTabs from '@material-ui/core/Tabs'
 import Button from '../../components/button/button.component'
 import Card from '../../components/card.component'
 import IconButton from '../../components/button/icon-button.component'
+import ThemeSwitch from '../../components/theme-switcher.component'
 
 const transitionTime = '0.4s cubic-bezier(0.9, 0.20, 0.20, 0.9)'
 const shortTime = '0.3s cubic-bezier(0.9, 0.90, 0.90, 0.9)'
@@ -34,17 +35,16 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  min-height: calc(100vh - 64px);
+  min-height: 100vh;
   padding: 0;
   @media (max-width: 900px) {
-    padding: 0 20px;
+    padding: 70px 20px 0 20px;
   }
 `
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
 `
 export const Tabs = styled(MaterialTabs)`
   display: none;
@@ -96,7 +96,7 @@ export const SwitchWrapper = styled.div<{ isLogin: boolean }>`
   position: absolute;
   width: 810px;
   height: 100%;
-  background: url("${(p) => p.theme.login.background}") center center;
+  background: ${(p) => p.theme.login.background};
   background-size: cover;
   clip-path: ${(p) => (p.isLogin ?
     'polygon(0 0, 330px 0, 330px 100%, 0 100%)' :
@@ -128,6 +128,9 @@ export const LeftContent = styled.div<{ isLogin: boolean }>`
   z-index: ${(p) => (p.isLogin ? '-1' : '10')};
   overflow: hidden;
   transition: left ${transitionTime}, z-index ${transitionTime}, opacity ${shortTime};
+  button {
+    background:  ${(p) => (p.isLogin ? 'transparent' : '')};
+  }
   @media (max-width: 900px) {
     top: 50px;
     left: 0;
@@ -142,6 +145,9 @@ export const RightContent = styled.div<{ isLogin: boolean }>`
   opacity: ${(p) => (p.isLogin ? '1' : '0')};
   z-index: ${(p) => (p.isLogin ? '10' : '-1')};
   transition: left ${transitionTime}, z-index ${transitionTime}, opacity ${shortTime};
+  button {
+    background:  ${(p) => (p.isLogin ? '' : 'transparent')};
+  }
   @media (max-width: 900px) {
     top: 50px;
     left: 0;
@@ -164,4 +170,13 @@ export const SwitchTitle = styled.div`
   font-size: 32px;
   line-height: 40px;
   text-align: center;
+`
+export const ThemeSwitcher = styled(ThemeSwitch)`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  @media (max-width: 900px) {
+    top: 10px;
+    right: 10px;
+  }
 `

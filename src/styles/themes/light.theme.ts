@@ -108,7 +108,7 @@ const select = {
 const login = {
   treesOpacity: 0,
   particlesColor: colors.primary,
-  background: loginBackground,
+  background: `url("${loginBackground}") center center;`,
   headerColor: '#333333',
 }
 

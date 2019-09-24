@@ -2,26 +2,36 @@ import React, { useCallback, useContext, useState } from 'react'
 import styled from 'styled-components/macro'
 import { Form } from 'react-final-form'
 import { toast } from 'react-toastify'
+import { Button, Grid } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 import Card from '../components/card.component'
 import Field from '../components/form/field.component'
-import { FormContent } from './login/login.styles'
+import { ThemeSwitcher } from './login/login.styles'
 import ServerError from '../components/form/error-message.component'
-import Button from '../components/button/button.component'
+import { LoadingButton } from '../components/button/loading-button.component'
 import { Header } from '../components/typography.component'
 import { UserContext } from '../contexts'
 
 const Wrapper = styled.div<{ minHeight?: string }>`
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
   padding: 0 20px;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 `
 const Content = styled(Card)`
   padding: 20px;
   width: 400px;
   max-width: calc(100vw - 40px);
+`
+export const FormContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 25px 15px 25px;
+  justify-content: space-around;
 `
 
 interface Values {
@@ -60,6 +70,7 @@ export default () => {
 
   return (
     <Wrapper>
+      <ThemeSwitcher />
       <Content>
         <Header>
           Reset your password
@@ -70,7 +81,22 @@ export default () => {
               <FormContent>
                 <Field name="email" placeholder="Email Address" autoComplete="email" />
                 <ServerError>{error}</ServerError>
-                <Button type="submit" disabled={pristine || invalid} isLoading={loading}>Reset Password</Button>
+                <Grid container spacing={2} justify="flex-end" alignItems="center">
+                  <Grid item>
+                    <Button component={Link} to="/">Back to Login</Button>
+                  </Grid>
+                  <Grid item>
+                    <LoadingButton
+                      type="submit"
+                      disabled={pristine || invalid}
+                      color="primary"
+                      variant="contained"
+                      loading={loading}
+                    >
+                      Reset Password
+                    </LoadingButton>
+                  </Grid>
+                </Grid>
               </FormContent>
             </form>
           )}
