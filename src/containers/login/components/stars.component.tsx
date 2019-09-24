@@ -45,7 +45,7 @@ export const Stars = memo(() => {
         ctx!.fillRect(randomX, randomY, randomSize, randomSize)
       })
     }
-  }, [canvasRef.current, width, height])
+  }, [canvasRef, width, height, themeType])
 
   if (themeType === 'light') {
     return null
