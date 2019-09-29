@@ -229,7 +229,9 @@ export const CostsPerStack = memo(({ data, startDate, endDate }: CostsPerStackPr
   }, {} as any)
 
   const orderedDataKeys = take(orderBy(map(dataKeys, (cost, name) => ({ cost, name })), 'cost', 'desc'), 5)
-  const isEmptyData = isEmpty(data) || (data.length === 1 && isEmpty(get(data, '0.stackCosts')))
+  const isEmptyData = isEmpty(data) ||
+    isEmpty(orderedDataKeys[activeIndex]) ||
+    (data.length === 1 && isEmpty(get(data, '0.stackCosts')))
 
   return (
     <Wrapper ref={wrapperRef}>
