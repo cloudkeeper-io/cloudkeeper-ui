@@ -27,8 +27,8 @@ interface ModalProps {
 export default ({ isOpen, onRemove, onClose, tenant }: ModalProps) => (
   <Dialog open={isOpen} onClose={onClose}>
     <DialogContent>
-      <Title>Remove Tenant</Title>
-      <Text>Your tenant <Name>{get(tenant, 'name')}</Name> will be removed. Are you sure about that?</Text>
+      <Title>Remove Project</Title>
+      <Text>Your project <Name>{get(tenant, 'name')}</Name> will be removed. Are you sure about that?</Text>
     </DialogContent>
     <DialogActions>
       <Button color="default" onClick={onClose}>
