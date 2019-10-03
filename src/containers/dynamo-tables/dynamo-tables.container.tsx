@@ -56,6 +56,18 @@ export default () => {
 
   const { currentTenant, refetch } = useContext(TenantContext)
 
+  const isProcessing = !get(currentTenant, 'initialProcessing.done', false)
+
+  useInterval(refetch, 10000, isProcessing)
+
+  if (!currentTenant.isSetupCompleted) {
+    return <SetupTenant tenant={currentTenant} />
+  }
+
+  if (isProcessing) {
+    return <Processing />
+  }
+
   const { data, loading, error } = useQuery(dynamoTablesQuery, {
     variables: {
       tenantId: currentTenant.id,
@@ -64,20 +76,8 @@ export default () => {
     },
   })
 
-  const isProcessing = !get(currentTenant, 'initialProcessing.done', false)
-
-  useInterval(refetch, 10000, isProcessing)
-
   if (error) {
     throw error
-  }
-
-  if (!currentTenant.isSetupCompleted) {
-    return <SetupTenant tenant={currentTenant} />
-  }
-
-  if (isProcessing) {
-    return <Processing />
   }
 
   return (

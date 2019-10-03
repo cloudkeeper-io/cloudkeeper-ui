@@ -87,21 +87,8 @@ export default () => {
 
   useEffect(() => debounceFn.current(width), [width])
 
-  const { data, loading, error, refetch } = useQuery<DashboardData>(dashboardQuery, {
-    variables: {
-      tenantId,
-      startDate: startDate.startOf('day').toISOString(true),
-      endDate: endDate.endOf('day').toISOString(true),
-    },
-  })
-
 
   useInterval(refetchTenants, PROCESSING_REFETCH_DELAY, isProcessing)
-  useInterval(refetch, POLL_INTERVAL, !isProcessing)
-
-  if (error) {
-    throw error
-  }
 
   if (!currentTenant!.isSetupCompleted) {
     return (
@@ -117,6 +104,20 @@ export default () => {
         <Processing />
       </Wrapper>
     )
+  }
+
+  const { data, loading, error, refetch } = useQuery<DashboardData>(dashboardQuery, {
+    variables: {
+      tenantId,
+      startDate: startDate.startOf('day').toISOString(true),
+      endDate: endDate.endOf('day').toISOString(true),
+    },
+  })
+
+  useInterval(refetch, POLL_INTERVAL, !isProcessing)
+
+  if (error) {
+    throw error
   }
 
   const timeAxisFormat = getTimeAxisFormat(startDate, endDate)
