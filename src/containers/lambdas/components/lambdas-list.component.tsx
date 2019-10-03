@@ -8,9 +8,9 @@ import TableRow from '@material-ui/core/TableRow'
 import TableBody from '@material-ui/core/TableBody'
 
 import { Typography } from '@material-ui/core'
-import { SortableTableHeadCell } from '../../components/sortable-table-head-cell'
-import { lambdasList_lambdasList as LambdasListItem } from '../../graphql/queries/types/lambdasList'
-import { LambdaRow } from './components'
+import { SortableTableHeadCell } from '../../../components/sortable-table-head-cell'
+import { lambdasList_lambdasList as LambdasListItem } from '../../../graphql/queries/types/lambdasList'
+import { LambdaRow } from './lambda-row.component'
 
 interface LambdasListProps {
     lambdas: LambdasListItem[]
