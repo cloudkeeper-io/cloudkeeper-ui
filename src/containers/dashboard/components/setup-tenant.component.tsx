@@ -85,7 +85,7 @@ export default (({ tenant }: SetupTenantProps) => {
     setServerError('')
     try {
       const parameters = {
-        roleArn: v.roleArn,
+        roleArn: v.roleArn.trim(),
         tenantId: tenant.id,
       }
       await mutation({ variables: parameters })
