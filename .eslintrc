@@ -2,23 +2,11 @@
   "extends": ["airbnb", "react-app"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "env": {
-    "browser": true
-  },
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "useJSXTextNode": true,
-    "project": "./tsconfig.json",
-    "extraFileExtensions": [".tsx"]
+    "createDefaultProgram": true
   },
   "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
-      }
-    }
+    "import/resolver": {"node": {"extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]}}
   },
   "rules": {
     "semi": ["error", "never"],

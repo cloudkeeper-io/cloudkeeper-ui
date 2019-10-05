@@ -145,7 +145,7 @@ export const CostsPerService = memo(({ data, timeAxisFormat }: CostsPerServicePr
                   stackId="a"
                   fill={COLORS[index]}
                   stroke={COLORS[index]}
-                  maxBarSize={10}
+                  maxBarSize={12}
                 />
               ))}
             </BarChart>
