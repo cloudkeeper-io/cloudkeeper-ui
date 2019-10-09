@@ -5,8 +5,8 @@ export const trackEvent = (eventName: string) => {
     anyWindow.amplitude.getInstance().logEvent(eventName)
   }
 
-  if (anyWindow.ga) {
-    anyWindow.ga('send', 'event', 'General', eventName)
+  if (anyWindow.gtag) {
+    anyWindow.gtag('event', eventName)
   }
 }
 
