@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { createBrowserHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import Analytics from 'react-router-ga'
 
 import Head from './head'
 import RootContainer from './containers/root.container'
@@ -16,27 +17,30 @@ import {
 } from './contexts'
 import * as serviceWorker from './serviceWorker'
 import './configs/icons.config'
+import { getEnvConfig } from './configs'
 
 const history = createBrowserHistory()
 
 ReactDOM.render((
   <Router history={history}>
-    <UserProvider history={history}>
-      <ThemeProvider>
-        <TenantProvider>
-          <UserSettingsProvider>
-            <AppBarProvider>
-              <>
-                <SvgDefs />
-                <Head />
-                <RootContainer />
-              </>
-            </AppBarProvider>
-          </UserSettingsProvider>
-        </TenantProvider>
-      </ThemeProvider>
-    </UserProvider>
-    <ToastContainer />
+    <Analytics id={getEnvConfig().gaId}>
+      <UserProvider history={history}>
+        <ThemeProvider>
+          <TenantProvider>
+            <UserSettingsProvider>
+              <AppBarProvider>
+                <>
+                  <SvgDefs />
+                  <Head />
+                  <RootContainer />
+                </>
+              </AppBarProvider>
+            </UserSettingsProvider>
+          </TenantProvider>
+        </ThemeProvider>
+      </UserProvider>
+      <ToastContainer />
+    </Analytics>
   </Router>
 ), document.getElementById('root'))
 
