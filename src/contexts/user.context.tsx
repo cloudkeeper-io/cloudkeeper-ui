@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect, useMemo, useCallback } from 'react'
+import React, { useState, memo, useEffect, useCallback } from 'react'
 import * as firebase from 'firebase/app'
 import get from 'lodash/get'
 import { ApolloProvider, useMutation } from 'react-apollo'
@@ -32,6 +32,10 @@ const signUp = async (email: string, password: string, subscribedToEmails: boole
 // email SingIn
 const signIn = (email: string, password: string) => firebase.auth().signInWithEmailAndPassword(email, password)
 
+// email SingIn
+const demoSignIn = () => firebase.auth().signInAnonymously()
+
+
 // signOut
 const signOutAndResetApollo = async (client: ApolloClient<any>) => {
   try {
@@ -62,6 +66,7 @@ interface UserState {
   updatePassword: (password: string, newPassword: string) => Promise<any>
   resetPassword: (email: string) => Promise<any>
   signOut: () => Promise<void>
+  demoLogin: () => Promise<void>
 }
 
 export const UserContext = React.createContext({} as UserState)
@@ -69,6 +74,7 @@ export const UserContext = React.createContext({} as UserState)
 export const UserProvider = memo(({ children, history }: UserProviderProps) => {
   const [user, setUser] = useState<firebase.User>()
   const [isUserLoaded, setUserLoaded] = useState(false)
+  const [client, setClient] = useState(getApolloClient(async () => (user ? user!.getIdToken() : '')))
 
   // Google SingIn
   const googleSignIn = useCallback(async () => {
@@ -86,15 +92,17 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
     return result
   }, [history])
 
-  useEffect(() => firebase.auth().onAuthStateChanged((newUser) => {
+  useEffect(() => firebase.auth().onAuthStateChanged(async (newUser) => {
+    if (get(newUser, 'isAnonymous')) {
+      const { mockClient } = await import('../__mocks__/client')
+      setClient(mockClient)
+    }
     setUserLoaded(true)
     setUser(newUser!)
     if (newUser) {
       setUserId(newUser.uid)
     }
   }), [])
-
-  const client = useMemo(() => getApolloClient(async () => (user ? user!.getIdToken() : '')), [user])
 
   const [generateUserHash] = useMutation(generateTawkUserHash, { client })
 
@@ -132,9 +140,26 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
     return signOutAndResetApollo(client)
   }, [client, history])
 
+  const demoLogin = async () => {
+    const { mockClient } = await import('../__mocks__/client')
+    demoSignIn()
+    setClient(mockClient)
+  }
+
   return (
     <UserContext.Provider
-      value={{ user, isUserLoaded, signIn, signUp, signOut, googleSignIn, githubSignIn, updatePassword, resetPassword }}
+      value={{
+        user,
+        demoLogin,
+        isUserLoaded,
+        signIn,
+        signUp,
+        signOut,
+        googleSignIn,
+        githubSignIn,
+        updatePassword,
+        resetPassword,
+      }}
     >
       <ApolloProvider client={client}>
         {children}

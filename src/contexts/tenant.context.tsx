@@ -41,6 +41,8 @@ const TenantProvider = memo(({ children }: TenantProviderProps) => {
     [tenantId, tenants],
   )
 
+  console.log(tenants)
+
   useEffect(() => {
     if (/^\/tenant\/[A-z0-9-]+/.test(pathname)) {
       const tenantIdPathParam = pathname.split('/')[2]

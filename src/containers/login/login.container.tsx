@@ -1,7 +1,7 @@
 import React, { useContext, memo } from 'react'
 import useReactRouter from 'use-react-router'
 import { Link } from 'react-router-dom'
-import { Tab } from '@material-ui/core'
+import { Button, Tab } from '@material-ui/core'
 
 import LoginForm from './components/login-form.component'
 import SignUpForm from './components/sign-up-form.component'
