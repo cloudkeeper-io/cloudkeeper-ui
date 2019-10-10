@@ -52,7 +52,7 @@ export const MostExpensiveCard = (props: TopDynamoCardProps) => {
 
   const [tab, setTab] = useSwitchTab(0, tabs.length, 0)
 
-  const currentTab = tabs[tab]
+  const currentTab = tabs[tab > tabs.length - 1 ? 0 : tab]
 
   return (
     <StyledCard className={className}>
