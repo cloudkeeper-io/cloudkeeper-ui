@@ -96,7 +96,10 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
     if (get(newUser, 'isAnonymous')) {
       const { mockClient } = await import('../__mocks__/client')
       setClient(mockClient)
+    } else {
+      setClient(getApolloClient(async () => (newUser ? newUser!.getIdToken() : '')))
     }
+
     setUserLoaded(true)
     setUser(newUser!)
     if (newUser) {
