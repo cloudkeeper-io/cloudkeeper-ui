@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState, memo } from 'react'
-import { Toolbar, IconButton, useMediaQuery } from '@material-ui/core'
+import { Toolbar, IconButton, useMediaQuery, Link as MaterialLink } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import useReactRouter from 'use-react-router'
 import get from 'lodash-es/get'
 
@@ -10,7 +11,7 @@ import ErrorContainer from '../../../containers/error.container'
 import ThemeSwitcher from '../../theme-switcher.component'
 import FullscreenSwitcher from '../../fullscreen-switcher.component'
 import { UserMenu } from '../../user'
-import { AppBarContext, TenantContext } from '../../../contexts'
+import { AppBarContext, TenantContext, UserContext } from '../../../contexts'
 import { TopMenuItems, BottomMenuItems } from './drawer-layout.utils'
 import { mobileMediaQuery } from '../../../utils'
 import {
@@ -35,6 +36,7 @@ interface DrawerLayoutProps {
 export default memo(({ children }: DrawerLayoutProps) => {
   const { location: { pathname } } = useReactRouter()
   const { isExpanded, setExpanded } = useContext(AppBarContext)
+  const { user } = useContext(UserContext)
   const [isOpen, setOpen] = useState(false)
   const { error, currentTenant } = useContext(TenantContext)
   const isMobile = useMediaQuery(`(${mobileMediaQuery})`)
@@ -44,6 +46,20 @@ export default memo(({ children }: DrawerLayoutProps) => {
   const closeSidebar = useCallback(() => setOpen(false), [setOpen])
 
   useEffect(closeSidebar, [pathname])
+  useEffect(() => {
+    if (user!.isAnonymous) {
+      toast((
+        <div>You&apos;re in the demo mode.
+            You can <MaterialLink to="/sign-up" component={Link}>sign up here </MaterialLink>
+            and exit from demo using user button in header
+        </div>
+      ),
+      {
+        position: 'top-center',
+        autoClose: false,
+      })
+    }
+  }, [user])
 
   return (
     <Wrapper>
@@ -87,7 +103,7 @@ export default memo(({ children }: DrawerLayoutProps) => {
       <Content expanded={isExpanded}>
         <div>
           <Toolbar />
-          {error ? <ErrorContainer /> : children}
+          {error ? <ErrorContainer text={get(error, 'message')} /> : children}
         </div>
       </Content>
     </Wrapper>

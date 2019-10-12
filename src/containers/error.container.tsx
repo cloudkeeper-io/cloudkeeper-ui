@@ -27,9 +27,18 @@ interface ErrorContainerProps {
   text?: string
 }
 
-export default ({ minHeight, title = 'Error', text, className }: ErrorContainerProps) => (
-  <Wrapper minHeight={minHeight} className={className}>
-    <Title>{title}</Title>
-    <Text>{text || 'Something went wrong. Please refresh the page and try again'}</Text>
-  </Wrapper>
-)
+export default (props: ErrorContainerProps) => {
+  const {
+    minHeight,
+    title = 'Error',
+    text = 'Something went wrong. Please refresh the page and try again',
+    className,
+  } = props
+
+  return (
+    <Wrapper minHeight={minHeight} className={className}>
+      <Title>{title}</Title>
+      <Text>{text}</Text>
+    </Wrapper>
+  )
+}

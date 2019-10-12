@@ -7,6 +7,7 @@ import Analytics from 'react-router-ga'
 
 import Head from './head'
 import RootContainer from './containers/root.container'
+import ErrorContainer from './containers/error.container'
 import SvgDefs from './styles/svg.defs'
 import {
   ThemeProvider,
@@ -21,28 +22,56 @@ import { getEnvConfig } from './configs'
 
 const history = createBrowserHistory()
 
-ReactDOM.render((
-  <Router history={history}>
-    <Analytics id={getEnvConfig().gaId}>
-      <UserProvider history={history}>
+class App extends React.PureComponent {
+  // eslint-disable-next-line react/state-in-constructor
+  public state = {
+    isError: false,
+  }
+
+  public componentDidCatch() {
+    this.setState({ isError: true })
+  }
+
+  public render() {
+    const { isError } = this.state
+
+    if (isError) {
+      return (
         <ThemeProvider>
           <TenantProvider>
-            <UserSettingsProvider>
-              <AppBarProvider>
-                <>
-                  <SvgDefs />
-                  <Head />
-                  <RootContainer />
-                </>
-              </AppBarProvider>
-            </UserSettingsProvider>
+            <ErrorContainer />
           </TenantProvider>
         </ThemeProvider>
-      </UserProvider>
-      <ToastContainer />
-    </Analytics>
-  </Router>
-), document.getElementById('root'))
+      )
+    }
+
+    return (
+      <Router history={history}>
+        <Analytics id={getEnvConfig().gaId}>
+          <UserProvider history={history}>
+            <ThemeProvider>
+              <TenantProvider>
+                <UserSettingsProvider>
+                  <AppBarProvider>
+                    <>
+                      <SvgDefs />
+                      <Head />
+                      <RootContainer />
+                    </>
+                  </AppBarProvider>
+                </UserSettingsProvider>
+              </TenantProvider>
+            </ThemeProvider>
+          </UserProvider>
+          <ToastContainer />
+        </Analytics>
+      </Router>
+    )
+  }
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
