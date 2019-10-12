@@ -1,6 +1,6 @@
 import React, { memo, useContext, useEffect, useRef } from 'react'
 import styled from 'styled-components/macro'
-import times from 'lodash/times'
+import times from 'lodash-es/times'
 import { useWindowSize } from 'react-use'
 import { ThemeContext } from '../../../contexts'
 

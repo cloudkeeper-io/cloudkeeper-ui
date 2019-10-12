@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from 'react'
 import styled from 'styled-components/macro'
 import { Switch } from '@material-ui/core'
-import isEmpty from 'lodash/isEmpty'
+import isEmpty from 'lodash-es/isEmpty'
 
 import { UserSettingsContext, Settings } from '../../../contexts'
 import Loading from '../../../components/spinners/loading.component'

@@ -12,12 +12,12 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import map from 'lodash/map'
-import first from 'lodash/first'
-import round from 'lodash/round'
-import every from 'lodash/every'
-import isEmpty from 'lodash/isEmpty'
-import uniqBy from 'lodash/uniqBy'
+import map from 'lodash-es/map'
+import first from 'lodash-es/first'
+import round from 'lodash-es/round'
+import every from 'lodash-es/every'
+import isEmpty from 'lodash-es/isEmpty'
+import uniqBy from 'lodash-es/uniqBy'
 
 import { getIconByServiceName } from '../../../utils'
 import { getGraphData, getTrendText, getTrendTitle, TRENDS } from './trends-card.utils'

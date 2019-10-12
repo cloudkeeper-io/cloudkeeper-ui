@@ -2,8 +2,8 @@ import React, { memo } from 'react'
 import styled from 'styled-components/macro'
 import { Typography } from '@material-ui/core'
 import moment from 'moment'
-import map from 'lodash/map'
-import isEmpty from 'lodash/isEmpty'
+import map from 'lodash-es/map'
+import isEmpty from 'lodash-es/isEmpty'
 
 import { getIconByServiceName } from '../../utils'
 

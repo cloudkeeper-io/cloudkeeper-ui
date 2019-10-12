@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { round, get } from 'lodash'
+import { round, get } from 'lodash-es'
 import TableRow from '@material-ui/core/TableRow'
 
 import { StyledTableCell } from '../../../components/sortable-table-head-cell'

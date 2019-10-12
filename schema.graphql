@@ -37,10 +37,10 @@ type DashboardDynamoDataForPeriod {
 
 type DynamoTableDetails {
   billingMode: String
-  items: Int
+  items: Float
   name: String
   region: String
-  sizeBytes: Int
+  sizeBytes: Float
 }
 
 type DynamoTableListItem {
@@ -50,10 +50,10 @@ type DynamoTableListItem {
   consumedRead: Int
   consumedWrite: Int
   cost: Float
-  items: Int
+  items: Float
   name: String
   region: String
-  sizeBytes: Int
+  sizeBytes: Float
   throttledReads: Int
   throttledWrites: Int
 }
@@ -144,10 +144,10 @@ type LambdasListItem {
 type MostExpensiveDynamoTable {
   billingMode: String!
   cost: Float!
-  items: Int!
+  items: Float!
   name: String!
   region: String!
-  sizeBytes: Int!
+  sizeBytes: Float!
 }
 
 type MostExpensiveLambdasListItem {
@@ -164,11 +164,11 @@ type MostExpensiveLambdasListItem {
 type MostExpensiveTableData {
   billingMode: String!
   dataPoints: [MostExpensiveTableDataPoint!]
-  items: Int!
+  items: Float!
   name: String!
   readPrice: Float!
   region: String!
-  sizeBytes: Int!
+  sizeBytes: Float!
   storagePrice: Float!
   totalPrice: Float!
   writePrice: Float!
@@ -187,11 +187,11 @@ type MostReadTableData {
   billingMode: String!
   consumedRead: Int!
   dataPoints: [MostReadTableDataPoint!]
-  items: Int!
+  items: Float!
   name: String!
   provisionedRead: Int!
   region: String!
-  sizeBytes: Int!
+  sizeBytes: Float!
 }
 
 type MostReadTableDataPoint {
@@ -203,10 +203,10 @@ type MostReadTableDataPoint {
 type MostThrottledTableData {
   billingMode: String
   dataPoints: [MostThrottledTableDataPoint!]
-  items: Int
+  items: Float
   name: String
   region: String
-  sizeBytes: Int
+  sizeBytes: Float
   throttledReads: Int
   throttledRequests: Int
   throttledWrites: Int
@@ -224,11 +224,11 @@ type MostWritesTableData {
   billingMode: String
   consumedWrite: Int
   dataPoints: [MostWritesTableDataPoint!]
-  items: Int
+  items: Float
   name: String
   provisionedWrite: Int
   region: String
-  sizeBytes: Int
+  sizeBytes: Float
 }
 
 type MostWritesTableDataPoint {

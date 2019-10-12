@@ -1,15 +1,15 @@
 import React, { memo, useContext } from 'react'
 import useReactRouter from 'use-react-router'
+import * as firebase from 'firebase/app'
 import { List, Tooltip } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { Layout, Settings, MessageSquare } from 'react-feather'
-import map from 'lodash/map'
-import isEmpty from 'lodash/isEmpty'
+import { map, isEmpty, invoke } from 'lodash-es'
 
 import Icon from '../../icons/icon.component'
 
 import { ListItem, ListItemIcon, ListItemText } from './drawer-layout.styles'
-import { TenantContext } from '../../../contexts'
+import { TenantContext, UserContext } from '../../../contexts'
 
 const isActive = (pathname: string, to: string) => pathname === to
 
@@ -59,16 +59,30 @@ const anyWindow = window as any
 
 export const bottomMenuItems = [
   { primary: 'Support Chat', onClick: () => anyWindow.Tawk_API.toggle(), icon: <MessageSquare /> },
-  { primary: 'Settings', to: '/settings', icon: <Settings /> },
+  { primary: 'Settings', to: '/settings', icon: <Settings />, disabled: (user: firebase.User) => user.isAnonymous },
 ]
 
 export const BottomMenuItems = memo((props: MenuItemsProps) => {
   const { location: { pathname } } = useReactRouter()
+  const { user } = useContext(UserContext)
   const { isExpanded } = props
 
   return (
     <List>
       {map(bottomMenuItems, (item) => {
+        const disabled = invoke(item, 'disabled', user)
+
+        if (disabled) {
+          return (
+            <ListItem key={item.primary} button disabled>
+              <Tooltip title={item.primary} placement="right" disableHoverListener={isExpanded}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+              </Tooltip>
+              <ListItemText primary={item.primary} isExpanded={isExpanded} />
+            </ListItem>
+          )
+        }
+
         if (item.to) {
           return (
             <Link key={item.primary} to={item.to}>

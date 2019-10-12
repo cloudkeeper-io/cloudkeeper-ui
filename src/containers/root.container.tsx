@@ -1,9 +1,9 @@
 import React, { memo, useContext, useEffect } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import Loadable from 'react-loadable'
-import isEmpty from 'lodash/isEmpty'
-import first from 'lodash/first'
-import get from 'lodash/get'
+import isEmpty from 'lodash-es/isEmpty'
+import first from 'lodash-es/first'
+import get from 'lodash-es/get'
 
 import DrawerLayout from '../components/layout/drawer-layout/drawer-layout.component'
 import LoadingPage from '../components/spinners/loading-page.component'
@@ -41,6 +41,7 @@ const AnonRoutes = memo(() => (
 
 const AuthorizedRoutes = memo(() => {
   const { tenants, loading, error, currentTenant } = useContext(TenantContext)
+  const { user } = useContext(UserContext)
 
   useEffect(() => {
     setTimeout(() => {
@@ -72,9 +73,11 @@ const AuthorizedRoutes = memo(() => {
       <Route exact path="/tenant/:tenantId/dynamo-tables">
         <DynamoTables tenants={tenants} />
       </Route>
-      <Route exact path="/settings">
-        <Settings />
-      </Route>
+      {!user!.isAnonymous && (
+        <Route exact path="/settings">
+          <Settings />
+        </Route>
+      )}
       {!isEmpty(tenants) && (
         <Redirect from="/" to={`/tenant/${get(currentTenant, 'id') || first(tenants)!.id}`} />
       )}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Mutation, MutationFunction } from 'react-apollo'
 import { Form } from 'react-final-form'
 import styled from 'styled-components/macro'
-import map from 'lodash/map'
+import map from 'lodash-es/map'
 import { DataProxy } from 'apollo-cache/lib/types'
 
 import { trackEvent } from '../../../utils/amplitude'

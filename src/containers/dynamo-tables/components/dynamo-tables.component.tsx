@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { orderBy, filter, slice } from 'lodash'
+import { orderBy, filter, slice } from 'lodash-es'
 import styled from 'styled-components'
 import InfiniteScroll from 'react-infinite-scroller'
 import Table from '@material-ui/core/Table'

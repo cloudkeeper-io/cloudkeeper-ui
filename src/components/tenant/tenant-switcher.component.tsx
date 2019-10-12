@@ -3,11 +3,11 @@ import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
 import { Typography, Menu, MenuItem, Button, Divider } from '@material-ui/core'
 import { ChevronDown } from 'react-feather'
-import get from 'lodash/get'
-import map from 'lodash/map'
-import take from 'lodash/take'
+import get from 'lodash-es/get'
+import map from 'lodash-es/map'
+import take from 'lodash-es/take'
 
-import { TenantContext } from '../../contexts'
+import { TenantContext, UserContext } from '../../contexts'
 import CreateTenantModal from '../../containers/settings/components/tenants/create-tenant-modal.component'
 
 const MenuButton = styled(Button)`
@@ -29,6 +29,7 @@ export default memo(({ className }: ProjectSwitcherProps) => {
   const [isCreateModalOpen, setCreateModalOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const { loading, tenants, currentTenant } = useContext(TenantContext)
+  const { user } = useContext(UserContext)
 
   const handleClose = useCallback(() => setAnchorEl(null), [setAnchorEl])
   const handleOpen = useCallback((event) => setAnchorEl(event.currentTarget), [setAnchorEl])
@@ -50,6 +51,7 @@ export default memo(({ className }: ProjectSwitcherProps) => {
         keepMounted
       >
         <MenuItem
+          disabled={user!.isAnonymous}
           onClick={() => {
             handleClose()
             setCreateModalOpen(true)
@@ -57,7 +59,7 @@ export default memo(({ className }: ProjectSwitcherProps) => {
         >
           Create New Project
         </MenuItem>
-        <MenuItem onClick={handleClose} component={Link} to="/settings">
+        <MenuItem disabled={user!.isAnonymous} onClick={handleClose} component={Link} to="/settings">
           See All Projects
         </MenuItem>
         <Divider />

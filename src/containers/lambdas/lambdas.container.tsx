@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components/macro'
-import get from 'lodash/get'
+import get from 'lodash-es/get'
 
 import SetupTenant from '../../components/tenant/setup-tenant.component'
 import Processing from '../../components/processing.component'

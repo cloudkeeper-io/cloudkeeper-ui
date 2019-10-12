@@ -1,6 +1,6 @@
 import React, { useState, memo, useEffect, useContext, useMemo, useCallback } from 'react'
 import * as firebase from 'firebase/app'
-import noop from 'lodash/noop'
+import noop from 'lodash-es/noop'
 import 'firebase/firestore'
 
 import { UserContext } from './user.context'

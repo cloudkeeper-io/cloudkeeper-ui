@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState, memo } from 'react
 import { Toolbar, IconButton, useMediaQuery } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import useReactRouter from 'use-react-router'
-import get from 'lodash/get'
+import get from 'lodash-es/get'
 
 import ElevationScroll from '../elevation-scroll.component'
 import TenantSwitcher from '../../tenant/tenant-switcher.component'
@@ -58,7 +58,7 @@ export default memo(({ children }: DrawerLayoutProps) => {
             {(!error && pathname !== '/settings') && <TenantSwitcher />}
             <Flex />
             <RightAppBar>
-              <RightAppBarItem> <FullscreenSwitcher /></RightAppBarItem>
+              {!isMobile && (<RightAppBarItem> <FullscreenSwitcher /></RightAppBarItem>)}
               <RightAppBarItem> <ThemeSwitcher /></RightAppBarItem>
               <RightAppBarItem> <UserMenu /></RightAppBarItem>
             </RightAppBar>
