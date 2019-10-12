@@ -28,6 +28,9 @@ export const LoginButton = styled(Button)`
     background: transparent;
   }
 `
+export const DemoButton = styled(LoginButton)`
+  margin-top: 20px;
+`
 export const Wrapper = styled.div`
   position: relative;
   display: flex;

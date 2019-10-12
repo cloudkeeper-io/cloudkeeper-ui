@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import debounce from 'lodash/debounce'
+import debounce from 'lodash-es/debounce'
 
 import styled from 'styled-components'
 import { useMeasure } from 'react-use'

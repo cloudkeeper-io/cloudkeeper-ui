@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { round } from 'lodash'
+import { round } from 'lodash-es'
 import TableRow from '@material-ui/core/TableRow'
 
 import { lambdasList_lambdasList as LambdasListItem } from '../../../graphql/queries/types/lambdasList'

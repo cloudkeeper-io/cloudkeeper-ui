@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components/macro'
-import sum from 'lodash/sum'
+import sum from 'lodash-es/sum'
 
 import { Header } from './typography.component'
 

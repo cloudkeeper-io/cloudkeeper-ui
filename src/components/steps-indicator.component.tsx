@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { transparentize } from 'polished'
-import times from 'lodash/times'
-import noop from 'lodash/noop'
+import times from 'lodash-es/times'
+import noop from 'lodash-es/noop'
 
 const Wrapper = styled.div`
   display: flex;

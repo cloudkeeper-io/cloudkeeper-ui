@@ -1,7 +1,7 @@
 import React from 'react'
-import map from 'lodash/map'
-import isEmpty from 'lodash/isEmpty'
-import filter from 'lodash/filter'
+import map from 'lodash-es/map'
+import isEmpty from 'lodash-es/isEmpty'
+import filter from 'lodash-es/filter'
 import { Typography } from '@material-ui/core'
 import styled from 'styled-components'
 

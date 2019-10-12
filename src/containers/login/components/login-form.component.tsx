@@ -26,7 +26,7 @@ interface Values {
 }
 
 export default memo(() => {
-  const { signIn, demoLogin } = useContext(UserContext)
+  const { signIn } = useContext(UserContext)
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -78,7 +78,6 @@ export default memo(() => {
             <ForgotPassword to="/forgot-password">Forgot password?</ForgotPassword>
             <ServerError>{serverError}</ServerError>
             <Button type="submit" disabled={pristine || invalid} isLoading={loading}>Log in</Button>
-            <Button type="button" onClick={demoLogin}>Demo Login</Button>
           </FormContent>
         </StyledForm>
       )}

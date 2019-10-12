@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { Dialog, DialogContent, DialogActions, Button } from '@material-ui/core'
-import get from 'lodash/get'
+import get from 'lodash-es/get'
 
 import { Text, Title } from '../../../../components/typography.component'
 import { Tenant } from '../../../../models'

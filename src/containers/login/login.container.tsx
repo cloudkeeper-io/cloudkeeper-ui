@@ -1,7 +1,7 @@
 import React, { useContext, memo } from 'react'
 import useReactRouter from 'use-react-router'
 import { Link } from 'react-router-dom'
-import { Button, Tab } from '@material-ui/core'
+import { Tab } from '@material-ui/core'
 
 import LoginForm from './components/login-form.component'
 import SignUpForm from './components/sign-up-form.component'
@@ -9,6 +9,7 @@ import { UserContext } from '../../contexts'
 import {
   Wrapper,
   LoginButton,
+  DemoButton,
   Content,
   MainCard,
   Title,
@@ -29,7 +30,7 @@ import { Stars } from './components/stars.component'
 
 export default memo(() => {
   const { history, location: { pathname } } = useReactRouter()
-  const { googleSignIn, githubSignIn } = useContext(UserContext)
+  const { googleSignIn, githubSignIn, demoLogin } = useContext(UserContext)
   const isLogin = pathname === '/'
 
   return (
@@ -66,6 +67,7 @@ export default memo(() => {
               <LoginButton onClick={() => (isLogin ? history.push('/sign-up') : history.push('/'))}>
                 {isLogin ? 'Sign Up' : 'Sign In'}
               </LoginButton>
+              <DemoButton type="button" onClick={demoLogin}>Demo Login</DemoButton>
             </SwitchContent>
           </SwitchWrapper>
           <RightContent isLogin={isLogin}>

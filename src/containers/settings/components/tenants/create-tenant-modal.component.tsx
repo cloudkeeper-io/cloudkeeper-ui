@@ -4,7 +4,7 @@ import styled from 'styled-components/macro'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core'
 import { Form } from 'react-final-form'
 import { useMutation } from 'react-apollo'
-import get from 'lodash/get'
+import get from 'lodash-es/get'
 
 import { tenantsQuery, createTenantMutation } from '../../../../graphql'
 import { CreateTenant } from '../../../../graphql/mutations/types/CreateTenant'

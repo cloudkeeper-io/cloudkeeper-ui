@@ -1,10 +1,10 @@
 import React, { useState, memo, useEffect, useCallback } from 'react'
 import * as firebase from 'firebase/app'
-import get from 'lodash/get'
+import get from 'lodash-es/get'
 import { ApolloProvider, useMutation } from 'react-apollo'
 import { History } from 'history'
 import ApolloClient from 'apollo-client'
-import noop from 'lodash/noop'
+import noop from 'lodash-es/noop'
 import 'firebase/auth'
 import 'firebase/firestore'
 
@@ -142,8 +142,8 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
 
   const demoLogin = async () => {
     const { mockClient } = await import('../__mocks__/client')
-    demoSignIn()
     setClient(mockClient)
+    demoSignIn()
   }
 
   return (

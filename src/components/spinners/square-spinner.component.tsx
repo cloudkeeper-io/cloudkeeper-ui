@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components/macro'
-import times from 'lodash/times'
+import times from 'lodash-es/times'
 
 const gridScale = keyframes`
   0%, 70%, 100% {

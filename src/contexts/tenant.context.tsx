@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useContext, useMemo, useEffect, memo } from 'react'
 import useReactRouter from 'use-react-router'
 import { useQuery } from 'react-apollo'
-import get from 'lodash/get'
-import find from 'lodash/find'
-import some from 'lodash/some'
+import get from 'lodash-es/get'
+import find from 'lodash-es/find'
+import some from 'lodash-es/some'
 
 import { tenantsQuery } from '../graphql/queries'
 import { UserContext } from './user.context'
@@ -40,8 +40,6 @@ const TenantProvider = memo(({ children }: TenantProviderProps) => {
     () => (find(tenants, { id: tenantId! }) || {}) as Tenant,
     [tenantId, tenants],
   )
-
-  console.log(tenants)
 
   useEffect(() => {
     if (/^\/tenant\/[A-z0-9-]+/.test(pathname)) {

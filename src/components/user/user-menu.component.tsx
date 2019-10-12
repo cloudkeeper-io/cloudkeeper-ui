@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 
 export const UserMenu = memo(() => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const { signOut } = useContext(UserContext)
+  const { user, signOut } = useContext(UserContext)
 
   const handleClose = useCallback(() => setAnchorEl(null), [setAnchorEl])
   const handleOpen = useCallback((event) => setAnchorEl(event.currentTarget), [setAnchorEl])
@@ -26,12 +26,12 @@ export const UserMenu = memo(() => {
         onClose={handleClose}
         keepMounted
       >
-        <MenuItem onClick={handleClose} component={Link} to="/settings">
+        <MenuItem disabled={user!.isAnonymous} onClick={handleClose} component={Link} to="/settings">
           Settings
         </MenuItem>
         <Divider />
         <MenuItem onClick={signOut}>
-          Sign Out
+          {user!.isAnonymous ? 'End Demo' : 'Sign Out'}
         </MenuItem>
       </Menu>
     </Wrapper>
