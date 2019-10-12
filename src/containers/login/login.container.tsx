@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react'
+import React, { useContext, memo, useCallback, useState } from 'react'
 import useReactRouter from 'use-react-router'
 import { Link } from 'react-router-dom'
 import { Tab } from '@material-ui/core'
@@ -31,7 +31,16 @@ import { Stars } from './components/stars.component'
 export default memo(() => {
   const { history, location: { pathname } } = useReactRouter()
   const { googleSignIn, githubSignIn, demoLogin } = useContext(UserContext)
+  const [isDemoLoading, setDemoLoading] = useState(false)
   const isLogin = pathname === '/'
+
+  const onDemoClick = useCallback(() => {
+    setDemoLoading(true)
+    demoLogin()
+      .then(() => history.push('/'))
+      // eslint-disable-next-line no-console
+      .catch(console.log)
+  }, [setDemoLoading, demoLogin, history])
 
   return (
     <Wrapper>
@@ -67,7 +76,7 @@ export default memo(() => {
               <LoginButton onClick={() => (isLogin ? history.push('/sign-up') : history.push('/'))}>
                 {isLogin ? 'Sign Up' : 'Sign In'}
               </LoginButton>
-              <DemoButton type="button" onClick={demoLogin}>Demo Login</DemoButton>
+              <DemoButton type="button" onClick={onDemoClick} isLoading={isDemoLoading}>Demo Login</DemoButton>
             </SwitchContent>
           </SwitchWrapper>
           <RightContent isLogin={isLogin}>

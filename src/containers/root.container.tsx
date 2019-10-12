@@ -1,17 +1,14 @@
 import React, { memo, useContext, useEffect } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import Loadable from 'react-loadable'
-import isEmpty from 'lodash-es/isEmpty'
-import first from 'lodash-es/first'
-import get from 'lodash-es/get'
+import loadable from '@loadable/component'
+import { isEmpty, first, get } from 'lodash-es'
 
 import DrawerLayout from '../components/layout/drawer-layout/drawer-layout.component'
 import LoadingPage from '../components/spinners/loading-page.component'
 import { UserContext, TenantContext } from '../contexts'
 
-const getLoadableContainer = (loader: any) => Loadable({
-  loader,
-  loading: LoadingPage,
+const getLoadableContainer = (loader: any) => loadable(loader, {
+  fallback: <LoadingPage />,
 })
 
 const Login = getLoadableContainer(() => import('./login/login.container')) as any
@@ -22,7 +19,7 @@ const DynamoTables = getLoadableContainer(() => import('./dynamo-tables/dynamo-t
 const Settings = getLoadableContainer(() => import('./settings/settings.container')) as any
 const Welcome = getLoadableContainer(() => import('./welcome.container')) as any
 const Error = getLoadableContainer(() => import('./error.container')) as any
-
+const Go = getLoadableContainer(() => import('./go.container')) as any
 
 const AnonRoutes = memo(() => (
   <Switch>
@@ -54,7 +51,9 @@ const AuthorizedRoutes = memo(() => {
   }
 
   if (error) {
-    throw error
+    return (
+      <Error text={get(error, 'message')} />
+    )
   }
 
   return (
@@ -62,6 +61,11 @@ const AuthorizedRoutes = memo(() => {
       {isEmpty(tenants) && (
         <Route exact path="/">
           <Welcome />
+        </Route>
+      )}
+      {!isEmpty(tenants) && (
+        <Route exact path="/">
+          <Redirect from="/" to={`/tenant/${get(currentTenant, 'id') || first(tenants)!.id}`} />
         </Route>
       )}
       <Route exact path="/tenant/:tenantId">
@@ -78,9 +82,9 @@ const AuthorizedRoutes = memo(() => {
           <Settings />
         </Route>
       )}
-      {!isEmpty(tenants) && (
-        <Redirect from="/" to={`/tenant/${get(currentTenant, 'id') || first(tenants)!.id}`} />
-      )}
+      <Route path="/go">
+        <Go />
+      </Route>
       <Error title="404" text="Page not found" />
     </Switch>
   )
