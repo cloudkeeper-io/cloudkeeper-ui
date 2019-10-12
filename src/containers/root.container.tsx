@@ -19,6 +19,7 @@ const DynamoTables = getLoadableContainer(() => import('./dynamo-tables/dynamo-t
 const Settings = getLoadableContainer(() => import('./settings/settings.container')) as any
 const Welcome = getLoadableContainer(() => import('./welcome.container')) as any
 const Error = getLoadableContainer(() => import('./error.container')) as any
+const Go = getLoadableContainer(() => import('./go.container')) as any
 
 const AnonRoutes = memo(() => (
   <Switch>
@@ -62,6 +63,11 @@ const AuthorizedRoutes = memo(() => {
           <Welcome />
         </Route>
       )}
+      {!isEmpty(tenants) && (
+        <Route exact path="/">
+          <Redirect from="/" to={`/tenant/${get(currentTenant, 'id') || first(tenants)!.id}`} />
+        </Route>
+      )}
       <Route exact path="/tenant/:tenantId">
         <Dashboard />
       </Route>
@@ -76,9 +82,9 @@ const AuthorizedRoutes = memo(() => {
           <Settings />
         </Route>
       )}
-      {!isEmpty(tenants) && (
-        <Redirect from="/" to={`/tenant/${get(currentTenant, 'id') || first(tenants)!.id}`} />
-      )}
+      <Route path="/go">
+        <Go />
+      </Route>
       <Error title="404" text="Page not found" />
     </Switch>
   )

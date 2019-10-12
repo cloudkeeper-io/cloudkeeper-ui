@@ -50,7 +50,7 @@ export default memo(({ children }: DrawerLayoutProps) => {
     if (user!.isAnonymous) {
       toast((
         <div>You&apos;re in the demo mode.
-            You can <MaterialLink to="/sign-up" component={Link}>sign up here </MaterialLink>
+            You can <MaterialLink to="/go/sign-up" component={Link}>sign up here </MaterialLink>
             and exit from demo using user button in header
         </div>
       ),

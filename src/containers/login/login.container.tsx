@@ -36,9 +36,11 @@ export default memo(() => {
 
   const onDemoClick = useCallback(() => {
     setDemoLoading(true)
-    // eslint-disable-next-line no-console
-    demoLogin().catch(console.log)
-  }, [setDemoLoading, demoLogin])
+    demoLogin()
+      .then(() => history.push('/'))
+      // eslint-disable-next-line no-console
+      .catch(console.log)
+  }, [setDemoLoading, demoLogin, history])
 
   return (
     <Wrapper>

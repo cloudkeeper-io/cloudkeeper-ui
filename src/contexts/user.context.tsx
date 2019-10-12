@@ -146,7 +146,7 @@ export const UserProvider = memo(({ children, history }: UserProviderProps) => {
   const demoLogin = async () => {
     const { mockClient } = await import('../__mocks__/client')
     setClient(mockClient)
-    demoSignIn()
+    await demoSignIn()
   }
 
   return (
