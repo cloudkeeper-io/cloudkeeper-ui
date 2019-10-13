@@ -51,13 +51,10 @@ export default memo(({ children }: DrawerLayoutProps) => {
       toast((
         <div>You&apos;re in the demo mode.
             You can <MaterialLink to="/go/sign-up" component={Link}>sign up here </MaterialLink>
-            and exit from demo using user button in header
+            or do it later using buttons in header
         </div>
       ),
-      {
-        position: 'top-center',
-        autoClose: false,
-      })
+      { position: 'top-center', autoClose: false })
     }
   }, [user])
 

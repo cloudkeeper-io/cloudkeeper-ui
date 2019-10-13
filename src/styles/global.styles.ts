@@ -36,6 +36,10 @@ export default createGlobalStyle`
     }
   }
   
+  .Toastify__toast-body {
+    font-family: ${(p) => p.theme.font}, sans-serif;
+   }
+  
   // toast
   .Toastify__toast--default {
     background: ${(p) => p.theme.colors.background} no-repeat 100%  100% !important;
