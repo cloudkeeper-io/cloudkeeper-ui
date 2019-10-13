@@ -54,6 +54,7 @@ class App extends React.PureComponent {
                 <UserSettingsProvider>
                   <AppBarProvider>
                     <>
+                      <ToastContainer />
                       <SvgDefs />
                       <Head />
                       <RootContainer />
@@ -63,7 +64,6 @@ class App extends React.PureComponent {
               </TenantProvider>
             </ThemeProvider>
           </UserProvider>
-          <ToastContainer />
         </Analytics>
       </Router>
     )

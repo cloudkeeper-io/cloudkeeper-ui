@@ -117,6 +117,8 @@ export const Content = styled.main<{ expanded: boolean }>`
 `
 export const RightAppBar = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
 `
 export const RightAppBarItem = styled.div`
   margin-right: 40px;
@@ -125,6 +127,9 @@ export const RightAppBarItem = styled.div`
   }
   @media (${mobileMediaQuery}) {
     margin-right: 20px;
+  }
+  @media (max-width: 350px) {
+    margin-right: 0;
   }
 `
 export const ListItem = styled(({ active, ...props }) => <MaterialListItem {...props} />)<{ active?: boolean }>`
