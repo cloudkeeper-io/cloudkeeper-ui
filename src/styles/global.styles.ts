@@ -8,7 +8,7 @@ export default createGlobalStyle`
     background: ${(p: any) => p.theme.colors.mainBackground || p.theme.colors.background} no-repeat 100%  100% ;
     color: ${(p) => p.theme.colors.text};
   }
-  
+
   body {
     margin: 0;
     padding: 0;
@@ -35,10 +35,10 @@ export default createGlobalStyle`
       transition-delay: 99999999999s;
     }
   }
-  
+
   .Toastify__toast-body {
     font-family: ${(p) => p.theme.font}, sans-serif;
-   }
+  }
   
   // toast
   .Toastify__toast--default {
@@ -47,12 +47,12 @@ export default createGlobalStyle`
     text-align: center;
     box-shadow: 0 0 4px ${(p) => p.theme.colors.shadow} !important;
   }
-  
+
   .Toastify__close-button {
     color: ${(p) => p.theme.colors.primary} !important;
   }
-  
+
   .Toastify__progress-bar  {
     background: ${(p) => p.theme.colors.primary} no-repeat 100%  100% !important;
-  }  
+  }
 `
