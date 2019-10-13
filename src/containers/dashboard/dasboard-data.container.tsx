@@ -20,7 +20,6 @@ import LambdaSummaryCard from '../../components/data-cards/lambda-summary-card.c
 import { MostExpensiveCard } from '../../components/data-cards/most-expensive-card.component'
 import { getMostExpensiveServiceData } from '../../components/data-cards/trends-card/trends-card.utils'
 
-
 const HeaderWrapper = styled.div`
   padding: 0 28px 0;
   @media (max-width: 800px) {
@@ -29,7 +28,6 @@ const HeaderWrapper = styled.div`
 `
 
 const POLL_INTERVAL = 30 * 60 * 1000 // 30 min
-
 const defaultStartDate = moment().subtract(6, 'days').startOf('day')
 const defaultEndDate = moment()
 
@@ -59,7 +57,6 @@ const defaultLayouts = {
     { x: 0, y: 6, w: 1, h: 4, i: '5' },
   ],
 }
-
 
 interface DashboardDataContainerProps {
   width: number
@@ -103,7 +100,7 @@ export const DashboardDataContainer = ({ width }: DashboardDataContainerProps) =
       {!loading && (width > 0) && (
       <ReactGridLayout
         layouts={defaultLayouts}
-        breakpoints={{ lg: 1250, md: 1000, sm: 800 }}
+        breakpoints={{ lg: 1250, md: 700, sm: 600 }}
         cols={{ lg: 12, md: 10, sm: 1 }}
         width={width}
         rowHeight={170}

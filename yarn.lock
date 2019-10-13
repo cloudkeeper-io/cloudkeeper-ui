@@ -4341,7 +4341,7 @@ browserify-zlib@^0.2.0:
   dependencies:
     pako "~1.0.5"
 
-browserslist@4.7.0, browserslist@^4.0.0, browserslist@^4.1.1, browserslist@^4.6.0, browserslist@^4.6.4, browserslist@^4.6.6, browserslist@^4.7.0:
+browserslist@4.7.0, browserslist@^4.0.0, browserslist@^4.1.1, browserslist@^4.6.0, browserslist@^4.6.4, browserslist@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.7.0.tgz#9ee89225ffc07db03409f2fee524dc8227458a17"
   integrity sha512-9rGNDtnj+HaahxiVV38Gn8n8Lr8REKsel68v1sPFfIGEK6uSXTY3h9acgiT1dZVtOOUtifo/Dn8daDQ5dUgVsA==
@@ -5132,19 +5132,19 @@ copy-to-clipboard@^3, copy-to-clipboard@^3.0.8, copy-to-clipboard@^3.1.0:
     toggle-selection "^1.0.6"
 
 core-js-compat@^3.1.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.2.1.tgz#0cbdbc2e386e8e00d3b85dc81c848effec5b8150"
-  integrity sha512-MwPZle5CF9dEaMYdDeWm73ao/IflDH+FjeJCWEADcEgFSE9TLimFKwJsfmkwzI8eC0Aj0mgvMDjeQjrElkz4/A==
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.3.1.tgz#7a22cb813bdf673b9929b90da5cbf6b3f5a72f70"
+  integrity sha512-R5gisVHlU8ZXrr05qjER3SJ8pp8cYxhWQ0doIfuGhLqtHf9b3eLzzr1ZEfI7MX9JJFwVT+HuyToULupnHl0Ghw==
   dependencies:
-    browserslist "^4.6.6"
+    browserslist "^4.7.0"
     semver "^6.3.0"
 
 core-js-pure@^3.0.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.2.1.tgz#879a23699cff46175bfd2d09158b5c50645a3c45"
-  integrity sha512-+qpvnYrsi/JDeQTArB7NnNc2VoMYLE1YSkziCDHgjexC2KH7OFiGhLUd3urxfyWmNjSwSW7NYXPWHMhuIJx9Ow==
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.3.1.tgz#87ccdfe054aeffabb95f6c0ba7eb60c42d868ab6"
+  integrity sha512-/78vITOqAwuwCupcj5pSSPj6qUavrW4/UNcdfAROH3mQOcY2RLaSTHh11Qsdcdf5MKbSeLWrrRxRd5czH4WH4g==
 
-core-js@3.2.1, core-js@^3.0.1, core-js@^3.0.4:
+core-js@3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.2.1.tgz#cd41f38534da6cc59f7db050fe67307de9868b09"
   integrity sha512-Qa5XSVefSVPRxy2XfUC13WbvqkxhkwB3ve+pgCQveNgYzbM/UxZeu1dcOX/xr4UmfUd+muuvsaxilQzCyUurMw==
@@ -5155,9 +5155,14 @@ core-js@^1.0.0:
   integrity sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
 
 core-js@^2.4.0, core-js@^2.5.0, core-js@^2.5.1:
-  version "2.6.9"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
-  integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==
+  version "2.6.10"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.10.tgz#8a5b8391f8cc7013da703411ce5b585706300d7f"
+  integrity sha512-I39t74+4t+zau64EN1fE5v2W31Adtc/REhzWN+gWRRXg6WH5qAsZm62DHpQ1+Yhe4047T55jvzz7MUqF/dBBlA==
+
+core-js@^3.0.1, core-js@^3.0.4:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.3.1.tgz#636a3dc323c3f9ba618e74c5900366e19f48e959"
+  integrity sha512-1PGI49Lz5qYo3EBz0kymSfJgTvn2G/c03lBTJ7PO0R1liQ7Yd6E570odu5p4CxG/WB0yUwCmAWummo79yOQUcQ==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"

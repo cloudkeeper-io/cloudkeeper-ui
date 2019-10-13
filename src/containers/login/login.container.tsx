@@ -1,7 +1,8 @@
-import React, { useContext, memo, useCallback, useState } from 'react'
+import React, { useContext, memo, useCallback, useState, useEffect } from 'react'
 import useReactRouter from 'use-react-router'
 import { Link } from 'react-router-dom'
-import { Tab } from '@material-ui/core'
+import { toast } from 'react-toastify'
+import { Box, Tab } from '@material-ui/core'
 
 import LoginForm from './components/login-form.component'
 import SignUpForm from './components/sign-up-form.component'
@@ -9,14 +10,11 @@ import { UserContext } from '../../contexts'
 import {
   Wrapper,
   LoginButton,
-  DemoButton,
   Content,
   MainCard,
   Title,
   Text,
   Tabs,
-  SocialWrapper,
-  SocialButton,
   SwitchWrapper,
   SwitchContent,
   LeftContent,
@@ -27,12 +25,17 @@ import {
 } from './login.styles'
 import { TawkFab } from '../../components/tawk-fab.component'
 import { Stars } from './components/stars.component'
+import { SocialSection } from './components'
 
 export default memo(() => {
   const { history, location: { pathname } } = useReactRouter()
-  const { googleSignIn, githubSignIn, demoLogin } = useContext(UserContext)
+  const { demoLogin } = useContext(UserContext)
   const [isDemoLoading, setDemoLoading] = useState(false)
   const isLogin = pathname === '/'
+
+  useEffect(() => {
+    toast.dismiss()
+  }, [])
 
   const onDemoClick = useCallback(() => {
     setDemoLoading(true)
@@ -59,10 +62,7 @@ export default memo(() => {
           </Tabs>
           <LeftContent isLogin={isLogin}>
             <Title>Create Account</Title>
-            <SocialWrapper>
-              <SocialButton icon={['fab', 'google']} onClick={googleSignIn} />
-              <SocialButton icon={['fab', 'github']} onClick={githubSignIn} />
-            </SocialWrapper>
+            <SocialSection />
             <Text>or use your email account for registration:</Text>
             <SignUpForm history={history} />
           </LeftContent>
@@ -76,15 +76,14 @@ export default memo(() => {
               <LoginButton onClick={() => (isLogin ? history.push('/sign-up') : history.push('/'))}>
                 {isLogin ? 'Sign Up' : 'Sign In'}
               </LoginButton>
-              <DemoButton type="button" onClick={onDemoClick} isLoading={isDemoLoading}>Demo Login</DemoButton>
+              <Box mt={2}>
+                <LoginButton type="button" onClick={onDemoClick} isLoading={isDemoLoading}>Demo Login</LoginButton>
+              </Box>
             </SwitchContent>
           </SwitchWrapper>
           <RightContent isLogin={isLogin}>
             <Title>Sign in to Cloudkeeper</Title>
-            <SocialWrapper>
-              <SocialButton icon={['fab', 'google']} onClick={googleSignIn} />
-              <SocialButton icon={['fab', 'github']} onClick={githubSignIn} />
-            </SocialWrapper>
+            <SocialSection />
             <Text>or use your email account:</Text>
             <LoginForm />
           </RightContent>
