@@ -38,6 +38,7 @@ const Legend = styled.div`
   align-items: flex-start;
   flex: 0 1 220px;
   padding: 0 15px;
+  margin-top: -10px;
   @media(max-width: 800px) {
     flex: 0 1 auto;
   }
@@ -83,7 +84,7 @@ const LegendItem = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 13px 0;
+  padding: 9px 0;
   cursor: pointer;
   border-bottom: 1px solid #EDF0F2;
   :first-child {
