@@ -4,23 +4,23 @@ import { createBrowserHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import Analytics from 'react-router-ga'
+import * as Sentry from '@sentry/browser'
 
 import Head from './head'
 import RootContainer from './containers/root.container'
 import ErrorContainer from './containers/error.container'
 import SvgDefs from './styles/svg.defs'
-import {
-  ThemeProvider,
-  TenantProvider,
-  AppBarProvider,
-  UserProvider,
-  UserSettingsProvider,
-} from './contexts'
+import { ThemeProvider, TenantProvider, AppBarProvider, UserProvider, UserSettingsProvider } from './contexts'
 import * as serviceWorker from './serviceWorker'
-import './configs/icons.config'
 import { getEnvConfig } from './configs'
+import './configs/icons.config'
 
+const config = getEnvConfig()
 const history = createBrowserHistory()
+
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({ dsn: config.sentry })
+}
 
 class App extends React.PureComponent {
   // eslint-disable-next-line react/state-in-constructor
@@ -47,7 +47,7 @@ class App extends React.PureComponent {
 
     return (
       <Router history={history}>
-        <Analytics id={getEnvConfig().gaId}>
+        <Analytics id={config.gaId}>
           <UserProvider history={history}>
             <ThemeProvider>
               <TenantProvider>
