@@ -59,7 +59,7 @@
     "react-spring": "^8.0.27",
     "react-toastify": "^5.4.0",
     "react-use": "^12.7.1",
-    "recharts": "^1.8.3",
+    "recharts": "1.8.2",
     "simple-statistics": "^7.0.5",
     "styled-components": "^4.4.0",
     "use-react-router": "^1.0.7"
