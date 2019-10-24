@@ -9,7 +9,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 
 import { getFirebaseConfig, getApolloClient } from '../configs'
-import { setUserId } from '../utils/amplitude'
+import { setUserId } from '../utils/analytics'
 import { generateTawkUserHash } from '../graphql/mutations'
 import { setTawkUserDetails } from '../utils/tawk.util'
 

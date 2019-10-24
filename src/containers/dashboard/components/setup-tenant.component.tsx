@@ -5,7 +5,7 @@ import styled from 'styled-components/macro'
 import map from 'lodash-es/map'
 import { DataProxy } from 'apollo-cache/lib/types'
 
-import { trackEvent } from '../../../utils/amplitude'
+import { trackEvent } from '../../../utils/analytics'
 import { setupTenantMutation } from '../../../graphql/mutations'
 import { tenantsQuery } from '../../../graphql/queries'
 import { SmallField } from '../../../components/form/field.component'

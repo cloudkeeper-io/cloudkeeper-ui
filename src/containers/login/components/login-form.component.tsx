@@ -9,7 +9,7 @@ import Button from '../../../components/button/button.component'
 import ServerError from '../../../components/form/error-message.component'
 import { FormContent, StyledForm } from '../login.styles'
 import { UserContext } from '../../../contexts'
-import { trackEvent } from '../../../utils/amplitude'
+import { trackEvent } from '../../../utils/analytics'
 
 const ForgotPassword = styled(Link)`
   text-decoration: underline;

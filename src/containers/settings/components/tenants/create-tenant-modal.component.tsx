@@ -8,7 +8,7 @@ import get from 'lodash-es/get'
 
 import { tenantsQuery, createTenantMutation } from '../../../../graphql'
 import { CreateTenant } from '../../../../graphql/mutations/types/CreateTenant'
-import { trackEvent } from '../../../../utils/amplitude'
+import { trackEvent } from '../../../../utils/analytics'
 import { SmallField } from '../../../../components/form/field.component'
 import { LoadingButton } from '../../../../components/button/loading-button.component'
 import { TenantContext } from '../../../../contexts'
