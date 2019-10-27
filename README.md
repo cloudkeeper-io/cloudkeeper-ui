@@ -4,7 +4,7 @@ dev:  [https://dev.cloudkeeper.io/](https://dev.cloudkeeper.io/)
 
 prod: [http://app.cloudkeeper.io/](http://app.cloudkeeper.io/)
 
-![CloudKeeper.png](https://bb-image-drai.s3.eu-central-1.amazonaws.com/CloudKeeper.png)
+![CloudKeeper.png](.github/CloudKeeper.png)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
