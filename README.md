@@ -1,8 +1,6 @@
 # CloudKeeper UI
 
-dev:  [https://dev.cloudkeeper.io/](https://dev.cloudkeeper.io/)
-
-prod: [http://app.cloudkeeper.io/](http://app.cloudkeeper.io/)
+[http://app.cloudkeeper.io/](http://app.cloudkeeper.io/)
 
 ![CloudKeeper.png](.github/CloudKeeper.png)
 
