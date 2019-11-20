@@ -58,7 +58,7 @@ export const TopMenuItems = memo((props: MenuItemsProps) => {
 const anyWindow = window as any
 
 export const bottomMenuItems = [
-  { primary: 'Support Chat', onClick: () => anyWindow.Tawk_API.toggle(), icon: <MessageSquare /> },
+  { primary: 'Support Chat', onClick: () => invoke(anyWindow.Tawk_API, 'toggle'), icon: <MessageSquare /> },
   { primary: 'Settings', to: '/settings', icon: <Settings />, disabled: (user: firebase.User) => user.isAnonymous },
 ]
 

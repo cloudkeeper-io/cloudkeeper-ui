@@ -2,6 +2,7 @@ import React from 'react'
 import Fab from '@material-ui/core/Fab'
 import { MessageSquare } from 'react-feather'
 import styled from 'styled-components'
+import { invoke } from 'lodash-es'
 
 const ChatFab = styled(Fab)`
   position: fixed;
@@ -21,5 +22,5 @@ const ChatFab = styled(Fab)`
 const anyWindow = window as any
 
 export const TawkFab = () => (
-  <ChatFab disableRipple onClick={() => anyWindow.Tawk_API.toggle()}><MessageSquare /></ChatFab>
+  <ChatFab disableRipple onClick={() => invoke(anyWindow.Tawk_API, 'toggle')}><MessageSquare /></ChatFab>
 )
